@@ -1,0 +1,21 @@
+
+-------------------- Start of log: 07/03/2012 16:34:57 --------------------
+
+Usuário: DITECH CONSULTORIA E SISTEMAS
+Data/hora: 07/03/2012 16:34:56 - Fuso: -3
+Tipo: E_WARNING (2)
+Arquivo em que ocorreu o erro: /var/www/pauta_homologacao/adodb/drivers/adodb-postgres64.inc.php
+Linha: 590
+Arquivo pai em execução pelo PHP: /pauta_homologacao/BL/BLbriefing_edt.php
+Descrição: pg_exec() [<a hr...ay) => (vazio)
+bValido => 1
+mCampoObrigatorio => FRMcd_tipo
+aColunas (Array) => id_prop => 
+                    id_proj => 
+                    id_ppmod => 
+                    id_modproj => 
+                    nm_origem => 
+                    nm_prop => 07/03 - ph/teste
+                    cd_tipo => N
+
+-------------------- End of log: 07/03/2012 16:34:57 --------------------

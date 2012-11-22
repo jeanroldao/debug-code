@@ -1,0 +1,146 @@
+<script>
+var ini, fim, url, dados = {};
+function ready() {
+  ini = document.getElementById('ini');
+  fim = document.getElementById('fim');
+  
+  var dataInicio = new Date();
+  if (dataInicio.getDate() < 16) {
+    dataInicio.setMonth(dataInicio.getMonth()-1)
+  }
+  dataInicio.setDate(16);
+  ini.value = dataInicio.toISOString().split('T')[0];
+  fim.value = new Date().toISOString().split('T')[0];
+}
+function gerarUrl() {
+  url = document.getElementById('url');
+  url.value = ('http://vega/intranet/DI/DIponto.php?FLTdt_ini='+ini.value+'&FLTdt_fim='+fim.value+'&_dc=1351266378274&page=1&iOffset=0&iLimit=1000&group=[{%22property%22%3A%22dt_ent%22%2C%22direction%22%3A%22ASC%22}]&sort=dt_ent&dir=ASC');
+  //url.size = url.value.length;
+  url.select();
+}
+
+function calcular() {
+  dados = eval('('+document.getElementById('dados').value+')');
+  
+  var iTotalTime = 0;
+  for (var i = 0; i < dados.iTotal; i++) {
+    var linha = dados.aLinhas[i];
+    //console.log(linha);
+    /*
+    var dateIni = new Date(linha.dt_ent.split('/').reverse().join('-') + 'T' + linha.hr_ent);
+    var dateFim = new Date(linha.dt_sai.split('/').reverse().join('-') + 'T' + linha.hr_sai);
+    
+    var iTime = (dateFim - dateIni);
+    if (iTime) {
+      iTotalTime += (dateFim - dateIni);
+    } else {
+      console.log([dateFim, dateIni]);
+    }
+    */
+    
+    iTotalTime += convertHoraEmInt(linha.hr_sai) - convertHoraEmInt(linha.hr_ent);
+  }
+  //console.log(iTotalTime);
+  alert(convertIntEmHora(iTotalTime) + ' / ' + horasEstimadas(ini.value, fim.value));
+}
+
+function horasEstimadas(dDataIni, dDataFim) {
+  var oDataIni = new Date(dDataIni);
+  var oDataFim = new Date(dDataFim);
+  return convertIntEmHora(calcBusinessDays(oDataIni, oDataFim) * 8 * 60);
+  /*
+  //delta é a diferenca de dias
+  var delta = ((oDataFim - oDataIni) /  ( 1000 * 60 * 60 * 24 )) + 1;
+  console.log(delta);
+  
+  //bizdelta é a diferenca convertida em dias uteis
+  var bizdelta = ((parseInt(delta) / 7) * 5) + (parseInt(delta)%7);
+  return convertIntEmHora(Math.round(bizdelta) * 8 * 60);
+  */
+}
+
+function calcBusinessDays(dDate1, dDate2) {         // input given as Date objects
+ 
+  var iWeeks, iDateDiff, iAdjust = 0;
+ 
+  if (dDate2 < dDate1) return -1;                 // error code if dates transposed
+ 
+  var iWeekday1 = dDate1.getDay();                // day of week
+  var iWeekday2 = dDate2.getDay();
+ 
+  iWeekday1 = (iWeekday1 == 0) ? 7 : iWeekday1;   // change Sunday from 0 to 7
+  iWeekday2 = (iWeekday2 == 0) ? 7 : iWeekday2;
+ 
+  if ((iWeekday1 > 5) && (iWeekday2 > 5)) iAdjust = 1;  // adjustment if both days on weekend
+ 
+  iWeekday1 = (iWeekday1 > 5) ? 5 : iWeekday1;    // only count weekdays
+  iWeekday2 = (iWeekday2 > 5) ? 5 : iWeekday2;
+ 
+  // calculate differnece in weeks (1000mS * 60sec * 60min * 24hrs * 7 days = 604800000)
+  iWeeks = Math.floor((dDate2.getTime() - dDate1.getTime()) / 604800000)
+ 
+  if (iWeekday1 <= iWeekday2) {
+    iDateDiff = (iWeeks * 5) + (iWeekday2 - iWeekday1)
+  } else {
+    iDateDiff = ((iWeeks + 1) * 5) - (iWeekday1 - iWeekday2)
+  }
+ 
+  iDateDiff -= iAdjust                            // take into account both days on weekend
+ 
+  return (iDateDiff + 1);                         // add 1 because dates are inclusive
+ 
+}
+
+//18:02:46 -> 163210
+function convertHoraEmInt(sHora) {
+  if (!sHora) {
+    return 0;
+  }
+  var aHora = sHora.split(':');
+  var hHora = (aHora[0] * 60) + parseInt(aHora[1]);
+
+  return +hHora;
+}
+
+function convertIntEmHora (hHora) {
+  //console.log(hHora);
+
+  var sSinal = '';
+
+  if(hHora < 0) {
+
+    // Tira o sinal negativo convertendo para string
+    hHora = ('' + hHora).substr(1);
+    sSinal = '-';
+  }
+
+  var iHora = parseInt(hHora / 60);
+  var iMin = parseInt(hHora % 60);
+
+  if(iMin < 10) {
+    iMin = "0" + iMin;
+  }
+
+  return sSinal + iHora + ':' + iMin;
+}
+/*
+Object
+dt_ent: "17/10/2012"
+dt_sai: "17/10/2012"
+hr_ent: "09:30:23"
+hr_sai: "11:49:22"
+*/
+//formula de horas
+//new Date(new Date('2012-10-26T16:40:00') - new Date('2012-10-26T12:30:00')).toISOString()
+//{"aLinhas":[{"id_mregponto":"13057","id_func":20,"dt_ent":"26\/10\/2012","hr_ent":"12:30:11","dt_sai":"","hr_sai":null},{"id_mregponto":"13030","id_func":20,"dt_ent":"25\/10\/2012","hr_ent":"12:58:35","dt_sai":"25\/10\/2012","hr_sai":"19:24:05"},{"id_mregponto":"12991","id_func":20,"dt_ent":"24\/10\/2012","hr_ent":"12:52:14","dt_sai":"24\/10\/2012","hr_sai":"19:18:04"},{"id_mregponto":"12952","id_func":20,"dt_ent":"23\/10\/2012","hr_ent":"12:53:05","dt_sai":"23\/10\/2012","hr_sai":"18:37:28"},{"id_mregponto":"12912","id_func":20,"dt_ent":"22\/10\/2012","hr_ent":"13:18:03","dt_sai":"22\/10\/2012","hr_sai":"18:48:53"},{"id_mregponto":"12876","id_func":20,"dt_ent":"20\/10\/2012","hr_ent":"13:51:43","dt_sai":"20\/10\/2012","hr_sai":"17:26:49"},{"id_mregponto":"12860","id_func":20,"dt_ent":"19\/10\/2012","hr_ent":"12:25:16","dt_sai":"19\/10\/2012","hr_sai":"16:49:24"},{"id_mregponto":"12844","id_func":20,"dt_ent":"19\/10\/2012","hr_ent":"09:34:45","dt_sai":"19\/10\/2012","hr_sai":"11:33:48"},{"id_mregponto":"12830","id_func":20,"dt_ent":"18\/10\/2012","hr_ent":"12:28:00","dt_sai":"18\/10\/2012","hr_sai":"18:56:00"},{"id_mregponto":"12795","id_func":20,"dt_ent":"18\/10\/2012","hr_ent":"09:54:00","dt_sai":"18\/10\/2012","hr_sai":"11:50:00"},{"id_mregponto":"12775","id_func":20,"dt_ent":"17\/10\/2012","hr_ent":"13:01:03","dt_sai":"17\/10\/2012","hr_sai":"18:43:39"},{"id_mregponto":"12752","id_func":20,"dt_ent":"17\/10\/2012","hr_ent":"09:30:23","dt_sai":"17\/10\/2012","hr_sai":"11:49:22"},{"id_mregponto":"12658","id_func":20,"dt_ent":"16\/10\/2012","hr_ent":"12:51:26","dt_sai":"16\/10\/2012","hr_sai":"18:30:29"},{"id_mregponto":"12627","id_func":20,"dt_ent":"16\/10\/2012","hr_ent":"09:34:55","dt_sai":"16\/10\/2012","hr_sai":"11:55:20"}],"iTotal":14}
+</script>
+
+ini: <input id="ini" /> 
+fim: <input id="fim" />
+<br />
+<input type="button" value="URL" onclick="gerarUrl()" />
+<input id="url" />
+<br />
+<input id="dados" />
+<input type="button" value="calcular" onclick="calcular()" />
+<script>ready();</script>

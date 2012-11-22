@@ -1,0 +1,46 @@
+<table border="1">
+  <thead>
+    <tr>
+      <th>language</th>
+      <th>developer</th>
+    </tr>
+  </thead>
+  <tfoot>
+
+    <tr>
+      <td colspan="2">total: 5</td>
+    </tr>
+  </tfoot>
+  <tbody>
+        <tr>
+      <td>c#</td>
+      <td>.net</td>
+      <td>1</td>
+
+    </tr>
+        <tr>
+      <td>vb</td>
+      <td>ms</td>
+      <td>2</td>
+    </tr>
+        <tr>
+      <td>java</td>
+      <td>sun</td>
+      <td>3</td>
+    </tr>
+        <tr>
+      <td>delphi</td>
+      <td>borland</td>
+      <td>4</td>
+    </tr>
+        <tr>
+
+      <td>phython</td>
+      <td>google</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td colspan="3">=SOMA(C2:C6)</td>
+    </tr>
+      </tbody>
+</table>

@@ -1,0 +1,11 @@
+<canvas id="my-canvas"></canvas>
+<script> 
+var canvas = document.getElementById('my-canvas');
+console.log(canvas);
+var ctx = canvas.getContext("2d");
+console.log(ctx);
+// Draw the window at the top left of canvas, width=100, height=200, white background
+ctx.drawWindow(window, 0,0, 100, 200, "rgb(255,255,255)");
+// Open another window with the thumbnail as an image
+open(canvas.toDataURL("image/png"));
+</script>

@@ -1,0 +1,31 @@
+<?php
+$lista = array(
+  'c#' => '.net',
+  'vb' => 'ms',
+  'java' => 'sun',
+  'delphi' => 'borland',
+  'phython' => 'google',
+);
+?>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>language</th>
+      <th>developer</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td colspan="2">total: <?=count($lista)?></td>
+    </tr>
+  </tfoot>
+  <tbody>
+    <? foreach ($lista as $lang => $dev) { ?>
+    <tr>
+      <td><?=$lang?></td>
+      <td><?=$dev?></td>
+    </tr>
+    <? } ?>
+  </tbody>
+</table>

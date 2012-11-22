@@ -1,0 +1,290 @@
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+	background-color: #EEEEEE;
+}
+
+table, 
+tr, 
+td {
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+}
+
+td.header {
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+	background-color: #EEEEEE;
+	display: none;
+}
+
+td.logo {
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+}
+
+td.banner {
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+	background-color: #EEEEEE;
+	display: none;
+}
+
+td.button {
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+	background-color: #EEEEEE;
+	display: none;
+}
+
+td.null {
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+	background-color: #EEEEEE;
+	display: none;
+}
+
+td.menu_esquerdo {
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+	background-color: #EEEEEE;
+	display: none;
+}
+
+td.menu_direito {
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+	background-color: #EEEEEE;
+	display: none;
+}
+
+td.principal {
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+	background-color: #FFFFFF;
+}
+
+td.footer {
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+	text-align: center;
+}
+
+#null {
+	display: none;
+}
+
+#powered {
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+	text-align: center;
+	display: none;
+}
+
+h1.titulo {
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	text-align: center;
+}
+
+form {
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+
+img {
+	border: 0;
+}
+
+a:link, 
+a:visited, 
+a:active {
+	background: transparent;
+	color: #000000;
+	text-decoration: underline;
+}
+
+a:hover {
+	background: transparent;
+	color: #000000;
+	text-decoration: none;
+	background-color: #EEEEEE;
+}
+
+a:link.menu, 
+a:visited.menu, 
+a:active.menu {
+	background: transparent;
+	color: #000000;
+	text-decoration: none;
+}
+
+a:hover.menu {
+	background: transparent;
+	color: #000000;
+	text-decoration: none;
+	background-color: #CCCCCC;
+}
+
+a:link.static, 
+a:visited.static, 
+a:active.static {
+	background: transparent;
+	color: #000000;
+	text-decoration: none;
+}
+
+a:hover.static {
+	background: transparent;
+	color: #000000;
+	text-decoration: none;
+}
+
+a:hover.transparente {
+	background: transparent;
+	color: #000000;
+	text-decoration: none;
+}
+
+input, 
+textarea, 
+select, 
+button {
+	background: #FFFFFF;
+	border: 1px solid #999999;
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin: 5px;
+	padding: 2px;
+	vertical-align: middle;
+}
+
+textarea {
+	overflow: auto;
+}
+
+select {
+	border: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin: 0;
+	padding: 0;
+}
+
+input.button {
+	background: #EEEEEE;
+	border: 1px solid #CCCCCC;
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin: 5px;
+	padding: 2px;
+	vertical-align: middle;
+}
+
+input.radio {
+	border: none;
+}
+
+input:focus, 
+select:focus, 
+textarea:focus {
+	background: #EEEEEE;
+	color: #000000;
+}
+
+pre {
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+	background-color: #F7F7F7;
+	margin: 0;
+	width: 500px;
+	overflow: auto;
+}
+
+hr {
+	color: #EEEEEE;
+}
+
+hr.menu {
+	color: #CCCCCC;
+}
+
+
+ol {
+	margin: 0em 0 0em 0px;
+}
+
+ol.li {
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+}
+
+ul {
+	margin: 0em 0 0em 0px;
+}
+
+ul.li {
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+}
+
+blockquote {
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+	border-left: 10px solid #F7F7F7;
+	margin: 0px;
+	padding: 0px;
+	padding-left: 25px;
+}
+
+div.moldura {
+	color: #000000;
+	font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+	border-left: 10px solid #F7F7F7;
+	border-bottom: #F7F7F7 medium solid;
+	border-left: #F7F7F7 medium solid;
+	border-right: #F7F7F7 medium solid;
+	border-top: #F7F7F7 medium solid;
+}
+
+/* menu */
+
+.menutitle {
+	cursor: pointer;
+	margin-bottom: 5px;
+	background-color: #EEEEEE;
+	color: #000000;
+	width: 190px;
+	padding: 0px;
+	text-align: left;
+}
+
+.submenu {
+	margin-bottom: 0.5em;
+}

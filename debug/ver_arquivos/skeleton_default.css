@@ -1,0 +1,13 @@
+﻿#container {background: url(../img/bg.gif) repeat-y center top; overflow:hidden; width:auto;}
+#page {width:1000px; margin:0 auto; background: url(../img/pageBg.gif) repeat-y center top; overflow:hidden; position:relative;}
+#header {overflow:hidden;}
+
+#content {overflow:hidden;}
+
+#main {position:relative; left:175px; width:825px; float:left;}
+
+#area1 {float:left; position:relative; width:601px; overflow:hidden;}
+#area2 {float:left; position:relative; width:175px; right:825px; overflow:hidden; z-index:100;}
+#area3 {float:left; position:relative; width:224px; overflow:hidden; z-index:2;}
+
+#footer {clear:both; overflow:hidden;}

@@ -1,0 +1,321 @@
+class IShellDispatch4 { /* GUID={EFD84B2D-4BCF-4298-BE25-EB542A59FBDA} */
+	/* DISPID=1610612736 */
+	function QueryInterface(
+		/* VT_PTR [26] [in] --> ? [29]  */ &$riid,
+		/* VT_PTR [26] [out] --> VT_PTR [26]  */ &$ppvObj 
+		)
+	{
+	}
+	/* DISPID=1610612737 */
+	/* VT_UI4 [19] */
+	function AddRef(
+		)
+	{
+	}
+	/* DISPID=1610612738 */
+	/* VT_UI4 [19] */
+	function Release(
+		)
+	{
+	}
+	/* DISPID=1610678272 */
+	function GetTypeInfoCount(
+		/* VT_PTR [26] [out] --> VT_UINT [23]  */ &$pctinfo 
+		)
+	{
+	}
+	/* DISPID=1610678273 */
+	function GetTypeInfo(
+		/* VT_UINT [23] [in] */ $itinfo,
+		/* VT_UI4 [19] [in] */ $lcid,
+		/* VT_PTR [26] [out] --> VT_PTR [26]  */ &$pptinfo 
+		)
+	{
+	}
+	/* DISPID=1610678274 */
+	function GetIDsOfNames(
+		/* VT_PTR [26] [in] --> ? [29]  */ &$riid,
+		/* VT_PTR [26] [in] --> VT_PTR [26]  */ &$rgszNames,
+		/* VT_UINT [23] [in] */ $cNames,
+		/* VT_UI4 [19] [in] */ $lcid,
+		/* VT_PTR [26] [out] --> VT_I4 [3]  */ &$rgdispid 
+		)
+	{
+	}
+	/* DISPID=1610678275 */
+	function Invoke(
+		/* VT_I4 [3] [in] */ $dispidMember,
+		/* VT_PTR [26] [in] --> ? [29]  */ &$riid,
+		/* VT_UI4 [19] [in] */ $lcid,
+		/* VT_UI2 [18] [in] */ $wFlags,
+		/* VT_PTR [26] [in] --> ? [29]  */ &$pdispparams,
+		/* VT_PTR [26] [out] --> VT_VARIANT [12]  */ &$pvarResult,
+		/* VT_PTR [26] [out] --> ? [29]  */ &$pexcepinfo,
+		/* VT_PTR [26] [out] --> VT_UINT [23]  */ &$puArgErr 
+		)
+	{
+	}
+	/* DISPID=1610743808 */
+	/* VT_DISPATCH [9] */
+	/* Get Application object */
+	var $Application;
+
+	/* DISPID=1610743809 */
+	/* VT_DISPATCH [9] */
+	/* Get Parent object */
+	var $Parent;
+
+	/* DISPID=1610743810 */
+	/* VT_PTR [26] */
+	function NameSpace(
+		/* VT_VARIANT [12] [in] */ $vDir 
+		)
+	{
+		/* Get special folder from ShellSpecialFolderConstants */
+	}
+	/* DISPID=1610743811 */
+	/* VT_PTR [26] */
+	function BrowseForFolder(
+		/* VT_I4 [3] [in] */ $Hwnd,
+		/* VT_BSTR [8] [in] */ $Title,
+		/* VT_I4 [3] [in] */ $Options,
+		/* VT_VARIANT [12] [in] */ $RootFolder 
+		)
+	{
+		/* Browse the name space for a Folder */
+	}
+	/* DISPID=1610743812 */
+	/* VT_DISPATCH [9] */
+	function Windows(
+		)
+	{
+		/* The collection of open folder windows */
+	}
+	/* DISPID=1610743813 */
+	function Open(
+		/* VT_VARIANT [12] [in] */ $vDir 
+		)
+	{
+		/* Open a folder */
+	}
+	/* DISPID=1610743814 */
+	function Explore(
+		/* VT_VARIANT [12] [in] */ $vDir 
+		)
+	{
+		/* Explore a folder */
+	}
+	/* DISPID=1610743815 */
+	function MinimizeAll(
+		)
+	{
+		/* Minimize all windows */
+	}
+	/* DISPID=1610743816 */
+	function UndoMinimizeALL(
+		)
+	{
+		/* Undo Minimize All */
+	}
+	/* DISPID=1610743817 */
+	function FileRun(
+		)
+	{
+		/* Bring up the file run */
+	}
+	/* DISPID=1610743818 */
+	function CascadeWindows(
+		)
+	{
+		/* Cascade Windows */
+	}
+	/* DISPID=1610743819 */
+	function TileVertically(
+		)
+	{
+		/* Tile windows vertically */
+	}
+	/* DISPID=1610743820 */
+	function TileHorizontally(
+		)
+	{
+		/* Tile windows horizontally */
+	}
+	/* DISPID=1610743821 */
+	function ShutdownWindows(
+		)
+	{
+		/* Exit Windows */
+	}
+	/* DISPID=1610743822 */
+	function Suspend(
+		)
+	{
+		/* Suspend the pc */
+	}
+	/* DISPID=1610743823 */
+	function EjectPC(
+		)
+	{
+		/* Eject the pc */
+	}
+	/* DISPID=1610743824 */
+	function SetTime(
+		)
+	{
+		/* Bring up the Set time dialog */
+	}
+	/* DISPID=1610743825 */
+	function TrayProperties(
+		)
+	{
+		/* Handle Tray properties */
+	}
+	/* DISPID=1610743826 */
+	function Help(
+		)
+	{
+		/* Display shell help */
+	}
+	/* DISPID=1610743827 */
+	function FindFiles(
+		)
+	{
+		/* Find Files */
+	}
+	/* DISPID=1610743828 */
+	function FindComputer(
+		)
+	{
+		/* Find a computer */
+	}
+	/* DISPID=1610743829 */
+	function RefreshMenu(
+		)
+	{
+		/* Refresh the menu */
+	}
+	/* DISPID=1610743830 */
+	function ControlPanelItem(
+		/* VT_BSTR [8] [in] */ $bstrDir 
+		)
+	{
+		/* Run a Control Panel Item */
+	}
+	/* DISPID=1610809344 */
+	/* VT_I4 [3] */
+	function IsRestricted(
+		/* VT_BSTR [8] [in] */ $Group,
+		/* VT_BSTR [8] [in] */ $Restriction 
+		)
+	{
+		/* get restriction settings */
+	}
+	/* DISPID=1610809345 */
+	function ShellExecute(
+		/* VT_BSTR [8] [in] */ $File,
+		/* VT_VARIANT [12] [in] */ $vArgs,
+		/* VT_VARIANT [12] [in] */ $vDir,
+		/* VT_VARIANT [12] [in] */ $vOperation,
+		/* VT_VARIANT [12] [in] */ $vShow 
+		)
+	{
+		/* Execute generic command */
+	}
+	/* DISPID=1610809346 */
+	function FindPrinter(
+		/* VT_BSTR [8] [in] */ $Name,
+		/* VT_BSTR [8] [in] */ $location,
+		/* VT_BSTR [8] [in] */ $model 
+		)
+	{
+		/* Find a Printer in the Directory Service */
+	}
+	/* DISPID=1610809347 */
+	/* VT_VARIANT [12] */
+	function GetSystemInformation(
+		/* VT_BSTR [8] [in] */ $Name 
+		)
+	{
+		/* Retrieve info about the user's system */
+	}
+	/* DISPID=1610809348 */
+	/* VT_VARIANT [12] */
+	function ServiceStart(
+		/* VT_BSTR [8] [in] */ $ServiceName,
+		/* VT_VARIANT [12] [in] */ $Persistent 
+		)
+	{
+		/* Start a service by name, and optionally set it to autostart. */
+	}
+	/* DISPID=1610809349 */
+	/* VT_VARIANT [12] */
+	function ServiceStop(
+		/* VT_BSTR [8] [in] */ $ServiceName,
+		/* VT_VARIANT [12] [in] */ $Persistent 
+		)
+	{
+		/* Stop a service by name, and optionally disable autostart. */
+	}
+	/* DISPID=1610809350 */
+	/* VT_VARIANT [12] */
+	function IsServiceRunning(
+		/* VT_BSTR [8] [in] */ $ServiceName 
+		)
+	{
+		/* Determine if a service is running by name. */
+	}
+	/* DISPID=1610809351 */
+	/* VT_VARIANT [12] */
+	function CanStartStopService(
+		/* VT_BSTR [8] [in] */ $ServiceName 
+		)
+	{
+		/* Determine if the current user can start/stop the named service. */
+	}
+	/* DISPID=1610809352 */
+	/* VT_VARIANT [12] */
+	function ShowBrowserBar(
+		/* VT_BSTR [8] [in] */ $bstrClsid,
+		/* VT_VARIANT [12] [in] */ $bShow 
+		)
+	{
+		/* Show/Hide browser bar. */
+	}
+	/* DISPID=1610874880 */
+	function AddToRecent(
+		/* VT_VARIANT [12] [in] */ $varFile,
+		/* VT_BSTR [8] [in] */ $bstrCategory 
+		)
+	{
+		/* Add an object to the Recent Docuements */
+	}
+	/* DISPID=1610940416 */
+	function WindowsSecurity(
+		)
+	{
+		/* Windows Security */
+	}
+	/* DISPID=1610940417 */
+	function ToggleDesktop(
+		)
+	{
+		/* Raise/lower the desktop */
+	}
+	/* DISPID=1610940418 */
+	/* VT_VARIANT [12] */
+	function ExplorerPolicy(
+		/* VT_BSTR [8] [in] */ $bstrPolicyName 
+		)
+	{
+		/* Return explorer policy value */
+	}
+	/* DISPID=1610940419 */
+	/* VT_BOOL [11] */
+	function GetSetting(
+		/* VT_I4 [3] [in] */ $lSetting 
+		)
+	{
+		/* Return shell global setting */
+	}
+}

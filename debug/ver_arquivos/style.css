@@ -1,0 +1,151 @@
+#isee{
+position: absolute;
+top: -100px;
+left: 0;
+width: 1px;
+height: 1px;
+}
+
+#barrahostnet_container{
+margin: 0;
+padding: 0;
+width: 100%;
+height: 30px;
+background-image: url(imagens/bg.jpg);
+border-style: solid;
+border-width: 1px;
+border-color: #0F144F;
+border-left:none;
+border-right:none;
+max-height:35px;
+overflow:hidden;
+}
+
+#barrahostnet_container ul{
+float: left;
+width: auto;
+height: 30px;
+margin: 0;
+padding: 0;
+list-style: none;
+}
+
+.barrahostnet_hidden{
+visibility: hidden;
+}
+
+.barrahostnet_separator{
+float: left;
+width: 10px;
+height: 30px;
+text-align: center;
+font-size: 18px;
+color: #8C8EC2;
+margin:0px;
+padding:0px;
+padding-top: 2px;
+line-height:normal;
+list-style:none;
+background:none !important;
+voice-family: "\"}\""; 
+voice-family:inherit;
+height: 28px;
+}
+
+.barrahostnet_logo{
+float: left;
+width: 75px;
+height: 30px;
+padding: 0;
+margin: 0;
+background-image: url(imagens/barra_logo.jpg);
+}
+
+.barrahostnet_logo{
+text-decoration: none;	
+}
+
+.barrahostnet_itens{
+float: left;
+width: 90px;
+height: 30px;
+color: #FFFFFF;
+text-align: center;
+font-size: 10px;
+font-family:Tahoma,Arial,sans-serif;
+font-weight: bold;
+line-height:normal;
+list-style:none;
+background:none;
+margin:0px;
+padding:0px;
+padding-top: 2px;
+voice-family: "\"}\""; 
+voice-family:inherit;
+height: 28px;
+}
+
+.barrahostnet_itens a{
+text-decoration: none !important;
+color: #FFFFFF !important;
+font-family:Tahoma,Arial,sans-serif !important;
+font-size:10px !important;
+}
+
+.barrahostnet_itens a:hover{
+text-decoration: underline !important;
+}
+
+#item_parceiros{
+width: 70px;
+height: 30px;
+padding-top: 8px;
+voice-family: "\"}\""; 
+voice-family:inherit;
+height: 22px;
+}
+
+#barrahostnet_parceiros_select{
+float: left;
+width: auto;
+height: 30px;
+padding-top: 4px;
+voice-family: "\"}\""; 
+voice-family:inherit;
+height: 26px;
+}
+
+#barrahostnet_parceiros_select select{
+width: auto;	
+height: auto;
+}
+
+#barrahostnet_parceiros_ok{
+float: left;
+width: auto;
+height: 30px;
+padding-top: 5px;
+padding-left: 5px;
+voice-family: "\"}\""; 
+voice-family:inherit;
+height: 25px;
+}
+
+#barrahostnet_container input{
+	border:0px !important;
+}
+
+#barrahostnet_container select {
+	border: 1px solid #DDD;
+	background: #FFFFFF;
+	padding: 2px;
+	font-size:11px;
+	font-family:Tahoma,Arial,sans-serif;
+	color: #444444;
+}
+
+
+#barrahostnet_container select:focus, #barrahostnet_container select:hover
+{
+	background: #FFFFFF;
+}
