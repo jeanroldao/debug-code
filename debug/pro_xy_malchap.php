@@ -10,10 +10,10 @@ $url = 'http://myanimelist.net/includes/ajax.inc.php?t=50';//animelist
 //$dados = array('epNum' => 1, 'aid' => 1604, 'id' => 1604);//reborn 
 //$dados = array('epNum' => 1, 'aid' => 6547, 'id' => 6547);//angel beats
 $dados = array('epNum' => 1, 'aid' => 5081, 'id' => 5081);//bakemonogatari
-$dados = array('epNum' => 1, 'aid' => 918, 'id' => 918);//gintama
+//$dados = array('epNum' => 1, 'aid' => 918, 'id' => 918);//gintama
 
 
-for ($i = 0; $i < 25; $i++) {
+for ($i = 0; $i < 15; $i++) {
   
   $dados['epNum'] = $i + 1;
   
@@ -68,7 +68,7 @@ function urlPost($url, $data) {
       'method'          => 'POST',    
       'request_fulluri' => true,
       'header'          => "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0.1\r\n"
-                          ."Cookie: gn_country=US; __gads=ID=55ba3017df83c2f5:T=1350304280:S=ALNI_MYJfVCykcRfx2T1C2lTF9YW8sDIaw; __utma=242346526.1780274949.1350304202.1350304202.1350308774.2; __utmc=242346526; __utmz=242346526.1350304202.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); Y=408342; Z=93ba956f71727e92a1f43b843dbb8a60f169a99f; __utmb=242346526.5.10.1350308774\r\n"
+                          ."Cookie: __gads=ID=55ba3017df83c2f5:T=1350304280:S=ALNI_MYJfVCykcRfx2T1C2lTF9YW8sDIaw; __utma=242346526.1780274949.1350304202.1350308774.1354289207.3; __utmz=242346526.1350304202.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); gn_country=US; __utmb=242346526.5.10.1354289207; __utmc=242346526; Y=408342; Z=449df65aee578a2c79b983224e5d6d38d416c8b9\r\n"
                           ."Content-Length: " . strlen($data) . "\r\n",
       'content' => $data
     )
@@ -85,7 +85,7 @@ function urlGet($url, $data) {
       'method'          => 'GET',    
       'request_fulluri' => true,
       'header'          => "User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0.1\r\n"
-                          ."Cookie: gn_country=US; __gads=ID=55ba3017df83c2f5:T=1350304280:S=ALNI_MYJfVCykcRfx2T1C2lTF9YW8sDIaw; __utma=242346526.1780274949.1350304202.1350304202.1350308774.2; __utmc=242346526; __utmz=242346526.1350304202.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); Y=408342; Z=93ba956f71727e92a1f43b843dbb8a60f169a99f; __utmb=242346526.5.10.1350308774\r\n"
+                          ."Cookie: __gads=ID=55ba3017df83c2f5:T=1350304280:S=ALNI_MYJfVCykcRfx2T1C2lTF9YW8sDIaw; __utma=242346526.1780274949.1350304202.1350308774.1354289207.3; __utmz=242346526.1350304202.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); gn_country=US; __utmb=242346526.5.10.1354289207; __utmc=242346526; Y=408342; Z=449df65aee578a2c79b983224e5d6d38d416c8b9\r\n"
                           ."Content-Length: " . strlen($data) . "\r\n",
       'content' => $data
     )
