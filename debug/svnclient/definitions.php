@@ -33,8 +33,8 @@ define("PHPSVN_LOGS_REQUEST",'<?xml version="1.0" encoding="utf-8"?> <S:log-repo
 
 define("SVN_LAST_MODIFIED","lp1:getlastmodified");
 define("SVN_URL","D:href");
-define("SVN_RELATIVE_URL","lp3:baseline-relative-path");
-define("SVN_FILE_ID","lp3:repository-uuid");
+define("SVN_RELATIVE_URL","lp2:baseline-relative-path");
+define("SVN_FILE_ID","lp2:repository-uuid");
 define("SVN_STATUS","D:status");
 define("SVN_IN_FILE","D:propstat");
 define("SVN_FILE","D:response");

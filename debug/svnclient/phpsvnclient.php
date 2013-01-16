@@ -386,7 +386,6 @@ class phpSVNclient
                     $this->errNro=UNKNOWN_ERROR;
 
             }
-            var_dump('erro', $http);
             $http->close();
             return false;
         }

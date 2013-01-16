@@ -39,11 +39,17 @@ $svn  = new phpsvnclient;
 $svn->setRepository("http://www.ditech.com.br/svn/DITECH/");
 //var_dump($svn);
 
+$svn->setAuth('jean', base64_decode('MzEzOTg3Ng=='));
+
 /**
  *  Get Files from "/trunk/phpajax/" directory from the last repository version 
  */
-$files_now = $svn->getDirectoryFiles("/");
-var_dump($files_now);
+//$files_now = $svn->getDirectoryFiles("/");
+//echo '<pre>';var_dump($files_now);
+
+$logs = $svn->getRepositoryLogs($svn->getVersion() -10);
+echo '<pre>';var_dump($logs);
+exit;
 
 
 /**
