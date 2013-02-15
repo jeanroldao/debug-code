@@ -486,7 +486,7 @@ set_time_limit(0);
 
 $config->expandTabsBy(8);
 
-$config->addRepository('ditech', 'http://www.ditech.com.br/svn/DITECH/trunk/', null, 'jean', base64_decode('MzEzOTg3Ng=='));
+$config->addRepository('ditech', 'http://www.ditech.com.br/svn/DITECH/trunk/', null, 'jean', 'senha');
 
 // To override the global setting for individual repositories, uncomment and replicate
 // the line below (replacing 'myrep' with the name of the repository).
