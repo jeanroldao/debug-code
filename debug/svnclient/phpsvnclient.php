@@ -261,6 +261,7 @@ class phpSVNclient
 
 
         $parser=new xml_parser_class;
+        echo $body; exit;
         $parser->Parse( $body,true);
 
 
