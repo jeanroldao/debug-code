@@ -1,0 +1,557 @@
+Compiled from "CampoMinado.java"
+public class CampoMinado {
+  static char[][] mapOrig;
+
+  static char[][] mapRadar;
+
+  static boolean[][] openArea;
+
+  static int qt_minas;
+
+  static int tamX;
+
+  static int tamY;
+
+  static java.io.InputStream input;
+
+  static java.lang.String rawMap;
+
+  static boolean gameOver;
+
+  static java.util.Scanner scan;
+
+  public CampoMinado();
+    Code:
+       0: aload_0       
+       1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+       4: return        
+
+  public static void main(java.lang.String[]) throws java.lang.Exception;
+    Code:
+       0: new           #2                  // class java/util/Scanner
+       3: dup           
+       4: getstatic     #3                  // Field java/lang/System.in:Ljava/io/InputStream;
+       7: invokespecial #4                  // Method java/util/Scanner."<init>":(Ljava/io/InputStream;)V
+      10: putstatic     #5                  // Field scan:Ljava/util/Scanner;
+      13: aload_0       
+      14: invokestatic  #6                  // Method GerarCampoMinado:([Ljava/lang/String;)Ljava/lang/String;
+      17: putstatic     #7                  // Field rawMap:Ljava/lang/String;
+      20: invokestatic  #8                  // Method scanMinner:()V
+      23: return        
+
+  static void scanMinner();
+    Code:
+       0: invokestatic  #9                  // Method getMap:()[[C
+       3: putstatic     #10                 // Field mapOrig:[[C
+       6: getstatic     #11                 // Field tamX:I
+       9: getstatic     #12                 // Field tamY:I
+      12: multianewarray #13,  2            // class "[[C"
+      16: putstatic     #14                 // Field mapRadar:[[C
+      19: getstatic     #11                 // Field tamX:I
+      22: getstatic     #12                 // Field tamY:I
+      25: multianewarray #15,  2            // class "[[Z"
+      29: putstatic     #16                 // Field openArea:[[Z
+      32: iconst_0      
+      33: istore_0      
+      34: iload_0       
+      35: getstatic     #11                 // Field tamX:I
+      38: if_icmpge     94
+      41: iconst_0      
+      42: istore_1      
+      43: iload_1       
+      44: getstatic     #12                 // Field tamY:I
+      47: if_icmpge     88
+      50: getstatic     #14                 // Field mapRadar:[[C
+      53: iload_0       
+      54: aaload        
+      55: iload_1       
+      56: iload_1       
+      57: iload_0       
+      58: invokestatic  #17                 // Method countMinesInPoint:(II)C
+      61: castore       
+      62: getstatic     #14                 // Field mapRadar:[[C
+      65: iload_0       
+      66: aaload        
+      67: iload_1       
+      68: caload        
+      69: bipush        42
+      71: if_icmpne     82
+      74: getstatic     #18                 // Field qt_minas:I
+      77: iconst_1      
+      78: iadd          
+      79: putstatic     #18                 // Field qt_minas:I
+      82: iinc          1, 1
+      85: goto          43
+      88: iinc          0, 1
+      91: goto          34
+      94: invokestatic  #19                 // Method update:()V
+      97: return        
+
+  static void readGameInput();
+    Code:
+       0: getstatic     #5                  // Field scan:Ljava/util/Scanner;
+       3: invokevirtual #20                 // Method java/util/Scanner.nextLine:()Ljava/lang/String;
+       6: astore_0      
+       7: aload_0       
+       8: iconst_0      
+       9: invokevirtual #21                 // Method java/lang/String.charAt:(I)C
+      12: bipush        65
+      14: isub          
+      15: istore_1      
+      16: aload_0       
+      17: iconst_1      
+      18: invokevirtual #21                 // Method java/lang/String.charAt:(I)C
+      21: bipush        65
+      23: isub          
+      24: istore_2      
+      25: iload_2       
+      26: iload_1       
+      27: invokestatic  #22                 // Method checkArea:(II)V
+      30: invokestatic  #19                 // Method update:()V
+      33: return        
+
+  static void checkArea(int, int);
+    Code:
+       0: getstatic     #16                 // Field openArea:[[Z
+       3: iload_1       
+       4: aaload        
+       5: iload_0       
+       6: iconst_1      
+       7: bastore       
+       8: getstatic     #14                 // Field mapRadar:[[C
+      11: iload_1       
+      12: aaload        
+      13: iload_0       
+      14: caload        
+      15: bipush        42
+      17: if_icmpne     34
+      20: ldc           #23                 // String GAME OVER!
+      22: astore_2      
+      23: getstatic     #24                 // Field java/lang/System.out:Ljava/io/PrintStream;
+      26: aload_2       
+      27: invokevirtual #25                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+      30: iconst_1      
+      31: putstatic     #26                 // Field gameOver:Z
+      34: getstatic     #14                 // Field mapRadar:[[C
+      37: iload_1       
+      38: aaload        
+      39: iload_0       
+      40: caload        
+      41: bipush        32
+      43: if_icmpne     100
+      46: iload_1       
+      47: iconst_1      
+      48: isub          
+      49: istore_2      
+      50: iload_2       
+      51: iload_1       
+      52: iconst_1      
+      53: iadd          
+      54: if_icmpgt     100
+      57: iload_0       
+      58: iconst_1      
+      59: isub          
+      60: istore_3      
+      61: iload_3       
+      62: iload_0       
+      63: iconst_1      
+      64: iadd          
+      65: if_icmpgt     94
+      68: getstatic     #16                 // Field openArea:[[Z
+      71: iload_2       
+      72: aaload        
+      73: iload_3       
+      74: baload        
+      75: ifne          83
+      78: iload_3       
+      79: iload_2       
+      80: invokestatic  #22                 // Method checkArea:(II)V
+      83: goto          88
+      86: astore        4
+      88: iinc          3, 1
+      91: goto          61
+      94: iinc          2, 1
+      97: goto          50
+     100: return        
+    Exception table:
+       from    to  target type
+          68    83    86   Class java/lang/Exception
+
+  static void update();
+    Code:
+       0: getstatic     #24                 // Field java/lang/System.out:Ljava/io/PrintStream;
+       3: new           #28                 // class java/lang/StringBuilder
+       6: dup           
+       7: invokespecial #29                 // Method java/lang/StringBuilder."<init>":()V
+      10: ldc           #30                 // String minas=
+      12: invokevirtual #31                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      15: getstatic     #18                 // Field qt_minas:I
+      18: invokevirtual #32                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      21: invokevirtual #33                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      24: invokevirtual #25                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+      27: getstatic     #14                 // Field mapRadar:[[C
+      30: invokestatic  #34                 // Method printMap:([[C)V
+      33: getstatic     #26                 // Field gameOver:Z
+      36: ifne          42
+      39: invokestatic  #35                 // Method readGameInput:()V
+      42: return        
+
+  static char countMinesInPoint(int, int);
+    Code:
+       0: iconst_0      
+       1: istore_2      
+       2: getstatic     #10                 // Field mapOrig:[[C
+       5: iload_1       
+       6: aaload        
+       7: iload_0       
+       8: caload        
+       9: bipush        42
+      11: if_icmpne     17
+      14: bipush        42
+      16: ireturn       
+      17: iload_1       
+      18: iconst_1      
+      19: isub          
+      20: istore_3      
+      21: iload_3       
+      22: iload_1       
+      23: iconst_1      
+      24: iadd          
+      25: if_icmpgt     74
+      28: iload_0       
+      29: iconst_1      
+      30: isub          
+      31: istore        4
+      33: iload         4
+      35: iload_0       
+      36: iconst_1      
+      37: iadd          
+      38: if_icmpgt     68
+      41: getstatic     #10                 // Field mapOrig:[[C
+      44: iload_3       
+      45: aaload        
+      46: iload         4
+      48: caload        
+      49: bipush        42
+      51: if_icmpne     57
+      54: iinc          2, 1
+      57: goto          62
+      60: astore        5
+      62: iinc          4, 1
+      65: goto          33
+      68: iinc          3, 1
+      71: goto          21
+      74: iload_2       
+      75: ifne          81
+      78: bipush        32
+      80: ireturn       
+      81: new           #28                 // class java/lang/StringBuilder
+      84: dup           
+      85: invokespecial #29                 // Method java/lang/StringBuilder."<init>":()V
+      88: iload_2       
+      89: invokevirtual #32                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+      92: ldc           #36                 // String 
+      94: invokevirtual #31                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      97: invokevirtual #33                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     100: iconst_0      
+     101: invokevirtual #21                 // Method java/lang/String.charAt:(I)C
+     104: ireturn       
+    Exception table:
+       from    to  target type
+          41    57    60   Class java/lang/Exception
+
+  static void printMap(char[][]);
+    Code:
+       0: bipush        65
+       2: istore_1      
+       3: getstatic     #24                 // Field java/lang/System.out:Ljava/io/PrintStream;
+       6: bipush        32
+       8: invokevirtual #37                 // Method java/io/PrintStream.print:(C)V
+      11: aload_0       
+      12: iconst_0      
+      13: aaload        
+      14: astore_2      
+      15: aload_2       
+      16: arraylength   
+      17: istore_3      
+      18: iconst_0      
+      19: istore        4
+      21: iload         4
+      23: iload_3       
+      24: if_icmpge     51
+      27: aload_2       
+      28: iload         4
+      30: caload        
+      31: istore        5
+      33: getstatic     #24                 // Field java/lang/System.out:Ljava/io/PrintStream;
+      36: iload_1       
+      37: iload_1       
+      38: iconst_1      
+      39: iadd          
+      40: i2c           
+      41: istore_1      
+      42: invokevirtual #37                 // Method java/io/PrintStream.print:(C)V
+      45: iinc          4, 1
+      48: goto          21
+      51: getstatic     #24                 // Field java/lang/System.out:Ljava/io/PrintStream;
+      54: invokevirtual #38                 // Method java/io/PrintStream.println:()V
+      57: bipush        65
+      59: istore_2      
+      60: iconst_0      
+      61: istore_3      
+      62: iload_3       
+      63: aload_0       
+      64: arraylength   
+      65: if_icmpge     144
+      68: getstatic     #24                 // Field java/lang/System.out:Ljava/io/PrintStream;
+      71: iload_2       
+      72: iload_2       
+      73: iconst_1      
+      74: iadd          
+      75: i2c           
+      76: istore_2      
+      77: invokevirtual #37                 // Method java/io/PrintStream.print:(C)V
+      80: iconst_0      
+      81: istore        4
+      83: iload         4
+      85: aload_0       
+      86: iload_3       
+      87: aaload        
+      88: arraylength   
+      89: if_icmpge     132
+      92: getstatic     #16                 // Field openArea:[[Z
+      95: iload_3       
+      96: aaload        
+      97: iload         4
+      99: baload        
+     100: ifeq          118
+     103: getstatic     #24                 // Field java/lang/System.out:Ljava/io/PrintStream;
+     106: aload_0       
+     107: iload_3       
+     108: aaload        
+     109: iload         4
+     111: caload        
+     112: invokevirtual #37                 // Method java/io/PrintStream.print:(C)V
+     115: goto          126
+     118: getstatic     #24                 // Field java/lang/System.out:Ljava/io/PrintStream;
+     121: bipush        35
+     123: invokevirtual #37                 // Method java/io/PrintStream.print:(C)V
+     126: iinc          4, 1
+     129: goto          83
+     132: getstatic     #24                 // Field java/lang/System.out:Ljava/io/PrintStream;
+     135: invokevirtual #38                 // Method java/io/PrintStream.println:()V
+     138: iinc          3, 1
+     141: goto          62
+     144: return        
+
+  static char[][] getMap();
+    Code:
+       0: getstatic     #7                  // Field rawMap:Ljava/lang/String;
+       3: ldc           #39                 // String \n
+       5: iconst_m1     
+       6: invokevirtual #40                 // Method java/lang/String.split:(Ljava/lang/String;I)[Ljava/lang/String;
+       9: astore_0      
+      10: aload_0       
+      11: arraylength   
+      12: iconst_1      
+      13: isub          
+      14: putstatic     #11                 // Field tamX:I
+      17: aload_0       
+      18: iconst_0      
+      19: aaload        
+      20: invokevirtual #41                 // Method java/lang/String.length:()I
+      23: putstatic     #12                 // Field tamY:I
+      26: getstatic     #11                 // Field tamX:I
+      29: getstatic     #12                 // Field tamY:I
+      32: multianewarray #13,  2            // class "[[C"
+      36: astore_1      
+      37: iconst_0      
+      38: istore_2      
+      39: iload_2       
+      40: getstatic     #11                 // Field tamX:I
+      43: if_icmpge     61
+      46: aload_1       
+      47: iload_2       
+      48: aload_0       
+      49: iload_2       
+      50: aaload        
+      51: invokevirtual #42                 // Method java/lang/String.toCharArray:()[C
+      54: aastore       
+      55: iinc          2, 1
+      58: goto          39
+      61: aload_1       
+      62: areturn       
+
+  static void scanner();
+    Code:
+       0: new           #2                  // class java/util/Scanner
+       3: dup           
+       4: getstatic     #3                  // Field java/lang/System.in:Ljava/io/InputStream;
+       7: invokespecial #4                  // Method java/util/Scanner."<init>":(Ljava/io/InputStream;)V
+      10: astore_0      
+      11: aload_0       
+      12: invokevirtual #43                 // Method java/util/Scanner.hasNextLine:()Z
+      15: ifeq          33
+      18: aload_0       
+      19: invokevirtual #20                 // Method java/util/Scanner.nextLine:()Ljava/lang/String;
+      22: astore_1      
+      23: getstatic     #24                 // Field java/lang/System.out:Ljava/io/PrintStream;
+      26: aload_1       
+      27: invokevirtual #25                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+      30: goto          11
+      33: return        
+
+  static java.lang.String GerarCampoMinado(java.lang.String[]) throws java.lang.Exception;
+    Code:
+       0: new           #28                 // class java/lang/StringBuilder
+       3: dup           
+       4: invokespecial #29                 // Method java/lang/StringBuilder."<init>":()V
+       7: astore_1      
+       8: bipush        10
+      10: istore_2      
+      11: aload_0       
+      12: arraylength   
+      13: iconst_1      
+      14: if_icmplt     24
+      17: aload_0       
+      18: iconst_0      
+      19: aaload        
+      20: invokestatic  #44                 // Method java/lang/Integer.parseInt:(Ljava/lang/String;)I
+      23: istore_2      
+      24: iload_2       
+      25: istore_3      
+      26: aload_0       
+      27: arraylength   
+      28: iconst_2      
+      29: if_icmplt     39
+      32: aload_0       
+      33: iconst_1      
+      34: aaload        
+      35: invokestatic  #44                 // Method java/lang/Integer.parseInt:(Ljava/lang/String;)I
+      38: istore_3      
+      39: iload_2       
+      40: iload_3       
+      41: imul          
+      42: bipush        10
+      44: idiv          
+      45: istore        4
+      47: aload_0       
+      48: arraylength   
+      49: iconst_3      
+      50: if_icmplt     61
+      53: aload_0       
+      54: iconst_2      
+      55: aaload        
+      56: invokestatic  #44                 // Method java/lang/Integer.parseInt:(Ljava/lang/String;)I
+      59: istore        4
+      61: new           #45                 // class java/util/ArrayList
+      64: dup           
+      65: invokespecial #46                 // Method java/util/ArrayList."<init>":()V
+      68: astore        5
+      70: aload         5
+      72: invokevirtual #47                 // Method java/util/ArrayList.size:()I
+      75: iload         4
+      77: if_icmpge     142
+      80: iconst_0      
+      81: iload_2       
+      82: invokestatic  #48                 // Method getIntRand:(II)I
+      85: istore        6
+      87: iconst_0      
+      88: iload_3       
+      89: invokestatic  #48                 // Method getIntRand:(II)I
+      92: istore        7
+      94: new           #28                 // class java/lang/StringBuilder
+      97: dup           
+      98: invokespecial #29                 // Method java/lang/StringBuilder."<init>":()V
+     101: iload         6
+     103: invokevirtual #32                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     106: ldc           #49                 // String *
+     108: invokevirtual #31                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     111: iload         7
+     113: invokevirtual #32                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     116: invokevirtual #33                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     119: astore        8
+     121: aload         5
+     123: aload         8
+     125: invokevirtual #50                 // Method java/util/ArrayList.contains:(Ljava/lang/Object;)Z
+     128: ifne          139
+     131: aload         5
+     133: aload         8
+     135: invokevirtual #51                 // Method java/util/ArrayList.add:(Ljava/lang/Object;)Z
+     138: pop           
+     139: goto          70
+     142: iconst_0      
+     143: istore        6
+     145: iload         6
+     147: iload_3       
+     148: if_icmpge     229
+     151: iconst_0      
+     152: istore        7
+     154: iload         7
+     156: iload_2       
+     157: if_icmpge     216
+     160: aload         5
+     162: new           #28                 // class java/lang/StringBuilder
+     165: dup           
+     166: invokespecial #29                 // Method java/lang/StringBuilder."<init>":()V
+     169: iload         7
+     171: invokevirtual #32                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     174: ldc           #49                 // String *
+     176: invokevirtual #31                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     179: iload         6
+     181: invokevirtual #32                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+     184: invokevirtual #33                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     187: invokevirtual #50                 // Method java/util/ArrayList.contains:(Ljava/lang/Object;)Z
+     190: ifeq          203
+     193: aload_1       
+     194: ldc           #49                 // String *
+     196: invokevirtual #31                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     199: pop           
+     200: goto          210
+     203: aload_1       
+     204: ldc           #52                 // String 0
+     206: invokevirtual #31                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     209: pop           
+     210: iinc          7, 1
+     213: goto          154
+     216: aload_1       
+     217: ldc           #39                 // String \n
+     219: invokevirtual #31                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     222: pop           
+     223: iinc          6, 1
+     226: goto          145
+     229: aload_1       
+     230: invokevirtual #33                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     233: areturn       
+
+  static int getIntRand(int, int);
+    Code:
+       0: iload_0       
+       1: i2d           
+       2: invokestatic  #53                 // Method java/lang/Math.random:()D
+       5: iload_1       
+       6: i2d           
+       7: dmul          
+       8: dadd          
+       9: d2i           
+      10: ireturn       
+
+  static void echo(java.lang.Object);
+    Code:
+       0: getstatic     #24                 // Field java/lang/System.out:Ljava/io/PrintStream;
+       3: aload_0       
+       4: invokevirtual #54                 // Method java/io/PrintStream.print:(Ljava/lang/Object;)V
+       7: return        
+
+  static {};
+    Code:
+       0: iconst_0      
+       1: putstatic     #18                 // Field qt_minas:I
+       4: iconst_4      
+       5: putstatic     #11                 // Field tamX:I
+       8: iconst_4      
+       9: putstatic     #12                 // Field tamY:I
+      12: iconst_0      
+      13: putstatic     #26                 // Field gameOver:Z
+      16: return        
+}

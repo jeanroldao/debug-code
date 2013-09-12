@@ -1,0 +1,344 @@
+minor version: 0
+major version: 50
+constant_pool_count = 36
+1: tag=10: method: Class index=8, Name and Type index=18
+2: tag=9: field: Class index=19, Name and Type index=20
+3: tag=8: String: utf8 index=21
+4: tag=10: method: Class index=22, Name and Type index=23
+5: tag=10: method: Class index=22, Name and Type index=24
+6: tag=10: method: Class index=22, Name and Type index=25
+7: tag=7: Class: utf8 index=26
+8: tag=7: Class: utf8 index=27
+9: tag=1: utf8 string: <init>
+10: tag=1: utf8 string: ()V
+11: tag=1: utf8 string: Code
+12: tag=1: utf8 string: LineNumberTable
+13: tag=1: utf8 string: main
+14: tag=1: utf8 string: ([Ljava/lang/String;)V
+15: tag=1: utf8 string: StackMapTable
+16: tag=1: utf8 string: SourceFile
+17: tag=1: utf8 string: Teste.java
+18: tag=12: name and type descriptor: name index=9, type index=10
+19: tag=7: Class: utf8 index=28
+20: tag=12: name and type descriptor: name index=29, type index=30
+21: tag=1: utf8 string: 
+
+22: tag=7: Class: utf8 index=31
+23: tag=12: name and type descriptor: name index=32, type index=33
+24: tag=12: name and type descriptor: name index=32, type index=34
+25: tag=12: name and type descriptor: name index=35, type index=33
+26: tag=1: utf8 string: Teste
+27: tag=1: utf8 string: java/lang/Object
+28: tag=1: utf8 string: java/lang/System
+29: tag=1: utf8 string: out
+30: tag=1: utf8 string: Ljava/io/PrintStream;
+31: tag=1: utf8 string: java/io/PrintStream
+32: tag=1: utf8 string: print
+33: tag=1: utf8 string: (Ljava/lang/String;)V
+34: tag=1: utf8 string: (I)V
+35: tag=1: utf8 string: println
+flag 32super
+this class: Teste
+super class: java/lang/Object
+interfaces: 0
+fields: 0
+methods: 2
+
+method name: <init>
+method type: ()V
+atributes count: 1
+  attribute 0 name: Code
+  max stack: 1
+  max locals: 1
+  code length: 5
+0: 1 aload_0
+1: 3 invokespecial <init>
+4: 1 return
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 6
+
+
+public
+method name: main
+method type: ([Ljava/lang/String;)V
+atributes count: 1
+  attribute 0 name: Code
+  max stack: 2
+  max locals: 2
+  code length: 45
+0: 3 getstatic out
+3: 2 ldc 
+
+5: 3 invokevirtual print
+8: 1 iconst_0
+9: 1 istore_1
+10: 1 iload_1
+11: 1 iconst_4
+12: 3 if_icmpge 24
+15: 3 getstatic out
+18: 1 iload_1
+19: 3 invokevirtual print
+22: 3 getstatic out
+25: 2 ldc 
+
+27: 3 invokevirtual print
+30: 3 iinc 1 1
+33: 3 goto 65546
+36: 3 getstatic out
+39: 2 ldc 
+
+41: 3 invokevirtual println
+44: 1 return
+  exceptions length: 0
+  code atributes count: 2
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 30
+
+  attribute 1 name: StackMapTable
+  attribute 1 length: 9
+
+
+
+class atributes count: 1
+  attribute 0 name: SourceFile
+  attribute 0 value: Teste.java
+
+the end?
+Array
+(
+    [flags] => super
+    [name] => Teste
+    [super] => java/lang/Object
+    [interfaces] => Array
+        (
+        )
+
+    [fields] => Array
+        (
+        )
+
+    [methods] => Array
+        (
+            [0] => Array
+                (
+                    [flags] => 
+                    [name] => <init>
+                    [type] => ()V
+                    [attr] => Array
+                        (
+                            [Code] => Array
+                                (
+                                    [max_stack] => 1
+                                    [max_locals] => 1
+                                    [instructions] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [0] => 1
+                                                    [1] => aload_0
+                                                )
+
+                                            [1] => Array
+                                                (
+                                                    [0] => 3
+                                                    [1] => invokespecial
+                                                    [2] => <init>
+                                                )
+
+                                            [4] => Array
+                                                (
+                                                    [0] => 1
+                                                    [1] => return
+                                                )
+
+                                        )
+
+                                    [exceptions] => Array
+                                        (
+                                        )
+
+                                    [attr] => Array
+                                        (
+                                            [LineNumberTable] => (?)length 6
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+            [1] => Array
+                (
+                    [flags] => public
+                    [name] => main
+                    [type] => ([Ljava/lang/String;)V
+                    [attr] => Array
+                        (
+                            [Code] => Array
+                                (
+                                    [max_stack] => 2
+                                    [max_locals] => 2
+                                    [instructions] => Array
+                                        (
+                                            [0] => Array
+                                                (
+                                                    [0] => 3
+                                                    [1] => getstatic
+                                                    [2] => out
+                                                )
+
+                                            [3] => Array
+                                                (
+                                                    [0] => 2
+                                                    [1] => ldc
+                                                    [2] => 
+
+                                                )
+
+                                            [5] => Array
+                                                (
+                                                    [0] => 3
+                                                    [1] => invokevirtual
+                                                    [2] => print
+                                                )
+
+                                            [8] => Array
+                                                (
+                                                    [0] => 1
+                                                    [1] => iconst_0
+                                                )
+
+                                            [9] => Array
+                                                (
+                                                    [0] => 1
+                                                    [1] => istore_1
+                                                )
+
+                                            [10] => Array
+                                                (
+                                                    [0] => 1
+                                                    [1] => iload_1
+                                                )
+
+                                            [11] => Array
+                                                (
+                                                    [0] => 1
+                                                    [1] => iconst_4
+                                                )
+
+                                            [12] => Array
+                                                (
+                                                    [0] => 3
+                                                    [1] => if_icmpge
+                                                    [2] => 24
+                                                )
+
+                                            [15] => Array
+                                                (
+                                                    [0] => 3
+                                                    [1] => getstatic
+                                                    [2] => out
+                                                )
+
+                                            [18] => Array
+                                                (
+                                                    [0] => 1
+                                                    [1] => iload_1
+                                                )
+
+                                            [19] => Array
+                                                (
+                                                    [0] => 3
+                                                    [1] => invokevirtual
+                                                    [2] => print
+                                                )
+
+                                            [22] => Array
+                                                (
+                                                    [0] => 3
+                                                    [1] => getstatic
+                                                    [2] => out
+                                                )
+
+                                            [25] => Array
+                                                (
+                                                    [0] => 2
+                                                    [1] => ldc
+                                                    [2] => 
+
+                                                )
+
+                                            [27] => Array
+                                                (
+                                                    [0] => 3
+                                                    [1] => invokevirtual
+                                                    [2] => print
+                                                )
+
+                                            [30] => Array
+                                                (
+                                                    [0] => 3
+                                                    [1] => iinc
+                                                    [2] => 1
+                                                    [3] => 1
+                                                )
+
+                                            [33] => Array
+                                                (
+                                                    [0] => 3
+                                                    [1] => goto
+                                                    [2] => 65546
+                                                )
+
+                                            [36] => Array
+                                                (
+                                                    [0] => 3
+                                                    [1] => getstatic
+                                                    [2] => out
+                                                )
+
+                                            [39] => Array
+                                                (
+                                                    [0] => 2
+                                                    [1] => ldc
+                                                    [2] => 
+
+                                                )
+
+                                            [41] => Array
+                                                (
+                                                    [0] => 3
+                                                    [1] => invokevirtual
+                                                    [2] => println
+                                                )
+
+                                            [44] => Array
+                                                (
+                                                    [0] => 1
+                                                    [1] => return
+                                                )
+
+                                        )
+
+                                    [exceptions] => Array
+                                        (
+                                        )
+
+                                    [attr] => Array
+                                        (
+                                            [LineNumberTable] => (?)length 30
+                                            [StackMapTable] => (?)length 9
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+)

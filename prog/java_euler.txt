@@ -1,0 +1,353 @@
+Compiled from "java_euler.java"
+class java_euler extends java.lang.Object{
+java_euler();
+  Code:
+   0:	aload_0
+   1:	invokespecial	#1; //Method java/lang/Object."<init>":()V
+   4:	return
+
+static void problem_1();
+  Code:
+   0:	iconst_0
+   1:	istore_0
+   2:	iconst_0
+   3:	istore_1
+   4:	iload_1
+   5:	sipush	1000
+   8:	if_icmpge	33
+   11:	iload_1
+   12:	iconst_3
+   13:	irem
+   14:	ifeq	23
+   17:	iload_1
+   18:	iconst_5
+   19:	irem
+   20:	ifne	27
+   23:	iload_0
+   24:	iload_1
+   25:	iadd
+   26:	istore_0
+   27:	iinc	1, 1
+   30:	goto	4
+   33:	getstatic	#2; //Field java/lang/System.out:Ljava/io/PrintStream;
+   36:	iload_0
+   37:	invokevirtual	#3; //Method java/io/PrintStream.println:(I)V
+   40:	return
+
+static void problem_2();
+  Code:
+   0:	iconst_0
+   1:	istore_0
+   2:	iconst_1
+   3:	istore_1
+   4:	iconst_1
+   5:	istore_2
+   6:	iconst_1
+   7:	istore_3
+   8:	iload_1
+   9:	ldc	#4; //int 4000000
+   11:	if_icmpge	35
+   14:	iload_3
+   15:	iconst_2
+   16:	irem
+   17:	ifne	24
+   20:	iload_0
+   21:	iload_3
+   22:	iadd
+   23:	istore_0
+   24:	iload_1
+   25:	iload_2
+   26:	iadd
+   27:	istore_3
+   28:	iload_1
+   29:	istore_2
+   30:	iload_3
+   31:	istore_1
+   32:	goto	8
+   35:	getstatic	#2; //Field java/lang/System.out:Ljava/io/PrintStream;
+   38:	iload_0
+   39:	invokevirtual	#3; //Method java/io/PrintStream.println:(I)V
+   42:	return
+
+static void problem_3();
+  Code:
+   0:	ldc2_w	#5; //long 600851475143l
+   3:	lstore_0
+   4:	ldc2_w	#7; //long 2l
+   7:	lstore_2
+   8:	lload_0
+   9:	ldc2_w	#7; //long 2l
+   12:	lcmp
+   13:	ifle	39
+   16:	lconst_0
+   17:	lload_0
+   18:	lload_2
+   19:	lrem
+   20:	lcmp
+   21:	ifne	32
+   24:	lload_0
+   25:	lload_2
+   26:	ldiv
+   27:	lstore_0
+   28:	lload_2
+   29:	lconst_1
+   30:	lsub
+   31:	lstore_2
+   32:	lload_2
+   33:	lconst_1
+   34:	ladd
+   35:	lstore_2
+   36:	goto	8
+   39:	getstatic	#2; //Field java/lang/System.out:Ljava/io/PrintStream;
+   42:	lload_2
+   43:	invokevirtual	#9; //Method java/io/PrintStream.println:(J)V
+   46:	return
+
+static void problem_4();
+  Code:
+   0:	iconst_0
+   1:	istore_0
+   2:	bipush	100
+   4:	istore_1
+   5:	iload_1
+   6:	sipush	999
+   9:	if_icmpgt	85
+   12:	bipush	100
+   14:	istore_2
+   15:	iload_2
+   16:	sipush	999
+   19:	if_icmpgt	79
+   22:	iload_1
+   23:	iload_2
+   24:	imul
+   25:	invokestatic	#10; //Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+   28:	astore_3
+   29:	new	#11; //class java/lang/StringBuilder
+   32:	dup
+   33:	aload_3
+   34:	invokevirtual	#12; //Method java/lang/Integer.toString:()Ljava/lang/String;
+   37:	invokespecial	#13; //Method java/lang/StringBuilder."<init>":(Ljava/lang/String;)V
+   40:	invokevirtual	#14; //Method java/lang/StringBuilder.reverse:()Ljava/lang/StringBuilder;
+   43:	invokevirtual	#15; //Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+   46:	astore	4
+   48:	aload	4
+   50:	aload_3
+   51:	invokevirtual	#12; //Method java/lang/Integer.toString:()Ljava/lang/String;
+   54:	invokevirtual	#16; //Method java/lang/String.equals:(Ljava/lang/Object;)Z
+   57:	ifeq	73
+   60:	iload_0
+   61:	aload_3
+   62:	invokevirtual	#17; //Method java/lang/Integer.intValue:()I
+   65:	if_icmpge	73
+   68:	aload_3
+   69:	invokevirtual	#17; //Method java/lang/Integer.intValue:()I
+   72:	istore_0
+   73:	iinc	2, 1
+   76:	goto	15
+   79:	iinc	1, 1
+   82:	goto	5
+   85:	getstatic	#2; //Field java/lang/System.out:Ljava/io/PrintStream;
+   88:	iload_0
+   89:	invokevirtual	#3; //Method java/io/PrintStream.println:(I)V
+   92:	return
+
+static void problem_5();
+  Code:
+   0:	bipush	20
+   2:	istore_0
+   3:	iconst_1
+   4:	istore_1
+   5:	iload_1
+   6:	bipush	20
+   8:	if_icmpgt	28
+   11:	iload_0
+   12:	iload_1
+   13:	irem
+   14:	ifeq	22
+   17:	iconst_1
+   18:	istore_1
+   19:	iinc	0, 1
+   22:	iinc	1, 1
+   25:	goto	5
+   28:	getstatic	#2; //Field java/lang/System.out:Ljava/io/PrintStream;
+   31:	iload_0
+   32:	invokevirtual	#3; //Method java/io/PrintStream.println:(I)V
+   35:	return
+
+static void problem_6();
+  Code:
+   0:	iconst_0
+   1:	istore_0
+   2:	iconst_0
+   3:	istore_1
+   4:	iconst_1
+   5:	istore_2
+   6:	iload_2
+   7:	bipush	100
+   9:	if_icmpgt	28
+   12:	iload_0
+   13:	iload_2
+   14:	iload_2
+   15:	imul
+   16:	iadd
+   17:	istore_0
+   18:	iload_1
+   19:	iload_2
+   20:	iadd
+   21:	istore_1
+   22:	iinc	2, 1
+   25:	goto	6
+   28:	iload_1
+   29:	iload_1
+   30:	imul
+   31:	istore_1
+   32:	getstatic	#2; //Field java/lang/System.out:Ljava/io/PrintStream;
+   35:	iload_1
+   36:	iload_0
+   37:	isub
+   38:	invokevirtual	#3; //Method java/io/PrintStream.println:(I)V
+   41:	return
+
+static void problem_7();
+  Code:
+   0:	iconst_0
+   1:	istore_1
+   2:	sipush	10001
+   5:	istore_2
+   6:	iconst_0
+   7:	istore_0
+   8:	iload_0
+   9:	invokestatic	#18; //Method problem_7_primo:(I)Z
+   12:	ifeq	18
+   15:	iinc	1, 1
+   18:	iload_1
+   19:	iload_2
+   20:	if_icmpne	26
+   23:	goto	32
+   26:	iinc	0, 1
+   29:	goto	8
+   32:	getstatic	#2; //Field java/lang/System.out:Ljava/io/PrintStream;
+   35:	iload_0
+   36:	invokevirtual	#3; //Method java/io/PrintStream.println:(I)V
+   39:	return
+
+static boolean problem_7_primo(int);
+  Code:
+   0:	iload_0
+   1:	iconst_1
+   2:	if_icmpgt	7
+   5:	iconst_0
+   6:	ireturn
+   7:	iload_0
+   8:	iconst_2
+   9:	if_icmpne	14
+   12:	iconst_1
+   13:	ireturn
+   14:	iload_0
+   15:	iconst_2
+   16:	irem
+   17:	ifne	22
+   20:	iconst_0
+   21:	ireturn
+   22:	iload_0
+   23:	iconst_5
+   24:	if_icmpne	29
+   27:	iconst_1
+   28:	ireturn
+   29:	iload_0
+   30:	invokestatic	#19; //Method java/lang/Integer.toString:(I)Ljava/lang/String;
+   33:	astore_1
+   34:	aload_1
+   35:	aload_1
+   36:	invokevirtual	#20; //Method java/lang/String.length:()I
+   39:	iconst_1
+   40:	isub
+   41:	invokevirtual	#21; //Method java/lang/String.charAt:(I)C
+   44:	bipush	53
+   46:	if_icmpne	51
+   49:	iconst_0
+   50:	ireturn
+   51:	iload_0
+   52:	i2d
+   53:	invokestatic	#22; //Method java/lang/Math.sqrt:(D)D
+   56:	d2i
+   57:	istore_2
+   58:	iconst_3
+   59:	istore_3
+   60:	iload_3
+   61:	iload_2
+   62:	if_icmpgt	79
+   65:	iload_0
+   66:	iload_3
+   67:	irem
+   68:	ifne	73
+   71:	iconst_0
+   72:	ireturn
+   73:	iinc	3, 2
+   76:	goto	60
+   79:	iconst_1
+   80:	ireturn
+
+static void problem_8();
+  Code:
+   0:	ldc	#23; //String 7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450
+   2:	astore_0
+   3:	iconst_0
+   4:	istore_1
+   5:	iconst_0
+   6:	istore_2
+   7:	iload_1
+   8:	sipush	995
+   11:	if_icmpge	66
+   14:	iconst_1
+   15:	istore_3
+   16:	iconst_0
+   17:	istore	4
+   19:	iload	4
+   21:	iconst_5
+   22:	if_icmpge	53
+   25:	iload_1
+   26:	iload	4
+   28:	iadd
+   29:	istore	5
+   31:	iload_3
+   32:	aload_0
+   33:	iload	5
+   35:	iload	5
+   37:	iconst_1
+   38:	iadd
+   39:	invokevirtual	#24; //Method java/lang/String.substring:(II)Ljava/lang/String;
+   42:	invokestatic	#25; //Method java/lang/Integer.parseInt:(Ljava/lang/String;)I
+   45:	imul
+   46:	istore_3
+   47:	iinc	4, 1
+   50:	goto	19
+   53:	iload_3
+   54:	iload_2
+   55:	if_icmple	60
+   58:	iload_3
+   59:	istore_2
+   60:	iinc	1, 1
+   63:	goto	7
+   66:	getstatic	#2; //Field java/lang/System.out:Ljava/io/PrintStream;
+   69:	iload_2
+   70:	invokevirtual	#3; //Method java/io/PrintStream.println:(I)V
+   73:	return
+
+static void problem_9();
+  Code:
+   0:	iconst_0
+   1:	invokestatic	#10; //Method java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+   4:	astore_0
+   5:	getstatic	#2; //Field java/lang/System.out:Ljava/io/PrintStream;
+   8:	aload_0
+   9:	invokevirtual	#26; //Method java/io/PrintStream.println:(Ljava/lang/Object;)V
+   12:	return
+
+public static void main(java.lang.String[]);
+  Code:
+   0:	invokestatic	#27; //Method problem_9:()V
+   3:	return
+
+}
+

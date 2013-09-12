@@ -1,0 +1,92 @@
+Compiled from "Teste.java"
+public class Teste extends java.lang.Object
+  SourceFile: "Teste.java"
+  minor version: 0
+  major version: 50
+  Constant pool:
+const #1 = Method	#9.#19;	//  java/lang/Object."<init>":()V
+const #2 = Field	#20.#21;	//  java/lang/System.out:Ljava/io/PrintStream;
+const #3 = Method	#22.#23;	//  java/io/PrintStream.println:(Z)V
+const #4 = Method	#24.#25;	//  Teste1.getDebug:()Z
+const #5 = String	#26;	//  SIM
+const #6 = Method	#22.#27;	//  java/io/PrintStream.println:(Ljava/lang/String;)V
+const #7 = String	#28;	//  NOO
+const #8 = class	#29;	//  Teste
+const #9 = class	#30;	//  java/lang/Object
+const #10 = Asciz	<init>;
+const #11 = Asciz	()V;
+const #12 = Asciz	Code;
+const #13 = Asciz	LineNumberTable;
+const #14 = Asciz	main;
+const #15 = Asciz	([Ljava/lang/String;)V;
+const #16 = Asciz	StackMapTable;
+const #17 = Asciz	SourceFile;
+const #18 = Asciz	Teste.java;
+const #19 = NameAndType	#10:#11;//  "<init>":()V
+const #20 = class	#31;	//  java/lang/System
+const #21 = NameAndType	#32:#33;//  out:Ljava/io/PrintStream;
+const #22 = class	#34;	//  java/io/PrintStream
+const #23 = NameAndType	#35:#36;//  println:(Z)V
+const #24 = class	#37;	//  Teste1
+const #25 = NameAndType	#38:#39;//  getDebug:()Z
+const #26 = Asciz	SIM;
+const #27 = NameAndType	#35:#40;//  println:(Ljava/lang/String;)V
+const #28 = Asciz	NOO;
+const #29 = Asciz	Teste;
+const #30 = Asciz	java/lang/Object;
+const #31 = Asciz	java/lang/System;
+const #32 = Asciz	out;
+const #33 = Asciz	Ljava/io/PrintStream;;
+const #34 = Asciz	java/io/PrintStream;
+const #35 = Asciz	println;
+const #36 = Asciz	(Z)V;
+const #37 = Asciz	Teste1;
+const #38 = Asciz	getDebug;
+const #39 = Asciz	()Z;
+const #40 = Asciz	(Ljava/lang/String;)V;
+
+{
+public Teste();
+  Code:
+   Stack=1, Locals=1, Args_size=1
+   0:	aload_0
+   1:	invokespecial	#1; //Method java/lang/Object."<init>":()V
+   4:	return
+  LineNumberTable: 
+   line 3: 0
+
+
+public static void main(java.lang.String[]);
+  Code:
+   Stack=2, Locals=1, Args_size=1
+   0:	getstatic	#2; //Field java/lang/System.out:Ljava/io/PrintStream;
+   3:	iconst_0
+   4:	invokevirtual	#3; //Method java/io/PrintStream.println:(Z)V
+   7:	getstatic	#2; //Field java/lang/System.out:Ljava/io/PrintStream;
+   10:	invokestatic	#4; //Method Teste1.getDebug:()Z
+   13:	invokevirtual	#3; //Method java/io/PrintStream.println:(Z)V
+   16:	invokestatic	#4; //Method Teste1.getDebug:()Z
+   19:	ifeq	33
+   22:	getstatic	#2; //Field java/lang/System.out:Ljava/io/PrintStream;
+   25:	ldc	#5; //String SIM
+   27:	invokevirtual	#6; //Method java/io/PrintStream.println:(Ljava/lang/String;)V
+   30:	goto	41
+   33:	getstatic	#2; //Field java/lang/System.out:Ljava/io/PrintStream;
+   36:	ldc	#7; //String NOO
+   38:	invokevirtual	#6; //Method java/io/PrintStream.println:(Ljava/lang/String;)V
+   41:	return
+  LineNumberTable: 
+   line 42: 0
+   line 43: 7
+   line 44: 16
+   line 45: 22
+   line 47: 33
+   line 49: 41
+
+  StackMapTable: number_of_entries = 2
+   frame_type = 33 /* same */
+   frame_type = 7 /* same */
+
+
+}
+

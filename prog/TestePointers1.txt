@@ -1,0 +1,265 @@
+Classfile /C:/Users/asus/Desktop/prog/TestePointers1.class
+  Last modified 22/08/2013; size 1367 bytes
+  MD5 checksum d78ccd44c0762a6f08a80a668636fe08
+  Compiled from "TestePointers.java"
+public class TestePointers
+  SourceFile: "TestePointers.java"
+  minor version: 0
+  major version: 48
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Utf8               TestePointers
+   #2 = Class              #1             //  TestePointers
+   #3 = Utf8               java/lang/Object
+   #4 = Class              #3             //  java/lang/Object
+   #5 = Utf8               scan
+   #6 = Utf8               Ljava/util/Scanner;
+   #7 = Utf8               mem
+   #8 = Utf8               [I
+   #9 = Utf8               p
+  #10 = Utf8               I
+  #11 = Utf8               main
+  #12 = Utf8               ([Ljava/lang/String;)V
+  #13 = Utf8               Exceptions
+  #14 = Utf8               java/lang/Exception
+  #15 = Class              #14            //  java/lang/Exception
+  #16 = Utf8               Code
+  #17 = Utf8               LineNumberTable
+  #18 = Utf8               <init>
+  #19 = Utf8               ()V
+  #20 = NameAndType        #18:#19        //  "<init>":()V
+  #21 = Methodref          #2.#20         //  TestePointers."<init>":()V
+  #22 = Utf8               storeString
+  #23 = Utf8               (Ljava/lang/String;)I
+  #24 = NameAndType        #9:#10         //  p:I
+  #25 = Fieldref           #2.#24         //  TestePointers.p:I
+  #26 = Utf8               toCharArray
+  #27 = Utf8               ()[C
+  #28 = NameAndType        #26:#27        //  toCharArray:()[C
+  #29 = Utf8               java/lang/String
+  #30 = Class              #29            //  java/lang/String
+  #31 = Methodref          #30.#28        //  java/lang/String.toCharArray:()[C
+  #32 = NameAndType        #7:#8          //  mem:[I
+  #33 = Fieldref           #2.#32         //  TestePointers.mem:[I
+  #34 = Utf8               getString
+  #35 = Utf8               (I)Ljava/lang/String;
+  #36 = Utf8               sizeOf
+  #37 = Utf8               (I)I
+  #38 = NameAndType        #36:#37        //  sizeOf:(I)I
+  #39 = Methodref          #2.#38         //  TestePointers.sizeOf:(I)I
+  #40 = Utf8               ([C)V
+  #41 = NameAndType        #18:#40        //  "<init>":([C)V
+  #42 = Methodref          #30.#41        //  java/lang/String."<init>":([C)V
+  #43 = Methodref          #4.#20         //  java/lang/Object."<init>":()V
+  #44 = Utf8               resultado
+  #45 = String             #44            //  resultado
+  #46 = NameAndType        #22:#23        //  storeString:(Ljava/lang/String;)I
+  #47 = Methodref          #2.#46         //  TestePointers.storeString:(Ljava/lang/String;)I
+  #48 = Utf8               out
+  #49 = Utf8               Ljava/io/PrintStream;
+  #50 = NameAndType        #48:#49        //  out:Ljava/io/PrintStream;
+  #51 = Utf8               java/lang/System
+  #52 = Class              #51            //  java/lang/System
+  #53 = Fieldref           #52.#50        //  java/lang/System.out:Ljava/io/PrintStream;
+  #54 = Utf8               println
+  #55 = Utf8               (I)V
+  #56 = NameAndType        #54:#55        //  println:(I)V
+  #57 = Utf8               java/io/PrintStream
+  #58 = Class              #57            //  java/io/PrintStream
+  #59 = Methodref          #58.#56        //  java/io/PrintStream.println:(I)V
+  #60 = NameAndType        #34:#35        //  getString:(I)Ljava/lang/String;
+  #61 = Methodref          #2.#60         //  TestePointers.getString:(I)Ljava/lang/String;
+  #62 = Utf8               (Ljava/lang/String;)V
+  #63 = NameAndType        #54:#62        //  println:(Ljava/lang/String;)V
+  #64 = Methodref          #58.#63        //  java/io/PrintStream.println:(Ljava/lang/String;)V
+  #65 = Utf8               edfg
+  #66 = String             #65            //  edfg
+  #67 = Utf8               <clinit>
+  #68 = Utf8               java/util/Scanner
+  #69 = Class              #68            //  java/util/Scanner
+  #70 = Utf8               in
+  #71 = Utf8               Ljava/io/InputStream;
+  #72 = NameAndType        #70:#71        //  in:Ljava/io/InputStream;
+  #73 = Fieldref           #52.#72        //  java/lang/System.in:Ljava/io/InputStream;
+  #74 = Utf8               (Ljava/io/InputStream;)V
+  #75 = NameAndType        #18:#74        //  "<init>":(Ljava/io/InputStream;)V
+  #76 = Methodref          #69.#75        //  java/util/Scanner."<init>":(Ljava/io/InputStream;)V
+  #77 = NameAndType        #5:#6          //  scan:Ljava/util/Scanner;
+  #78 = Fieldref           #2.#77         //  TestePointers.scan:Ljava/util/Scanner;
+  #79 = Utf8               SourceFile
+  #80 = Utf8               TestePointers.java
+{
+  static java.util.Scanner scan;
+    flags: ACC_STATIC
+
+  static int[] mem;
+    flags: ACC_STATIC
+
+  static int p;
+    flags: ACC_STATIC
+
+  public static void main(java.lang.String[]) throws java.lang.Exception;
+    flags: ACC_PUBLIC, ACC_STATIC
+    Exceptions:
+      throws java.lang.Exception
+    Code:
+      stack=1, locals=1, args_size=1
+         0: new           #2                  // class TestePointers
+         3: invokespecial #21                 // Method "<init>":()V
+         6: return        
+      LineNumberTable:
+        line 13: 0
+        line 14: 6
+
+  int storeString(java.lang.String);
+    flags: 
+    Code:
+      stack=4, locals=5, args_size=2
+         0: getstatic     #25                 // Field p:I
+         3: istore_2      
+         4: aload_1       
+         5: invokevirtual #31                 // Method java/lang/String.toCharArray:()[C
+         8: astore_3      
+         9: iconst_0      
+        10: istore        4
+        12: goto          35
+        15: getstatic     #33                 // Field mem:[I
+        18: getstatic     #25                 // Field p:I
+        21: dup           
+        22: iconst_1      
+        23: iadd          
+        24: putstatic     #25                 // Field p:I
+        27: aload_3       
+        28: iload         4
+        30: caload        
+        31: iastore       
+        32: iinc          4, 1
+        35: iload         4
+        37: aload_3       
+        38: arraylength   
+        39: if_icmplt     15
+        42: getstatic     #33                 // Field mem:[I
+        45: getstatic     #25                 // Field p:I
+        48: dup           
+        49: iconst_1      
+        50: iadd          
+        51: putstatic     #25                 // Field p:I
+        54: iconst_0      
+        55: iastore       
+        56: iload_2       
+        57: ireturn       
+      LineNumberTable:
+        line 29: 0
+        line 30: 4
+        line 31: 9
+        line 32: 15
+        line 31: 32
+        line 31: 35
+        line 34: 42
+        line 35: 56
+
+  java.lang.String getString(int);
+    flags: 
+    Code:
+      stack=5, locals=5, args_size=2
+         0: aload_0       
+         1: iload_1       
+         2: invokevirtual #39                 // Method sizeOf:(I)I
+         5: istore_2      
+         6: iload_2       
+         7: newarray       char
+         9: astore_3      
+        10: iconst_0      
+        11: istore        4
+        13: goto          32
+        16: aload_3       
+        17: iload         4
+        19: getstatic     #33                 // Field mem:[I
+        22: iload_1       
+        23: iload         4
+        25: iadd          
+        26: iaload        
+        27: i2c           
+        28: castore       
+        29: iinc          4, 1
+        32: iload         4
+        34: iload_2       
+        35: if_icmplt     16
+        38: new           #30                 // class java/lang/String
+        41: dup           
+        42: aload_3       
+        43: invokespecial #42                 // Method java/lang/String."<init>":([C)V
+        46: areturn       
+      LineNumberTable:
+        line 39: 0
+        line 40: 6
+        line 41: 10
+        line 42: 16
+        line 41: 29
+        line 41: 32
+        line 45: 38
+
+  int sizeOf(int);
+    flags: 
+    Code:
+      stack=3, locals=3, args_size=2
+         0: iconst_0      
+         1: istore_2      
+         2: goto          8
+         5: iinc          2, 1
+         8: getstatic     #33                 // Field mem:[I
+        11: iload_1       
+        12: iload_2       
+        13: iadd          
+        14: iaload        
+        15: ifne          5
+        18: iload_2       
+        19: ireturn       
+      LineNumberTable:
+        line 49: 0
+        line 50: 2
+        line 51: 5
+        line 50: 8
+        line 53: 18
+
+  TestePointers();
+    flags: 
+    Code:
+      stack=3, locals=3, args_size=1
+         0: aload_0       
+         1: invokespecial #43                 // Method java/lang/Object."<init>":()V
+         4: aload_0       
+         5: ldc           #45                 // String resultado
+         7: invokevirtual #47                 // Method storeString:(Ljava/lang/String;)I
+        10: istore_1      
+        11: getstatic     #53                 // Field java/lang/System.out:Ljava/io/PrintStream;
+        14: iload_1       
+        15: invokevirtual #59                 // Method java/io/PrintStream.println:(I)V
+        18: getstatic     #53                 // Field java/lang/System.out:Ljava/io/PrintStream;
+        21: aload_0       
+        22: iload_1       
+        23: invokevirtual #61                 // Method getString:(I)Ljava/lang/String;
+        26: invokevirtual #64                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+        29: aload_0       
+        30: ldc           #66                 // String edfg
+        32: invokevirtual #47                 // Method storeString:(Ljava/lang/String;)I
+        35: istore_2      
+        36: getstatic     #53                 // Field java/lang/System.out:Ljava/io/PrintStream;
+        39: iload_2       
+        40: invokevirtual #59                 // Method java/io/PrintStream.println:(I)V
+        43: getstatic     #53                 // Field java/lang/System.out:Ljava/io/PrintStream;
+        46: aload_0       
+        47: iload_2       
+        48: invokevirtual #61                 // Method getString:(I)Ljava/lang/String;
+        51: invokevirtual #64                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+        54: return        
+      LineNumberTable:
+        line 16: 0
+        line 18: 4
+        line 19: 11
+        line 20: 18
+        line 22: 29
+        line 23: 36
+        line 24: 43
+        line 25: 54
+}

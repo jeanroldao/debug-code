@@ -1,0 +1,1275 @@
+Compiled from "GettingLoaded.java"
+public class GettingLoaded extends java.applet.Applet implements java.lang.Runnable
+  SourceFile: "GettingLoaded.java"
+  minor version: 3
+  major version: 45
+  Constant pool:
+const #1 = String	#196;	//  classURL
+const #2 = String	#301;	//  An IO Error occured while trying to read a file from the server.\n
+const #3 = String	#358;	//  Reset
+const #4 = String	#362;	//  \n
+const #5 = String	#270;	//  Center
+const #6 = String	#325;	//  Loading First Of Two Files...\n
+const #7 = String	#339;	//  South
+const #8 = String	#234;	//  Unfortunately this means the applet cannot go any further.\n
+const #9 = String	#238;	//  An security exception occured while trying to read a file from the server.\n
+const #10 = String	#183;	//  Bad URL: 
+const #11 = String	#329;	//  North
+const #12 = String	#192;	//  (The End)
+const #13 = String	#292;	//  GETTING LOADED
+const #14 = String	#299;	//  This HTML file contains a malformed URL of a file required by this applet.\n
+const #15 = String	#266;	//  Back
+const #16 = String	#276;	//  \n\n
+const #17 = String	#317;	//  textURL
+const #18 = String	#198;	//  Security Exception: 
+const #19 = String	#307;	//  Getting Loaded\n\n
+const #20 = String	#323;	//  Loading Second Of Two Files...\n
+const #21 = String	#351;	//  Step
+const #22 = String	#239;	//  IO Error: 
+const #23 = class	#308;	//  java/lang/Throwable
+const #24 = class	#259;	//  java/awt/Event
+const #25 = class	#274;	//  java/io/BufferedInputStream
+const #26 = class	#263;	//  java/io/EOFException
+const #27 = class	#217;	//  java/net/URL
+const #28 = class	#268;	//  java/net/MalformedURLException
+const #29 = class	#356;	//  JVMPacman
+const #30 = class	#310;	//  ControlPanel
+const #31 = class	#361;	//  java/awt/Label
+const #32 = class	#236;	//  java/io/IOException
+const #33 = class	#312;	//  GettingLoaded
+const #34 = class	#354;	//  java/io/DataInputStream
+const #35 = class	#216;	//  java/awt/Container
+const #36 = class	#251;	//  java/lang/String
+const #37 = class	#199;	//  java/lang/SecurityException
+const #38 = class	#340;	//  java/awt/Insets
+const #39 = class	#289;	//  java/lang/Thread
+const #40 = class	#260;	//  java/awt/Component
+const #41 = class	#272;	//  java/awt/BorderLayout
+const #42 = class	#335;	//  ColoredLabel
+const #43 = class	#353;	//  java/awt/Button
+const #44 = class	#321;	//  java/lang/Runnable
+const #45 = class	#215;	//  StepNode
+const #46 = class	#344;	//  java/awt/Color
+const #47 = class	#191;	//  java/awt/TextComponent
+const #48 = class	#197;	//  HexString
+const #49 = class	#303;	//  java/awt/TextArea
+const #50 = class	#205;	//  java/lang/StringBuffer
+const #51 = class	#309;	//  java/applet/Applet
+const #52 = Field	#33.#131;	//  GettingLoaded.urlExceptionWasThrown:Z
+const #53 = Method	#34.#151;	//  java/io/DataInputStream.readLine:()Ljava/lang/String;
+const #54 = Method	#45.#157;	//  StepNode.getNext:()LStepNode;
+const #55 = Field	#33.#160;	//  GettingLoaded.runner:Ljava/lang/Thread;
+const #56 = Field	#33.#181;	//  GettingLoaded.jvmFinishedGobbling:Z
+const #57 = Method	#30.#130;	//  ControlPanel."<init>":()V
+const #58 = Method	#47.#127;	//  java/awt/TextComponent.setEditable:(Z)V
+const #59 = Method	#41.#169;	//  java/awt/BorderLayout."<init>":(II)V
+const #60 = Method	#50.#130;	//  java/lang/StringBuffer."<init>":()V
+const #61 = Field	#33.#142;	//  GettingLoaded.theActTextURL:Ljava/net/URL;
+const #62 = Method	#25.#145;	//  java/io/BufferedInputStream."<init>":(Ljava/io/InputStream;)V
+const #63 = Method	#29.#175;	//  JVMPacman.gobbleToPosition:(II)V
+const #64 = Method	#50.#152;	//  java/lang/StringBuffer.setLength:(I)V
+const #65 = Method	#45.#134;	//  StepNode.first:()Z
+const #66 = Field	#33.#153;	//  GettingLoaded.cantGoFurtherString:Ljava/lang/String;
+const #67 = Field	#33.#137;	//  GettingLoaded.titleString:Ljava/lang/String;
+const #68 = Method	#51.#130;	//  java/applet/Applet."<init>":()V
+const #69 = Method	#39.#146;	//  java/lang/Thread.start:()V
+const #70 = Method	#27.#133;	//  java/net/URL.openStream:()Ljava/io/InputStream;
+const #71 = Method	#29.#143;	//  JVMPacman.setGobblePosition:(II)V
+const #72 = Field	#33.#147;	//  GettingLoaded.ready:Z
+const #73 = Method	#45.#139;	//  StepNode.getByteCount:()I
+const #74 = Field	#33.#159;	//  GettingLoaded.firstNode:LStepNode;
+const #75 = Method	#45.#179;	//  StepNode.setPrev:(LStepNode;)V
+const #76 = Field	#24.#174;	//  java/awt/Event.target:Ljava/lang/Object;
+const #77 = Method	#48.#178;	//  HexString.getString:()Ljava/lang/String;
+const #78 = Field	#33.#163;	//  GettingLoaded.jvmPacman:LJVMPacman;
+const #79 = Method	#40.#123;	//  java/awt/Component.setBackground:(Ljava/awt/Color;)V
+const #80 = Method	#23.#170;	//  java/lang/Throwable.getMessage:()Ljava/lang/String;
+const #81 = Method	#45.#178;	//  StepNode.getString:()Ljava/lang/String;
+const #82 = Method	#34.#145;	//  java/io/DataInputStream."<init>":(Ljava/io/InputStream;)V
+const #83 = Method	#35.#128;	//  java/awt/Container.setLayout:(Ljava/awt/LayoutManager;)V
+const #84 = Field	#33.#172;	//  GettingLoaded.ioErrorMsg:Ljava/lang/String;
+const #85 = Method	#36.#158;	//  java/lang/String.charAt:(I)C
+const #86 = Field	#46.#136;	//  java/awt/Color.white:Ljava/awt/Color;
+const #87 = Method	#49.#130;	//  java/awt/TextArea."<init>":()V
+const #88 = Field	#33.#132;	//  GettingLoaded.theClassFileURL:Ljava/net/URL;
+const #89 = Method	#34.#138;	//  java/io/DataInputStream.readUnsignedByte:()I
+const #90 = Method	#45.#177;	//  StepNode.getPrev:()LStepNode;
+const #91 = Field	#33.#171;	//  GettingLoaded.lastNode:LStepNode;
+const #92 = Method	#48.#169;	//  HexString."<init>":(II)V
+const #93 = Method	#51.#121;	//  java/applet/Applet.getDocumentBase:()Ljava/net/URL;
+const #94 = Method	#27.#180;	//  java/net/URL."<init>":(Ljava/net/URL;Ljava/lang/String;)V
+const #95 = Method	#45.#141;	//  StepNode."<init>":(Ljava/lang/String;I)V
+const #96 = Field	#46.#140;	//  java/awt/Color.blue:Ljava/awt/Color;
+const #97 = Method	#36.#148;	//  java/lang/String.equals:(Ljava/lang/Object;)Z
+const #98 = Method	#45.#155;	//  StepNode.last:()Z
+const #99 = Field	#33.#167;	//  GettingLoaded.urlErrorMsg:Ljava/lang/String;
+const #100 = Method	#39.#122;	//  java/lang/Thread.stop:()V
+const #101 = Field	#33.#135;	//  GettingLoaded.currentNode:LStepNode;
+const #102 = Method	#39.#154;	//  java/lang/Thread."<init>":(Ljava/lang/Runnable;)V
+const #103 = Method	#29.#168;	//  JVMPacman.setText:(Ljava/lang/String;)V
+const #104 = Field	#33.#149;	//  GettingLoaded.ta:Ljava/awt/TextArea;
+const #105 = Field	#46.#150;	//  java/awt/Color.cyan:Ljava/awt/Color;
+const #106 = Method	#27.#176;	//  java/net/URL.toString:()Ljava/lang/String;
+const #107 = Method	#45.#165;	//  StepNode.setNext:(LStepNode;)V
+const #108 = Method	#40.#124;	//  java/awt/Component.handleEvent:(Ljava/awt/Event;)Z
+const #109 = Field	#33.#162;	//  GettingLoaded.currentGobblePosition:I
+const #110 = Method	#36.#161;	//  java/lang/String.length:()I
+const #111 = Method	#50.#144;	//  java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+const #112 = Method	#47.#168;	//  java/awt/TextComponent.setText:(Ljava/lang/String;)V
+const #113 = Method	#30.#166;	//  ControlPanel.getJVMPacman:()LJVMPacman;
+const #114 = Method	#51.#129;	//  java/applet/Applet.init:()V
+const #115 = Method	#42.#126;	//  ColoredLabel."<init>":(Ljava/lang/String;ILjava/awt/Color;)V
+const #116 = Method	#35.#173;	//  java/awt/Container.add:(Ljava/lang/String;Ljava/awt/Component;)Ljava/awt/Component;
+const #117 = Method	#38.#164;	//  java/awt/Insets."<init>":(IIII)V
+const #118 = Method	#50.#176;	//  java/lang/StringBuffer.toString:()Ljava/lang/String;
+const #119 = Method	#51.#125;	//  java/applet/Applet.getParameter:(Ljava/lang/String;)Ljava/lang/String;
+const #120 = Field	#33.#156;	//  GettingLoaded.securityErrorMsg:Ljava/lang/String;
+const #121 = NameAndType	#342:#214;//  getDocumentBase:()Ljava/net/URL;
+const #122 = NameAndType	#298:#337;//  stop:()V
+const #123 = NameAndType	#285:#360;//  setBackground:(Ljava/awt/Color;)V
+const #124 = NameAndType	#326:#235;//  handleEvent:(Ljava/awt/Event;)Z
+const #125 = NameAndType	#209:#206;//  getParameter:(Ljava/lang/String;)Ljava/lang/String;
+const #126 = NameAndType	#226:#253;//  "<init>":(Ljava/lang/String;ILjava/awt/Color;)V
+const #127 = NameAndType	#243:#333;//  setEditable:(Z)V
+const #128 = NameAndType	#300:#288;//  setLayout:(Ljava/awt/LayoutManager;)V
+const #129 = NameAndType	#265:#337;//  init:()V
+const #130 = NameAndType	#226:#337;//  "<init>":()V
+const #131 = NameAndType	#271:#349;//  urlExceptionWasThrown:Z
+const #132 = NameAndType	#291:#282;//  theClassFileURL:Ljava/net/URL;
+const #133 = NameAndType	#248:#331;//  openStream:()Ljava/io/InputStream;
+const #134 = NameAndType	#316:#336;//  first:()Z
+const #135 = NameAndType	#233:#227;//  currentNode:LStepNode;
+const #136 = NameAndType	#186:#290;//  white:Ljava/awt/Color;
+const #137 = NameAndType	#204:#348;//  titleString:Ljava/lang/String;
+const #138 = NameAndType	#184:#341;//  readUnsignedByte:()I
+const #139 = NameAndType	#314:#341;//  getByteCount:()I
+const #140 = NameAndType	#237:#290;//  blue:Ljava/awt/Color;
+const #141 = NameAndType	#226:#295;//  "<init>":(Ljava/lang/String;I)V
+const #142 = NameAndType	#296:#282;//  theActTextURL:Ljava/net/URL;
+const #143 = NameAndType	#359:#185;//  setGobblePosition:(II)V
+const #144 = NameAndType	#278:#328;//  append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+const #145 = NameAndType	#226:#327;//  "<init>":(Ljava/io/InputStream;)V
+const #146 = NameAndType	#193:#337;//  start:()V
+const #147 = NameAndType	#279:#349;//  ready:Z
+const #148 = NameAndType	#283:#304;//  equals:(Ljava/lang/Object;)Z
+const #149 = NameAndType	#297:#269;//  ta:Ljava/awt/TextArea;
+const #150 = NameAndType	#222:#290;//  cyan:Ljava/awt/Color;
+const #151 = NameAndType	#249:#332;//  readLine:()Ljava/lang/String;
+const #152 = NameAndType	#256:#240;//  setLength:(I)V
+const #153 = NameAndType	#286:#348;//  cantGoFurtherString:Ljava/lang/String;
+const #154 = NameAndType	#226:#315;//  "<init>":(Ljava/lang/Runnable;)V
+const #155 = NameAndType	#245:#336;//  last:()Z
+const #156 = NameAndType	#247:#348;//  securityErrorMsg:Ljava/lang/String;
+const #157 = NameAndType	#287:#318;//  getNext:()LStepNode;
+const #158 = NameAndType	#258:#244;//  charAt:(I)C
+const #159 = NameAndType	#330:#227;//  firstNode:LStepNode;
+const #160 = NameAndType	#334:#264;//  runner:Ljava/lang/Thread;
+const #161 = NameAndType	#355:#341;//  length:()I
+const #162 = NameAndType	#189:#352;//  currentGobblePosition:I
+const #163 = NameAndType	#306:#182;//  jvmPacman:LJVMPacman;
+const #164 = NameAndType	#226:#324;//  "<init>":(IIII)V
+const #165 = NameAndType	#261:#280;//  setNext:(LStepNode;)V
+const #166 = NameAndType	#219:#343;//  getJVMPacman:()LJVMPacman;
+const #167 = NameAndType	#201:#348;//  urlErrorMsg:Ljava/lang/String;
+const #168 = NameAndType	#284:#277;//  setText:(Ljava/lang/String;)V
+const #169 = NameAndType	#226:#185;//  "<init>":(II)V
+const #170 = NameAndType	#293:#332;//  getMessage:()Ljava/lang/String;
+const #171 = NameAndType	#347:#227;//  lastNode:LStepNode;
+const #172 = NameAndType	#202:#348;//  ioErrorMsg:Ljava/lang/String;
+const #173 = NameAndType	#246:#252;//  add:(Ljava/lang/String;Ljava/awt/Component;)Ljava/awt/Component;
+const #174 = NameAndType	#257:#305;//  target:Ljava/lang/Object;
+const #175 = NameAndType	#223:#185;//  gobbleToPosition:(II)V
+const #176 = NameAndType	#311:#332;//  toString:()Ljava/lang/String;
+const #177 = NameAndType	#225:#318;//  getPrev:()LStepNode;
+const #178 = NameAndType	#228:#332;//  getString:()Ljava/lang/String;
+const #179 = NameAndType	#208:#280;//  setPrev:(LStepNode;)V
+const #180 = NameAndType	#226:#346;//  "<init>":(Ljava/net/URL;Ljava/lang/String;)V
+const #181 = NameAndType	#187:#349;//  jvmFinishedGobbling:Z
+const #182 = Asciz	LJVMPacman;;
+const #183 = Asciz	Bad URL: ;
+const #184 = Asciz	readUnsignedByte;
+const #185 = Asciz	(II)V;
+const #186 = Asciz	white;
+const #187 = Asciz	jvmFinishedGobbling;
+const #188 = Asciz	LineNumberTable;
+const #189 = Asciz	currentGobblePosition;
+const #190 = Asciz	run;
+const #191 = Asciz	java/awt/TextComponent;
+const #192 = Asciz	(The End);
+const #193 = Asciz	start;
+const #194 = Asciz	docBase;
+const #195 = Asciz	insets;
+const #196 = Asciz	classURL;
+const #197 = Asciz	HexString;
+const #198 = Asciz	Security Exception: ;
+const #199 = Asciz	java/lang/SecurityException;
+const #200 = Asciz	bname;
+const #201 = Asciz	urlErrorMsg;
+const #202 = Asciz	ioErrorMsg;
+const #203 = Asciz	url;
+const #204 = Asciz	titleString;
+const #205 = Asciz	java/lang/StringBuffer;
+const #206 = Asciz	(Ljava/lang/String;)Ljava/lang/String;;
+const #207 = Asciz	Ljava/awt/Event;;
+const #208 = Asciz	setPrev;
+const #209 = Asciz	getParameter;
+const #210 = Asciz	controlPanel;
+const #211 = Asciz	Ljava/io/IOException;;
+const #212 = Asciz	Ljava/lang/SecurityException;;
+const #213 = Asciz	line;
+const #214 = Asciz	()Ljava/net/URL;;
+const #215 = Asciz	StepNode;
+const #216 = Asciz	java/awt/Container;
+const #217 = Asciz	java/net/URL;
+const #218 = Asciz	Exceptions;
+const #219 = Asciz	getJVMPacman;
+const #220 = Asciz	unsignedByte;
+const #221 = Asciz	Ljava/io/InputStream;;
+const #222 = Asciz	cyan;
+const #223 = Asciz	gobbleToPosition;
+const #224 = Asciz	()Ljava/awt/Insets;;
+const #225 = Asciz	getPrev;
+const #226 = Asciz	<init>;
+const #227 = Asciz	LStepNode;;
+const #228 = Asciz	getString;
+const #229 = Asciz	LControlPanel;;
+const #230 = Asciz	(Ljava/awt/Event;Ljava/lang/Object;)Z;
+const #231 = Asciz	LocalVariableTable;
+const #232 = Asciz	Ljava/io/DataInputStream;;
+const #233 = Asciz	currentNode;
+const #234 = Asciz	Unfortunately this means the applet cannot go any further.\n;
+const #235 = Asciz	(Ljava/awt/Event;)Z;
+const #236 = Asciz	java/io/IOException;
+const #237 = Asciz	blue;
+const #238 = Asciz	An security exception occured while trying to read a file from the server.\n;
+const #239 = Asciz	IO Error: ;
+const #240 = Asciz	(I)V;
+const #241 = Asciz	LGettingLoaded;;
+const #242 = Asciz	ConstantValue;
+const #243 = Asciz	setEditable;
+const #244 = Asciz	(I)C;
+const #245 = Asciz	last;
+const #246 = Asciz	add;
+const #247 = Asciz	securityErrorMsg;
+const #248 = Asciz	openStream;
+const #249 = Asciz	readLine;
+const #250 = Asciz	event;
+const #251 = Asciz	java/lang/String;
+const #252 = Asciz	(Ljava/lang/String;Ljava/awt/Component;)Ljava/awt/Component;;
+const #253 = Asciz	(Ljava/lang/String;ILjava/awt/Color;)V;
+const #254 = Asciz	hexStr;
+const #255 = Asciz	SourceFile;
+const #256 = Asciz	setLength;
+const #257 = Asciz	target;
+const #258 = Asciz	charAt;
+const #259 = Asciz	java/awt/Event;
+const #260 = Asciz	java/awt/Component;
+const #261 = Asciz	setNext;
+const #262 = Asciz	nextNode;
+const #263 = Asciz	java/io/EOFException;
+const #264 = Asciz	Ljava/lang/Thread;;
+const #265 = Asciz	init;
+const #266 = Asciz	Back;
+const #267 = Asciz	conn;
+const #268 = Asciz	java/net/MalformedURLException;
+const #269 = Asciz	Ljava/awt/TextArea;;
+const #270 = Asciz	Center;
+const #271 = Asciz	urlExceptionWasThrown;
+const #272 = Asciz	java/awt/BorderLayout;
+const #273 = Asciz	Ljava/lang/StringBuffer;;
+const #274 = Asciz	java/io/BufferedInputStream;
+const #275 = Asciz	LocalVariables;
+const #276 = Asciz	\n\n;
+const #277 = Asciz	(Ljava/lang/String;)V;
+const #278 = Asciz	append;
+const #279 = Asciz	ready;
+const #280 = Asciz	(LStepNode;)V;
+const #281 = Asciz	LHexString;;
+const #282 = Asciz	Ljava/net/URL;;
+const #283 = Asciz	equals;
+const #284 = Asciz	setText;
+const #285 = Asciz	setBackground;
+const #286 = Asciz	cantGoFurtherString;
+const #287 = Asciz	getNext;
+const #288 = Asciz	(Ljava/awt/LayoutManager;)V;
+const #289 = Asciz	java/lang/Thread;
+const #290 = Asciz	Ljava/awt/Color;;
+const #291 = Asciz	theClassFileURL;
+const #292 = Asciz	GETTING LOADED;
+const #293 = Asciz	getMessage;
+const #294 = Asciz	data;
+const #295 = Asciz	(Ljava/lang/String;I)V;
+const #296 = Asciz	theActTextURL;
+const #297 = Asciz	ta;
+const #298 = Asciz	stop;
+const #299 = Asciz	This HTML file contains a malformed URL of a file required by this applet.\n;
+const #300 = Asciz	setLayout;
+const #301 = Asciz	An IO Error occured while trying to read a file from the server.\n;
+const #302 = Asciz	starCount;
+const #303 = Asciz	java/awt/TextArea;
+const #304 = Asciz	(Ljava/lang/Object;)Z;
+const #305 = Asciz	Ljava/lang/Object;;
+const #306 = Asciz	jvmPacman;
+const #307 = Asciz	Getting Loaded\n\n;
+const #308 = Asciz	java/lang/Throwable;
+const #309 = Asciz	java/applet/Applet;
+const #310 = Asciz	ControlPanel;
+const #311 = Asciz	toString;
+const #312 = Asciz	GettingLoaded;
+const #313 = Asciz	GettingLoaded.java;
+const #314 = Asciz	getByteCount;
+const #315 = Asciz	(Ljava/lang/Runnable;)V;
+const #316 = Asciz	first;
+const #317 = Asciz	textURL;
+const #318 = Asciz	()LStepNode;;
+const #319 = Asciz	action;
+const #320 = Asciz	arg;
+const #321 = Asciz	java/lang/Runnable;
+const #322 = Asciz	Code;
+const #323 = Asciz	Loading Second Of Two Files...\n;
+const #324 = Asciz	(IIII)V;
+const #325 = Asciz	Loading First Of Two Files...\n;
+const #326 = Asciz	handleEvent;
+const #327 = Asciz	(Ljava/io/InputStream;)V;
+const #328 = Asciz	(Ljava/lang/String;)Ljava/lang/StringBuffer;;
+const #329 = Asciz	North;
+const #330 = Asciz	firstNode;
+const #331 = Asciz	()Ljava/io/InputStream;;
+const #332 = Asciz	()Ljava/lang/String;;
+const #333 = Asciz	(Z)V;
+const #334 = Asciz	runner;
+const #335 = Asciz	ColoredLabel;
+const #336 = Asciz	()Z;
+const #337 = Asciz	()V;
+const #338 = Asciz	evt;
+const #339 = Asciz	South;
+const #340 = Asciz	java/awt/Insets;
+const #341 = Asciz	()I;
+const #342 = Asciz	getDocumentBase;
+const #343 = Asciz	()LJVMPacman;;
+const #344 = Asciz	java/awt/Color;
+const #345 = Asciz	e;
+const #346 = Asciz	(Ljava/net/URL;Ljava/lang/String;)V;
+const #347 = Asciz	lastNode;
+const #348 = Asciz	Ljava/lang/String;;
+const #349 = Asciz	Z;
+const #350 = Asciz	this;
+const #351 = Asciz	Step;
+const #352 = Asciz	I;
+const #353 = Asciz	java/awt/Button;
+const #354 = Asciz	java/io/DataInputStream;
+const #355 = Asciz	length;
+const #356 = Asciz	JVMPacman;
+const #357 = Asciz	buf;
+const #358 = Asciz	Reset;
+const #359 = Asciz	setGobblePosition;
+const #360 = Asciz	(Ljava/awt/Color;)V;
+const #361 = Asciz	java/awt/Label;
+const #362 = Asciz	\n;
+
+{
+public void init();
+  Code:
+   Stack=7, Locals=3, Args_size=1
+   0:	aload_0
+   1:	invokespecial	#114; //Method java/applet/Applet.init:()V
+   4:	aload_0
+   5:	getfield	#104; //Field ta:Ljava/awt/TextArea;
+   8:	iconst_0
+   9:	invokevirtual	#58; //Method java/awt/TextComponent.setEditable:(Z)V
+   12:	aload_0
+   13:	getstatic	#96; //Field java/awt/Color.blue:Ljava/awt/Color;
+   16:	invokevirtual	#79; //Method java/awt/Component.setBackground:(Ljava/awt/Color;)V
+   19:	aload_0
+   20:	ldc	#1; //String classURL
+   22:	invokevirtual	#119; //Method java/applet/Applet.getParameter:(Ljava/lang/String;)Ljava/lang/String;
+   25:	astore_1
+   26:	aload_0
+   27:	new	#27; //class java/net/URL
+   30:	dup
+   31:	aload_0
+   32:	invokevirtual	#93; //Method java/applet/Applet.getDocumentBase:()Ljava/net/URL;
+   35:	aload_1
+   36:	invokespecial	#94; //Method java/net/URL."<init>":(Ljava/net/URL;Ljava/lang/String;)V
+   39:	putfield	#88; //Field theClassFileURL:Ljava/net/URL;
+   42:	goto	115
+   45:	pop
+   46:	aload_0
+   47:	iconst_1
+   48:	putfield	#52; //Field urlExceptionWasThrown:Z
+   51:	aload_0
+   52:	invokevirtual	#93; //Method java/applet/Applet.getDocumentBase:()Ljava/net/URL;
+   55:	astore_2
+   56:	aload_0
+   57:	getfield	#104; //Field ta:Ljava/awt/TextArea;
+   60:	new	#50; //class java/lang/StringBuffer
+   63:	dup
+   64:	invokespecial	#60; //Method java/lang/StringBuffer."<init>":()V
+   67:	aload_0
+   68:	getfield	#67; //Field titleString:Ljava/lang/String;
+   71:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   74:	ldc	#10; //String Bad URL: 
+   76:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   79:	aload_2
+   80:	invokevirtual	#106; //Method java/net/URL.toString:()Ljava/lang/String;
+   83:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   86:	aload_1
+   87:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   90:	ldc	#16; //String \n\n
+   92:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   95:	aload_0
+   96:	getfield	#99; //Field urlErrorMsg:Ljava/lang/String;
+   99:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   102:	aload_0
+   103:	getfield	#66; //Field cantGoFurtherString:Ljava/lang/String;
+   106:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   109:	invokevirtual	#118; //Method java/lang/StringBuffer.toString:()Ljava/lang/String;
+   112:	invokevirtual	#112; //Method java/awt/TextComponent.setText:(Ljava/lang/String;)V
+   115:	aload_0
+   116:	ldc	#17; //String textURL
+   118:	invokevirtual	#119; //Method java/applet/Applet.getParameter:(Ljava/lang/String;)Ljava/lang/String;
+   121:	astore_1
+   122:	aload_0
+   123:	new	#27; //class java/net/URL
+   126:	dup
+   127:	aload_0
+   128:	invokevirtual	#93; //Method java/applet/Applet.getDocumentBase:()Ljava/net/URL;
+   131:	aload_1
+   132:	invokespecial	#94; //Method java/net/URL."<init>":(Ljava/net/URL;Ljava/lang/String;)V
+   135:	putfield	#61; //Field theActTextURL:Ljava/net/URL;
+   138:	goto	211
+   141:	pop
+   142:	aload_0
+   143:	iconst_1
+   144:	putfield	#52; //Field urlExceptionWasThrown:Z
+   147:	aload_0
+   148:	invokevirtual	#93; //Method java/applet/Applet.getDocumentBase:()Ljava/net/URL;
+   151:	astore_2
+   152:	aload_0
+   153:	getfield	#104; //Field ta:Ljava/awt/TextArea;
+   156:	new	#50; //class java/lang/StringBuffer
+   159:	dup
+   160:	invokespecial	#60; //Method java/lang/StringBuffer."<init>":()V
+   163:	aload_0
+   164:	getfield	#67; //Field titleString:Ljava/lang/String;
+   167:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   170:	ldc	#10; //String Bad URL: 
+   172:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   175:	aload_2
+   176:	invokevirtual	#106; //Method java/net/URL.toString:()Ljava/lang/String;
+   179:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   182:	aload_1
+   183:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   186:	ldc	#16; //String \n\n
+   188:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   191:	aload_0
+   192:	getfield	#99; //Field urlErrorMsg:Ljava/lang/String;
+   195:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   198:	aload_0
+   199:	getfield	#66; //Field cantGoFurtherString:Ljava/lang/String;
+   202:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   205:	invokevirtual	#118; //Method java/lang/StringBuffer.toString:()Ljava/lang/String;
+   208:	invokevirtual	#112; //Method java/awt/TextComponent.setText:(Ljava/lang/String;)V
+   211:	new	#30; //class ControlPanel
+   214:	dup
+   215:	invokespecial	#57; //Method ControlPanel."<init>":()V
+   218:	astore_2
+   219:	aload_0
+   220:	aload_2
+   221:	invokevirtual	#113; //Method ControlPanel.getJVMPacman:()LJVMPacman;
+   224:	putfield	#78; //Field jvmPacman:LJVMPacman;
+   227:	aload_0
+   228:	new	#41; //class java/awt/BorderLayout
+   231:	dup
+   232:	iconst_5
+   233:	iconst_5
+   234:	invokespecial	#59; //Method java/awt/BorderLayout."<init>":(II)V
+   237:	invokevirtual	#83; //Method java/awt/Container.setLayout:(Ljava/awt/LayoutManager;)V
+   240:	aload_0
+   241:	getfield	#104; //Field ta:Ljava/awt/TextArea;
+   244:	getstatic	#86; //Field java/awt/Color.white:Ljava/awt/Color;
+   247:	invokevirtual	#79; //Method java/awt/Component.setBackground:(Ljava/awt/Color;)V
+   250:	aload_0
+   251:	ldc	#11; //String North
+   253:	new	#42; //class ColoredLabel
+   256:	dup
+   257:	ldc	#13; //String GETTING LOADED
+   259:	iconst_1
+   260:	getstatic	#105; //Field java/awt/Color.cyan:Ljava/awt/Color;
+   263:	invokespecial	#115; //Method ColoredLabel."<init>":(Ljava/lang/String;ILjava/awt/Color;)V
+   266:	invokevirtual	#116; //Method java/awt/Container.add:(Ljava/lang/String;Ljava/awt/Component;)Ljava/awt/Component;
+   269:	pop
+   270:	aload_0
+   271:	ldc	#7; //String South
+   273:	aload_2
+   274:	invokevirtual	#116; //Method java/awt/Container.add:(Ljava/lang/String;Ljava/awt/Component;)Ljava/awt/Component;
+   277:	pop
+   278:	aload_0
+   279:	ldc	#5; //String Center
+   281:	aload_0
+   282:	getfield	#104; //Field ta:Ljava/awt/TextArea;
+   285:	invokevirtual	#116; //Method java/awt/Container.add:(Ljava/lang/String;Ljava/awt/Component;)Ljava/awt/Component;
+   288:	pop
+   289:	return
+  Exception table:
+   from   to  target type
+    26    42    45   Class java/net/MalformedURLException
+
+   122   138   141   Class java/net/MalformedURLException
+
+  LineNumberTable: 
+   line 57: 0
+   line 59: 4
+   line 61: 12
+   line 63: 19
+   line 64: 26
+   line 65: 26
+   line 64: 42
+   line 67: 45
+   line 68: 46
+   line 69: 51
+   line 70: 56
+   line 72: 115
+   line 73: 122
+   line 74: 122
+   line 73: 138
+   line 76: 141
+   line 77: 142
+   line 78: 147
+   line 79: 152
+   line 81: 211
+   line 82: 219
+   line 83: 227
+   line 85: 240
+   line 87: 250
+   line 88: 270
+   line 89: 278
+   line 55: 289
+
+  LocalVariableTable: 
+   Start  Length  Slot  Name   Signature
+   0      290      0    this       LGettingLoaded;
+   26      264      1    url       Ljava/lang/String;
+   56      59      2    docBase       Ljava/net/URL;
+   138      14      2    docBase       Ljava/net/URL;
+   152      59      2    docBase       Ljava/net/URL;
+   219      71      2    controlPanel       LControlPanel;
+
+
+public boolean handleEvent(java.awt.Event);
+  Code:
+   Stack=2, Locals=2, Args_size=2
+   0:	aload_0
+   1:	aload_1
+   2:	invokespecial	#108; //Method java/awt/Component.handleEvent:(Ljava/awt/Event;)Z
+   5:	ireturn
+  LineNumberTable: 
+   line 93: 0
+
+  LocalVariableTable: 
+   Start  Length  Slot  Name   Signature
+   0      6      0    this       LGettingLoaded;
+   0      6      1    event       Ljava/awt/Event;
+
+
+public boolean action(java.awt.Event, java.lang.Object);
+  Code:
+   Stack=3, Locals=4, Args_size=3
+   0:	aload_1
+   1:	getfield	#76; //Field java/awt/Event.target:Ljava/lang/Object;
+   4:	instanceof	#43; //class java/awt/Button
+   7:	ifeq	342
+   10:	aload_2
+   11:	checkcast	#36; //class java/lang/String
+   14:	astore_3
+   15:	aload_3
+   16:	ldc	#3; //String Reset
+   18:	invokevirtual	#97; //Method java/lang/String.equals:(Ljava/lang/Object;)Z
+   21:	ifeq	86
+   24:	aload_0
+   25:	getfield	#72; //Field ready:Z
+   28:	ifeq	342
+   31:	aload_0
+   32:	getfield	#101; //Field currentNode:LStepNode;
+   35:	invokevirtual	#65; //Method StepNode.first:()Z
+   38:	ifne	342
+   41:	aload_0
+   42:	aload_0
+   43:	getfield	#74; //Field firstNode:LStepNode;
+   46:	putfield	#101; //Field currentNode:LStepNode;
+   49:	aload_0
+   50:	iconst_0
+   51:	putfield	#109; //Field currentGobblePosition:I
+   54:	aload_0
+   55:	getfield	#78; //Field jvmPacman:LJVMPacman;
+   58:	iconst_0
+   59:	aload_0
+   60:	getfield	#101; //Field currentNode:LStepNode;
+   63:	invokevirtual	#73; //Method StepNode.getByteCount:()I
+   66:	invokevirtual	#71; //Method JVMPacman.setGobblePosition:(II)V
+   69:	aload_0
+   70:	getfield	#104; //Field ta:Ljava/awt/TextArea;
+   73:	aload_0
+   74:	getfield	#101; //Field currentNode:LStepNode;
+   77:	invokevirtual	#81; //Method StepNode.getString:()Ljava/lang/String;
+   80:	invokevirtual	#112; //Method java/awt/TextComponent.setText:(Ljava/lang/String;)V
+   83:	goto	342
+   86:	aload_3
+   87:	ldc	#21; //String Step
+   89:	invokevirtual	#97; //Method java/lang/String.equals:(Ljava/lang/Object;)Z
+   92:	ifeq	226
+   95:	aload_0
+   96:	getfield	#72; //Field ready:Z
+   99:	ifeq	342
+   102:	aload_0
+   103:	getfield	#101; //Field currentNode:LStepNode;
+   106:	invokevirtual	#98; //Method StepNode.last:()Z
+   109:	ifne	174
+   112:	aload_0
+   113:	dup
+   114:	getfield	#109; //Field currentGobblePosition:I
+   117:	aload_0
+   118:	getfield	#101; //Field currentNode:LStepNode;
+   121:	invokevirtual	#73; //Method StepNode.getByteCount:()I
+   124:	iadd
+   125:	putfield	#109; //Field currentGobblePosition:I
+   128:	aload_0
+   129:	aload_0
+   130:	getfield	#101; //Field currentNode:LStepNode;
+   133:	invokevirtual	#54; //Method StepNode.getNext:()LStepNode;
+   136:	putfield	#101; //Field currentNode:LStepNode;
+   139:	aload_0
+   140:	getfield	#78; //Field jvmPacman:LJVMPacman;
+   143:	aload_0
+   144:	getfield	#109; //Field currentGobblePosition:I
+   147:	aload_0
+   148:	getfield	#101; //Field currentNode:LStepNode;
+   151:	invokevirtual	#73; //Method StepNode.getByteCount:()I
+   154:	invokevirtual	#63; //Method JVMPacman.gobbleToPosition:(II)V
+   157:	aload_0
+   158:	getfield	#104; //Field ta:Ljava/awt/TextArea;
+   161:	aload_0
+   162:	getfield	#101; //Field currentNode:LStepNode;
+   165:	invokevirtual	#81; //Method StepNode.getString:()Ljava/lang/String;
+   168:	invokevirtual	#112; //Method java/awt/TextComponent.setText:(Ljava/lang/String;)V
+   171:	goto	342
+   174:	aload_0
+   175:	getfield	#56; //Field jvmFinishedGobbling:Z
+   178:	ifne	342
+   181:	aload_0
+   182:	dup
+   183:	getfield	#109; //Field currentGobblePosition:I
+   186:	aload_0
+   187:	getfield	#101; //Field currentNode:LStepNode;
+   190:	invokevirtual	#73; //Method StepNode.getByteCount:()I
+   193:	iadd
+   194:	putfield	#109; //Field currentGobblePosition:I
+   197:	aload_0
+   198:	getfield	#78; //Field jvmPacman:LJVMPacman;
+   201:	aload_0
+   202:	getfield	#109; //Field currentGobblePosition:I
+   205:	iconst_0
+   206:	invokevirtual	#63; //Method JVMPacman.gobbleToPosition:(II)V
+   209:	aload_0
+   210:	iconst_1
+   211:	putfield	#56; //Field jvmFinishedGobbling:Z
+   214:	aload_0
+   215:	getfield	#104; //Field ta:Ljava/awt/TextArea;
+   218:	ldc	#12; //String (The End)
+   220:	invokevirtual	#112; //Method java/awt/TextComponent.setText:(Ljava/lang/String;)V
+   223:	goto	342
+   226:	aload_3
+   227:	ldc	#15; //String Back
+   229:	invokevirtual	#97; //Method java/lang/String.equals:(Ljava/lang/Object;)Z
+   232:	ifeq	342
+   235:	aload_0
+   236:	getfield	#72; //Field ready:Z
+   239:	ifeq	342
+   242:	aload_0
+   243:	getfield	#101; //Field currentNode:LStepNode;
+   246:	invokevirtual	#65; //Method StepNode.first:()Z
+   249:	ifne	342
+   252:	aload_0
+   253:	getfield	#56; //Field jvmFinishedGobbling:Z
+   256:	ifeq	283
+   259:	aload_0
+   260:	iconst_0
+   261:	putfield	#56; //Field jvmFinishedGobbling:Z
+   264:	aload_0
+   265:	dup
+   266:	getfield	#109; //Field currentGobblePosition:I
+   269:	aload_0
+   270:	getfield	#101; //Field currentNode:LStepNode;
+   273:	invokevirtual	#73; //Method StepNode.getByteCount:()I
+   276:	isub
+   277:	putfield	#109; //Field currentGobblePosition:I
+   280:	goto	310
+   283:	aload_0
+   284:	aload_0
+   285:	getfield	#101; //Field currentNode:LStepNode;
+   288:	invokevirtual	#90; //Method StepNode.getPrev:()LStepNode;
+   291:	putfield	#101; //Field currentNode:LStepNode;
+   294:	aload_0
+   295:	dup
+   296:	getfield	#109; //Field currentGobblePosition:I
+   299:	aload_0
+   300:	getfield	#101; //Field currentNode:LStepNode;
+   303:	invokevirtual	#73; //Method StepNode.getByteCount:()I
+   306:	isub
+   307:	putfield	#109; //Field currentGobblePosition:I
+   310:	aload_0
+   311:	getfield	#78; //Field jvmPacman:LJVMPacman;
+   314:	aload_0
+   315:	getfield	#109; //Field currentGobblePosition:I
+   318:	aload_0
+   319:	getfield	#101; //Field currentNode:LStepNode;
+   322:	invokevirtual	#73; //Method StepNode.getByteCount:()I
+   325:	invokevirtual	#71; //Method JVMPacman.setGobblePosition:(II)V
+   328:	aload_0
+   329:	getfield	#104; //Field ta:Ljava/awt/TextArea;
+   332:	aload_0
+   333:	getfield	#101; //Field currentNode:LStepNode;
+   336:	invokevirtual	#81; //Method StepNode.getString:()Ljava/lang/String;
+   339:	invokevirtual	#112; //Method java/awt/TextComponent.setText:(Ljava/lang/String;)V
+   342:	iconst_1
+   343:	ireturn
+  LineNumberTable: 
+   line 97: 0
+   line 98: 10
+   line 99: 15
+   line 100: 24
+   line 101: 31
+   line 102: 41
+   line 103: 49
+   line 104: 54
+   line 105: 69
+   line 99: 83
+   line 109: 86
+   line 110: 95
+   line 111: 102
+   line 112: 112
+   line 113: 128
+   line 114: 139
+   line 115: 157
+   line 111: 171
+   line 118: 174
+   line 119: 181
+   line 120: 197
+   line 121: 209
+   line 122: 214
+   line 109: 223
+   line 127: 226
+   line 128: 235
+   line 129: 242
+   line 130: 252
+   line 131: 259
+   line 132: 264
+   line 130: 280
+   line 135: 283
+   line 136: 294
+   line 138: 310
+   line 139: 328
+   line 144: 342
+
+  LocalVariableTable: 
+   Start  Length  Slot  Name   Signature
+   0      344      0    this       LGettingLoaded;
+   0      344      1    evt       Ljava/awt/Event;
+   0      344      2    arg       Ljava/lang/Object;
+   15      327      3    bname       Ljava/lang/String;
+
+
+public java.awt.Insets insets();
+  Code:
+   Stack=6, Locals=1, Args_size=1
+   0:	new	#38; //class java/awt/Insets
+   3:	dup
+   4:	iconst_5
+   5:	iconst_5
+   6:	iconst_5
+   7:	iconst_5
+   8:	invokespecial	#117; //Method java/awt/Insets."<init>":(IIII)V
+   11:	areturn
+  LineNumberTable: 
+   line 148: 0
+
+  LocalVariableTable: 
+   Start  Length  Slot  Name   Signature
+   0      12      0    this       LGettingLoaded;
+
+
+public void start();
+  Code:
+   Stack=4, Locals=1, Args_size=1
+   0:	aload_0
+   1:	getfield	#55; //Field runner:Ljava/lang/Thread;
+   4:	ifnonnull	40
+   7:	aload_0
+   8:	getfield	#72; //Field ready:Z
+   11:	ifne	40
+   14:	aload_0
+   15:	getfield	#52; //Field urlExceptionWasThrown:Z
+   18:	ifne	40
+   21:	aload_0
+   22:	new	#39; //class java/lang/Thread
+   25:	dup
+   26:	aload_0
+   27:	invokespecial	#102; //Method java/lang/Thread."<init>":(Ljava/lang/Runnable;)V
+   30:	putfield	#55; //Field runner:Ljava/lang/Thread;
+   33:	aload_0
+   34:	getfield	#55; //Field runner:Ljava/lang/Thread;
+   37:	invokevirtual	#69; //Method java/lang/Thread.start:()V
+   40:	return
+  LineNumberTable: 
+   line 152: 0
+   line 153: 21
+   line 154: 33
+   line 151: 40
+
+  LocalVariableTable: 
+   Start  Length  Slot  Name   Signature
+   0      41      0    this       LGettingLoaded;
+
+
+public void stop();
+  Code:
+   Stack=2, Locals=1, Args_size=1
+   0:	aload_0
+   1:	getfield	#55; //Field runner:Ljava/lang/Thread;
+   4:	ifnull	19
+   7:	aload_0
+   8:	getfield	#55; //Field runner:Ljava/lang/Thread;
+   11:	invokevirtual	#100; //Method java/lang/Thread.stop:()V
+   14:	aload_0
+   15:	aconst_null
+   16:	putfield	#55; //Field runner:Ljava/lang/Thread;
+   19:	return
+  LineNumberTable: 
+   line 159: 0
+   line 160: 7
+   line 161: 14
+   line 158: 19
+
+  LocalVariableTable: 
+   Start  Length  Slot  Name   Signature
+   0      20      0    this       LGettingLoaded;
+
+
+public void run();
+  Code:
+   Stack=5, Locals=7, Args_size=1
+   0:	aconst_null
+   1:	astore_1
+   2:	aconst_null
+   3:	astore_2
+   4:	new	#50; //class java/lang/StringBuffer
+   7:	dup
+   8:	invokespecial	#60; //Method java/lang/StringBuffer."<init>":()V
+   11:	astore	4
+   13:	aload_0
+   14:	getfield	#104; //Field ta:Ljava/awt/TextArea;
+   17:	new	#50; //class java/lang/StringBuffer
+   20:	dup
+   21:	invokespecial	#60; //Method java/lang/StringBuffer."<init>":()V
+   24:	aload_0
+   25:	getfield	#67; //Field titleString:Ljava/lang/String;
+   28:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   31:	ldc	#6; //String Loading First Of Two Files...\n
+   33:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   36:	invokevirtual	#118; //Method java/lang/StringBuffer.toString:()Ljava/lang/String;
+   39:	invokevirtual	#112; //Method java/awt/TextComponent.setText:(Ljava/lang/String;)V
+   42:	aload_0
+   43:	getfield	#88; //Field theClassFileURL:Ljava/net/URL;
+   46:	invokevirtual	#70; //Method java/net/URL.openStream:()Ljava/io/InputStream;
+   49:	astore_1
+   50:	new	#34; //class java/io/DataInputStream
+   53:	dup
+   54:	new	#25; //class java/io/BufferedInputStream
+   57:	dup
+   58:	aload_1
+   59:	invokespecial	#62; //Method java/io/BufferedInputStream."<init>":(Ljava/io/InputStream;)V
+   62:	invokespecial	#82; //Method java/io/DataInputStream."<init>":(Ljava/io/InputStream;)V
+   65:	astore_2
+   66:	aload_2
+   67:	invokevirtual	#89; //Method java/io/DataInputStream.readUnsignedByte:()I
+   70:	istore	5
+   72:	new	#48; //class HexString
+   75:	dup
+   76:	iload	5
+   78:	iconst_2
+   79:	invokespecial	#92; //Method HexString."<init>":(II)V
+   82:	astore	6
+   84:	aload	4
+   86:	aload	6
+   88:	invokevirtual	#77; //Method HexString.getString:()Ljava/lang/String;
+   91:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   94:	pop
+   95:	goto	66
+   98:	pop
+   99:	aload_0
+   100:	getfield	#78; //Field jvmPacman:LJVMPacman;
+   103:	aload	4
+   105:	invokevirtual	#118; //Method java/lang/StringBuffer.toString:()Ljava/lang/String;
+   108:	invokevirtual	#103; //Method JVMPacman.setText:(Ljava/lang/String;)V
+   111:	aload_0
+   112:	getfield	#104; //Field ta:Ljava/awt/TextArea;
+   115:	new	#50; //class java/lang/StringBuffer
+   118:	dup
+   119:	invokespecial	#60; //Method java/lang/StringBuffer."<init>":()V
+   122:	aload_0
+   123:	getfield	#67; //Field titleString:Ljava/lang/String;
+   126:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   129:	ldc	#20; //String Loading Second Of Two Files...\n
+   131:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   134:	invokevirtual	#118; //Method java/lang/StringBuffer.toString:()Ljava/lang/String;
+   137:	invokevirtual	#112; //Method java/awt/TextComponent.setText:(Ljava/lang/String;)V
+   140:	aload_0
+   141:	getfield	#61; //Field theActTextURL:Ljava/net/URL;
+   144:	invokevirtual	#70; //Method java/net/URL.openStream:()Ljava/io/InputStream;
+   147:	astore_1
+   148:	new	#34; //class java/io/DataInputStream
+   151:	dup
+   152:	new	#25; //class java/io/BufferedInputStream
+   155:	dup
+   156:	aload_1
+   157:	invokespecial	#62; //Method java/io/BufferedInputStream."<init>":(Ljava/io/InputStream;)V
+   160:	invokespecial	#82; //Method java/io/DataInputStream."<init>":(Ljava/io/InputStream;)V
+   163:	astore_2
+   164:	aload	4
+   166:	iconst_0
+   167:	invokevirtual	#64; //Method java/lang/StringBuffer.setLength:(I)V
+   170:	goto	292
+   173:	aload_3
+   174:	invokevirtual	#110; //Method java/lang/String.length:()I
+   177:	ifle	267
+   180:	aload_3
+   181:	iconst_0
+   182:	invokevirtual	#85; //Method java/lang/String.charAt:(I)C
+   185:	bipush	42
+   187:	if_icmpne	267
+   190:	aload_3
+   191:	invokevirtual	#110; //Method java/lang/String.length:()I
+   194:	istore	5
+   196:	new	#45; //class StepNode
+   199:	dup
+   200:	aload	4
+   202:	invokevirtual	#118; //Method java/lang/StringBuffer.toString:()Ljava/lang/String;
+   205:	iload	5
+   207:	invokespecial	#95; //Method StepNode."<init>":(Ljava/lang/String;I)V
+   210:	astore	6
+   212:	aload_0
+   213:	getfield	#74; //Field firstNode:LStepNode;
+   216:	ifnonnull	234
+   219:	aload_0
+   220:	aload	6
+   222:	putfield	#74; //Field firstNode:LStepNode;
+   225:	aload_0
+   226:	aload	6
+   228:	putfield	#91; //Field lastNode:LStepNode;
+   231:	goto	258
+   234:	aload_0
+   235:	getfield	#91; //Field lastNode:LStepNode;
+   238:	aload	6
+   240:	invokevirtual	#107; //Method StepNode.setNext:(LStepNode;)V
+   243:	aload	6
+   245:	aload_0
+   246:	getfield	#91; //Field lastNode:LStepNode;
+   249:	invokevirtual	#75; //Method StepNode.setPrev:(LStepNode;)V
+   252:	aload_0
+   253:	aload	6
+   255:	putfield	#91; //Field lastNode:LStepNode;
+   258:	aload	4
+   260:	iconst_0
+   261:	invokevirtual	#64; //Method java/lang/StringBuffer.setLength:(I)V
+   264:	goto	292
+   267:	aload	4
+   269:	new	#50; //class java/lang/StringBuffer
+   272:	dup
+   273:	invokespecial	#60; //Method java/lang/StringBuffer."<init>":()V
+   276:	aload_3
+   277:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   280:	ldc	#4; //String \n
+   282:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   285:	invokevirtual	#118; //Method java/lang/StringBuffer.toString:()Ljava/lang/String;
+   288:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   291:	pop
+   292:	aload_2
+   293:	invokevirtual	#53; //Method java/io/DataInputStream.readLine:()Ljava/lang/String;
+   296:	dup
+   297:	astore_3
+   298:	ifnonnull	173
+   301:	aload_0
+   302:	iconst_1
+   303:	putfield	#72; //Field ready:Z
+   306:	aload_0
+   307:	aload_0
+   308:	getfield	#74; //Field firstNode:LStepNode;
+   311:	putfield	#101; //Field currentNode:LStepNode;
+   314:	aload_0
+   315:	getfield	#78; //Field jvmPacman:LJVMPacman;
+   318:	iconst_0
+   319:	aload_0
+   320:	getfield	#74; //Field firstNode:LStepNode;
+   323:	invokevirtual	#73; //Method StepNode.getByteCount:()I
+   326:	invokevirtual	#71; //Method JVMPacman.setGobblePosition:(II)V
+   329:	aload_0
+   330:	getfield	#104; //Field ta:Ljava/awt/TextArea;
+   333:	aload_0
+   334:	getfield	#101; //Field currentNode:LStepNode;
+   337:	invokevirtual	#81; //Method StepNode.getString:()Ljava/lang/String;
+   340:	invokevirtual	#112; //Method java/awt/TextComponent.setText:(Ljava/lang/String;)V
+   343:	return
+   344:	astore	5
+   346:	aload_0
+   347:	getfield	#104; //Field ta:Ljava/awt/TextArea;
+   350:	new	#50; //class java/lang/StringBuffer
+   353:	dup
+   354:	invokespecial	#60; //Method java/lang/StringBuffer."<init>":()V
+   357:	aload_0
+   358:	getfield	#67; //Field titleString:Ljava/lang/String;
+   361:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   364:	ldc	#22; //String IO Error: 
+   366:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   369:	aload	5
+   371:	invokevirtual	#80; //Method java/lang/Throwable.getMessage:()Ljava/lang/String;
+   374:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   377:	ldc	#16; //String \n\n
+   379:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   382:	aload_0
+   383:	getfield	#84; //Field ioErrorMsg:Ljava/lang/String;
+   386:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   389:	aload_0
+   390:	getfield	#66; //Field cantGoFurtherString:Ljava/lang/String;
+   393:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   396:	invokevirtual	#118; //Method java/lang/StringBuffer.toString:()Ljava/lang/String;
+   399:	invokevirtual	#112; //Method java/awt/TextComponent.setText:(Ljava/lang/String;)V
+   402:	return
+   403:	astore	5
+   405:	aload_0
+   406:	getfield	#104; //Field ta:Ljava/awt/TextArea;
+   409:	new	#50; //class java/lang/StringBuffer
+   412:	dup
+   413:	invokespecial	#60; //Method java/lang/StringBuffer."<init>":()V
+   416:	aload_0
+   417:	getfield	#67; //Field titleString:Ljava/lang/String;
+   420:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   423:	ldc	#18; //String Security Exception: 
+   425:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   428:	aload	5
+   430:	invokevirtual	#80; //Method java/lang/Throwable.getMessage:()Ljava/lang/String;
+   433:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   436:	ldc	#16; //String \n\n
+   438:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   441:	aload_0
+   442:	getfield	#120; //Field securityErrorMsg:Ljava/lang/String;
+   445:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   448:	aload_0
+   449:	getfield	#66; //Field cantGoFurtherString:Ljava/lang/String;
+   452:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   455:	invokevirtual	#118; //Method java/lang/StringBuffer.toString:()Ljava/lang/String;
+   458:	invokevirtual	#112; //Method java/awt/TextComponent.setText:(Ljava/lang/String;)V
+   461:	return
+   462:	astore	5
+   464:	aload_0
+   465:	getfield	#104; //Field ta:Ljava/awt/TextArea;
+   468:	new	#50; //class java/lang/StringBuffer
+   471:	dup
+   472:	invokespecial	#60; //Method java/lang/StringBuffer."<init>":()V
+   475:	aload_0
+   476:	getfield	#67; //Field titleString:Ljava/lang/String;
+   479:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   482:	ldc	#22; //String IO Error: 
+   484:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   487:	aload	5
+   489:	invokevirtual	#80; //Method java/lang/Throwable.getMessage:()Ljava/lang/String;
+   492:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   495:	ldc	#16; //String \n\n
+   497:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   500:	aload_0
+   501:	getfield	#84; //Field ioErrorMsg:Ljava/lang/String;
+   504:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   507:	aload_0
+   508:	getfield	#66; //Field cantGoFurtherString:Ljava/lang/String;
+   511:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   514:	invokevirtual	#118; //Method java/lang/StringBuffer.toString:()Ljava/lang/String;
+   517:	invokevirtual	#112; //Method java/awt/TextComponent.setText:(Ljava/lang/String;)V
+   520:	return
+   521:	astore	5
+   523:	aload_0
+   524:	getfield	#104; //Field ta:Ljava/awt/TextArea;
+   527:	new	#50; //class java/lang/StringBuffer
+   530:	dup
+   531:	invokespecial	#60; //Method java/lang/StringBuffer."<init>":()V
+   534:	aload_0
+   535:	getfield	#67; //Field titleString:Ljava/lang/String;
+   538:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   541:	ldc	#18; //String Security Exception: 
+   543:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   546:	aload	5
+   548:	invokevirtual	#80; //Method java/lang/Throwable.getMessage:()Ljava/lang/String;
+   551:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   554:	ldc	#16; //String \n\n
+   556:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   559:	aload_0
+   560:	getfield	#120; //Field securityErrorMsg:Ljava/lang/String;
+   563:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   566:	aload_0
+   567:	getfield	#66; //Field cantGoFurtherString:Ljava/lang/String;
+   570:	invokevirtual	#111; //Method java/lang/StringBuffer.append:(Ljava/lang/String;)Ljava/lang/StringBuffer;
+   573:	invokevirtual	#118; //Method java/lang/StringBuffer.toString:()Ljava/lang/String;
+   576:	invokevirtual	#112; //Method java/awt/TextComponent.setText:(Ljava/lang/String;)V
+   579:	return
+  Exception table:
+   from   to  target type
+    66    98    98   Class java/io/EOFException
+
+   111   343   344   Class java/io/IOException
+
+   111   343   403   Class java/lang/SecurityException
+
+    42   462   462   Class java/io/IOException
+
+    42   462   521   Class java/lang/SecurityException
+
+  LineNumberTable: 
+   line 166: 0
+   line 167: 2
+   line 169: 4
+   line 171: 13
+   line 173: 42
+   line 174: 42
+   line 175: 50
+   line 177: 66
+   line 179: 66
+   line 180: 72
+   line 181: 84
+   line 178: 95
+   line 184: 98
+   line 185: 99
+   line 187: 111
+   line 188: 111
+   line 189: 140
+   line 190: 148
+   line 191: 164
+   line 193: 170
+   line 194: 173
+   line 195: 190
+   line 196: 196
+   line 197: 212
+   line 198: 219
+   line 199: 225
+   line 197: 231
+   line 202: 234
+   line 203: 243
+   line 204: 252
+   line 206: 258
+   line 194: 264
+   line 209: 267
+   line 193: 292
+   line 212: 301
+   line 213: 306
+   line 214: 314
+   line 215: 329
+   line 187: 343
+   line 217: 344
+   line 218: 346
+   line 219: 350
+   line 218: 357
+   line 219: 382
+   line 218: 399
+   line 187: 402
+   line 221: 403
+   line 222: 405
+   line 223: 409
+   line 222: 416
+   line 223: 441
+   line 222: 458
+   line 187: 461
+   line 226: 462
+   line 227: 464
+   line 228: 468
+   line 227: 475
+   line 228: 500
+   line 227: 517
+   line 173: 520
+   line 230: 521
+   line 231: 523
+   line 232: 527
+   line 231: 534
+   line 232: 559
+   line 231: 576
+   line 165: 579
+
+  LocalVariableTable: 
+   Start  Length  Slot  Name   Signature
+   0      580      0    this       LGettingLoaded;
+   2      578      1    conn       Ljava/io/InputStream;
+   4      576      2    data       Ljava/io/DataInputStream;
+   13      567      4    buf       Ljava/lang/StringBuffer;
+   72      26      5    unsignedByte       I
+   84      14      6    hexStr       LHexString;
+   173      119      3    line       Ljava/lang/String;
+   196      71      5    starCount       I
+   212      55      6    nextNode       LStepNode;
+   298      46      3    line       Ljava/lang/String;
+   346      57      5    e       Ljava/io/IOException;
+   405      57      5    e       Ljava/lang/SecurityException;
+   464      57      5    e       Ljava/io/IOException;
+   523      57      5    e       Ljava/lang/SecurityException;
+
+
+public GettingLoaded();
+  Code:
+   Stack=3, Locals=1, Args_size=1
+   0:	aload_0
+   1:	invokespecial	#68; //Method java/applet/Applet."<init>":()V
+   4:	aload_0
+   5:	new	#49; //class java/awt/TextArea
+   8:	dup
+   9:	invokespecial	#87; //Method java/awt/TextArea."<init>":()V
+   12:	putfield	#104; //Field ta:Ljava/awt/TextArea;
+   15:	aload_0
+   16:	iconst_0
+   17:	putfield	#72; //Field ready:Z
+   20:	aload_0
+   21:	iconst_0
+   22:	putfield	#56; //Field jvmFinishedGobbling:Z
+   25:	aload_0
+   26:	ldc	#19; //String Getting Loaded\n\n
+   28:	putfield	#67; //Field titleString:Ljava/lang/String;
+   31:	aload_0
+   32:	iconst_0
+   33:	putfield	#52; //Field urlExceptionWasThrown:Z
+   36:	aload_0
+   37:	ldc	#8; //String Unfortunately this means the applet cannot go any further.\n
+   39:	putfield	#66; //Field cantGoFurtherString:Ljava/lang/String;
+   42:	aload_0
+   43:	ldc	#2; //String An IO Error occured while trying to read a file from the server.\n
+   45:	putfield	#84; //Field ioErrorMsg:Ljava/lang/String;
+   48:	aload_0
+   49:	ldc	#9; //String An security exception occured while trying to read a file from the server.\n
+   51:	putfield	#120; //Field securityErrorMsg:Ljava/lang/String;
+   54:	aload_0
+   55:	ldc	#14; //String This HTML file contains a malformed URL of a file required by this applet.\n
+   57:	putfield	#99; //Field urlErrorMsg:Ljava/lang/String;
+   60:	return
+  LineNumberTable: 
+   line 34: 0
+   line 40: 4
+   line 44: 15
+   line 45: 20
+   line 48: 25
+   line 49: 31
+   line 50: 36
+   line 51: 42
+   line 52: 48
+   line 53: 54
+   line 34: 60
+
+  LocalVariableTable: 
+   Start  Length  Slot  Name   Signature
+   0      61      0    this       LGettingLoaded;
+
+
+}
+

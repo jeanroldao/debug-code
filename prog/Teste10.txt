@@ -1,0 +1,302 @@
+Classfile /C:/Users/asus/Desktop/prog/Teste10.class
+  Last modified 13/08/2013; size 1635 bytes
+  MD5 checksum b868cf0b121851829bc49d55afe6cfef
+  Compiled from "Teste10.java"
+public class Teste10
+  SourceFile: "Teste10.java"
+  minor version: 0
+  major version: 51
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+    #1 = Methodref          #29.#49       //  java/lang/Object."<init>":()V
+    #2 = Class              #50           //  java/io/File
+    #3 = String             #51           //  nome.txt
+    #4 = Methodref          #2.#52        //  java/io/File."<init>":(Ljava/lang/String;)V
+    #5 = Fieldref           #53.#54       //  java/lang/System.out:Ljava/io/PrintStream;
+    #6 = Class              #55           //  java/lang/StringBuilder
+    #7 = Methodref          #6.#49        //  java/lang/StringBuilder."<init>":()V
+    #8 = String             #56           //  exits? 
+    #9 = Methodref          #6.#57        //  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+   #10 = Methodref          #2.#58        //  java/io/File.exists:()Z
+   #11 = String             #59           //  sim
+   #12 = String             #60           //  nao
+   #13 = Methodref          #6.#61        //  java/lang/StringBuilder.toString:()Ljava/lang/String;
+   #14 = Methodref          #62.#63       //  java/io/PrintStream.println:(Ljava/lang/String;)V
+   #15 = String             #64           //  isFile? 
+   #16 = Methodref          #2.#65        //  java/io/File.isFile:()Z
+   #17 = String             #66           //  length? 
+   #18 = Methodref          #2.#67        //  java/io/File.length:()J
+   #19 = Methodref          #6.#68        //  java/lang/StringBuilder.append:(J)Ljava/lang/StringBuilder;
+   #20 = Fieldref           #28.#69       //  Teste10.scan:Ljava/util/Scanner;
+   #21 = Methodref          #25.#70       //  java/util/Scanner.nextLine:()Ljava/lang/String;
+   #22 = Methodref          #2.#71        //  java/io/File.createNewFile:()Z
+   #23 = Methodref          #2.#72        //  java/io/File.delete:()Z
+   #24 = String             #73           //  deleted
+   #25 = Class              #74           //  java/util/Scanner
+   #26 = Fieldref           #53.#75       //  java/lang/System.in:Ljava/io/InputStream;
+   #27 = Methodref          #25.#76       //  java/util/Scanner."<init>":(Ljava/io/InputStream;)V
+   #28 = Class              #77           //  Teste10
+   #29 = Class              #78           //  java/lang/Object
+   #30 = Utf8               scan
+   #31 = Utf8               Ljava/util/Scanner;
+   #32 = Utf8               <init>
+   #33 = Utf8               ()V
+   #34 = Utf8               Code
+   #35 = Utf8               LineNumberTable
+   #36 = Utf8               main
+   #37 = Utf8               ([Ljava/lang/String;)V
+   #38 = Utf8               StackMapTable
+   #39 = Class              #79           //  "[Ljava/lang/String;"
+   #40 = Class              #50           //  java/io/File
+   #41 = Class              #80           //  java/io/PrintStream
+   #42 = Class              #55           //  java/lang/StringBuilder
+   #43 = Class              #81           //  java/lang/String
+   #44 = Utf8               Exceptions
+   #45 = Class              #82           //  java/lang/Exception
+   #46 = Utf8               <clinit>
+   #47 = Utf8               SourceFile
+   #48 = Utf8               Teste10.java
+   #49 = NameAndType        #32:#33       //  "<init>":()V
+   #50 = Utf8               java/io/File
+   #51 = Utf8               nome.txt
+   #52 = NameAndType        #32:#83       //  "<init>":(Ljava/lang/String;)V
+   #53 = Class              #84           //  java/lang/System
+   #54 = NameAndType        #85:#86       //  out:Ljava/io/PrintStream;
+   #55 = Utf8               java/lang/StringBuilder
+   #56 = Utf8               exits? 
+   #57 = NameAndType        #87:#88       //  append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+   #58 = NameAndType        #89:#90       //  exists:()Z
+   #59 = Utf8               sim
+   #60 = Utf8               nao
+   #61 = NameAndType        #91:#92       //  toString:()Ljava/lang/String;
+   #62 = Class              #80           //  java/io/PrintStream
+   #63 = NameAndType        #93:#83       //  println:(Ljava/lang/String;)V
+   #64 = Utf8               isFile? 
+   #65 = NameAndType        #94:#90       //  isFile:()Z
+   #66 = Utf8               length? 
+   #67 = NameAndType        #95:#96       //  length:()J
+   #68 = NameAndType        #87:#97       //  append:(J)Ljava/lang/StringBuilder;
+   #69 = NameAndType        #30:#31       //  scan:Ljava/util/Scanner;
+   #70 = NameAndType        #98:#92       //  nextLine:()Ljava/lang/String;
+   #71 = NameAndType        #99:#90       //  createNewFile:()Z
+   #72 = NameAndType        #100:#90      //  delete:()Z
+   #73 = Utf8               deleted
+   #74 = Utf8               java/util/Scanner
+   #75 = NameAndType        #101:#102     //  in:Ljava/io/InputStream;
+   #76 = NameAndType        #32:#103      //  "<init>":(Ljava/io/InputStream;)V
+   #77 = Utf8               Teste10
+   #78 = Utf8               java/lang/Object
+   #79 = Utf8               [Ljava/lang/String;
+   #80 = Utf8               java/io/PrintStream
+   #81 = Utf8               java/lang/String
+   #82 = Utf8               java/lang/Exception
+   #83 = Utf8               (Ljava/lang/String;)V
+   #84 = Utf8               java/lang/System
+   #85 = Utf8               out
+   #86 = Utf8               Ljava/io/PrintStream;
+   #87 = Utf8               append
+   #88 = Utf8               (Ljava/lang/String;)Ljava/lang/StringBuilder;
+   #89 = Utf8               exists
+   #90 = Utf8               ()Z
+   #91 = Utf8               toString
+   #92 = Utf8               ()Ljava/lang/String;
+   #93 = Utf8               println
+   #94 = Utf8               isFile
+   #95 = Utf8               length
+   #96 = Utf8               ()J
+   #97 = Utf8               (J)Ljava/lang/StringBuilder;
+   #98 = Utf8               nextLine
+   #99 = Utf8               createNewFile
+  #100 = Utf8               delete
+  #101 = Utf8               in
+  #102 = Utf8               Ljava/io/InputStream;
+  #103 = Utf8               (Ljava/io/InputStream;)V
+{
+  static java.util.Scanner scan;
+    flags: ACC_STATIC
+
+  public Teste10();
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0       
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return        
+      LineNumberTable:
+        line 4: 0
+
+  public static void main(java.lang.String[]) throws java.lang.Exception;
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=4, locals=2, args_size=1
+         0: new           #2                  // class java/io/File
+         3: dup           
+         4: ldc           #3                  // String nome.txt
+         6: invokespecial #4                  // Method java/io/File."<init>":(Ljava/lang/String;)V
+         9: astore_1      
+        10: getstatic     #5                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        13: new           #6                  // class java/lang/StringBuilder
+        16: dup           
+        17: invokespecial #7                  // Method java/lang/StringBuilder."<init>":()V
+        20: ldc           #8                  // String exits? 
+        22: invokevirtual #9                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        25: aload_1       
+        26: invokevirtual #10                 // Method java/io/File.exists:()Z
+        29: ifeq          37
+        32: ldc           #11                 // String sim
+        34: goto          39
+        37: ldc           #12                 // String nao
+        39: invokevirtual #9                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        42: invokevirtual #13                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+        45: invokevirtual #14                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+        48: getstatic     #5                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        51: new           #6                  // class java/lang/StringBuilder
+        54: dup           
+        55: invokespecial #7                  // Method java/lang/StringBuilder."<init>":()V
+        58: ldc           #15                 // String isFile? 
+        60: invokevirtual #9                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        63: aload_1       
+        64: invokevirtual #16                 // Method java/io/File.isFile:()Z
+        67: ifeq          75
+        70: ldc           #11                 // String sim
+        72: goto          77
+        75: ldc           #12                 // String nao
+        77: invokevirtual #9                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        80: invokevirtual #13                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+        83: invokevirtual #14                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+        86: getstatic     #5                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        89: new           #6                  // class java/lang/StringBuilder
+        92: dup           
+        93: invokespecial #7                  // Method java/lang/StringBuilder."<init>":()V
+        96: ldc           #17                 // String length? 
+        98: invokevirtual #9                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       101: aload_1       
+       102: invokevirtual #18                 // Method java/io/File.length:()J
+       105: invokevirtual #19                 // Method java/lang/StringBuilder.append:(J)Ljava/lang/StringBuilder;
+       108: invokevirtual #13                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+       111: invokevirtual #14                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       114: getstatic     #20                 // Field scan:Ljava/util/Scanner;
+       117: invokevirtual #21                 // Method java/util/Scanner.nextLine:()Ljava/lang/String;
+       120: pop           
+       121: aload_1       
+       122: invokevirtual #22                 // Method java/io/File.createNewFile:()Z
+       125: pop           
+       126: getstatic     #5                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       129: new           #6                  // class java/lang/StringBuilder
+       132: dup           
+       133: invokespecial #7                  // Method java/lang/StringBuilder."<init>":()V
+       136: ldc           #8                  // String exits? 
+       138: invokevirtual #9                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       141: aload_1       
+       142: invokevirtual #10                 // Method java/io/File.exists:()Z
+       145: ifeq          153
+       148: ldc           #11                 // String sim
+       150: goto          155
+       153: ldc           #12                 // String nao
+       155: invokevirtual #9                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       158: invokevirtual #13                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+       161: invokevirtual #14                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       164: getstatic     #5                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       167: new           #6                  // class java/lang/StringBuilder
+       170: dup           
+       171: invokespecial #7                  // Method java/lang/StringBuilder."<init>":()V
+       174: ldc           #15                 // String isFile? 
+       176: invokevirtual #9                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       179: aload_1       
+       180: invokevirtual #16                 // Method java/io/File.isFile:()Z
+       183: ifeq          191
+       186: ldc           #11                 // String sim
+       188: goto          193
+       191: ldc           #12                 // String nao
+       193: invokevirtual #9                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       196: invokevirtual #13                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+       199: invokevirtual #14                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       202: getstatic     #5                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       205: new           #6                  // class java/lang/StringBuilder
+       208: dup           
+       209: invokespecial #7                  // Method java/lang/StringBuilder."<init>":()V
+       212: ldc           #17                 // String length? 
+       214: invokevirtual #9                  // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       217: aload_1       
+       218: invokevirtual #18                 // Method java/io/File.length:()J
+       221: invokevirtual #19                 // Method java/lang/StringBuilder.append:(J)Ljava/lang/StringBuilder;
+       224: invokevirtual #13                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+       227: invokevirtual #14                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       230: getstatic     #20                 // Field scan:Ljava/util/Scanner;
+       233: invokevirtual #21                 // Method java/util/Scanner.nextLine:()Ljava/lang/String;
+       236: pop           
+       237: aload_1       
+       238: invokevirtual #23                 // Method java/io/File.delete:()Z
+       241: pop           
+       242: getstatic     #5                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       245: ldc           #24                 // String deleted
+       247: invokevirtual #14                 // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       250: getstatic     #20                 // Field scan:Ljava/util/Scanner;
+       253: invokevirtual #21                 // Method java/util/Scanner.nextLine:()Ljava/lang/String;
+       256: pop           
+       257: return        
+      LineNumberTable:
+        line 10: 0
+        line 11: 10
+        line 12: 48
+        line 13: 86
+        line 14: 114
+        line 15: 121
+        line 16: 126
+        line 17: 164
+        line 18: 202
+        line 19: 230
+        line 20: 237
+        line 21: 242
+        line 22: 250
+        line 23: 257
+      StackMapTable: number_of_entries = 8
+           frame_type = 255 /* full_frame */
+          offset_delta = 37
+          locals = [ class "[Ljava/lang/String;", class java/io/File ]
+          stack = [ class java/io/PrintStream, class java/lang/StringBuilder ]
+           frame_type = 255 /* full_frame */
+          offset_delta = 1
+          locals = [ class "[Ljava/lang/String;", class java/io/File ]
+          stack = [ class java/io/PrintStream, class java/lang/StringBuilder, class java/lang/String ]
+           frame_type = 255 /* full_frame */
+          offset_delta = 35
+          locals = [ class "[Ljava/lang/String;", class java/io/File ]
+          stack = [ class java/io/PrintStream, class java/lang/StringBuilder ]
+           frame_type = 255 /* full_frame */
+          offset_delta = 1
+          locals = [ class "[Ljava/lang/String;", class java/io/File ]
+          stack = [ class java/io/PrintStream, class java/lang/StringBuilder, class java/lang/String ]
+           frame_type = 255 /* full_frame */
+          offset_delta = 75
+          locals = [ class "[Ljava/lang/String;", class java/io/File ]
+          stack = [ class java/io/PrintStream, class java/lang/StringBuilder ]
+           frame_type = 255 /* full_frame */
+          offset_delta = 1
+          locals = [ class "[Ljava/lang/String;", class java/io/File ]
+          stack = [ class java/io/PrintStream, class java/lang/StringBuilder, class java/lang/String ]
+           frame_type = 255 /* full_frame */
+          offset_delta = 35
+          locals = [ class "[Ljava/lang/String;", class java/io/File ]
+          stack = [ class java/io/PrintStream, class java/lang/StringBuilder ]
+           frame_type = 255 /* full_frame */
+          offset_delta = 1
+          locals = [ class "[Ljava/lang/String;", class java/io/File ]
+          stack = [ class java/io/PrintStream, class java/lang/StringBuilder, class java/lang/String ]
+
+    Exceptions:
+      throws java.lang.Exception
+
+  static {};
+    flags: ACC_STATIC
+    Code:
+      stack=3, locals=0, args_size=0
+         0: new           #25                 // class java/util/Scanner
+         3: dup           
+         4: getstatic     #26                 // Field java/lang/System.in:Ljava/io/InputStream;
+         7: invokespecial #27                 // Method java/util/Scanner."<init>":(Ljava/io/InputStream;)V
+        10: putstatic     #20                 // Field scan:Ljava/util/Scanner;
+        13: return        
+      LineNumberTable:
+        line 6: 0
+}

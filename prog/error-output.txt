@@ -1,0 +1,12 @@
+"Selecionar destino" "-1"
+"ALV-POA" "0"
+"POA-ALV" "1"
+"ALV./GRAVATAI" "-1"
+"GRAVATAI/ALV." "-1"
+"ALVORADA/VIAMAO" "-1"
+"VIAMAO/ALVORADA" "-1"
+"ALV./GUAIBA" "-1"
+"GUAIBA/ALV." "-1"
+"ALV./DIST.IND.CACHOEIRINHA" "-1"
+"DIST.IND.CACHOEIRINHA/ALV." "-1"
+Deseja finalizar o arquivo em lotes (S/N)? 

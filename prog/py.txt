@@ -1,0 +1,2587 @@
+minor version: 0
+major version: 49
+constant_pool_count = 1474
+1: tag=1: utf8 string: f$0
+2: tag=1: utf8 string: (Lorg/python/core/PyFrame;Lorg/python/core/ThreadState;)Lorg/python/core/PyObject;
+3: tag=1: utf8 string: __doc__
+4: tag=8: String: utf8 index=3
+5: tag=1: utf8 string: codecs$py
+6: tag=7: Class: utf8 index=5
+7: tag=1: utf8 string: _1
+8: tag=1: utf8 string: Lorg/python/core/PyString;
+9: tag=12: name and type descriptor: name index=7, type index=8
+10: tag=9: field: Class index=6, Name and Type index=9
+11: tag=1: utf8 string: org/python/core/PyFrame
+12: tag=7: Class: utf8 index=11
+13: tag=1: utf8 string: setglobal
+14: tag=1: utf8 string: (Ljava/lang/String;Lorg/python/core/PyObject;)V
+15: tag=12: name and type descriptor: name index=13, type index=14
+16: tag=10: method: Class index=12, Name and Type index=15
+17: tag=1: utf8 string: setline
+18: tag=1: utf8 string: (I)V
+19: tag=12: name and type descriptor: name index=17, type index=18
+20: tag=10: method: Class index=12, Name and Type index=19
+21: tag=1: utf8 string: __builtin__
+22: tag=8: String: utf8 index=21
+23: tag=1: utf8 string: org/python/core/imp
+24: tag=7: Class: utf8 index=23
+25: tag=1: utf8 string: importOne
+26: tag=1: utf8 string: (Ljava/lang/String;Lorg/python/core/PyFrame;I)Lorg/python/core/PyObject;
+27: tag=12: name and type descriptor: name index=25, type index=26
+28: tag=10: method: Class index=24, Name and Type index=27
+29: tag=1: utf8 string: setlocal
+30: tag=12: name and type descriptor: name index=29, type index=14
+31: tag=10: method: Class index=12, Name and Type index=30
+32: tag=1: utf8 string: sys
+33: tag=8: String: utf8 index=32
+34: tag=1: utf8 string: _codecs
+35: tag=8: String: utf8 index=34
+36: tag=1: utf8 string: importAll
+37: tag=1: utf8 string: (Ljava/lang/String;Lorg/python/core/PyFrame;I)V
+38: tag=12: name and type descriptor: name index=36, type index=37
+39: tag=10: method: Class index=24, Name and Type index=38
+40: tag=1: utf8 string: org/python/core/Py
+41: tag=7: Class: utf8 index=40
+42: tag=1: utf8 string: setException
+43: tag=1: utf8 string: (Ljava/lang/Throwable;Lorg/python/core/PyFrame;)Lorg/python/core/PyException;
+44: tag=12: name and type descriptor: name index=42, type index=43
+45: tag=10: method: Class index=41, Name and Type index=44
+46: tag=1: utf8 string: ImportError
+47: tag=8: String: utf8 index=46
+48: tag=1: utf8 string: getname
+49: tag=1: utf8 string: (Ljava/lang/String;)Lorg/python/core/PyObject;
+50: tag=12: name and type descriptor: name index=48, type index=49
+51: tag=10: method: Class index=12, Name and Type index=50
+52: tag=1: utf8 string: org/python/core/PyException
+53: tag=7: Class: utf8 index=52
+54: tag=1: utf8 string: match
+55: tag=1: utf8 string: (Lorg/python/core/PyObject;)Z
+56: tag=12: name and type descriptor: name index=54, type index=55
+57: tag=10: method: Class index=53, Name and Type index=56
+58: tag=1: utf8 string: value
+59: tag=1: utf8 string: Lorg/python/core/PyObject;
+60: tag=12: name and type descriptor: name index=58, type index=59
+61: tag=9: field: Class index=53, Name and Type index=60
+62: tag=1: utf8 string: why
+63: tag=8: String: utf8 index=62
+64: tag=1: utf8 string: SystemError
+65: tag=8: String: utf8 index=64
+66: tag=1: utf8 string: _2
+67: tag=12: name and type descriptor: name index=66, type index=8
+68: tag=9: field: Class index=6, Name and Type index=67
+69: tag=1: utf8 string: org/python/core/PyObject
+70: tag=7: Class: utf8 index=69
+71: tag=1: utf8 string: _mod
+72: tag=1: utf8 string: (Lorg/python/core/PyObject;)Lorg/python/core/PyObject;
+73: tag=12: name and type descriptor: name index=71, type index=72
+74: tag=10: method: Class index=70, Name and Type index=73
+75: tag=1: utf8 string: __call__
+76: tag=1: utf8 string: (Lorg/python/core/ThreadState;Lorg/python/core/PyObject;)Lorg/python/core/PyObject;
+77: tag=12: name and type descriptor: name index=75, type index=76
+78: tag=10: method: Class index=70, Name and Type index=77
+79: tag=1: utf8 string: makeException
+80: tag=1: utf8 string: (Lorg/python/core/PyObject;)Lorg/python/core/PyException;
+81: tag=12: name and type descriptor: name index=79, type index=80
+82: tag=10: method: Class index=41, Name and Type index=81
+83: tag=1: utf8 string: java/lang/Throwable
+84: tag=7: Class: utf8 index=83
+85: tag=1: utf8 string: _3
+86: tag=12: name and type descriptor: name index=85, type index=8
+87: tag=9: field: Class index=6, Name and Type index=86
+88: tag=1: utf8 string: _4
+89: tag=12: name and type descriptor: name index=88, type index=8
+90: tag=9: field: Class index=6, Name and Type index=89
+91: tag=1: utf8 string: _5
+92: tag=12: name and type descriptor: name index=91, type index=8
+93: tag=9: field: Class index=6, Name and Type index=92
+94: tag=1: utf8 string: _6
+95: tag=12: name and type descriptor: name index=94, type index=8
+96: tag=9: field: Class index=6, Name and Type index=95
+97: tag=1: utf8 string: _7
+98: tag=12: name and type descriptor: name index=97, type index=8
+99: tag=9: field: Class index=6, Name and Type index=98
+100: tag=1: utf8 string: _8
+101: tag=12: name and type descriptor: name index=100, type index=8
+102: tag=9: field: Class index=6, Name and Type index=101
+103: tag=1: utf8 string: _9
+104: tag=12: name and type descriptor: name index=103, type index=8
+105: tag=9: field: Class index=6, Name and Type index=104
+106: tag=1: utf8 string: _10
+107: tag=12: name and type descriptor: name index=106, type index=8
+108: tag=9: field: Class index=6, Name and Type index=107
+109: tag=1: utf8 string: _11
+110: tag=12: name and type descriptor: name index=109, type index=8
+111: tag=9: field: Class index=6, Name and Type index=110
+112: tag=1: utf8 string: _12
+113: tag=12: name and type descriptor: name index=112, type index=8
+114: tag=9: field: Class index=6, Name and Type index=113
+115: tag=1: utf8 string: _13
+116: tag=12: name and type descriptor: name index=115, type index=8
+117: tag=9: field: Class index=6, Name and Type index=116
+118: tag=1: utf8 string: _14
+119: tag=12: name and type descriptor: name index=118, type index=8
+120: tag=9: field: Class index=6, Name and Type index=119
+121: tag=1: utf8 string: _15
+122: tag=12: name and type descriptor: name index=121, type index=8
+123: tag=9: field: Class index=6, Name and Type index=122
+124: tag=1: utf8 string: _16
+125: tag=12: name and type descriptor: name index=124, type index=8
+126: tag=9: field: Class index=6, Name and Type index=125
+127: tag=1: utf8 string: _17
+128: tag=12: name and type descriptor: name index=127, type index=8
+129: tag=9: field: Class index=6, Name and Type index=128
+130: tag=1: utf8 string: _18
+131: tag=12: name and type descriptor: name index=130, type index=8
+132: tag=9: field: Class index=6, Name and Type index=131
+133: tag=1: utf8 string: _19
+134: tag=12: name and type descriptor: name index=133, type index=8
+135: tag=9: field: Class index=6, Name and Type index=134
+136: tag=1: utf8 string: _20
+137: tag=12: name and type descriptor: name index=136, type index=8
+138: tag=9: field: Class index=6, Name and Type index=137
+139: tag=1: utf8 string: _21
+140: tag=12: name and type descriptor: name index=139, type index=8
+141: tag=9: field: Class index=6, Name and Type index=140
+142: tag=1: utf8 string: _22
+143: tag=12: name and type descriptor: name index=142, type index=8
+144: tag=9: field: Class index=6, Name and Type index=143
+145: tag=1: utf8 string: _23
+146: tag=12: name and type descriptor: name index=145, type index=8
+147: tag=9: field: Class index=6, Name and Type index=146
+148: tag=1: utf8 string: _24
+149: tag=12: name and type descriptor: name index=148, type index=8
+150: tag=9: field: Class index=6, Name and Type index=149
+151: tag=1: utf8 string: _25
+152: tag=12: name and type descriptor: name index=151, type index=8
+153: tag=9: field: Class index=6, Name and Type index=152
+154: tag=1: utf8 string: _26
+155: tag=12: name and type descriptor: name index=154, type index=8
+156: tag=9: field: Class index=6, Name and Type index=155
+157: tag=1: utf8 string: org/python/core/PyList
+158: tag=7: Class: utf8 index=157
+159: tag=1: utf8 string: <init>
+160: tag=1: utf8 string: ([Lorg/python/core/PyObject;)V
+161: tag=12: name and type descriptor: name index=159, type index=160
+162: tag=10: method: Class index=158, Name and Type index=161
+163: tag=1: utf8 string: java/util/Arrays
+164: tag=7: Class: utf8 index=163
+165: tag=1: utf8 string: fill
+166: tag=1: utf8 string: ([Ljava/lang/Object;Ljava/lang/Object;)V
+167: tag=12: name and type descriptor: name index=165, type index=166
+168: tag=10: method: Class index=164, Name and Type index=167
+169: tag=1: utf8 string: __all__
+170: tag=8: String: utf8 index=169
+171: tag=1: utf8 string: _27
+172: tag=12: name and type descriptor: name index=171, type index=8
+173: tag=9: field: Class index=6, Name and Type index=172
+174: tag=1: utf8 string: BOM_UTF8
+175: tag=8: String: utf8 index=174
+176: tag=1: utf8 string: _28
+177: tag=12: name and type descriptor: name index=176, type index=8
+178: tag=9: field: Class index=6, Name and Type index=177
+179: tag=1: utf8 string: BOM_LE
+180: tag=8: String: utf8 index=179
+181: tag=1: utf8 string: BOM_UTF16_LE
+182: tag=8: String: utf8 index=181
+183: tag=1: utf8 string: _29
+184: tag=12: name and type descriptor: name index=183, type index=8
+185: tag=9: field: Class index=6, Name and Type index=184
+186: tag=1: utf8 string: BOM_BE
+187: tag=8: String: utf8 index=186
+188: tag=1: utf8 string: BOM_UTF16_BE
+189: tag=8: String: utf8 index=188
+190: tag=1: utf8 string: _30
+191: tag=12: name and type descriptor: name index=190, type index=8
+192: tag=9: field: Class index=6, Name and Type index=191
+193: tag=1: utf8 string: BOM_UTF32_LE
+194: tag=8: String: utf8 index=193
+195: tag=1: utf8 string: _31
+196: tag=12: name and type descriptor: name index=195, type index=8
+197: tag=9: field: Class index=6, Name and Type index=196
+198: tag=1: utf8 string: BOM_UTF32_BE
+199: tag=8: String: utf8 index=198
+200: tag=1: utf8 string: byteorder
+201: tag=8: String: utf8 index=200
+202: tag=1: utf8 string: __getattr__
+203: tag=12: name and type descriptor: name index=202, type index=49
+204: tag=10: method: Class index=70, Name and Type index=203
+205: tag=1: utf8 string: _32
+206: tag=12: name and type descriptor: name index=205, type index=8
+207: tag=9: field: Class index=6, Name and Type index=206
+208: tag=1: utf8 string: _eq
+209: tag=12: name and type descriptor: name index=208, type index=72
+210: tag=10: method: Class index=70, Name and Type index=209
+211: tag=1: utf8 string: __nonzero__
+212: tag=1: utf8 string: ()Z
+213: tag=12: name and type descriptor: name index=211, type index=212
+214: tag=10: method: Class index=70, Name and Type index=213
+215: tag=1: utf8 string: BOM
+216: tag=8: String: utf8 index=215
+217: tag=1: utf8 string: BOM_UTF16
+218: tag=8: String: utf8 index=217
+219: tag=1: utf8 string: BOM_UTF32
+220: tag=8: String: utf8 index=219
+221: tag=1: utf8 string: BOM32_LE
+222: tag=8: String: utf8 index=221
+223: tag=1: utf8 string: BOM32_BE
+224: tag=8: String: utf8 index=223
+225: tag=1: utf8 string: BOM64_LE
+226: tag=8: String: utf8 index=225
+227: tag=1: utf8 string: BOM64_BE
+228: tag=8: String: utf8 index=227
+229: tag=1: utf8 string: tuple
+230: tag=8: String: utf8 index=229
+231: tag=1: utf8 string: CodecInfo
+232: tag=8: String: utf8 index=231
+233: tag=1: utf8 string: CodecInfo$1
+234: tag=1: utf8 string: __module__
+235: tag=8: String: utf8 index=234
+236: tag=1: utf8 string: __name__
+237: tag=8: String: utf8 index=236
+238: tag=1: utf8 string: None
+239: tag=8: String: utf8 index=238
+240: tag=1: utf8 string: org/python/core/PyFunction
+241: tag=7: Class: utf8 index=240
+242: tag=1: utf8 string: f_globals
+243: tag=12: name and type descriptor: name index=242, type index=59
+244: tag=9: field: Class index=12, Name and Type index=243
+245: tag=1: utf8 string: __new__$2
+246: tag=1: utf8 string: getglobal
+247: tag=12: name and type descriptor: name index=246, type index=49
+248: tag=10: method: Class index=12, Name and Type index=247
+249: tag=1: utf8 string: __new__
+250: tag=8: String: utf8 index=249
+251: tag=1: utf8 string: getlocal
+252: tag=1: utf8 string: (I)Lorg/python/core/PyObject;
+253: tag=12: name and type descriptor: name index=251, type index=252
+254: tag=10: method: Class index=12, Name and Type index=253
+255: tag=1: utf8 string: org/python/core/PyTuple
+256: tag=7: Class: utf8 index=255
+257: tag=10: method: Class index=256, Name and Type index=161
+258: tag=1: utf8 string: (Lorg/python/core/ThreadState;Lorg/python/core/PyObject;Lorg/python/core/PyObject;)Lorg/python/core/PyObject;
+259: tag=12: name and type descriptor: name index=75, type index=258
+260: tag=10: method: Class index=70, Name and Type index=259
+261: tag=1: utf8 string: (ILorg/python/core/PyObject;)V
+262: tag=12: name and type descriptor: name index=29, type index=261
+263: tag=10: method: Class index=12, Name and Type index=262
+264: tag=1: utf8 string: name
+265: tag=8: String: utf8 index=264
+266: tag=1: utf8 string: __setattr__
+267: tag=12: name and type descriptor: name index=266, type index=14
+268: tag=10: method: Class index=70, Name and Type index=267
+269: tag=1: utf8 string: encode
+270: tag=8: String: utf8 index=269
+271: tag=1: utf8 string: decode
+272: tag=8: String: utf8 index=271
+273: tag=1: utf8 string: incrementalencoder
+274: tag=8: String: utf8 index=273
+275: tag=1: utf8 string: incrementaldecoder
+276: tag=8: String: utf8 index=275
+277: tag=1: utf8 string: streamwriter
+278: tag=8: String: utf8 index=277
+279: tag=1: utf8 string: streamreader
+280: tag=8: String: utf8 index=279
+281: tag=1: utf8 string: f_lasti
+282: tag=1: utf8 string: I
+283: tag=12: name and type descriptor: name index=281, type index=282
+284: tag=9: field: Class index=12, Name and Type index=283
+285: tag=1: utf8 string: Lorg/python/core/PyCode;
+286: tag=12: name and type descriptor: name index=245, type index=285
+287: tag=9: field: Class index=6, Name and Type index=286
+288: tag=1: utf8 string: (Lorg/python/core/PyObject;[Lorg/python/core/PyObject;Lorg/python/core/PyCode;Lorg/python/core/PyObject;)V
+289: tag=12: name and type descriptor: name index=159, type index=288
+290: tag=10: method: Class index=241, Name and Type index=289
+291: tag=1: utf8 string: EmptyObjects
+292: tag=1: utf8 string: [Lorg/python/core/PyObject;
+293: tag=12: name and type descriptor: name index=291, type index=292
+294: tag=9: field: Class index=41, Name and Type index=293
+295: tag=1: utf8 string: __repr__$3
+296: tag=1: utf8 string: _33
+297: tag=12: name and type descriptor: name index=296, type index=8
+298: tag=9: field: Class index=6, Name and Type index=297
+299: tag=1: utf8 string: __class__
+300: tag=8: String: utf8 index=299
+301: tag=1: utf8 string: id
+302: tag=8: String: utf8 index=301
+303: tag=12: name and type descriptor: name index=295, type index=285
+304: tag=9: field: Class index=6, Name and Type index=303
+305: tag=1: utf8 string: __repr__
+306: tag=8: String: utf8 index=305
+307: tag=1: utf8 string: getf_locals
+308: tag=1: utf8 string: ()Lorg/python/core/PyObject;
+309: tag=12: name and type descriptor: name index=307, type index=308
+310: tag=10: method: Class index=12, Name and Type index=309
+311: tag=12: name and type descriptor: name index=233, type index=285
+312: tag=9: field: Class index=6, Name and Type index=311
+313: tag=1: utf8 string: makeClass
+314: tag=1: utf8 string: (Ljava/lang/String;[Lorg/python/core/PyObject;Lorg/python/core/PyCode;)Lorg/python/core/PyObject;
+315: tag=12: name and type descriptor: name index=313, type index=314
+316: tag=10: method: Class index=41, Name and Type index=315
+317: tag=1: utf8 string: Codec
+318: tag=8: String: utf8 index=317
+319: tag=1: utf8 string: Codec$4
+320: tag=1: utf8 string: _34
+321: tag=12: name and type descriptor: name index=320, type index=8
+322: tag=9: field: Class index=6, Name and Type index=321
+323: tag=1: utf8 string: _35
+324: tag=12: name and type descriptor: name index=323, type index=8
+325: tag=9: field: Class index=6, Name and Type index=324
+326: tag=1: utf8 string: encode$5
+327: tag=1: utf8 string: _36
+328: tag=12: name and type descriptor: name index=327, type index=8
+329: tag=9: field: Class index=6, Name and Type index=328
+330: tag=1: utf8 string: NotImplementedError
+331: tag=8: String: utf8 index=330
+332: tag=12: name and type descriptor: name index=326, type index=285
+333: tag=9: field: Class index=6, Name and Type index=332
+334: tag=1: utf8 string: decode$6
+335: tag=1: utf8 string: _37
+336: tag=12: name and type descriptor: name index=335, type index=8
+337: tag=9: field: Class index=6, Name and Type index=336
+338: tag=12: name and type descriptor: name index=334, type index=285
+339: tag=9: field: Class index=6, Name and Type index=338
+340: tag=12: name and type descriptor: name index=319, type index=285
+341: tag=9: field: Class index=6, Name and Type index=340
+342: tag=1: utf8 string: object
+343: tag=8: String: utf8 index=342
+344: tag=1: utf8 string: IncrementalEncoder
+345: tag=8: String: utf8 index=344
+346: tag=1: utf8 string: IncrementalEncoder$7
+347: tag=1: utf8 string: _38
+348: tag=12: name and type descriptor: name index=347, type index=8
+349: tag=9: field: Class index=6, Name and Type index=348
+350: tag=1: utf8 string: __init__$8
+351: tag=1: utf8 string: _39
+352: tag=12: name and type descriptor: name index=351, type index=8
+353: tag=9: field: Class index=6, Name and Type index=352
+354: tag=1: utf8 string: errors
+355: tag=8: String: utf8 index=354
+356: tag=1: utf8 string: _40
+357: tag=12: name and type descriptor: name index=356, type index=8
+358: tag=9: field: Class index=6, Name and Type index=357
+359: tag=1: utf8 string: buffer
+360: tag=8: String: utf8 index=359
+361: tag=12: name and type descriptor: name index=238, type index=59
+362: tag=9: field: Class index=41, Name and Type index=361
+363: tag=12: name and type descriptor: name index=350, type index=285
+364: tag=9: field: Class index=6, Name and Type index=363
+365: tag=1: utf8 string: __init__
+366: tag=8: String: utf8 index=365
+367: tag=1: utf8 string: False
+368: tag=8: String: utf8 index=367
+369: tag=1: utf8 string: encode$9
+370: tag=1: utf8 string: _41
+371: tag=12: name and type descriptor: name index=370, type index=8
+372: tag=9: field: Class index=6, Name and Type index=371
+373: tag=12: name and type descriptor: name index=369, type index=285
+374: tag=9: field: Class index=6, Name and Type index=373
+375: tag=1: utf8 string: reset$10
+376: tag=1: utf8 string: _42
+377: tag=12: name and type descriptor: name index=376, type index=8
+378: tag=9: field: Class index=6, Name and Type index=377
+379: tag=12: name and type descriptor: name index=375, type index=285
+380: tag=9: field: Class index=6, Name and Type index=379
+381: tag=1: utf8 string: reset
+382: tag=8: String: utf8 index=381
+383: tag=12: name and type descriptor: name index=346, type index=285
+384: tag=9: field: Class index=6, Name and Type index=383
+385: tag=1: utf8 string: BufferedIncrementalEncoder
+386: tag=8: String: utf8 index=385
+387: tag=1: utf8 string: BufferedIncrementalEncoder$11
+388: tag=1: utf8 string: _43
+389: tag=12: name and type descriptor: name index=388, type index=8
+390: tag=9: field: Class index=6, Name and Type index=389
+391: tag=1: utf8 string: __init__$12
+392: tag=12: name and type descriptor: name index=391, type index=285
+393: tag=9: field: Class index=6, Name and Type index=392
+394: tag=1: utf8 string: _buffer_encode$13
+395: tag=12: name and type descriptor: name index=394, type index=285
+396: tag=9: field: Class index=6, Name and Type index=395
+397: tag=1: utf8 string: _buffer_encode
+398: tag=8: String: utf8 index=397
+399: tag=1: utf8 string: encode$14
+400: tag=1: utf8 string: _add
+401: tag=12: name and type descriptor: name index=400, type index=72
+402: tag=10: method: Class index=70, Name and Type index=401
+403: tag=1: utf8 string: (Lorg/python/core/ThreadState;Lorg/python/core/PyObject;Lorg/python/core/PyObject;Lorg/python/core/PyObject;)Lorg/python/core/PyObject;
+404: tag=12: name and type descriptor: name index=75, type index=403
+405: tag=10: method: Class index=70, Name and Type index=404
+406: tag=1: utf8 string: unpackSequence
+407: tag=1: utf8 string: (Lorg/python/core/PyObject;I)[Lorg/python/core/PyObject;
+408: tag=12: name and type descriptor: name index=406, type index=407
+409: tag=10: method: Class index=41, Name and Type index=408
+410: tag=1: utf8 string: __getslice__
+411: tag=1: utf8 string: (Lorg/python/core/PyObject;Lorg/python/core/PyObject;Lorg/python/core/PyObject;)Lorg/python/core/PyObject;
+412: tag=12: name and type descriptor: name index=410, type index=411
+413: tag=10: method: Class index=70, Name and Type index=412
+414: tag=12: name and type descriptor: name index=399, type index=285
+415: tag=9: field: Class index=6, Name and Type index=414
+416: tag=1: utf8 string: reset$15
+417: tag=12: name and type descriptor: name index=416, type index=285
+418: tag=9: field: Class index=6, Name and Type index=417
+419: tag=12: name and type descriptor: name index=387, type index=285
+420: tag=9: field: Class index=6, Name and Type index=419
+421: tag=1: utf8 string: IncrementalDecoder
+422: tag=8: String: utf8 index=421
+423: tag=1: utf8 string: IncrementalDecoder$16
+424: tag=1: utf8 string: _44
+425: tag=12: name and type descriptor: name index=424, type index=8
+426: tag=9: field: Class index=6, Name and Type index=425
+427: tag=1: utf8 string: __init__$17
+428: tag=1: utf8 string: _45
+429: tag=12: name and type descriptor: name index=428, type index=8
+430: tag=9: field: Class index=6, Name and Type index=429
+431: tag=12: name and type descriptor: name index=427, type index=285
+432: tag=9: field: Class index=6, Name and Type index=431
+433: tag=1: utf8 string: decode$18
+434: tag=1: utf8 string: _46
+435: tag=12: name and type descriptor: name index=434, type index=8
+436: tag=9: field: Class index=6, Name and Type index=435
+437: tag=12: name and type descriptor: name index=433, type index=285
+438: tag=9: field: Class index=6, Name and Type index=437
+439: tag=1: utf8 string: reset$19
+440: tag=1: utf8 string: _47
+441: tag=12: name and type descriptor: name index=440, type index=8
+442: tag=9: field: Class index=6, Name and Type index=441
+443: tag=12: name and type descriptor: name index=439, type index=285
+444: tag=9: field: Class index=6, Name and Type index=443
+445: tag=12: name and type descriptor: name index=423, type index=285
+446: tag=9: field: Class index=6, Name and Type index=445
+447: tag=1: utf8 string: BufferedIncrementalDecoder
+448: tag=8: String: utf8 index=447
+449: tag=1: utf8 string: BufferedIncrementalDecoder$20
+450: tag=1: utf8 string: _48
+451: tag=12: name and type descriptor: name index=450, type index=8
+452: tag=9: field: Class index=6, Name and Type index=451
+453: tag=1: utf8 string: __init__$21
+454: tag=12: name and type descriptor: name index=453, type index=285
+455: tag=9: field: Class index=6, Name and Type index=454
+456: tag=1: utf8 string: _buffer_decode$22
+457: tag=12: name and type descriptor: name index=456, type index=285
+458: tag=9: field: Class index=6, Name and Type index=457
+459: tag=1: utf8 string: _buffer_decode
+460: tag=8: String: utf8 index=459
+461: tag=1: utf8 string: decode$23
+462: tag=12: name and type descriptor: name index=461, type index=285
+463: tag=9: field: Class index=6, Name and Type index=462
+464: tag=1: utf8 string: reset$24
+465: tag=12: name and type descriptor: name index=464, type index=285
+466: tag=9: field: Class index=6, Name and Type index=465
+467: tag=12: name and type descriptor: name index=449, type index=285
+468: tag=9: field: Class index=6, Name and Type index=467
+469: tag=1: utf8 string: StreamWriter
+470: tag=8: String: utf8 index=469
+471: tag=1: utf8 string: StreamWriter$25
+472: tag=1: utf8 string: __init__$26
+473: tag=1: utf8 string: _49
+474: tag=12: name and type descriptor: name index=473, type index=8
+475: tag=9: field: Class index=6, Name and Type index=474
+476: tag=1: utf8 string: stream
+477: tag=8: String: utf8 index=476
+478: tag=12: name and type descriptor: name index=472, type index=285
+479: tag=9: field: Class index=6, Name and Type index=478
+480: tag=1: utf8 string: write$27
+481: tag=1: utf8 string: _50
+482: tag=12: name and type descriptor: name index=481, type index=8
+483: tag=9: field: Class index=6, Name and Type index=482
+484: tag=1: utf8 string: write
+485: tag=8: String: utf8 index=484
+486: tag=12: name and type descriptor: name index=480, type index=285
+487: tag=9: field: Class index=6, Name and Type index=486
+488: tag=1: utf8 string: writelines$28
+489: tag=1: utf8 string: _51
+490: tag=12: name and type descriptor: name index=489, type index=8
+491: tag=9: field: Class index=6, Name and Type index=490
+492: tag=1: utf8 string: join
+493: tag=8: String: utf8 index=492
+494: tag=12: name and type descriptor: name index=488, type index=285
+495: tag=9: field: Class index=6, Name and Type index=494
+496: tag=1: utf8 string: writelines
+497: tag=8: String: utf8 index=496
+498: tag=1: utf8 string: reset$29
+499: tag=1: utf8 string: _52
+500: tag=12: name and type descriptor: name index=499, type index=8
+501: tag=9: field: Class index=6, Name and Type index=500
+502: tag=12: name and type descriptor: name index=498, type index=285
+503: tag=9: field: Class index=6, Name and Type index=502
+504: tag=1: utf8 string: getattr
+505: tag=8: String: utf8 index=504
+506: tag=1: utf8 string: __getattr__$30
+507: tag=1: utf8 string: _53
+508: tag=12: name and type descriptor: name index=507, type index=8
+509: tag=9: field: Class index=6, Name and Type index=508
+510: tag=12: name and type descriptor: name index=506, type index=285
+511: tag=9: field: Class index=6, Name and Type index=510
+512: tag=8: String: utf8 index=202
+513: tag=1: utf8 string: __enter__$31
+514: tag=12: name and type descriptor: name index=513, type index=285
+515: tag=9: field: Class index=6, Name and Type index=514
+516: tag=1: utf8 string: __enter__
+517: tag=8: String: utf8 index=516
+518: tag=1: utf8 string: __exit__$32
+519: tag=1: utf8 string: close
+520: tag=8: String: utf8 index=519
+521: tag=1: utf8 string: (Lorg/python/core/ThreadState;)Lorg/python/core/PyObject;
+522: tag=12: name and type descriptor: name index=75, type index=521
+523: tag=10: method: Class index=70, Name and Type index=522
+524: tag=12: name and type descriptor: name index=518, type index=285
+525: tag=9: field: Class index=6, Name and Type index=524
+526: tag=1: utf8 string: __exit__
+527: tag=8: String: utf8 index=526
+528: tag=12: name and type descriptor: name index=471, type index=285
+529: tag=9: field: Class index=6, Name and Type index=528
+530: tag=1: utf8 string: StreamReader
+531: tag=8: String: utf8 index=530
+532: tag=1: utf8 string: StreamReader$33
+533: tag=1: utf8 string: __init__$34
+534: tag=1: utf8 string: _54
+535: tag=12: name and type descriptor: name index=534, type index=8
+536: tag=9: field: Class index=6, Name and Type index=535
+537: tag=1: utf8 string: bytebuffer
+538: tag=8: String: utf8 index=537
+539: tag=1: utf8 string: charbuffer
+540: tag=8: String: utf8 index=539
+541: tag=1: utf8 string: linebuffer
+542: tag=8: String: utf8 index=541
+543: tag=12: name and type descriptor: name index=533, type index=285
+544: tag=9: field: Class index=6, Name and Type index=543
+545: tag=1: utf8 string: decode$35
+546: tag=12: name and type descriptor: name index=545, type index=285
+547: tag=9: field: Class index=6, Name and Type index=546
+548: tag=1: utf8 string: _55
+549: tag=1: utf8 string: Lorg/python/core/PyInteger;
+550: tag=12: name and type descriptor: name index=548, type index=549
+551: tag=9: field: Class index=6, Name and Type index=550
+552: tag=1: utf8 string: read$36
+553: tag=1: utf8 string: _56
+554: tag=12: name and type descriptor: name index=553, type index=8
+555: tag=9: field: Class index=6, Name and Type index=554
+556: tag=1: utf8 string: _57
+557: tag=12: name and type descriptor: name index=556, type index=549
+558: tag=9: field: Class index=6, Name and Type index=557
+559: tag=1: utf8 string: _lt
+560: tag=12: name and type descriptor: name index=559, type index=72
+561: tag=10: method: Class index=70, Name and Type index=560
+562: tag=1: utf8 string: len
+563: tag=8: String: utf8 index=562
+564: tag=1: utf8 string: _ge
+565: tag=12: name and type descriptor: name index=564, type index=72
+566: tag=10: method: Class index=70, Name and Type index=565
+567: tag=1: utf8 string: read
+568: tag=8: String: utf8 index=567
+569: tag=1: utf8 string: UnicodeDecodeError
+570: tag=8: String: utf8 index=569
+571: tag=1: utf8 string: start
+572: tag=8: String: utf8 index=571
+573: tag=1: utf8 string: splitlines
+574: tag=8: String: utf8 index=573
+575: tag=1: utf8 string: True
+576: tag=8: String: utf8 index=575
+577: tag=1: utf8 string: _58
+578: tag=12: name and type descriptor: name index=577, type index=549
+579: tag=9: field: Class index=6, Name and Type index=578
+580: tag=1: utf8 string: _le
+581: tag=12: name and type descriptor: name index=580, type index=72
+582: tag=10: method: Class index=70, Name and Type index=581
+583: tag=1: utf8 string: ()Lorg/python/core/PyException;
+584: tag=12: name and type descriptor: name index=79, type index=583
+585: tag=10: method: Class index=41, Name and Type index=584
+586: tag=1: utf8 string: _iadd
+587: tag=12: name and type descriptor: name index=586, type index=72
+588: tag=10: method: Class index=70, Name and Type index=587
+589: tag=1: utf8 string: __not__
+590: tag=12: name and type descriptor: name index=589, type index=308
+591: tag=10: method: Class index=70, Name and Type index=590
+592: tag=12: name and type descriptor: name index=552, type index=285
+593: tag=9: field: Class index=6, Name and Type index=592
+594: tag=1: utf8 string: readline$37
+595: tag=1: utf8 string: _59
+596: tag=12: name and type descriptor: name index=595, type index=8
+597: tag=9: field: Class index=6, Name and Type index=596
+598: tag=1: utf8 string: __getitem__
+599: tag=12: name and type descriptor: name index=598, type index=72
+600: tag=10: method: Class index=70, Name and Type index=599
+601: tag=1: utf8 string: __delitem__
+602: tag=1: utf8 string: (Lorg/python/core/PyObject;)V
+603: tag=12: name and type descriptor: name index=601, type index=602
+604: tag=10: method: Class index=70, Name and Type index=603
+605: tag=1: utf8 string: _60
+606: tag=12: name and type descriptor: name index=605, type index=549
+607: tag=9: field: Class index=6, Name and Type index=606
+608: tag=1: utf8 string: java/lang/String
+609: tag=7: Class: utf8 index=608
+610: tag=1: utf8 string: firstline
+611: tag=8: String: utf8 index=610
+612: tag=1: utf8 string: (Lorg/python/core/ThreadState;[Lorg/python/core/PyObject;[Ljava/lang/String;)Lorg/python/core/PyObject;
+613: tag=12: name and type descriptor: name index=75, type index=612
+614: tag=10: method: Class index=70, Name and Type index=613
+615: tag=1: utf8 string: endswith
+616: tag=8: String: utf8 index=615
+617: tag=1: utf8 string: _61
+618: tag=12: name and type descriptor: name index=617, type index=8
+619: tag=9: field: Class index=6, Name and Type index=618
+620: tag=1: utf8 string: size
+621: tag=8: String: utf8 index=620
+622: tag=1: utf8 string: chars
+623: tag=8: String: utf8 index=622
+624: tag=1: utf8 string: _gt
+625: tag=12: name and type descriptor: name index=624, type index=72
+626: tag=10: method: Class index=70, Name and Type index=625
+627: tag=1: utf8 string: __setitem__
+628: tag=1: utf8 string: (Lorg/python/core/PyObject;Lorg/python/core/PyObject;)V
+629: tag=12: name and type descriptor: name index=627, type index=628
+630: tag=10: method: Class index=70, Name and Type index=629
+631: tag=1: utf8 string: _ne
+632: tag=12: name and type descriptor: name index=631, type index=72
+633: tag=10: method: Class index=70, Name and Type index=632
+634: tag=1: utf8 string: _isnot
+635: tag=12: name and type descriptor: name index=634, type index=72
+636: tag=10: method: Class index=70, Name and Type index=635
+637: tag=1: utf8 string: _62
+638: tag=12: name and type descriptor: name index=637, type index=549
+639: tag=9: field: Class index=6, Name and Type index=638
+640: tag=1: utf8 string: _63
+641: tag=12: name and type descriptor: name index=640, type index=549
+642: tag=9: field: Class index=6, Name and Type index=641
+643: tag=1: utf8 string: _imul
+644: tag=12: name and type descriptor: name index=643, type index=72
+645: tag=10: method: Class index=70, Name and Type index=644
+646: tag=12: name and type descriptor: name index=594, type index=285
+647: tag=9: field: Class index=6, Name and Type index=646
+648: tag=1: utf8 string: readline
+649: tag=8: String: utf8 index=648
+650: tag=1: utf8 string: readlines$38
+651: tag=1: utf8 string: _64
+652: tag=12: name and type descriptor: name index=651, type index=8
+653: tag=9: field: Class index=6, Name and Type index=652
+654: tag=12: name and type descriptor: name index=650, type index=285
+655: tag=9: field: Class index=6, Name and Type index=654
+656: tag=1: utf8 string: readlines
+657: tag=8: String: utf8 index=656
+658: tag=1: utf8 string: reset$39
+659: tag=1: utf8 string: _65
+660: tag=12: name and type descriptor: name index=659, type index=8
+661: tag=9: field: Class index=6, Name and Type index=660
+662: tag=1: utf8 string: _66
+663: tag=1: utf8 string: Lorg/python/core/PyUnicode;
+664: tag=12: name and type descriptor: name index=662, type index=663
+665: tag=9: field: Class index=6, Name and Type index=664
+666: tag=12: name and type descriptor: name index=658, type index=285
+667: tag=9: field: Class index=6, Name and Type index=666
+668: tag=1: utf8 string: seek$40
+669: tag=1: utf8 string: _67
+670: tag=12: name and type descriptor: name index=669, type index=8
+671: tag=9: field: Class index=6, Name and Type index=670
+672: tag=1: utf8 string: seek
+673: tag=8: String: utf8 index=672
+674: tag=12: name and type descriptor: name index=668, type index=285
+675: tag=9: field: Class index=6, Name and Type index=674
+676: tag=1: utf8 string: next$41
+677: tag=1: utf8 string: _68
+678: tag=12: name and type descriptor: name index=677, type index=8
+679: tag=9: field: Class index=6, Name and Type index=678
+680: tag=1: utf8 string: StopIteration
+681: tag=8: String: utf8 index=680
+682: tag=12: name and type descriptor: name index=676, type index=285
+683: tag=9: field: Class index=6, Name and Type index=682
+684: tag=1: utf8 string: next
+685: tag=8: String: utf8 index=684
+686: tag=1: utf8 string: __iter__$42
+687: tag=12: name and type descriptor: name index=686, type index=285
+688: tag=9: field: Class index=6, Name and Type index=687
+689: tag=1: utf8 string: __iter__
+690: tag=8: String: utf8 index=689
+691: tag=1: utf8 string: __getattr__$43
+692: tag=12: name and type descriptor: name index=691, type index=285
+693: tag=9: field: Class index=6, Name and Type index=692
+694: tag=1: utf8 string: __enter__$44
+695: tag=12: name and type descriptor: name index=694, type index=285
+696: tag=9: field: Class index=6, Name and Type index=695
+697: tag=1: utf8 string: __exit__$45
+698: tag=12: name and type descriptor: name index=697, type index=285
+699: tag=9: field: Class index=6, Name and Type index=698
+700: tag=12: name and type descriptor: name index=532, type index=285
+701: tag=9: field: Class index=6, Name and Type index=700
+702: tag=1: utf8 string: StreamReaderWriter
+703: tag=8: String: utf8 index=702
+704: tag=1: utf8 string: StreamReaderWriter$46
+705: tag=1: utf8 string: _69
+706: tag=12: name and type descriptor: name index=705, type index=8
+707: tag=9: field: Class index=6, Name and Type index=706
+708: tag=1: utf8 string: _70
+709: tag=12: name and type descriptor: name index=708, type index=8
+710: tag=9: field: Class index=6, Name and Type index=709
+711: tag=1: utf8 string: encoding
+712: tag=8: String: utf8 index=711
+713: tag=1: utf8 string: __init__$47
+714: tag=1: utf8 string: _71
+715: tag=12: name and type descriptor: name index=714, type index=8
+716: tag=9: field: Class index=6, Name and Type index=715
+717: tag=1: utf8 string: reader
+718: tag=8: String: utf8 index=717
+719: tag=1: utf8 string: writer
+720: tag=8: String: utf8 index=719
+721: tag=12: name and type descriptor: name index=713, type index=285
+722: tag=9: field: Class index=6, Name and Type index=721
+723: tag=1: utf8 string: read$48
+724: tag=12: name and type descriptor: name index=723, type index=285
+725: tag=9: field: Class index=6, Name and Type index=724
+726: tag=1: utf8 string: readline$49
+727: tag=12: name and type descriptor: name index=726, type index=285
+728: tag=9: field: Class index=6, Name and Type index=727
+729: tag=1: utf8 string: readlines$50
+730: tag=12: name and type descriptor: name index=729, type index=285
+731: tag=9: field: Class index=6, Name and Type index=730
+732: tag=1: utf8 string: next$51
+733: tag=12: name and type descriptor: name index=732, type index=285
+734: tag=9: field: Class index=6, Name and Type index=733
+735: tag=1: utf8 string: __iter__$52
+736: tag=12: name and type descriptor: name index=735, type index=285
+737: tag=9: field: Class index=6, Name and Type index=736
+738: tag=1: utf8 string: write$53
+739: tag=12: name and type descriptor: name index=738, type index=285
+740: tag=9: field: Class index=6, Name and Type index=739
+741: tag=1: utf8 string: writelines$54
+742: tag=12: name and type descriptor: name index=741, type index=285
+743: tag=9: field: Class index=6, Name and Type index=742
+744: tag=1: utf8 string: reset$55
+745: tag=12: name and type descriptor: name index=744, type index=285
+746: tag=9: field: Class index=6, Name and Type index=745
+747: tag=1: utf8 string: __getattr__$56
+748: tag=12: name and type descriptor: name index=747, type index=285
+749: tag=9: field: Class index=6, Name and Type index=748
+750: tag=1: utf8 string: __enter__$57
+751: tag=12: name and type descriptor: name index=750, type index=285
+752: tag=9: field: Class index=6, Name and Type index=751
+753: tag=1: utf8 string: __exit__$58
+754: tag=12: name and type descriptor: name index=753, type index=285
+755: tag=9: field: Class index=6, Name and Type index=754
+756: tag=12: name and type descriptor: name index=704, type index=285
+757: tag=9: field: Class index=6, Name and Type index=756
+758: tag=1: utf8 string: StreamRecoder
+759: tag=8: String: utf8 index=758
+760: tag=1: utf8 string: StreamRecoder$59
+761: tag=1: utf8 string: _72
+762: tag=12: name and type descriptor: name index=761, type index=8
+763: tag=9: field: Class index=6, Name and Type index=762
+764: tag=1: utf8 string: data_encoding
+765: tag=8: String: utf8 index=764
+766: tag=1: utf8 string: file_encoding
+767: tag=8: String: utf8 index=766
+768: tag=1: utf8 string: __init__$60
+769: tag=1: utf8 string: _73
+770: tag=12: name and type descriptor: name index=769, type index=8
+771: tag=9: field: Class index=6, Name and Type index=770
+772: tag=12: name and type descriptor: name index=768, type index=285
+773: tag=9: field: Class index=6, Name and Type index=772
+774: tag=1: utf8 string: read$61
+775: tag=12: name and type descriptor: name index=774, type index=285
+776: tag=9: field: Class index=6, Name and Type index=775
+777: tag=1: utf8 string: readline$62
+778: tag=1: utf8 string: _is
+779: tag=12: name and type descriptor: name index=778, type index=72
+780: tag=10: method: Class index=70, Name and Type index=779
+781: tag=12: name and type descriptor: name index=777, type index=285
+782: tag=9: field: Class index=6, Name and Type index=781
+783: tag=1: utf8 string: readlines$63
+784: tag=12: name and type descriptor: name index=783, type index=285
+785: tag=9: field: Class index=6, Name and Type index=784
+786: tag=1: utf8 string: next$64
+787: tag=12: name and type descriptor: name index=786, type index=285
+788: tag=9: field: Class index=6, Name and Type index=787
+789: tag=1: utf8 string: __iter__$65
+790: tag=12: name and type descriptor: name index=789, type index=285
+791: tag=9: field: Class index=6, Name and Type index=790
+792: tag=1: utf8 string: write$66
+793: tag=12: name and type descriptor: name index=792, type index=285
+794: tag=9: field: Class index=6, Name and Type index=793
+795: tag=1: utf8 string: writelines$67
+796: tag=12: name and type descriptor: name index=795, type index=285
+797: tag=9: field: Class index=6, Name and Type index=796
+798: tag=1: utf8 string: reset$68
+799: tag=12: name and type descriptor: name index=798, type index=285
+800: tag=9: field: Class index=6, Name and Type index=799
+801: tag=1: utf8 string: __getattr__$69
+802: tag=12: name and type descriptor: name index=801, type index=285
+803: tag=9: field: Class index=6, Name and Type index=802
+804: tag=1: utf8 string: __enter__$70
+805: tag=12: name and type descriptor: name index=804, type index=285
+806: tag=9: field: Class index=6, Name and Type index=805
+807: tag=1: utf8 string: __exit__$71
+808: tag=12: name and type descriptor: name index=807, type index=285
+809: tag=9: field: Class index=6, Name and Type index=808
+810: tag=12: name and type descriptor: name index=760, type index=285
+811: tag=9: field: Class index=6, Name and Type index=810
+812: tag=1: utf8 string: _74
+813: tag=12: name and type descriptor: name index=812, type index=8
+814: tag=9: field: Class index=6, Name and Type index=813
+815: tag=1: utf8 string: open$72
+816: tag=1: utf8 string: _75
+817: tag=12: name and type descriptor: name index=816, type index=8
+818: tag=9: field: Class index=6, Name and Type index=817
+819: tag=1: utf8 string: _76
+820: tag=12: name and type descriptor: name index=819, type index=8
+821: tag=9: field: Class index=6, Name and Type index=820
+822: tag=1: utf8 string: _notin
+823: tag=12: name and type descriptor: name index=822, type index=72
+824: tag=10: method: Class index=70, Name and Type index=823
+825: tag=1: utf8 string: open
+826: tag=8: String: utf8 index=825
+827: tag=1: utf8 string: lookup
+828: tag=8: String: utf8 index=827
+829: tag=1: utf8 string: (Lorg/python/core/ThreadState;Lorg/python/core/PyObject;Lorg/python/core/PyObject;Lorg/python/core/PyObject;Lorg/python/core/PyObject;)Lorg/python/core/PyObject;
+830: tag=12: name and type descriptor: name index=75, type index=829
+831: tag=10: method: Class index=70, Name and Type index=830
+832: tag=12: name and type descriptor: name index=815, type index=285
+833: tag=9: field: Class index=6, Name and Type index=832
+834: tag=1: utf8 string: EncodedFile$73
+835: tag=1: utf8 string: _77
+836: tag=12: name and type descriptor: name index=835, type index=8
+837: tag=9: field: Class index=6, Name and Type index=836
+838: tag=1: utf8 string: (Lorg/python/core/ThreadState;[Lorg/python/core/PyObject;)Lorg/python/core/PyObject;
+839: tag=12: name and type descriptor: name index=75, type index=838
+840: tag=10: method: Class index=70, Name and Type index=839
+841: tag=12: name and type descriptor: name index=834, type index=285
+842: tag=9: field: Class index=6, Name and Type index=841
+843: tag=1: utf8 string: EncodedFile
+844: tag=8: String: utf8 index=843
+845: tag=1: utf8 string: getencoder$74
+846: tag=1: utf8 string: _78
+847: tag=12: name and type descriptor: name index=846, type index=8
+848: tag=9: field: Class index=6, Name and Type index=847
+849: tag=12: name and type descriptor: name index=845, type index=285
+850: tag=9: field: Class index=6, Name and Type index=849
+851: tag=1: utf8 string: getencoder
+852: tag=8: String: utf8 index=851
+853: tag=1: utf8 string: getdecoder$75
+854: tag=1: utf8 string: _79
+855: tag=12: name and type descriptor: name index=854, type index=8
+856: tag=9: field: Class index=6, Name and Type index=855
+857: tag=12: name and type descriptor: name index=853, type index=285
+858: tag=9: field: Class index=6, Name and Type index=857
+859: tag=1: utf8 string: getdecoder
+860: tag=8: String: utf8 index=859
+861: tag=1: utf8 string: getincrementalencoder$76
+862: tag=1: utf8 string: _80
+863: tag=12: name and type descriptor: name index=862, type index=8
+864: tag=9: field: Class index=6, Name and Type index=863
+865: tag=1: utf8 string: LookupError
+866: tag=8: String: utf8 index=865
+867: tag=12: name and type descriptor: name index=861, type index=285
+868: tag=9: field: Class index=6, Name and Type index=867
+869: tag=1: utf8 string: getincrementalencoder
+870: tag=8: String: utf8 index=869
+871: tag=1: utf8 string: getincrementaldecoder$77
+872: tag=1: utf8 string: _81
+873: tag=12: name and type descriptor: name index=872, type index=8
+874: tag=9: field: Class index=6, Name and Type index=873
+875: tag=12: name and type descriptor: name index=871, type index=285
+876: tag=9: field: Class index=6, Name and Type index=875
+877: tag=1: utf8 string: getincrementaldecoder
+878: tag=8: String: utf8 index=877
+879: tag=1: utf8 string: getreader$78
+880: tag=1: utf8 string: _82
+881: tag=12: name and type descriptor: name index=880, type index=8
+882: tag=9: field: Class index=6, Name and Type index=881
+883: tag=12: name and type descriptor: name index=879, type index=285
+884: tag=9: field: Class index=6, Name and Type index=883
+885: tag=1: utf8 string: getreader
+886: tag=8: String: utf8 index=885
+887: tag=1: utf8 string: getwriter$79
+888: tag=1: utf8 string: _83
+889: tag=12: name and type descriptor: name index=888, type index=8
+890: tag=9: field: Class index=6, Name and Type index=889
+891: tag=12: name and type descriptor: name index=887, type index=285
+892: tag=9: field: Class index=6, Name and Type index=891
+893: tag=1: utf8 string: getwriter
+894: tag=8: String: utf8 index=893
+895: tag=1: utf8 string: iterencode$80
+896: tag=1: utf8 string: _84
+897: tag=12: name and type descriptor: name index=896, type index=8
+898: tag=9: field: Class index=6, Name and Type index=897
+899: tag=1: utf8 string: _callextra
+900: tag=1: utf8 string: ([Lorg/python/core/PyObject;[Ljava/lang/String;Lorg/python/core/PyObject;Lorg/python/core/PyObject;)Lorg/python/core/PyObject;
+901: tag=12: name and type descriptor: name index=899, type index=900
+902: tag=10: method: Class index=70, Name and Type index=901
+903: tag=12: name and type descriptor: name index=689, type index=308
+904: tag=10: method: Class index=70, Name and Type index=903
+905: tag=1: utf8 string: java/lang/Object
+906: tag=7: Class: utf8 index=905
+907: tag=1: utf8 string: f_savedlocals
+908: tag=1: utf8 string: [Ljava/lang/Object;
+909: tag=12: name and type descriptor: name index=907, type index=908
+910: tag=9: field: Class index=12, Name and Type index=909
+911: tag=1: utf8 string: getGeneratorInput
+912: tag=1: utf8 string: ()Ljava/lang/Object;
+913: tag=12: name and type descriptor: name index=911, type index=912
+914: tag=10: method: Class index=12, Name and Type index=913
+915: tag=1: utf8 string: __iternext__
+916: tag=12: name and type descriptor: name index=915, type index=308
+917: tag=10: method: Class index=70, Name and Type index=916
+918: tag=12: name and type descriptor: name index=895, type index=285
+919: tag=9: field: Class index=6, Name and Type index=918
+920: tag=1: utf8 string: iterencode
+921: tag=8: String: utf8 index=920
+922: tag=1: utf8 string: iterdecode$81
+923: tag=1: utf8 string: _85
+924: tag=12: name and type descriptor: name index=923, type index=8
+925: tag=9: field: Class index=6, Name and Type index=924
+926: tag=12: name and type descriptor: name index=922, type index=285
+927: tag=9: field: Class index=6, Name and Type index=926
+928: tag=1: utf8 string: iterdecode
+929: tag=8: String: utf8 index=928
+930: tag=1: utf8 string: make_identity_dict$82
+931: tag=1: utf8 string: _86
+932: tag=12: name and type descriptor: name index=931, type index=8
+933: tag=9: field: Class index=6, Name and Type index=932
+934: tag=1: utf8 string: org/python/core/PyDictionary
+935: tag=7: Class: utf8 index=934
+936: tag=10: method: Class index=935, Name and Type index=161
+937: tag=12: name and type descriptor: name index=930, type index=285
+938: tag=9: field: Class index=6, Name and Type index=937
+939: tag=1: utf8 string: make_identity_dict
+940: tag=8: String: utf8 index=939
+941: tag=1: utf8 string: make_encoding_map$83
+942: tag=1: utf8 string: _87
+943: tag=12: name and type descriptor: name index=942, type index=8
+944: tag=9: field: Class index=6, Name and Type index=943
+945: tag=1: utf8 string: items
+946: tag=8: String: utf8 index=945
+947: tag=1: utf8 string: _in
+948: tag=12: name and type descriptor: name index=947, type index=72
+949: tag=10: method: Class index=70, Name and Type index=948
+950: tag=12: name and type descriptor: name index=941, type index=285
+951: tag=9: field: Class index=6, Name and Type index=950
+952: tag=1: utf8 string: make_encoding_map
+953: tag=8: String: utf8 index=952
+954: tag=1: utf8 string: lookup_error
+955: tag=8: String: utf8 index=954
+956: tag=1: utf8 string: strict_errors
+957: tag=8: String: utf8 index=956
+958: tag=1: utf8 string: _88
+959: tag=12: name and type descriptor: name index=958, type index=8
+960: tag=9: field: Class index=6, Name and Type index=959
+961: tag=1: utf8 string: ignore_errors
+962: tag=8: String: utf8 index=961
+963: tag=1: utf8 string: _89
+964: tag=12: name and type descriptor: name index=963, type index=8
+965: tag=9: field: Class index=6, Name and Type index=964
+966: tag=1: utf8 string: replace_errors
+967: tag=8: String: utf8 index=966
+968: tag=1: utf8 string: _90
+969: tag=12: name and type descriptor: name index=968, type index=8
+970: tag=9: field: Class index=6, Name and Type index=969
+971: tag=1: utf8 string: xmlcharrefreplace_errors
+972: tag=8: String: utf8 index=971
+973: tag=1: utf8 string: _91
+974: tag=12: name and type descriptor: name index=973, type index=8
+975: tag=9: field: Class index=6, Name and Type index=974
+976: tag=1: utf8 string: backslashreplace_errors
+977: tag=8: String: utf8 index=976
+978: tag=1: utf8 string: _false
+979: tag=8: String: utf8 index=978
+980: tag=1: utf8 string: encodings
+981: tag=8: String: utf8 index=980
+982: tag=1: utf8 string: _92
+983: tag=12: name and type descriptor: name index=982, type index=8
+984: tag=9: field: Class index=6, Name and Type index=983
+985: tag=1: utf8 string: stdout
+986: tag=8: String: utf8 index=985
+987: tag=1: utf8 string: _93
+988: tag=12: name and type descriptor: name index=987, type index=8
+989: tag=9: field: Class index=6, Name and Type index=988
+990: tag=1: utf8 string: _94
+991: tag=12: name and type descriptor: name index=990, type index=8
+992: tag=9: field: Class index=6, Name and Type index=991
+993: tag=1: utf8 string: stdin
+994: tag=8: String: utf8 index=993
+995: tag=1: utf8 string: (Ljava/lang/String;)V
+996: tag=1: utf8 string: org/python/core/PyFunctionTable
+997: tag=7: Class: utf8 index=996
+998: tag=1: utf8 string: ()V
+999: tag=12: name and type descriptor: name index=159, type index=998
+1000: tag=10: method: Class index=997, Name and Type index=999
+1001: tag=1: utf8 string: self
+1002: tag=1: utf8 string: Lcodecs$py;
+1003: tag=12: name and type descriptor: name index=1001, type index=1002
+1004: tag=9: field: Class index=6, Name and Type index=1003
+1005: tag=1: utf8 string:  StreamRecoder instances provide a frontend - backend
+        view of encoding data.
+
+        They use the complete set of APIs returned by the
+        codecs.lookup() function to implement their task.
+
+        Data written to the stream is first decoded into an
+        intermediate format (which is dependent on the given codec
+        combination) and then written to the stream using an instance
+        of the provided Writer class.
+
+        In the other direction, data is read from the stream using a
+        Reader instance and then return encoded data to the caller.
+
+    
+1006: tag=8: String: utf8 index=1005
+1007: tag=1: utf8 string: org/python/core/PyString
+1008: tag=7: Class: utf8 index=1007
+1009: tag=1: utf8 string: fromInterned
+1010: tag=1: utf8 string: (Ljava/lang/String;)Lorg/python/core/PyString;
+1011: tag=12: name and type descriptor: name index=1009, type index=1010
+1012: tag=10: method: Class index=1008, Name and Type index=1011
+1013: tag=1: utf8 string: 
+        Creates a IncrementalDecoder instance.
+
+        The IncrementalDecoder may use different error handling schemes by
+        providing the errors keyword argument. See the module docstring
+        for a list of possible values.
+        
+1014: tag=8: String: utf8 index=1013
+1015: tag=1: utf8 string:  Creates a StreamWriter instance.
+
+            stream must be a file-like object open for writing
+            (binary) data.
+
+            The StreamWriter may use different error handling
+            schemes by providing the errors keyword argument. These
+            parameters are predefined:
+
+             'strict' - raise a ValueError (or a subclass)
+             'ignore' - ignore the character and continue with the next
+             'replace'- replace with a suitable replacement character
+             'xmlcharrefreplace' - Replace with the appropriate XML
+                                   character reference.
+             'backslashreplace'  - Replace with backslashed escape
+                                   sequences (only for encoding).
+
+            The set of allowed parameter values can be extended via
+            register_error.
+        
+1016: tag=8: String: utf8 index=1015
+1017: tag=1: utf8 string: strict
+1018: tag=8: String: utf8 index=1017
+1019: tag=1: utf8 string:  Creates an encoding map from a decoding map.
+
+        If a target mapping in the decoding map occurs multiple
+        times, then that target is mapped to None (undefined mapping),
+        causing an exception when encountered by the charmap codec
+        during translation.
+
+        One example where this happens is cp875.py which decodes
+        multiple character to \u001a.
+
+    
+1020: tag=8: String: utf8 index=1019
+1021: tag=1: utf8 string: newInteger
+1022: tag=1: utf8 string: (I)Lorg/python/core/PyInteger;
+1023: tag=12: name and type descriptor: name index=1021, type index=1022
+1024: tag=10: method: Class index=41, Name and Type index=1023
+1025: tag=1: utf8 string: ï»¿
+1026: tag=8: String: utf8 index=1025
+1027: tag=1: utf8 string:  Lookup up the codec for the given encoding and return
+        its decoder function.
+
+        Raises a LookupError in case the encoding cannot be found.
+
+    
+1028: tag=8: String: utf8 index=1027
+1029: tag=1: utf8 string:  Decodes data from the stream self.stream and returns the
+            resulting object.
+
+            chars indicates the number of characters to read from the
+            stream. read() will never return more than chars
+            characters, but it might return less, if there are not enough
+            characters available.
+
+            size indicates the approximate maximum number of bytes to
+            read from the stream for decoding purposes. The decoder
+            can modify this setting as appropriate. The default value
+            -1 indicates to read and decode as much as possible.  size
+            is intended to prevent having to decode huge files in one
+            step.
+
+            If firstline is true, and a UnicodeDecodeError happens
+            after the first line terminator in the input only the first line
+            will be returned, the rest of the input will be kept until the
+            next call to read().
+
+            The method should use a greedy read strategy meaning that
+            it should read as much data as is allowed within the
+            definition of the encoding and the given size, e.g.  if
+            optional encoding endings or state markers are available
+            on the stream, these should be read too.
+        
+1030: tag=8: String: utf8 index=1029
+1031: tag=1: utf8 string:  Set the input stream's current position.
+
+            Resets the codec buffers used for keeping state.
+        
+1032: tag=8: String: utf8 index=1031
+1033: tag=1: utf8 string:  Creates a StreamReader instance.
+
+            stream must be a file-like object open for reading
+            (binary) data.
+
+            The StreamReader may use different error handling
+            schemes by providing the errors keyword argument. These
+            parameters are predefined:
+
+             'strict' - raise a ValueError (or a subclass)
+             'ignore' - ignore the character and continue with the next
+             'replace'- replace with a suitable replacement character;
+
+            The set of allowed parameter values can be extended via
+            register_error.
+        
+1034: tag=8: String: utf8 index=1033
+1035: tag=1: utf8 string: utf-8
+1036: tag=8: String: utf8 index=1035
+1037: tag=1: utf8 string:  codecs -- Python Codec Registry, API and helpers.
+
+
+Written by Marc-Andre Lemburg (mal@lemburg.com).
+
+(c) Copyright CNRI, All Rights Reserved. NO WARRANTY.
+
+
+1038: tag=8: String: utf8 index=1037
+1039: tag=1: utf8 string: <%s.%s object for encoding %s at 0x%x>
+1040: tag=8: String: utf8 index=1039
+1041: tag=1: utf8 string:  Writes the object's contents encoded to self.stream.
+        
+1042: tag=8: String: utf8 index=1041
+1043: tag=1: utf8 string:  make_identity_dict(rng) -> dict
+
+        Return a dictionary where elements of the rng sequence are
+        mapped to themselves.
+
+    
+1044: tag=8: String: utf8 index=1043
+1045: tag=1: utf8 string: ÿþ
+1046: tag=8: String: utf8 index=1045
+1047: tag=1: utf8 string: register_error
+1048: tag=8: String: utf8 index=1047
+1049: tag=1: utf8 string:  Return the next decoded line from the input stream.
+1050: tag=8: String: utf8 index=1049
+1051: tag=1: utf8 string:  Read all lines available on the input stream
+            and return them as list of lines.
+
+            Line breaks are implemented using the codec's decoder
+            method and are included in the list entries.
+
+            sizehint, if given, is ignored since there is no efficient
+            way to finding the true end-of-line.
+
+        
+1052: tag=8: String: utf8 index=1051
+1053: tag=1: utf8 string:  Read one line from the input stream and return the
+            decoded data.
+
+            size, if given, is passed as size argument to the
+            read() method.
+
+        
+1054: tag=8: String: utf8 index=1053
+1055: tag=1: utf8 string: ignore
+1056: tag=8: String: utf8 index=1055
+1057: tag=1: utf8 string: 
+    An IncrementalDecoder decodes an input in multiple steps. The input can be
+    passed piece by piece to the decode() method. The IncrementalDecoder
+    remembers the state of the decoding process between calls to decode().
+    
+1058: tag=8: String: utf8 index=1057
+1059: tag=1: utf8 string: backslashreplace
+1060: tag=8: String: utf8 index=1059
+1061: tag=1: utf8 string: 
+    Decoding iterator.
+
+    Decodes the input strings from the iterator using a IncrementalDecoder.
+
+    errors and kwargs are passed through to the IncrementalDecoder
+    constructor.
+    
+1062: tag=8: String: utf8 index=1061
+1063: tag=1: utf8 string: Failed to load the builtin codecs: %s
+1064: tag=8: String: utf8 index=1063
+1065: tag=1: utf8 string: little
+1066: tag=8: String: utf8 index=1065
+1067: tag=1: utf8 string: 
+        Encodes input and returns the resulting object.
+        
+1068: tag=8: String: utf8 index=1067
+1069: tag=1: utf8 string: ????þÿ
+1070: tag=8: String: utf8 index=1069
+1071: tag=1: utf8 string: þÿ
+1072: tag=8: String: utf8 index=1071
+1073: tag=1: utf8 string:  Creates a StreamReaderWriter instance.
+
+            stream must be a Stream-like object.
+
+            Reader, Writer must be factory functions or classes
+            providing the StreamReader, StreamWriter interface resp.
+
+            Error handling is done in the same way as defined for the
+            StreamWriter/Readers.
+
+        
+1074: tag=8: String: utf8 index=1073
+1075: tag=1: utf8 string: replace
+1076: tag=8: String: utf8 index=1075
+1077: tag=1: utf8 string: b
+1078: tag=8: String: utf8 index=1077
+1079: tag=1: utf8 string:  Lookup up the codec for the given encoding and return
+        its encoder function.
+
+        Raises a LookupError in case the encoding cannot be found.
+
+    
+1080: tag=8: String: utf8 index=1079
+1081: tag=1: utf8 string:  Decodes the object input and returns a tuple (output
+            object, length consumed).
+
+            input must be an object which provides the bf_getreadbuf
+            buffer slot. Python strings, buffer objects and memory
+            mapped files are examples of objects providing this slot.
+
+            errors defines the error handling to apply. It defaults to
+            'strict' handling.
+
+            The method may not store state in the Codec instance. Use
+            StreamCodec for codecs which have to keep state in order to
+            make encoding/decoding efficient.
+
+            The decoder must be able to handle zero length input and
+            return an empty object of the output object type in this
+            situation.
+
+        
+1082: tag=8: String: utf8 index=1081
+1083: tag=1: utf8 string: __main__
+1084: tag=8: String: utf8 index=1083
+1085: tag=1: utf8 string:  Encodes the object input and returns a tuple (output
+            object, length consumed).
+
+            errors defines the error handling to apply. It defaults to
+            'strict' handling.
+
+            The method may not store state in the Codec instance. Use
+            StreamCodec for codecs which have to keep state in order to
+            make encoding/decoding efficient.
+
+            The encoder must be able to handle zero length input and
+            return an empty object of the output object type in this
+            situation.
+
+        
+1086: tag=8: String: utf8 index=1085
+1087: tag=1: utf8 string:  Resets the codec buffers used for keeping state.
+
+            Note that no stream repositioning should take place.
+            This method is primarily intended to be able to recover
+            from decoding errors.
+
+        
+1088: tag=8: String: utf8 index=1087
+1089: tag=1: utf8 string: 
+    This subclass of IncrementalEncoder can be used as the baseclass for an
+    incremental encoder if the encoder must keep some of the output in a
+    buffer between calls to encode().
+    
+1090: tag=8: String: utf8 index=1089
+1091: tag=1: utf8 string: 
+        Creates an IncrementalEncoder instance.
+
+        The IncrementalEncoder may use different error handling schemes by
+        providing the errors keyword argument. See the module docstring
+        for a list of possible values.
+        
+1092: tag=8: String: utf8 index=1091
+1093: tag=1: utf8 string:  Defines the interface for stateless encoders/decoders.
+
+        The .encode()/.decode() methods may use different error
+        handling schemes by providing the errors argument. These
+        string values are predefined:
+
+         'strict' - raise a ValueError error (or a subclass)
+         'ignore' - ignore the character and continue with the next
+         'replace' - replace with a suitable replacement character;
+                    Python will use the official U+FFFD REPLACEMENT
+                    CHARACTER for the builtin Unicode codecs on
+                    decoding and '?' on encoding.
+         'xmlcharrefreplace' - Replace with the appropriate XML
+                               character reference (only for encoding).
+         'backslashreplace'  - Replace with backslashed escape sequences
+                               (only for encoding).
+
+        The set of allowed values can be extended via register_error.
+
+    
+1094: tag=8: String: utf8 index=1093
+1095: tag=1: utf8 string: unknown
+1096: tag=8: String: utf8 index=1095
+1097: tag=1: utf8 string: xmlcharrefreplace
+1098: tag=8: String: utf8 index=1097
+1099: tag=1: utf8 string: ÿþ????
+1100: tag=8: String: utf8 index=1099
+1101: tag=1: utf8 string: _0
+1102: tag=1: utf8 string: C:\jython2.5.2\Lib\codecs.py
+1103: tag=8: String: utf8 index=1102
+1104: tag=12: name and type descriptor: name index=1101, type index=8
+1105: tag=9: field: Class index=6, Name and Type index=1104
+1106: tag=1: utf8 string:  Lookup up the codec for the given encoding and return
+        its IncrementalDecoder class or factory function.
+
+        Raises a LookupError in case the encoding cannot be found
+        or the codecs doesn't provide an incremental decoder.
+
+    
+1107: tag=8: String: utf8 index=1106
+1108: tag=1: utf8 string: 
+        Resets the encoder to the initial state.
+        
+1109: tag=8: String: utf8 index=1108
+1110: tag=1: utf8 string: 
+    Encoding iterator.
+
+    Encodes the input strings from the iterator using a IncrementalEncoder.
+
+    errors and kwargs are passed through to the IncrementalEncoder
+    constructor.
+    
+1111: tag=8: String: utf8 index=1110
+1112: tag=1: utf8 string: 
+        Resets the decoder to the initial state.
+        
+1113: tag=8: String: utf8 index=1112
+1114: tag=1: utf8 string:  Flushes and resets the codec buffers used for keeping state.
+
+            Calling this method should ensure that the data on the
+            output is put into a clean state, that allows appending
+            of new fresh data without having to rescan the whole
+            stream to recover state.
+
+        
+1115: tag=8: String: utf8 index=1114
+1116: tag=1: utf8 string:  Writes the concatenated list of strings to the stream
+            using .write().
+        
+1117: tag=8: String: utf8 index=1116
+1118: tag=1: utf8 string: latin-1
+1119: tag=8: String: utf8 index=1118
+1120: tag=1: utf8 string:  Lookup up the codec for the given encoding and return
+        its StreamWriter class or factory function.
+
+        Raises a LookupError in case the encoding cannot be found.
+
+    
+1121: tag=8: String: utf8 index=1120
+1122: tag=1: utf8 string: 
+    An IncrementalEncoder encodes an input in multiple steps. The input can be
+    passed piece by piece to the encode() method. The IncrementalEncoder remembers
+    the state of the Encoding process between calls to encode().
+    
+1123: tag=8: String: utf8 index=1122
+1124: tag=1: utf8 string:  StreamReaderWriter instances allow wrapping streams which
+        work in both read and write modes.
+
+        The design is such that one can use the factory functions
+        returned by the codec.lookup() function to construct the
+        instance.
+
+    
+1125: tag=8: String: utf8 index=1124
+1126: tag=1: utf8 string: 
+    This subclass of IncrementalDecoder can be used as the baseclass for an
+    incremental decoder if the decoder must be able to handle incomplete byte
+    sequences.
+    
+1127: tag=8: String: utf8 index=1126
+1128: tag=1: utf8 string:  Lookup up the codec for the given encoding and return
+        its StreamReader class or factory function.
+
+        Raises a LookupError in case the encoding cannot be found.
+
+    
+1129: tag=8: String: utf8 index=1128
+1130: tag=1: utf8 string:  Inherit all other methods from the underlying stream.
+        
+1131: tag=8: String: utf8 index=1130
+1132: tag=1: utf8 string: 
+        Decodes input and returns the resulting object.
+        
+1133: tag=8: String: utf8 index=1132
+1134: tag=1: utf8 string: register
+1135: tag=8: String: utf8 index=1134
+1136: tag=1: utf8 string:  Lookup up the codec for the given encoding and return
+        its IncrementalEncoder class or factory function.
+
+        Raises a LookupError in case the encoding cannot be found
+        or the codecs doesn't provide an incremental encoder.
+
+    
+1137: tag=8: String: utf8 index=1136
+1138: tag=1: utf8 string:  Creates a StreamRecoder instance which implements a two-way
+            conversion: encode and decode work on the frontend (the
+            input to .read() and output of .write()) while
+            Reader and Writer work on the backend (reading and
+            writing to the stream).
+
+            You can use these objects to do transparent direct
+            recodings from e.g. latin-1 to utf-8 and back.
+
+            stream must be a file-like object.
+
+            encode, decode must adhere to the Codec interface, Reader,
+            Writer must be factory functions or classes providing the
+            StreamReader, StreamWriter interface resp.
+
+            encode and decode are needed for the frontend translation,
+            Reader and Writer for the backend translation. Unicode is
+            used as intermediate encoding.
+
+            Error handling is done in the same way as defined for the
+            StreamWriter/Readers.
+
+        
+1139: tag=8: String: utf8 index=1138
+1140: tag=1: utf8 string:  Return a wrapped version of file which provides transparent
+        encoding translation.
+
+        Strings written to the wrapped file are interpreted according
+        to the given data_encoding and then written to the original
+        file as string using file_encoding. The intermediate encoding
+        will usually be Unicode but depends on the specified codecs.
+
+        Strings are read from the file using file_encoding and then
+        passed back to the caller as string using data_encoding.
+
+        If file_encoding is not given, it defaults to data_encoding.
+
+        errors may be given to define the error handling. It defaults
+        to 'strict' which causes ValueErrors to be raised in case an
+        encoding error occurs.
+
+        The returned wrapped file object provides two extra attributes
+        .data_encoding and .file_encoding which reflect the given
+        parameters of the same name. The attributes can be used for
+        introspection by Python programs.
+
+    
+1141: tag=8: String: utf8 index=1140
+1142: tag=1: utf8 string:  Open an encoded file using the given mode and return
+        a wrapped version providing transparent encoding/decoding.
+
+        Note: The wrapped version will only accept the object format
+        defined by the codecs, i.e. Unicode objects for most builtin
+        codecs. Output is also codec dependent and will usually be
+        Unicode as well.
+
+        Files are always opened in binary mode, even if no binary mode
+        was specified. This is done to avoid data loss due to encodings
+        using 8-bit values. The default file mode is 'rb' meaning to
+        open the file in binary read mode.
+
+        encoding specifies the encoding which is to be used for the
+        file.
+
+        errors may be given to define the error handling. It defaults
+        to 'strict' which causes ValueErrors to be raised in case an
+        encoding error occurs.
+
+        buffering has the same meaning as for the builtin open() API.
+        It defaults to line buffered.
+
+        The returned wrapped file object provides an extra attribute
+        .encoding which allows querying the used encoding. This
+        attribute is only available if an encoding was specified as
+        parameter.
+
+    
+1143: tag=8: String: utf8 index=1142
+1144: tag=1: utf8 string: 
+1145: tag=8: String: utf8 index=1144
+1146: tag=1: utf8 string: rb
+1147: tag=8: String: utf8 index=1146
+1148: tag=1: 
+Warning: fread(): Length parameter must be greater than 0 in C:\Users\jean_roldao\Desktop\prog\DataInputStream.php on line 48
+utf8 string: 
+1149: tag=8: String: utf8 index=1148
+1150: tag=1: utf8 string: org/python/core/PyUnicode
+1151: tag=7: Class: utf8 index=1150
+1152: tag=1: utf8 string: (Ljava/lang/String;)Lorg/python/core/PyUnicode;
+1153: tag=12: name and type descriptor: name index=1009, type index=1152
+1154: tag=10: method: Class index=1151, Name and Type index=1153
+1155: tag=1: utf8 string: <module>
+1156: tag=8: String: utf8 index=1155
+1157: tag=1: utf8 string: newCode
+1158: tag=1: utf8 string: (I[Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IZZLorg/python/core/PyFunctionTable;I[Ljava/lang/String;[Ljava/lang/String;II)Lorg/python/core/PyCode;
+1159: tag=12: name and type descriptor: name index=1157, type index=1158
+1160: tag=10: method: Class index=41, Name and Type index=1159
+1161: tag=12: name and type descriptor: name index=1, type index=285
+1162: tag=9: field: Class index=6, Name and Type index=1161
+1163: tag=1: utf8 string: cls
+1164: tag=8: String: utf8 index=1163
+1165: tag=8: String: utf8 index=1001
+1166: tag=1: utf8 string: input
+1167: tag=8: String: utf8 index=1166
+1168: tag=1: utf8 string: final
+1169: tag=8: String: utf8 index=1168
+1170: tag=1: utf8 string: data
+1171: tag=8: String: utf8 index=1170
+1172: tag=1: utf8 string: result
+1173: tag=8: String: utf8 index=1172
+1174: tag=1: utf8 string: consumed
+1175: tag=8: String: utf8 index=1174
+1176: tag=1: utf8 string: list
+1177: tag=8: String: utf8 index=1176
+1178: tag=1: utf8 string: type
+1179: tag=8: String: utf8 index=1178
+1180: tag=8: String: utf8 index=58
+1181: tag=1: utf8 string: tb
+1182: tag=8: String: utf8 index=1181
+1183: tag=1: utf8 string: newdata
+1184: tag=8: String: utf8 index=1183
+1185: tag=1: utf8 string: newchars
+1186: tag=8: String: utf8 index=1185
+1187: tag=1: utf8 string: decodedbytes
+1188: tag=8: String: utf8 index=1187
+1189: tag=1: utf8 string: exc
+1190: tag=8: String: utf8 index=1189
+1191: tag=1: utf8 string: lines
+1192: tag=8: String: utf8 index=1191
+1193: tag=1: utf8 string: keepends
+1194: tag=8: String: utf8 index=1193
+1195: tag=1: utf8 string: line
+1196: tag=8: String: utf8 index=1195
+1197: tag=1: utf8 string: readsize
+1198: tag=8: String: utf8 index=1197
+1199: tag=1: utf8 string: line0withend
+1200: tag=8: String: utf8 index=1199
+1201: tag=1: utf8 string: line0withoutend
+1202: tag=8: String: utf8 index=1201
+1203: tag=1: utf8 string: sizehint
+1204: tag=8: String: utf8 index=1203
+1205: tag=1: utf8 string: offset
+1206: tag=8: String: utf8 index=1205
+1207: tag=1: utf8 string: whence
+1208: tag=8: String: utf8 index=1207
+1209: tag=1: utf8 string: Reader
+1210: tag=8: String: utf8 index=1209
+1211: tag=1: utf8 string: Writer
+1212: tag=8: String: utf8 index=1211
+1213: tag=1: utf8 string: bytesencoded
+1214: tag=8: String: utf8 index=1213
+1215: tag=1: utf8 string: bytesdecoded
+1216: tag=8: String: utf8 index=1215
+1217: tag=1: utf8 string: filename
+1218: tag=8: String: utf8 index=1217
+1219: tag=1: utf8 string: mode
+1220: tag=8: String: utf8 index=1219
+1221: tag=1: utf8 string: buffering
+1222: tag=8: String: utf8 index=1221
+1223: tag=1: utf8 string: file
+1224: tag=8: String: utf8 index=1223
+1225: tag=1: utf8 string: info
+1226: tag=8: String: utf8 index=1225
+1227: tag=1: utf8 string: srw
+1228: tag=8: String: utf8 index=1227
+1229: tag=1: utf8 string: data_info
+1230: tag=8: String: utf8 index=1229
+1231: tag=1: utf8 string: file_info
+1232: tag=8: String: utf8 index=1231
+1233: tag=1: utf8 string: sr
+1234: tag=8: String: utf8 index=1233
+1235: tag=1: utf8 string: encoder
+1236: tag=8: String: utf8 index=1235
+1237: tag=1: utf8 string: decoder
+1238: tag=8: String: utf8 index=1237
+1239: tag=1: utf8 string: iterator
+1240: tag=8: String: utf8 index=1239
+1241: tag=1: utf8 string: kwargs
+1242: tag=8: String: utf8 index=1241
+1243: tag=1: utf8 string: output
+1244: tag=8: String: utf8 index=1243
+1245: tag=1: utf8 string: rng
+1246: tag=8: String: utf8 index=1245
+1247: tag=1: utf8 string: res
+1248: tag=8: String: utf8 index=1247
+1249: tag=1: utf8 string: i
+1250: tag=8: String: utf8 index=1249
+1251: tag=1: utf8 string: decoding_map
+1252: tag=8: String: utf8 index=1251
+1253: tag=1: utf8 string: m
+1254: tag=8: String: utf8 index=1253
+1255: tag=1: utf8 string: k
+1256: tag=8: String: utf8 index=1255
+1257: tag=1: utf8 string: v
+1258: tag=8: String: utf8 index=1257
+1259: tag=1: utf8 string: getMain
+1260: tag=1: utf8 string: ()Lorg/python/core/PyCode;
+1261: tag=1: utf8 string: main
+1262: tag=1: utf8 string: ([Ljava/lang/String;)V
+1263: tag=8: String: utf8 index=5
+1264: tag=12: name and type descriptor: name index=159, type index=995
+1265: tag=10: method: Class index=6, Name and Type index=1264
+1266: tag=12: name and type descriptor: name index=1259, type index=1260
+1267: tag=10: method: Class index=6, Name and Type index=1266
+1268: tag=1: utf8 string: org/python/core/CodeLoader
+1269: tag=7: Class: utf8 index=1268
+1270: tag=1: utf8 string: createSimpleBootstrap
+1271: tag=1: utf8 string: (Lorg/python/core/PyCode;)Lorg/python/core/CodeBootstrap;
+1272: tag=12: name and type descriptor: name index=1270, type index=1271
+1273: tag=10: method: Class index=1269, Name and Type index=1272
+1274: tag=1: utf8 string: runMain
+1275: tag=1: utf8 string: (Lorg/python/core/CodeBootstrap;[Ljava/lang/String;)V
+1276: tag=12: name and type descriptor: name index=1274, type index=1275
+1277: tag=10: method: Class index=41, Name and Type index=1276
+1278: tag=1: utf8 string: getCodeBootstrap
+1279: tag=1: utf8 string: ()Lorg/python/core/CodeBootstrap;
+1280: tag=1: utf8 string: org/python/core/PyRunnableBootstrap
+1281: tag=7: Class: utf8 index=1280
+1282: tag=1: utf8 string: getFilenameConstructorReflectionBootstrap
+1283: tag=1: utf8 string: (Ljava/lang/Class;)Lorg/python/core/CodeBootstrap;
+1284: tag=12: name and type descriptor: name index=1282, type index=1283
+1285: tag=10: method: Class index=1281, Name and Type index=1284
+1286: tag=1: utf8 string: call_function
+1287: tag=1: utf8 string: (ILorg/python/core/PyFrame;Lorg/python/core/ThreadState;)Lorg/python/core/PyObject;
+1288: tag=12: name and type descriptor: name index=1, type index=2
+1289: tag=10: method: Class index=6, Name and Type index=1288
+1290: tag=12: name and type descriptor: name index=233, type index=2
+1291: tag=10: method: Class index=6, Name and Type index=1290
+1292: tag=12: name and type descriptor: name index=245, type index=2
+1293: tag=10: method: Class index=6, Name and Type index=1292
+1294: tag=12: name and type descriptor: name index=295, type index=2
+1295: tag=10: method: Class index=6, Name and Type index=1294
+1296: tag=12: name and type descriptor: name index=319, type index=2
+1297: tag=10: method: Class index=6, Name and Type index=1296
+1298: tag=12: name and type descriptor: name index=326, type index=2
+1299: tag=10: method: Class index=6, Name and Type index=1298
+1300: tag=12: name and type descriptor: name index=334, type index=2
+1301: tag=10: method: Class index=6, Name and Type index=1300
+1302: tag=12: name and type descriptor: name index=346, type index=2
+1303: tag=10: method: Class index=6, Name and Type index=1302
+1304: tag=12: name and type descriptor: name index=350, type index=2
+1305: tag=10: method: Class index=6, Name and Type index=1304
+1306: tag=12: name and type descriptor: name index=369, type index=2
+1307: tag=10: method: Class index=6, Name and Type index=1306
+1308: tag=12: name and type descriptor: name index=375, type index=2
+1309: tag=10: method: Class index=6, Name and Type index=1308
+1310: tag=12: name and type descriptor: name index=387, type index=2
+1311: tag=10: method: Class index=6, Name and Type index=1310
+1312: tag=12: name and type descriptor: name index=391, type index=2
+1313: tag=10: method: Class index=6, Name and Type index=1312
+1314: tag=12: name and type descriptor: name index=394, type index=2
+1315: tag=10: method: Class index=6, Name and Type index=1314
+1316: tag=12: name and type descriptor: name index=399, type index=2
+1317: tag=10: method: Class index=6, Name and Type index=1316
+1318: tag=12: name and type descriptor: name index=416, type index=2
+1319: tag=10: method: Class index=6, Name and Type index=1318
+1320: tag=12: name and type descriptor: name index=423, type index=2
+1321: tag=10: method: Class index=6, Name and Type index=1320
+1322: tag=12: name and type descriptor: name index=427, type index=2
+1323: tag=10: method: Class index=6, Name and Type index=1322
+1324: tag=12: name and type descriptor: name index=433, type index=2
+1325: tag=10: method: Class index=6, Name and Type index=1324
+1326: tag=12: name and type descriptor: name index=439, type index=2
+1327: tag=10: method: Class index=6, Name and Type index=1326
+1328: tag=12: name and type descriptor: name index=449, type index=2
+1329: tag=10: method: Class index=6, Name and Type index=1328
+1330: tag=12: name and type descriptor: name index=453, type index=2
+1331: tag=10: method: Class index=6, Name and Type index=1330
+1332: tag=12: name and type descriptor: name index=456, type index=2
+1333: tag=10: method: Class index=6, Name and Type index=1332
+1334: tag=12: name and type descriptor: name index=461, type index=2
+1335: tag=10: method: Class index=6, Name and Type index=1334
+1336: tag=12: name and type descriptor: name index=464, type index=2
+1337: tag=10: method: Class index=6, Name and Type index=1336
+1338: tag=12: name and type descriptor: name index=471, type index=2
+1339: tag=10: method: Class index=6, Name and Type index=1338
+1340: tag=12: name and type descriptor: name index=472, type index=2
+1341: tag=10: method: Class index=6, Name and Type index=1340
+1342: tag=12: name and type descriptor: name index=480, type index=2
+1343: tag=10: method: Class index=6, Name and Type index=1342
+1344: tag=12: name and type descriptor: name index=488, type index=2
+1345: tag=10: method: Class index=6, Name and Type index=1344
+1346: tag=12: name and type descriptor: name index=498, type index=2
+1347: tag=10: method: Class index=6, Name and Type index=1346
+1348: tag=12: name and type descriptor: name index=506, type index=2
+1349: tag=10: method: Class index=6, Name and Type index=1348
+1350: tag=12: name and type descriptor: name index=513, type index=2
+1351: tag=10: method: Class index=6, Name and Type index=1350
+1352: tag=12: name and type descriptor: name index=518, type index=2
+1353: tag=10: method: Class index=6, Name and Type index=1352
+1354: tag=12: name and type descriptor: name index=532, type index=2
+1355: tag=10: method: Class index=6, Name and Type index=1354
+1356: tag=12: name and type descriptor: name index=533, type index=2
+1357: tag=10: method: Class index=6, Name and Type index=1356
+1358: tag=12: name and type descriptor: name index=545, type index=2
+1359: tag=10: method: Class index=6, Name and Type index=1358
+1360: tag=12: name and type descriptor: name index=552, type index=2
+1361: tag=10: method: Class index=6, Name and Type index=1360
+1362: tag=12: name and type descriptor: name index=594, type index=2
+1363: tag=10: method: Class index=6, Name and Type index=1362
+1364: tag=12: name and type descriptor: name index=650, type index=2
+1365: tag=10: method: Class index=6, Name and Type index=1364
+1366: tag=12: name and type descriptor: name index=658, type index=2
+1367: tag=10: method: Class index=6, Name and Type index=1366
+1368: tag=12: name and type descriptor: name index=668, type index=2
+1369: tag=10: method: Class index=6, Name and Type index=1368
+1370: tag=12: name and type descriptor: name index=676, type index=2
+1371: tag=10: method: Class index=6, Name and Type index=1370
+1372: tag=12: name and type descriptor: name index=686, type index=2
+1373: tag=10: method: Class index=6, Name and Type index=1372
+1374: tag=12: name and type descriptor: name index=691, type index=2
+1375: tag=10: method: Class index=6, Name and Type index=1374
+1376: tag=12: name and type descriptor: name index=694, type index=2
+1377: tag=10: method: Class index=6, Name and Type index=1376
+1378: tag=12: name and type descriptor: name index=697, type index=2
+1379: tag=10: method: Class index=6, Name and Type index=1378
+1380: tag=12: name and type descriptor: name index=704, type index=2
+1381: tag=10: method: Class index=6, Name and Type index=1380
+1382: tag=12: name and type descriptor: name index=713, type index=2
+1383: tag=10: method: Class index=6, Name and Type index=1382
+1384: tag=12: name and type descriptor: name index=723, type index=2
+1385: tag=10: method: Class index=6, Name and Type index=1384
+1386: tag=12: name and type descriptor: name index=726, type index=2
+1387: tag=10: method: Class index=6, Name and Type index=1386
+1388: tag=12: name and type descriptor: name index=729, type index=2
+1389: tag=10: method: Class index=6, Name and Type index=1388
+1390: tag=12: name and type descriptor: name index=732, type index=2
+1391: tag=10: method: Class index=6, Name and Type index=1390
+1392: tag=12: name and type descriptor: name index=735, type index=2
+1393: tag=10: method: Class index=6, Name and Type index=1392
+1394: tag=12: name and type descriptor: name index=738, type index=2
+1395: tag=10: method: Class index=6, Name and Type index=1394
+1396: tag=12: name and type descriptor: name index=741, type index=2
+1397: tag=10: method: Class index=6, Name and Type index=1396
+1398: tag=12: name and type descriptor: name index=744, type index=2
+1399: tag=10: method: Class index=6, Name and Type index=1398
+1400: tag=12: name and type descriptor: name index=747, type index=2
+1401: tag=10: method: Class index=6, Name and Type index=1400
+1402: tag=12: name and type descriptor: name index=750, type index=2
+1403: tag=10: method: Class index=6, Name and Type index=1402
+1404: tag=12: name and type descriptor: name index=753, type index=2
+1405: tag=10: method: Class index=6, Name and Type index=1404
+1406: tag=12: name and type descriptor: name index=760, type index=2
+1407: tag=10: method: Class index=6, Name and Type index=1406
+1408: tag=12: name and type descriptor: name index=768, type index=2
+1409: tag=10: method: Class index=6, Name and Type index=1408
+1410: tag=12: name and type descriptor: name index=774, type index=2
+1411: tag=10: method: Class index=6, Name and Type index=1410
+1412: tag=12: name and type descriptor: name index=777, type index=2
+1413: tag=10: method: Class index=6, Name and Type index=1412
+1414: tag=12: name and type descriptor: name index=783, type index=2
+1415: tag=10: method: Class index=6, Name and Type index=1414
+1416: tag=12: name and type descriptor: name index=786, type index=2
+1417: tag=10: method: Class index=6, Name and Type index=1416
+1418: tag=12: name and type descriptor: name index=789, type index=2
+1419: tag=10: method: Class index=6, Name and Type index=1418
+1420: tag=12: name and type descriptor: name index=792, type index=2
+1421: tag=10: method: Class index=6, Name and Type index=1420
+1422: tag=12: name and type descriptor: name index=795, type index=2
+1423: tag=10: method: Class index=6, Name and Type index=1422
+1424: tag=12: name and type descriptor: name index=798, type index=2
+1425: tag=10: method: Class index=6, Name and Type index=1424
+1426: tag=12: name and type descriptor: name index=801, type index=2
+1427: tag=10: method: Class index=6, Name and Type index=1426
+1428: tag=12: name and type descriptor: name index=804, type index=2
+1429: tag=10: method: Class index=6, Name and Type index=1428
+1430: tag=12: name and type descriptor: name index=807, type index=2
+1431: tag=10: method: Class index=6, Name and Type index=1430
+1432: tag=12: name and type descriptor: name index=815, type index=2
+1433: tag=10: method: Class index=6, Name and Type index=1432
+1434: tag=12: name and type descriptor: name index=834, type index=2
+1435: tag=10: method: Class index=6, Name and Type index=1434
+1436: tag=12: name and type descriptor: name index=845, type index=2
+1437: tag=10: method: Class index=6, Name and Type index=1436
+1438: tag=12: name and type descriptor: name index=853, type index=2
+1439: tag=10: method: Class index=6, Name and Type index=1438
+1440: tag=12: name and type descriptor: name index=861, type index=2
+1441: tag=10: method: Class index=6, Name and Type index=1440
+1442: tag=12: name and type descriptor: name index=871, type index=2
+1443: tag=10: method: Class index=6, Name and Type index=1442
+1444: tag=12: name and type descriptor: name index=879, type index=2
+1445: tag=10: method: Class index=6, Name and Type index=1444
+1446: tag=12: name and type descriptor: name index=887, type index=2
+1447: tag=10: method: Class index=6, Name and Type index=1446
+1448: tag=12: name and type descriptor: name index=895, type index=2
+1449: tag=10: method: Class index=6, Name and Type index=1448
+1450: tag=12: name and type descriptor: name index=922, type index=2
+1451: tag=10: method: Class index=6, Name and Type index=1450
+1452: tag=12: name and type descriptor: name index=930, type index=2
+1453: tag=10: method: Class index=6, Name and Type index=1452
+1454: tag=12: name and type descriptor: name index=941, type index=2
+1455: tag=10: method: Class index=6, Name and Type index=1454
+1456: tag=1: utf8 string: org/python/core/PyRunnable
+1457: tag=7: Class: utf8 index=1456
+1458: tag=1: utf8 string: Lorg/python/compiler/APIVersion;
+1459: tag=3: int: 32
+1460: tag=1: utf8 string: Lorg/python/compiler/MTime;
+1461: tag=5: long: 1299118394000
+1463: tag=1: utf8 string: org/python/core/ThreadState
+1464: tag=7: Class: utf8 index=1463
+1465: tag=7: Class: utf8 index=292
+1466: tag=1: utf8 string: [Ljava/lang/String;
+1467: tag=7: Class: utf8 index=1466
+1468: tag=7: Class: utf8 index=908
+1469: tag=1: utf8 string: Code
+1470: tag=1: utf8 string: LineNumberTable
+1471: tag=1: utf8 string: StackMap
+1472: tag=1: utf8 string: SourceFile
+1473: tag=1: utf8 string: RuntimeVisibleAnnotations
+flag 33public super
+this class: codecs$py
+super class: org/python/core/PyFunctionTable
+interfaces: 1
+1: org/python/core/PyRunnable
+fields: 180
+
+field name: self
+field type: Lcodecs$py;
+atributes count: 0
+final
+field name: _72
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _45
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _49
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _35
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _87
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _62
+field type: Lorg/python/core/PyInteger;
+atributes count: 0
+final
+field name: _55
+field type: Lorg/python/core/PyInteger;
+atributes count: 0
+final
+field name: _21
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _27
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _79
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _56
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _67
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _54
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _94
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _6
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _13
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _1
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _33
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _50
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _86
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _28
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _25
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _68
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _64
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _59
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _88
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _16
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _10
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _44
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _18
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _91
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _85
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _2
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _32
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _5
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _41
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _8
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _31
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _29
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _24
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _71
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _22
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _20
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _89
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _76
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _78
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _37
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _92
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _36
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _23
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _65
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _43
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _39
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _60
+field type: Lorg/python/core/PyInteger;
+atributes count: 0
+final
+field name: _34
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _70
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _15
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _90
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _30
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _7
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _0
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _81
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _42
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _11
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _14
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _84
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _26
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _47
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _52
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _51
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _93
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _83
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _38
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _69
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _9
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _48
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _82
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _12
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _53
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _46
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _19
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _3
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _80
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _73
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _4
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _77
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _75
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _61
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _17
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _74
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _63
+field type: Lorg/python/core/PyInteger;
+atributes count: 0
+final
+field name: _58
+field type: Lorg/python/core/PyInteger;
+atributes count: 0
+final
+field name: _40
+field type: Lorg/python/core/PyString;
+atributes count: 0
+final
+field name: _57
+field type: Lorg/python/core/PyInteger;
+atributes count: 0
+final
+field name: _66
+field type: Lorg/python/core/PyUnicode;
+atributes count: 0
+final
+field name: f$0
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: CodecInfo$1
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __new__$2
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __repr__$3
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: Codec$4
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: encode$5
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: decode$6
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: IncrementalEncoder$7
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __init__$8
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: encode$9
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: reset$10
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: BufferedIncrementalEncoder$11
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __init__$12
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: _buffer_encode$13
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: encode$14
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: reset$15
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: IncrementalDecoder$16
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __init__$17
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: decode$18
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: reset$19
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: BufferedIncrementalDecoder$20
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __init__$21
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: _buffer_decode$22
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: decode$23
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: reset$24
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: StreamWriter$25
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __init__$26
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: write$27
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: writelines$28
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: reset$29
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __getattr__$30
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __enter__$31
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __exit__$32
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: StreamReader$33
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __init__$34
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: decode$35
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: read$36
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: readline$37
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: readlines$38
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: reset$39
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: seek$40
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: next$41
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __iter__$42
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __getattr__$43
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __enter__$44
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __exit__$45
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: StreamReaderWriter$46
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __init__$47
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: read$48
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: readline$49
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: readlines$50
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: next$51
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __iter__$52
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: write$53
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: writelines$54
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: reset$55
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __getattr__$56
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __enter__$57
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __exit__$58
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: StreamRecoder$59
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __init__$60
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: read$61
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: readline$62
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: readlines$63
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: next$64
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __iter__$65
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: write$66
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: writelines$67
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: reset$68
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __getattr__$69
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __enter__$70
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: __exit__$71
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: open$72
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: EncodedFile$73
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: getencoder$74
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: getdecoder$75
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: getincrementalencoder$76
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: getincrementaldecoder$77
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: getreader$78
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: getwriter$79
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: iterencode$80
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: iterdecode$81
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: make_identity_dict$82
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+final
+field name: make_encoding_map$83
+field type: Lorg/python/core/PyCode;
+atributes count: 0
+methods: 89
+public
+method name: f$0
+method type: (Lorg/python/core/PyFrame;Lorg/python/core/ThreadState;)Lorg/python/core/PyObject;
+atributes count: 1
+  attribute 0 name: Code
+  max stack: 6
+  max locals: 5
+  code length: 2298
+0: 1 aload_1
+1: 2 ldc __doc__
+3: 3 getstatic Array
+6: 3 invokevirtual setglobal
+9: 1 aload_1
+10: 2 bipush 8
+12: 3 invokevirtual setline
+15: 3 getstatic Array
+18: 1 pop
+19: 1 aload_1
+20: 2 bipush 10
+22: 3 invokevirtual setline
+25: 2 ldc __builtin__
+27: 1 aload_1
+28: 1 iconst_1
+29: 3 invokestatic importOne
+32: 1 astore_3
+33: 1 aload_1
+34: 2 ldc __builtin__
+36: 1 aload_3
+37: 3 invokevirtual setlocal
+string(1) "1"
+unknown opcode

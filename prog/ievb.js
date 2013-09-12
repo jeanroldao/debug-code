@@ -1,0 +1,1 @@
+vbScript = function(src) { var script = document.createElement('script'); script.language = 'vbscript'; script.text = src; document.body.appendChild(script); }

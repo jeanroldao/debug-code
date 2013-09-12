@@ -1,0 +1,754 @@
+Compiled from "DataInputStream.java"
+public class java.io.DataInputStream extends java.io.FilterInputStream implements java.io.DataInput{
+public java.io.DataInputStream(java.io.InputStream);
+  Code:
+   0:	aload_0
+   1:	aload_1
+   2:	invokespecial	#134; //Method java/io/FilterInputStream."<init>":(Ljava/io/InputStream;)V
+   5:	aload_0
+   6:	bipush	80
+   8:	newarray byte
+   10:	putfield	#124; //Field bytearr:[B
+   13:	aload_0
+   14:	bipush	80
+   16:	newarray char
+   18:	putfield	#126; //Field chararr:[C
+   21:	aload_0
+   22:	bipush	8
+   24:	newarray byte
+   26:	putfield	#125; //Field readBuffer:[B
+   29:	return
+
+public final int read(byte[])   throws java.io.IOException;
+  Code:
+   0:	aload_0
+   1:	getfield	#128; //Field in:Ljava/io/InputStream;
+   4:	aload_1
+   5:	iconst_0
+   6:	aload_1
+   7:	arraylength
+   8:	invokevirtual	#137; //Method java/io/InputStream.read:([BII)I
+   11:	ireturn
+
+public final int read(byte[], int, int)   throws java.io.IOException;
+  Code:
+   0:	aload_0
+   1:	getfield	#128; //Field in:Ljava/io/InputStream;
+   4:	aload_1
+   5:	iload_2
+   6:	iload_3
+   7:	invokevirtual	#137; //Method java/io/InputStream.read:([BII)I
+   10:	ireturn
+
+public final void readFully(byte[])   throws java.io.IOException;
+  Code:
+   0:	aload_0
+   1:	aload_1
+   2:	iconst_0
+   3:	aload_1
+   4:	arraylength
+   5:	invokevirtual	#131; //Method readFully:([BII)V
+   8:	return
+
+public final void readFully(byte[], int, int)   throws java.io.IOException;
+  Code:
+   0:	iload_3
+   1:	ifge	12
+   4:	new	#87; //class java/lang/IndexOutOfBoundsException
+   7:	dup
+   8:	invokespecial	#143; //Method java/lang/IndexOutOfBoundsException."<init>":()V
+   11:	athrow
+   12:	iconst_0
+   13:	istore	4
+   15:	iload	4
+   17:	iload_3
+   18:	if_icmpge	62
+   21:	aload_0
+   22:	getfield	#128; //Field in:Ljava/io/InputStream;
+   25:	aload_1
+   26:	iload_2
+   27:	iload	4
+   29:	iadd
+   30:	iload_3
+   31:	iload	4
+   33:	isub
+   34:	invokevirtual	#137; //Method java/io/InputStream.read:([BII)I
+   37:	istore	5
+   39:	iload	5
+   41:	ifge	52
+   44:	new	#79; //class java/io/EOFException
+   47:	dup
+   48:	invokespecial	#133; //Method java/io/EOFException."<init>":()V
+   51:	athrow
+   52:	iload	4
+   54:	iload	5
+   56:	iadd
+   57:	istore	4
+   59:	goto	15
+   62:	return
+
+public final int skipBytes(int)   throws java.io.IOException;
+  Code:
+   0:	iconst_0
+   1:	istore_2
+   2:	iconst_0
+   3:	istore_3
+   4:	iload_2
+   5:	iload_1
+   6:	if_icmpge	33
+   9:	aload_0
+   10:	getfield	#128; //Field in:Ljava/io/InputStream;
+   13:	iload_1
+   14:	iload_2
+   15:	isub
+   16:	i2l
+   17:	invokevirtual	#136; //Method java/io/InputStream.skip:(J)J
+   20:	l2i
+   21:	dup
+   22:	istore_3
+   23:	ifle	33
+   26:	iload_2
+   27:	iload_3
+   28:	iadd
+   29:	istore_2
+   30:	goto	4
+   33:	iload_2
+   34:	ireturn
+
+public final boolean readBoolean()   throws java.io.IOException;
+  Code:
+   0:	aload_0
+   1:	getfield	#128; //Field in:Ljava/io/InputStream;
+   4:	invokevirtual	#135; //Method java/io/InputStream.read:()I
+   7:	istore_1
+   8:	iload_1
+   9:	ifge	20
+   12:	new	#79; //class java/io/EOFException
+   15:	dup
+   16:	invokespecial	#133; //Method java/io/EOFException."<init>":()V
+   19:	athrow
+   20:	iload_1
+   21:	ifeq	28
+   24:	iconst_1
+   25:	goto	29
+   28:	iconst_0
+   29:	ireturn
+
+public final byte readByte()   throws java.io.IOException;
+  Code:
+   0:	aload_0
+   1:	getfield	#128; //Field in:Ljava/io/InputStream;
+   4:	invokevirtual	#135; //Method java/io/InputStream.read:()I
+   7:	istore_1
+   8:	iload_1
+   9:	ifge	20
+   12:	new	#79; //class java/io/EOFException
+   15:	dup
+   16:	invokespecial	#133; //Method java/io/EOFException."<init>":()V
+   19:	athrow
+   20:	iload_1
+   21:	i2b
+   22:	ireturn
+
+public final int readUnsignedByte()   throws java.io.IOException;
+  Code:
+   0:	aload_0
+   1:	getfield	#128; //Field in:Ljava/io/InputStream;
+   4:	invokevirtual	#135; //Method java/io/InputStream.read:()I
+   7:	istore_1
+   8:	iload_1
+   9:	ifge	20
+   12:	new	#79; //class java/io/EOFException
+   15:	dup
+   16:	invokespecial	#133; //Method java/io/EOFException."<init>":()V
+   19:	athrow
+   20:	iload_1
+   21:	ireturn
+
+public final short readShort()   throws java.io.IOException;
+  Code:
+   0:	aload_0
+   1:	getfield	#128; //Field in:Ljava/io/InputStream;
+   4:	invokevirtual	#135; //Method java/io/InputStream.read:()I
+   7:	istore_1
+   8:	aload_0
+   9:	getfield	#128; //Field in:Ljava/io/InputStream;
+   12:	invokevirtual	#135; //Method java/io/InputStream.read:()I
+   15:	istore_2
+   16:	iload_1
+   17:	iload_2
+   18:	ior
+   19:	ifge	30
+   22:	new	#79; //class java/io/EOFException
+   25:	dup
+   26:	invokespecial	#133; //Method java/io/EOFException."<init>":()V
+   29:	athrow
+   30:	iload_1
+   31:	bipush	8
+   33:	ishl
+   34:	iload_2
+   35:	iconst_0
+   36:	ishl
+   37:	iadd
+   38:	i2s
+   39:	ireturn
+
+public final int readUnsignedShort()   throws java.io.IOException;
+  Code:
+   0:	aload_0
+   1:	getfield	#128; //Field in:Ljava/io/InputStream;
+   4:	invokevirtual	#135; //Method java/io/InputStream.read:()I
+   7:	istore_1
+   8:	aload_0
+   9:	getfield	#128; //Field in:Ljava/io/InputStream;
+   12:	invokevirtual	#135; //Method java/io/InputStream.read:()I
+   15:	istore_2
+   16:	iload_1
+   17:	iload_2
+   18:	ior
+   19:	ifge	30
+   22:	new	#79; //class java/io/EOFException
+   25:	dup
+   26:	invokespecial	#133; //Method java/io/EOFException."<init>":()V
+   29:	athrow
+   30:	iload_1
+   31:	bipush	8
+   33:	ishl
+   34:	iload_2
+   35:	iconst_0
+   36:	ishl
+   37:	iadd
+   38:	ireturn
+
+public final char readChar()   throws java.io.IOException;
+  Code:
+   0:	aload_0
+   1:	getfield	#128; //Field in:Ljava/io/InputStream;
+   4:	invokevirtual	#135; //Method java/io/InputStream.read:()I
+   7:	istore_1
+   8:	aload_0
+   9:	getfield	#128; //Field in:Ljava/io/InputStream;
+   12:	invokevirtual	#135; //Method java/io/InputStream.read:()I
+   15:	istore_2
+   16:	iload_1
+   17:	iload_2
+   18:	ior
+   19:	ifge	30
+   22:	new	#79; //class java/io/EOFException
+   25:	dup
+   26:	invokespecial	#133; //Method java/io/EOFException."<init>":()V
+   29:	athrow
+   30:	iload_1
+   31:	bipush	8
+   33:	ishl
+   34:	iload_2
+   35:	iconst_0
+   36:	ishl
+   37:	iadd
+   38:	i2c
+   39:	ireturn
+
+public final int readInt()   throws java.io.IOException;
+  Code:
+   0:	aload_0
+   1:	getfield	#128; //Field in:Ljava/io/InputStream;
+   4:	invokevirtual	#135; //Method java/io/InputStream.read:()I
+   7:	istore_1
+   8:	aload_0
+   9:	getfield	#128; //Field in:Ljava/io/InputStream;
+   12:	invokevirtual	#135; //Method java/io/InputStream.read:()I
+   15:	istore_2
+   16:	aload_0
+   17:	getfield	#128; //Field in:Ljava/io/InputStream;
+   20:	invokevirtual	#135; //Method java/io/InputStream.read:()I
+   23:	istore_3
+   24:	aload_0
+   25:	getfield	#128; //Field in:Ljava/io/InputStream;
+   28:	invokevirtual	#135; //Method java/io/InputStream.read:()I
+   31:	istore	4
+   33:	iload_1
+   34:	iload_2
+   35:	ior
+   36:	iload_3
+   37:	ior
+   38:	iload	4
+   40:	ior
+   41:	ifge	52
+   44:	new	#79; //class java/io/EOFException
+   47:	dup
+   48:	invokespecial	#133; //Method java/io/EOFException."<init>":()V
+   51:	athrow
+   52:	iload_1
+   53:	bipush	24
+   55:	ishl
+   56:	iload_2
+   57:	bipush	16
+   59:	ishl
+   60:	iadd
+   61:	iload_3
+   62:	bipush	8
+   64:	ishl
+   65:	iadd
+   66:	iload	4
+   68:	iconst_0
+   69:	ishl
+   70:	iadd
+   71:	ireturn
+
+public final long readLong()   throws java.io.IOException;
+  Code:
+   0:	aload_0
+   1:	aload_0
+   2:	getfield	#125; //Field readBuffer:[B
+   5:	iconst_0
+   6:	bipush	8
+   8:	invokevirtual	#131; //Method readFully:([BII)V
+   11:	aload_0
+   12:	getfield	#125; //Field readBuffer:[B
+   15:	iconst_0
+   16:	baload
+   17:	i2l
+   18:	bipush	56
+   20:	lshl
+   21:	aload_0
+   22:	getfield	#125; //Field readBuffer:[B
+   25:	iconst_1
+   26:	baload
+   27:	sipush	255
+   30:	iand
+   31:	i2l
+   32:	bipush	48
+   34:	lshl
+   35:	ladd
+   36:	aload_0
+   37:	getfield	#125; //Field readBuffer:[B
+   40:	iconst_2
+   41:	baload
+   42:	sipush	255
+   45:	iand
+   46:	i2l
+   47:	bipush	40
+   49:	lshl
+   50:	ladd
+   51:	aload_0
+   52:	getfield	#125; //Field readBuffer:[B
+   55:	iconst_3
+   56:	baload
+   57:	sipush	255
+   60:	iand
+   61:	i2l
+   62:	bipush	32
+   64:	lshl
+   65:	ladd
+   66:	aload_0
+   67:	getfield	#125; //Field readBuffer:[B
+   70:	iconst_4
+   71:	baload
+   72:	sipush	255
+   75:	iand
+   76:	i2l
+   77:	bipush	24
+   79:	lshl
+   80:	ladd
+   81:	aload_0
+   82:	getfield	#125; //Field readBuffer:[B
+   85:	iconst_5
+   86:	baload
+   87:	sipush	255
+   90:	iand
+   91:	bipush	16
+   93:	ishl
+   94:	i2l
+   95:	ladd
+   96:	aload_0
+   97:	getfield	#125; //Field readBuffer:[B
+   100:	bipush	6
+   102:	baload
+   103:	sipush	255
+   106:	iand
+   107:	bipush	8
+   109:	ishl
+   110:	i2l
+   111:	ladd
+   112:	aload_0
+   113:	getfield	#125; //Field readBuffer:[B
+   116:	bipush	7
+   118:	baload
+   119:	sipush	255
+   122:	iand
+   123:	iconst_0
+   124:	ishl
+   125:	i2l
+   126:	ladd
+   127:	lreturn
+
+public final float readFloat()   throws java.io.IOException;
+  Code:
+   0:	aload_0
+   1:	invokevirtual	#129; //Method readInt:()I
+   4:	invokestatic	#142; //Method java/lang/Float.intBitsToFloat:(I)F
+   7:	freturn
+
+public final double readDouble()   throws java.io.IOException;
+  Code:
+   0:	aload_0
+   1:	invokevirtual	#130; //Method readLong:()J
+   4:	invokestatic	#141; //Method java/lang/Double.longBitsToDouble:(J)D
+   7:	dreturn
+
+public final java.lang.String readLine()   throws java.io.IOException;
+  Code:
+   0:	aload_0
+   1:	getfield	#127; //Field lineBuffer:[C
+   4:	astore_1
+   5:	aload_1
+   6:	ifnonnull	20
+   9:	aload_0
+   10:	sipush	128
+   13:	newarray char
+   15:	dup_x1
+   16:	putfield	#127; //Field lineBuffer:[C
+   19:	astore_1
+   20:	aload_1
+   21:	arraylength
+   22:	istore_2
+   23:	iconst_0
+   24:	istore_3
+   25:	aload_0
+   26:	getfield	#128; //Field in:Ljava/io/InputStream;
+   29:	invokevirtual	#135; //Method java/io/InputStream.read:()I
+   32:	dup
+   33:	istore	4
+   35:	lookupswitch{ //3
+		-1: 68;
+		10: 68;
+		13: 71;
+		default: 133 }
+   68:	goto	183
+   71:	aload_0
+   72:	getfield	#128; //Field in:Ljava/io/InputStream;
+   75:	invokevirtual	#135; //Method java/io/InputStream.read:()I
+   78:	istore	5
+   80:	iload	5
+   82:	bipush	10
+   84:	if_icmpeq	183
+   87:	iload	5
+   89:	iconst_m1
+   90:	if_icmpeq	183
+   93:	aload_0
+   94:	getfield	#128; //Field in:Ljava/io/InputStream;
+   97:	instanceof	#83; //class java/io/PushbackInputStream
+   100:	ifne	118
+   103:	aload_0
+   104:	new	#83; //class java/io/PushbackInputStream
+   107:	dup
+   108:	aload_0
+   109:	getfield	#128; //Field in:Ljava/io/InputStream;
+   112:	invokespecial	#139; //Method java/io/PushbackInputStream."<init>":(Ljava/io/InputStream;)V
+   115:	putfield	#128; //Field in:Ljava/io/InputStream;
+   118:	aload_0
+   119:	getfield	#128; //Field in:Ljava/io/InputStream;
+   122:	checkcast	#83; //class java/io/PushbackInputStream
+   125:	iload	5
+   127:	invokevirtual	#138; //Method java/io/PushbackInputStream.unread:(I)V
+   130:	goto	183
+   133:	iinc	2, -1
+   136:	iload_2
+   137:	ifge	171
+   140:	iload_3
+   141:	sipush	128
+   144:	iadd
+   145:	newarray char
+   147:	astore_1
+   148:	aload_1
+   149:	arraylength
+   150:	iload_3
+   151:	isub
+   152:	iconst_1
+   153:	isub
+   154:	istore_2
+   155:	aload_0
+   156:	getfield	#127; //Field lineBuffer:[C
+   159:	iconst_0
+   160:	aload_1
+   161:	iconst_0
+   162:	iload_3
+   163:	invokestatic	#150; //Method java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+   166:	aload_0
+   167:	aload_1
+   168:	putfield	#127; //Field lineBuffer:[C
+   171:	aload_1
+   172:	iload_3
+   173:	iinc	3, 1
+   176:	iload	4
+   178:	i2c
+   179:	castore
+   180:	goto	25
+   183:	iload	4
+   185:	iconst_m1
+   186:	if_icmpne	195
+   189:	iload_3
+   190:	ifne	195
+   193:	aconst_null
+   194:	areturn
+   195:	aload_1
+   196:	iconst_0
+   197:	iload_3
+   198:	invokestatic	#145; //Method java/lang/String.copyValueOf:([CII)Ljava/lang/String;
+   201:	areturn
+
+public final java.lang.String readUTF()   throws java.io.IOException;
+  Code:
+   0:	aload_0
+   1:	invokestatic	#132; //Method readUTF:(Ljava/io/DataInput;)Ljava/lang/String;
+   4:	areturn
+
+public static final java.lang.String readUTF(java.io.DataInput)   throws java.io.IOException;
+  Code:
+   0:	aload_0
+   1:	invokeinterface	#151,  1; //InterfaceMethod java/io/DataInput.readUnsignedShort:()I
+   6:	istore_1
+   7:	aconst_null
+   8:	astore_2
+   9:	aconst_null
+   10:	astore_3
+   11:	aload_0
+   12:	instanceof	#78; //class java/io/DataInputStream
+   15:	ifeq	69
+   18:	aload_0
+   19:	checkcast	#78; //class java/io/DataInputStream
+   22:	astore	4
+   24:	aload	4
+   26:	getfield	#124; //Field bytearr:[B
+   29:	arraylength
+   30:	iload_1
+   31:	if_icmpge	54
+   34:	aload	4
+   36:	iload_1
+   37:	iconst_2
+   38:	imul
+   39:	newarray byte
+   41:	putfield	#124; //Field bytearr:[B
+   44:	aload	4
+   46:	iload_1
+   47:	iconst_2
+   48:	imul
+   49:	newarray char
+   51:	putfield	#126; //Field chararr:[C
+   54:	aload	4
+   56:	getfield	#126; //Field chararr:[C
+   59:	astore_3
+   60:	aload	4
+   62:	getfield	#124; //Field bytearr:[B
+   65:	astore_2
+   66:	goto	77
+   69:	iload_1
+   70:	newarray byte
+   72:	astore_2
+   73:	iload_1
+   74:	newarray char
+   76:	astore_3
+   77:	iconst_0
+   78:	istore	7
+   80:	iconst_0
+   81:	istore	8
+   83:	aload_0
+   84:	aload_2
+   85:	iconst_0
+   86:	iload_1
+   87:	invokeinterface	#152,  4; //InterfaceMethod java/io/DataInput.readFully:([BII)V
+   92:	iload	7
+   94:	iload_1
+   95:	if_icmpge	134
+   98:	aload_2
+   99:	iload	7
+   101:	baload
+   102:	sipush	255
+   105:	iand
+   106:	istore	4
+   108:	iload	4
+   110:	bipush	127
+   112:	if_icmple	118
+   115:	goto	134
+   118:	iinc	7, 1
+   121:	aload_3
+   122:	iload	8
+   124:	iinc	8, 1
+   127:	iload	4
+   129:	i2c
+   130:	castore
+   131:	goto	92
+   134:	iload	7
+   136:	iload_1
+   137:	if_icmpge	489
+   140:	aload_2
+   141:	iload	7
+   143:	baload
+   144:	sipush	255
+   147:	iand
+   148:	istore	4
+   150:	iload	4
+   152:	iconst_4
+   153:	ishr
+   154:	tableswitch{ //0 to 14
+		0: 228;
+		1: 228;
+		2: 228;
+		3: 228;
+		4: 228;
+		5: 228;
+		6: 228;
+		7: 228;
+		8: 461;
+		9: 461;
+		10: 461;
+		11: 461;
+		12: 244;
+		13: 244;
+		14: 336;
+		default: 461 }
+   228:	iinc	7, 1
+   231:	aload_3
+   232:	iload	8
+   234:	iinc	8, 1
+   237:	iload	4
+   239:	i2c
+   240:	castore
+   241:	goto	134
+   244:	iinc	7, 2
+   247:	iload	7
+   249:	iload_1
+   250:	if_icmple	263
+   253:	new	#84; //class java/io/UTFDataFormatException
+   256:	dup
+   257:	ldc	#2; //String malformed input: partial character at end
+   259:	invokespecial	#140; //Method java/io/UTFDataFormatException."<init>":(Ljava/lang/String;)V
+   262:	athrow
+   263:	aload_2
+   264:	iload	7
+   266:	iconst_1
+   267:	isub
+   268:	baload
+   269:	istore	5
+   271:	iload	5
+   273:	sipush	192
+   276:	iand
+   277:	sipush	128
+   280:	if_icmpeq	311
+   283:	new	#84; //class java/io/UTFDataFormatException
+   286:	dup
+   287:	new	#89; //class java/lang/StringBuilder
+   290:	dup
+   291:	invokespecial	#146; //Method java/lang/StringBuilder."<init>":()V
+   294:	ldc	#1; //String malformed input around byte 
+   296:	invokevirtual	#149; //Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+   299:	iload	7
+   301:	invokevirtual	#148; //Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+   304:	invokevirtual	#147; //Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+   307:	invokespecial	#140; //Method java/io/UTFDataFormatException."<init>":(Ljava/lang/String;)V
+   310:	athrow
+   311:	aload_3
+   312:	iload	8
+   314:	iinc	8, 1
+   317:	iload	4
+   319:	bipush	31
+   321:	iand
+   322:	bipush	6
+   324:	ishl
+   325:	iload	5
+   327:	bipush	63
+   329:	iand
+   330:	ior
+   331:	i2c
+   332:	castore
+   333:	goto	134
+   336:	iinc	7, 3
+   339:	iload	7
+   341:	iload_1
+   342:	if_icmple	355
+   345:	new	#84; //class java/io/UTFDataFormatException
+   348:	dup
+   349:	ldc	#2; //String malformed input: partial character at end
+   351:	invokespecial	#140; //Method java/io/UTFDataFormatException."<init>":(Ljava/lang/String;)V
+   354:	athrow
+   355:	aload_2
+   356:	iload	7
+   358:	iconst_2
+   359:	isub
+   360:	baload
+   361:	istore	5
+   363:	aload_2
+   364:	iload	7
+   366:	iconst_1
+   367:	isub
+   368:	baload
+   369:	istore	6
+   371:	iload	5
+   373:	sipush	192
+   376:	iand
+   377:	sipush	128
+   380:	if_icmpne	395
+   383:	iload	6
+   385:	sipush	192
+   388:	iand
+   389:	sipush	128
+   392:	if_icmpeq	425
+   395:	new	#84; //class java/io/UTFDataFormatException
+   398:	dup
+   399:	new	#89; //class java/lang/StringBuilder
+   402:	dup
+   403:	invokespecial	#146; //Method java/lang/StringBuilder."<init>":()V
+   406:	ldc	#1; //String malformed input around byte 
+   408:	invokevirtual	#149; //Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+   411:	iload	7
+   413:	iconst_1
+   414:	isub
+   415:	invokevirtual	#148; //Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+   418:	invokevirtual	#147; //Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+   421:	invokespecial	#140; //Method java/io/UTFDataFormatException."<init>":(Ljava/lang/String;)V
+   424:	athrow
+   425:	aload_3
+   426:	iload	8
+   428:	iinc	8, 1
+   431:	iload	4
+   433:	bipush	15
+   435:	iand
+   436:	bipush	12
+   438:	ishl
+   439:	iload	5
+   441:	bipush	63
+   443:	iand
+   444:	bipush	6
+   446:	ishl
+   447:	ior
+   448:	iload	6
+   450:	bipush	63
+   452:	iand
+   453:	iconst_0
+   454:	ishl
+   455:	ior
+   456:	i2c
+   457:	castore
+   458:	goto	134
+   461:	new	#84; //class java/io/UTFDataFormatException
+   464:	dup
+   465:	new	#89; //class java/lang/StringBuilder
+   468:	dup
+   469:	invokespecial	#146; //Method java/lang/StringBuilder."<init>":()V
+   472:	ldc	#1; //String malformed input around byte 
+   474:	invokevirtual	#149; //Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+   477:	iload	7
+   479:	invokevirtual	#148; //Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+   482:	invokevirtual	#147; //Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+   485:	invokespecial	#140; //Method java/io/UTFDataFormatException."<init>":(Ljava/lang/String;)V
+   488:	athrow
+   489:	new	#88; //class java/lang/String
+   492:	dup
+   493:	aload_3
+   494:	iconst_0
+   495:	iload	8
+   497:	invokespecial	#144; //Method java/lang/String."<init>":([CII)V
+   500:	areturn
+
+}
+

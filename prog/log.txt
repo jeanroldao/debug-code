@@ -1,0 +1,2362 @@
+sun.misc.Launcher$AppClassLoader@108786b
+sun.misc.Launcher$AppClassLoader@108786b
+true
+cl instanceof java.lang.ClassLoader
+true
+Teste3@dc8569
+Teste7@1bab50a
+com debug
+<loading Teste7>
+string(6) "Teste7"
+<loading Teste3>
+string(6) "Teste3"
+string(6) "Teste3"
+string(32) "sun\misc\Launcher$AppClassLoader"
+minor version: 0
+major version: 49
+constant_pool_count = 162
+1: tag=8: String: utf8 index=30
+2: tag=8: String: utf8 index=40
+3: tag=1: utf8 string: $assertionsDisabled
+4: tag=1: utf8 string: ()V
+5: tag=1: utf8 string: ()Z
+6: tag=1: utf8 string: (I)I
+7: tag=1: utf8 string: (II)Ljava/lang/String;
+8: tag=1: utf8 string: (Ljava/lang/Object;)Z
+9: tag=1: utf8 string: (Ljava/lang/String;)Ljava/lang/String;
+10: tag=1: utf8 string: (Ljava/lang/String;)V
+11: tag=1: utf8 string: <clinit>
+12: tag=1: utf8 string: <init>
+13: tag=1: utf8 string: Code
+14: tag=1: utf8 string: Exceptions
+15: tag=1: utf8 string: InnerClasses
+16: tag=1: utf8 string: Launcher.java
+17: tag=1: utf8 string: LineNumberTable
+18: tag=1: utf8 string: SourceFile
+19: tag=1: utf8 string: Z
+20: tag=1: utf8 string: [Ljava/security/cert/Certificate;
+21: tag=1: utf8 string: access$100
+22: tag=1: utf8 string: access$200
+23: tag=1: utf8 string: add
+24: tag=1: utf8 string: addAppURL
+25: tag=1: utf8 string: addURL
+26: tag=1: utf8 string: appendToClassPathForInstrumentation
+27: tag=1: utf8 string: checkPackageAccess
+28: tag=1: utf8 string: desiredAssertionStatus
+29: tag=1: utf8 string: doPrivileged
+30: tag=1: utf8 string: exitVM
+31: tag=1: utf8 string: getAppClassLoader
+32: tag=1: utf8 string: getBootClassPathEntryForClass
+33: tag=1: utf8 string: getCodeBase
+34: tag=1: utf8 string: getContext
+35: tag=1: utf8 string: getFileURL
+36: tag=1: utf8 string: getPermissions
+37: tag=1: utf8 string: getProperty
+38: tag=1: utf8 string: getSecurityManager
+39: tag=1: utf8 string: holdsLock
+40: tag=1: utf8 string: java.class.path
+41: tag=1: utf8 string: java/io/File
+42: tag=1: utf8 string: java/io/IOException
+43: tag=1: utf8 string: java/lang/AssertionError
+44: tag=1: utf8 string: java/lang/Class
+45: tag=1: utf8 string: java/lang/ClassNotFoundException
+46: tag=1: utf8 string: java/lang/RuntimePermission
+47: tag=1: utf8 string: java/lang/SecurityManager
+48: tag=1: utf8 string: java/lang/String
+49: tag=1: utf8 string: java/lang/System
+50: tag=1: utf8 string: java/lang/Thread
+51: tag=1: utf8 string: java/net/MalformedURLException
+52: tag=1: utf8 string: java/net/URLClassLoader
+53: tag=1: utf8 string: java/security/AccessControlContext
+54: tag=1: utf8 string: java/security/AccessController
+55: tag=1: utf8 string: java/security/CodeSource
+56: tag=1: utf8 string: java/security/PermissionCollection
+57: tag=1: utf8 string: java/security/ProtectionDomain
+58: tag=1: utf8 string: lastIndexOf
+59: tag=1: utf8 string: loadClass
+60: tag=1: utf8 string: substring
+61: tag=1: utf8 string: sun/jkernel/DownloadManager
+62: tag=1: utf8 string: sun/misc/Launcher
+63: tag=1: utf8 string: sun/misc/Launcher$AppClassLoader
+64: tag=1: utf8 string: sun/misc/Launcher$AppClassLoader$1
+65: tag=1: utf8 string: sun/misc/PathPermissions
+66: tag=7: Class: utf8 index=20
+67: tag=7: Class: utf8 index=41
+68: tag=7: Class: utf8 index=42
+69: tag=7: Class: utf8 index=43
+70: tag=7: Class: utf8 index=44
+71: tag=7: Class: utf8 index=45
+72: tag=7: Class: utf8 index=46
+73: tag=7: Class: utf8 index=47
+74: tag=7: Class: utf8 index=48
+75: tag=7: Class: utf8 index=49
+76: tag=7: Class: utf8 index=50
+77: tag=7: Class: utf8 index=51
+78: tag=7: Class: utf8 index=52
+79: tag=7: Class: utf8 index=53
+80: tag=7: Class: utf8 index=54
+81: tag=7: Class: utf8 index=55
+82: tag=7: Class: utf8 index=56
+83: tag=7: Class: utf8 index=57
+84: tag=7: Class: utf8 index=61
+85: tag=7: Class: utf8 index=62
+86: tag=7: Class: utf8 index=63
+87: tag=7: Class: utf8 index=64
+88: tag=7: Class: utf8 index=65
+89: tag=1: utf8 string: ([Ljava/io/File;)V
+90: tag=1: utf8 string: ()Ljava/lang/SecurityManager;
+91: tag=1: utf8 string: ()Ljava/net/URL;
+92: tag=1: utf8 string: (Ljava/net/URL;)V
+93: tag=1: utf8 string: ()Ljava/net/URLStreamHandlerFactory;
+94: tag=1: utf8 string: (Ljava/security/Permission;)V
+95: tag=1: utf8 string: ([Ljava/security/ProtectionDomain;)V
+96: tag=1: utf8 string: (Ljava/lang/String;)[Ljava/io/File;
+97: tag=1: utf8 string: (Ljava/lang/String;Z)Ljava/lang/Class;
+98: tag=1: utf8 string: (Ljava/lang/ClassLoader;)Ljava/lang/ClassLoader;
+99: tag=1: utf8 string: ([Ljava/net/URL;Ljava/lang/ClassLoader;)V
+100: tag=1: utf8 string: (Ljava/security/PrivilegedAction;)Ljava/lang/Object;
+101: tag=1: utf8 string: (Ljava/io/File;)Ljava/net/URL;
+102: tag=1: utf8 string: ([Ljava/io/File;)Ljava/security/AccessControlContext;
+103: tag=1: utf8 string: (Ljava/security/CodeSource;)Ljava/security/PermissionCollection;
+104: tag=1: utf8 string: (Ljava/security/CodeSource;Ljava/security/PermissionCollection;)V
+105: tag=1: utf8 string: (Ljava/net/URL;[Ljava/security/cert/Certificate;)V
+106: tag=1: utf8 string: (Ljava/lang/String;[Ljava/io/File;Ljava/lang/ClassLoader;)V
+107: tag=1: utf8 string: ([Ljava/net/URL;Ljava/lang/ClassLoader;Ljava/net/URLStreamHandlerFactory;)V
+108: tag=12: name and type descriptor: name index=3, type index=19
+109: tag=12: name and type descriptor: name index=12, type index=4
+110: tag=12: name and type descriptor: name index=28, type index=5
+111: tag=12: name and type descriptor: name index=58, type index=6
+112: tag=12: name and type descriptor: name index=12, type index=89
+113: tag=12: name and type descriptor: name index=39, type index=8
+114: tag=12: name and type descriptor: name index=38, type index=90
+115: tag=12: name and type descriptor: name index=60, type index=7
+116: tag=12: name and type descriptor: name index=12, type index=10
+117: tag=12: name and type descriptor: name index=27, type index=10
+118: tag=12: name and type descriptor: name index=33, type index=91
+119: tag=12: name and type descriptor: name index=25, type index=92
+120: tag=12: name and type descriptor: name index=21, type index=93
+121: tag=12: name and type descriptor: name index=23, type index=94
+122: tag=12: name and type descriptor: name index=12, type index=95
+123: tag=12: name and type descriptor: name index=22, type index=96
+124: tag=12: name and type descriptor: name index=59, type index=97
+125: tag=12: name and type descriptor: name index=29, type index=100
+126: tag=12: name and type descriptor: name index=32, type index=9
+127: tag=12: name and type descriptor: name index=37, type index=9
+128: tag=12: name and type descriptor: name index=35, type index=101
+129: tag=12: name and type descriptor: name index=36, type index=103
+130: tag=12: name and type descriptor: name index=12, type index=104
+131: tag=12: name and type descriptor: name index=12, type index=105
+132: tag=12: name and type descriptor: name index=12, type index=106
+133: tag=12: name and type descriptor: name index=12, type index=107
+134: tag=9: field: Class index=86, Name and Type index=108
+135: tag=10: method: Class index=67, Name and Type index=116
+136: tag=10: method: Class index=69, Name and Type index=109
+137: tag=10: method: Class index=70, Name and Type index=110
+138: tag=10: method: Class index=72, Name and Type index=116
+139: tag=10: method: Class index=73, Name and Type index=117
+140: tag=10: method: Class index=74, Name and Type index=111
+141: tag=10: method: Class index=74, Name and Type index=115
+142: tag=10: method: Class index=75, Name and Type index=114
+143: tag=10: method: Class index=75, Name and Type index=127
+144: tag=10: method: Class index=76, Name and Type index=113
+145: tag=10: method: Class index=78, Name and Type index=119
+146: tag=10: method: Class index=78, Name and Type index=124
+147: tag=10: method: Class index=78, Name and Type index=129
+148: tag=10: method: Class index=78, Name and Type index=133
+149: tag=10: method: Class index=79, Name and Type index=122
+150: tag=10: method: Class index=80, Name and Type index=125
+151: tag=10: method: Class index=81, Name and Type index=131
+152: tag=10: method: Class index=82, Name and Type index=121
+153: tag=10: method: Class index=83, Name and Type index=130
+154: tag=10: method: Class index=84, Name and Type index=126
+155: tag=10: method: Class index=85, Name and Type index=120
+156: tag=10: method: Class index=85, Name and Type index=123
+157: tag=10: method: Class index=85, Name and Type index=128
+158: tag=10: method: Class index=87, Name and Type index=132
+159: tag=10: method: Class index=88, Name and Type index=112
+160: tag=10: method: Class index=88, Name and Type index=118
+161: tag=1: utf8 string: AppClassLoader
+flag 32super
+this class: sun/misc/Launcher$AppClassLoader
+super class: java/net/URLClassLoader
+interfaces: 0
+fields: 1
+static final synthetic
+field name: $assertionsDisabled
+field type: Z
+attr count: 0
+methods: 8
+public static
+method name: getAppClassLoader
+method type: (Ljava/lang/ClassLoader;)Ljava/lang/ClassLoader;
+attr count: 2
+  attribute 0 name: Code
+  max stack: 5
+  max locals: 3
+  code length: 39
+0: 2 ldc java.class.path
+2: 3 invokestatic java/lang/System getProperty java/lang/String Ljava/lang/String;
+5: 1 astore_1
+6: 1 aload_1
+7: 3 ifnonnull 10
+10: 1 iconst_0
+11: 3 anewarray java/io/File
+14: 3 goto 7
+17: 1 aload_1
+18: 3 invokestatic sun/misc/Launcher access$200 java/lang/String [Ljava/io/File;
+21: 1 astore_2
+22: 3 new sun/misc/Launcher$AppClassLoader$1
+25: 1 dup
+26: 1 aload_1
+27: 1 aload_2
+28: 1 aload_0
+29: 3 invokespecial sun/misc/Launcher$AppClassLoader$1 <init> java/lang/String [java/io/File java/lang/ClassLoader V
+32: 3 invokestatic java/security/AccessController doPrivileged java/security/PrivilegedAction Ljava/lang/Object;
+35: 3 checkcast sun/misc/Launcher$AppClassLoader
+38: 1 areturn
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 14
+
+
+  attribute 1 name: Exceptions
+  attribute 1 length: 4
+
+
+method name: <init>
+method type: ([Ljava/net/URL;Ljava/lang/ClassLoader;)V
+attr count: 1
+  attribute 0 name: Code
+  max stack: 4
+  max locals: 3
+  code length: 10
+0: 1 aload_0
+1: 1 aload_1
+2: 1 aload_2
+3: 3 invokestatic sun/misc/Launcher access$100  Ljava/net/URLStreamHandlerFactory;
+6: 3 invokespecial java/net/URLClassLoader <init> [java/net/URL java/lang/ClassLoader java/net/URLStreamHandlerFactory V
+9: 1 return
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 10
+
+
+public super
+method name: loadClass
+method type: (Ljava/lang/String;Z)Ljava/lang/Class;
+attr count: 2
+  attribute 0 name: Code
+  max stack: 4
+  max locals: 5
+  code length: 45
+0: 1 aload_1
+1: 3 invokestatic sun/jkernel/DownloadManager getBootClassPathEntryForClass java/lang/String Ljava/lang/String;
+4: 1 pop
+5: 1 aload_1
+6: 2 bipush 46
+8: 3 invokevirtual java/lang/String lastIndexOf I I
+11: 1 istore_3
+12: 1 iload_3
+13: 1 iconst_m1
+14: 3 if_icmpeq 24
+17: 3 invokestatic java/lang/System getSecurityManager  Ljava/lang/SecurityManager;
+20: 2 astore 4
+22: 2 aload 4
+24: 3 ifnull 14
+27: 2 aload 4
+29: 1 aload_1
+30: 1 iconst_0
+31: 1 iload_3
+32: 3 invokevirtual java/lang/String substring I I Ljava/lang/String;
+35: 3 invokevirtual java/lang/SecurityManager checkPackageAccess java/lang/String V
+38: 1 aload_0
+39: 1 aload_1
+40: 1 iload_2
+41: 3 invokespecial java/net/URLClassLoader loadClass java/lang/String Z Ljava/lang/Class;
+44: 1 areturn
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 30
+
+
+  attribute 1 name: Exceptions
+  attribute 1 length: 4
+
+protected
+method name: getPermissions
+method type: (Ljava/security/CodeSource;)Ljava/security/PermissionCollection;
+attr count: 1
+  attribute 0 name: Code
+  max stack: 4
+  max locals: 3
+  code length: 21
+0: 1 aload_0
+1: 1 aload_1
+2: 3 invokespecial java/net/URLClassLoader getPermissions java/security/CodeSource Ljava/security/PermissionCollection;
+5: 1 astore_2
+6: 1 aload_2
+7: 3 new java/lang/RuntimePermission
+10: 1 dup
+11: 2 ldc exitVM
+13: 3 invokespecial java/lang/RuntimePermission <init> java/lang/String V
+16: 3 invokevirtual java/security/PermissionCollection add java/security/Permission V
+19: 1 aload_2
+20: 1 areturn
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 14
+
+
+private
+method name: appendToClassPathForInstrumentation
+method type: (Ljava/lang/String;)V
+attr count: 1
+  attribute 0 name: Code
+  max stack: 4
+  max locals: 2
+  code length: 37
+0: 3 getstatic sun/misc/Launcher$AppClassLoader $assertionsDisabled Z
+3: 3 ifne 18
+6: 1 aload_0
+7: 3 invokestatic java/lang/Thread holdsLock java/lang/Object Z
+10: 3 ifne 11
+13: 3 new java/lang/AssertionError
+16: 1 dup
+17: 3 invokespecial java/lang/AssertionError <init>  V
+20: 1 athrow
+21: 1 aload_0
+22: 3 new java/io/File
+25: 1 dup
+26: 1 aload_1
+27: 3 invokespecial java/io/File <init> java/lang/String V
+30: 3 invokestatic sun/misc/Launcher getFileURL java/io/File Ljava/net/URL;
+33: 3 invokespecial java/net/URLClassLoader addURL java/net/URL V
+36: 1 return
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 14
+
+
+private static
+method name: getContext
+method type: ([Ljava/io/File;)Ljava/security/AccessControlContext;
+attr count: 2
+  attribute 0 name: Code
+  max stack: 6
+  max locals: 4
+  code length: 51
+0: 3 new sun/misc/PathPermissions
+3: 1 dup
+4: 1 aload_0
+5: 3 invokespecial sun/misc/PathPermissions <init> [java/io/File V
+8: 1 astore_1
+9: 3 new java/security/ProtectionDomain
+12: 1 dup
+13: 3 new java/security/CodeSource
+16: 1 dup
+17: 1 aload_1
+18: 3 invokevirtual sun/misc/PathPermissions getCodeBase  Ljava/net/URL;
+21: 1 aconst_null
+22: 3 checkcast [Ljava/security/cert/Certificate;
+25: 3 invokespecial java/security/CodeSource <init> java/net/URL [java/security/cert/Certificate V
+28: 1 aload_1
+29: 3 invokespecial java/security/ProtectionDomain <init> java/security/CodeSource java/security/PermissionCollection V
+32: 1 astore_2
+33: 3 new java/security/AccessControlContext
+36: 1 dup
+37: 1 iconst_1
+38: 3 anewarray java/security/ProtectionDomain
+41: 1 dup
+42: 1 iconst_0
+43: 1 aload_2
+44: 1 aastore
+45: 3 invokespecial java/security/AccessControlContext <init> [java/security/ProtectionDomain V
+48: 1 astore_3
+49: 1 aload_3
+50: 1 areturn
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 18
+
+
+  attribute 1 name: Exceptions
+  attribute 1 length: 4
+
+
+method name: addAppURL
+method type: (Ljava/net/URL;)V
+attr count: 1
+  attribute 0 name: Code
+  max stack: 2
+  max locals: 2
+  code length: 6
+0: 1 aload_0
+1: 1 aload_1
+2: 3 invokespecial java/net/URLClassLoader addURL java/net/URL V
+5: 1 return
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 10
+
+
+static
+method name: <clinit>
+method type: ()V
+attr count: 1
+  attribute 0 name: Code
+  max stack: 1
+  max locals: 0
+  code length: 18
+string(17) "sun/misc/Launcher"
+<loading sun\misc\Launcher$Factory>
+string(25) "sun\misc\Launcher$Factory"
+minor version: 0
+major version: 49
+constant_pool_count = 428
+1: tag=8: String: utf8 index=13
+2: tag=8: String: utf8 index=30
+3: tag=8: String: utf8 index=31
+4: tag=8: String: utf8 index=32
+5: tag=8: String: utf8 index=37
+6: tag=8: String: utf8 index=63
+7: tag=8: String: utf8 index=66
+8: tag=8: String: utf8 index=73
+9: tag=8: String: utf8 index=147
+10: tag=8: String: utf8 index=149
+11: tag=8: String: utf8 index=150
+12: tag=8: String: utf8 index=161
+13: tag=1: utf8 string:  is sealed
+14: tag=1: utf8 string: ()I
+15: tag=1: utf8 string: ()Ljava/lang/String;
+16: tag=1: utf8 string: ()V
+17: tag=1: utf8 string: ()Z
+18: tag=1: utf8 string: ()[B
+19: tag=1: utf8 string: (I)I
+20: tag=1: utf8 string: (II)Ljava/lang/String;
+21: tag=1: utf8 string: (Ljava/lang/Object;)Z
+22: tag=1: utf8 string: (Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
+23: tag=1: utf8 string: (Ljava/lang/String;)Ljava/lang/Class;
+24: tag=1: utf8 string: (Ljava/lang/String;)Ljava/lang/String;
+25: tag=1: utf8 string: (Ljava/lang/String;)V
+26: tag=1: utf8 string: (Ljava/lang/String;)Z
+27: tag=1: utf8 string: (Ljava/lang/String;Ljava/lang/String;)V
+28: tag=1: utf8 string: (Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+29: tag=1: utf8 string: (Z)V
+30: tag=1: utf8 string: -
+31: tag=1: utf8 string: /
+32: tag=1: utf8 string: : already loaded
+33: tag=1: utf8 string: <clinit>
+34: tag=1: utf8 string: <init>
+35: tag=1: utf8 string: C
+36: tag=1: utf8 string: Code
+37: tag=1: utf8 string: Error defining class 
+38: tag=1: utf8 string: Exceptions
+39: tag=1: utf8 string: IMPLEMENTATION_TITLE
+40: tag=1: utf8 string: IMPLEMENTATION_VENDOR
+41: tag=1: utf8 string: IMPLEMENTATION_VERSION
+42: tag=1: utf8 string: InnerClasses
+43: tag=1: utf8 string: LineNumberTable
+44: tag=1: utf8 string: Ljava/lang/String;
+45: tag=1: utf8 string: Ljava/lang/reflect/Method;
+46: tag=1: utf8 string: Name
+47: tag=1: utf8 string: SEALED
+48: tag=1: utf8 string: SPECIFICATION_TITLE
+49: tag=1: utf8 string: SPECIFICATION_VENDOR
+50: tag=1: utf8 string: SPECIFICATION_VERSION
+51: tag=1: utf8 string: Signature
+52: tag=1: utf8 string: SourceFile
+53: tag=1: utf8 string: URLClassLoader.java
+54: tag=1: utf8 string: acc
+55: tag=1: utf8 string: access$000
+56: tag=1: utf8 string: access$100
+57: tag=1: utf8 string: add
+58: tag=1: utf8 string: addURL
+59: tag=1: utf8 string: append
+60: tag=1: utf8 string: checkCreateClassLoader
+61: tag=1: utf8 string: checkURL
+62: tag=1: utf8 string: concat
+63: tag=1: utf8 string: connect,accept
+64: tag=1: utf8 string: decode
+65: tag=1: utf8 string: defineClass
+66: tag=1: utf8 string: defineClassNoVerify
+67: tag=1: utf8 string: defineClassNoVerifyMethod
+68: tag=1: utf8 string: definePackage
+69: tag=1: utf8 string: doPrivileged
+70: tag=1: utf8 string: endsWith
+71: tag=1: utf8 string: equals
+72: tag=1: utf8 string: equalsIgnoreCase
+73: tag=1: utf8 string: file
+74: tag=1: utf8 string: findClass
+75: tag=1: utf8 string: findResource
+76: tag=1: utf8 string: findResources
+77: tag=1: utf8 string: getAttributes
+78: tag=1: utf8 string: getByteBuffer
+79: tag=1: utf8 string: getBytes
+80: tag=1: utf8 string: getCodeSigners
+81: tag=1: utf8 string: getCodeSourceURL
+82: tag=1: utf8 string: getContext
+83: tag=1: utf8 string: getDeclaredMethod
+84: tag=1: utf8 string: getException
+85: tag=1: utf8 string: getFile
+86: tag=1: utf8 string: getHost
+87: tag=1: utf8 string: getJarFileURL
+88: tag=1: utf8 string: getLocation
+89: tag=1: utf8 string: getMainAttributes
+90: tag=1: utf8 string: getManifest
+91: tag=1: utf8 string: getName
+92: tag=1: utf8 string: getPackage
+93: tag=1: utf8 string: getPermission
+94: tag=1: utf8 string: getPermissions
+95: tag=1: utf8 string: getProtocol
+96: tag=1: utf8 string: getSecurityManager
+97: tag=1: utf8 string: getTargetException
+98: tag=1: utf8 string: getURLs
+99: tag=1: utf8 string: getValue
+100: tag=1: utf8 string: invoke
+101: tag=1: utf8 string: isSealed
+102: tag=1: utf8 string: java/io/File
+103: tag=1: utf8 string: java/io/FilePermission
+104: tag=1: utf8 string: java/io/IOException
+105: tag=1: utf8 string: java/lang/Class
+106: tag=1: utf8 string: java/lang/ClassNotFoundException
+107: tag=1: utf8 string: java/lang/IllegalAccessException
+108: tag=1: utf8 string: java/lang/IllegalArgumentException
+109: tag=1: utf8 string: java/lang/LinkageError
+110: tag=1: utf8 string: java/lang/NoSuchMethodException
+111: tag=1: utf8 string: java/lang/Object
+112: tag=1: utf8 string: java/lang/Package
+113: tag=1: utf8 string: java/lang/RuntimeException
+114: tag=1: utf8 string: java/lang/SecurityException
+115: tag=1: utf8 string: java/lang/SecurityManager
+116: tag=1: utf8 string: java/lang/String
+117: tag=1: utf8 string: java/lang/StringBuilder
+118: tag=1: utf8 string: java/lang/System
+119: tag=1: utf8 string: java/lang/reflect/InvocationTargetException
+120: tag=1: utf8 string: java/lang/reflect/Method
+121: tag=1: utf8 string: java/net/JarURLConnection
+122: tag=1: utf8 string: java/net/SocketPermission
+123: tag=1: utf8 string: java/net/URL
+124: tag=1: utf8 string: java/net/URLClassLoader
+125: tag=1: utf8 string: java/net/URLClassLoader$1
+126: tag=1: utf8 string: java/net/URLClassLoader$2
+127: tag=1: utf8 string: java/net/URLClassLoader$3
+128: tag=1: utf8 string: java/net/URLClassLoader$4
+129: tag=1: utf8 string: java/net/URLClassLoader$5
+130: tag=1: utf8 string: java/net/URLClassLoader$6
+131: tag=1: utf8 string: java/net/URLClassLoader$7
+132: tag=1: utf8 string: java/net/URLConnection
+133: tag=1: utf8 string: java/nio/ByteBuffer
+134: tag=1: utf8 string: java/security/AccessController
+135: tag=1: utf8 string: java/security/CodeSource
+136: tag=1: utf8 string: java/security/Permission
+137: tag=1: utf8 string: java/security/PermissionCollection
+138: tag=1: utf8 string: java/security/PrivilegedActionException
+139: tag=1: utf8 string: java/security/SecureClassLoader
+140: tag=1: utf8 string: java/util/jar/Attributes
+141: tag=1: utf8 string: java/util/jar/Attributes$Name
+142: tag=1: utf8 string: java/util/jar/Manifest
+143: tag=1: utf8 string: lastIndexOf
+144: tag=1: utf8 string: length
+145: tag=1: utf8 string: newInstance
+146: tag=1: utf8 string: openConnection
+147: tag=1: utf8 string: read
+148: tag=1: utf8 string: replace
+149: tag=1: utf8 string: sealing violation: can't seal package 
+150: tag=1: utf8 string: sealing violation: package 
+151: tag=1: utf8 string: separator
+152: tag=1: utf8 string: separatorChar
+153: tag=1: utf8 string: setAccessible
+154: tag=1: utf8 string: setJavaNetAccess
+155: tag=1: utf8 string: substring
+156: tag=1: utf8 string: sun/misc/Resource
+157: tag=1: utf8 string: sun/misc/SharedSecrets
+158: tag=1: utf8 string: sun/misc/URLClassPath
+159: tag=1: utf8 string: sun/net/www/ParseUtil
+160: tag=1: utf8 string: toString
+161: tag=1: utf8 string: true
+162: tag=1: utf8 string: ucp
+163: tag=1: utf8 string: wrap
+164: tag=7: Class: utf8 index=102
+165: tag=7: Class: utf8 index=103
+166: tag=7: Class: utf8 index=104
+167: tag=7: Class: utf8 index=105
+168: tag=7: Class: utf8 index=106
+169: tag=7: Class: utf8 index=107
+170: tag=7: Class: utf8 index=108
+171: tag=7: Class: utf8 index=109
+172: tag=7: Class: utf8 index=110
+173: tag=7: Class: utf8 index=111
+174: tag=7: Class: utf8 index=112
+175: tag=7: Class: utf8 index=113
+176: tag=7: Class: utf8 index=114
+177: tag=7: Class: utf8 index=115
+178: tag=7: Class: utf8 index=116
+179: tag=7: Class: utf8 index=117
+180: tag=7: Class: utf8 index=118
+181: tag=7: Class: utf8 index=119
+182: tag=7: Class: utf8 index=120
+183: tag=7: Class: utf8 index=121
+184: tag=7: Class: utf8 index=122
+185: tag=7: Class: utf8 index=123
+186: tag=7: Class: utf8 index=124
+187: tag=7: Class: utf8 index=125
+188: tag=7: Class: utf8 index=126
+189: tag=7: Class: utf8 index=127
+190: tag=7: Class: utf8 index=128
+191: tag=7: Class: utf8 index=129
+192: tag=7: Class: utf8 index=130
+193: tag=7: Class: utf8 index=131
+194: tag=7: Class: utf8 index=132
+195: tag=7: Class: utf8 index=133
+196: tag=7: Class: utf8 index=134
+197: tag=7: Class: utf8 index=135
+198: tag=7: Class: utf8 index=136
+199: tag=7: Class: utf8 index=137
+200: tag=7: Class: utf8 index=138
+201: tag=7: Class: utf8 index=139
+202: tag=7: Class: utf8 index=140
+203: tag=7: Class: utf8 index=141
+204: tag=7: Class: utf8 index=142
+205: tag=7: Class: utf8 index=156
+206: tag=7: Class: utf8 index=157
+207: tag=7: Class: utf8 index=158
+208: tag=7: Class: utf8 index=159
+209: tag=1: utf8 string: Ljava/security/AccessControlContext;
+210: tag=1: utf8 string: Ljava/util/jar/Attributes$Name;
+211: tag=1: utf8 string: Lsun/misc/URLClassPath;
+212: tag=1: utf8 string: (Ljava/lang/ClassLoader;)V
+213: tag=1: utf8 string: ()Ljava/lang/Exception;
+214: tag=1: utf8 string: ()Ljava/lang/SecurityManager;
+215: tag=1: utf8 string: (CC)Ljava/lang/String;
+216: tag=1: utf8 string: ()Ljava/lang/Throwable;
+217: tag=1: utf8 string: ()Ljava/net/URL;
+218: tag=1: utf8 string: ()[Ljava/net/URL;
+219: tag=1: utf8 string: (Ljava/net/URL;)V
+220: tag=1: utf8 string: (Ljava/net/URL;)Z
+221: tag=1: utf8 string: ([Ljava/net/URL;)V
+222: tag=1: utf8 string: ()Ljava/net/URLConnection;
+223: tag=1: utf8 string: ()Ljava/nio/ByteBuffer;
+224: tag=1: utf8 string: ([B)Ljava/nio/ByteBuffer;
+225: tag=1: utf8 string: ()Ljava/security/AccessControlContext;
+226: tag=1: utf8 string: ()[Ljava/security/CodeSigner;
+227: tag=1: utf8 string: ()Ljava/security/Permission;
+228: tag=1: utf8 string: (Ljava/security/Permission;)V
+229: tag=1: utf8 string: ()Ljava/util/jar/Attributes;
+230: tag=1: utf8 string: ()Ljava/util/jar/Manifest;
+231: tag=1: utf8 string: (Lsun/misc/JavaNetAccess;)V
+232: tag=1: utf8 string: (Ljava/lang/String;)Ljava/lang/Class<*>;
+233: tag=1: utf8 string: ([Ljava/net/URL;Ljava/lang/ClassLoader;)V
+234: tag=1: utf8 string: (Ljava/security/PrivilegedAction;)Ljava/lang/Object;
+235: tag=1: utf8 string: (Ljava/lang/String;)Ljava/lang/Package;
+236: tag=1: utf8 string: (Ljava/net/URLClassLoader;Ljava/lang/String;)V
+237: tag=1: utf8 string: (Ljava/util/jar/Attributes$Name;)Ljava/lang/String;
+238: tag=1: utf8 string: (Ljava/lang/String;)Ljava/lang/StringBuilder;
+239: tag=1: utf8 string: (Ljava/lang/String;Ljava/lang/Throwable;)V
+240: tag=1: utf8 string: (Ljava/lang/String;)Ljava/net/URL;
+241: tag=1: utf8 string: (Ljava/net/URL;)Ljava/net/URL;
+242: tag=1: utf8 string: ([Ljava/net/URL;)Ljava/net/URLClassLoader;
+243: tag=1: utf8 string: ([Ljava/net/URL;Ljava/net/URLStreamHandlerFactory;)V
+244: tag=1: utf8 string: (Ljava/net/URLClassLoader;)Ljava/security/AccessControlContext;
+245: tag=1: utf8 string: (Ljava/net/URL;[Ljava/security/CodeSigner;)V
+246: tag=1: utf8 string: (Ljava/security/CodeSource;)Ljava/security/PermissionCollection;
+247: tag=1: utf8 string: (Ljava/lang/String;)Ljava/util/Enumeration;
+248: tag=1: utf8 string: (Ljava/lang/String;Z)Ljava/util/Enumeration;
+249: tag=1: utf8 string: (Ljava/net/URLClassLoader;Ljava/util/Enumeration;)V
+250: tag=1: utf8 string: (Ljava/lang/String;)Ljava/util/jar/Attributes;
+251: tag=1: utf8 string: (Ljava/lang/String;Ljava/util/jar/Manifest;)Z
+252: tag=1: utf8 string: (Ljava/lang/String;[BIILjava/security/CodeSource;)Ljava/lang/Class;
+253: tag=1: utf8 string: (Ljava/lang/String;Lsun/misc/Resource;)Ljava/lang/Class;
+254: tag=1: utf8 string: (Ljava/lang/String;Lsun/misc/Resource;Z)Ljava/lang/Class;
+255: tag=1: utf8 string: (Ljava/security/PrivilegedAction;Ljava/security/AccessControlContext;)Ljava/lang/Object;
+256: tag=1: utf8 string: (Ljava/security/PrivilegedExceptionAction;Ljava/security/AccessControlContext;)Ljava/lang/Object;
+257: tag=1: utf8 string: (Ljava/lang/String;)Ljava/util/Enumeration<Ljava/net/URL;>;
+258: tag=1: utf8 string: ([Ljava/net/URL;Ljava/lang/ClassLoader;)Ljava/net/URLClassLoader;
+259: tag=1: utf8 string: ([Ljava/net/URL;Ljava/lang/ClassLoader;Ljava/net/URLStreamHandlerFactory;)V
+260: tag=1: utf8 string: (Ljava/net/URLClassLoader;Ljava/lang/SecurityManager;Ljava/security/Permission;)V
+261: tag=1: utf8 string: (Ljava/lang/String;Ljava/nio/ByteBuffer;Ljava/security/CodeSource;)Ljava/lang/Class;
+262: tag=1: utf8 string: (Ljava/net/URLClassLoader;Ljava/lang/String;Lsun/misc/Resource;Z)Ljava/lang/Class;
+263: tag=1: utf8 string: (Ljava/lang/String;Ljava/util/jar/Manifest;Ljava/net/URL;)Ljava/lang/Package;
+264: tag=1: utf8 string: (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/net/URL;)Ljava/lang/Package;
+265: tag=12: name and type descriptor: name index=152, type index=35
+266: tag=12: name and type descriptor: name index=151, type index=44
+267: tag=12: name and type descriptor: name index=67, type index=45
+268: tag=12: name and type descriptor: name index=54, type index=209
+269: tag=12: name and type descriptor: name index=39, type index=210
+270: tag=12: name and type descriptor: name index=40, type index=210
+271: tag=12: name and type descriptor: name index=41, type index=210
+272: tag=12: name and type descriptor: name index=47, type index=210
+273: tag=12: name and type descriptor: name index=48, type index=210
+274: tag=12: name and type descriptor: name index=49, type index=210
+275: tag=12: name and type descriptor: name index=50, type index=210
+276: tag=12: name and type descriptor: name index=162, type index=211
+277: tag=12: name and type descriptor: name index=144, type index=14
+278: tag=12: name and type descriptor: name index=34, type index=16
+279: tag=12: name and type descriptor: name index=60, type index=16
+280: tag=12: name and type descriptor: name index=101, type index=17
+281: tag=12: name and type descriptor: name index=79, type index=18
+282: tag=12: name and type descriptor: name index=143, type index=19
+283: tag=12: name and type descriptor: name index=153, type index=29
+284: tag=12: name and type descriptor: name index=34, type index=212
+285: tag=12: name and type descriptor: name index=84, type index=213
+286: tag=12: name and type descriptor: name index=71, type index=21
+287: tag=12: name and type descriptor: name index=96, type index=214
+288: tag=12: name and type descriptor: name index=85, type index=15
+289: tag=12: name and type descriptor: name index=86, type index=15
+290: tag=12: name and type descriptor: name index=91, type index=15
+291: tag=12: name and type descriptor: name index=95, type index=15
+292: tag=12: name and type descriptor: name index=160, type index=15
+293: tag=12: name and type descriptor: name index=148, type index=215
+294: tag=12: name and type descriptor: name index=155, type index=20
+295: tag=12: name and type descriptor: name index=34, type index=25
+296: tag=12: name and type descriptor: name index=70, type index=26
+297: tag=12: name and type descriptor: name index=72, type index=26
+298: tag=12: name and type descriptor: name index=97, type index=216
+299: tag=12: name and type descriptor: name index=81, type index=217
+300: tag=12: name and type descriptor: name index=87, type index=217
+301: tag=12: name and type descriptor: name index=88, type index=217
+302: tag=12: name and type descriptor: name index=98, type index=218
+303: tag=12: name and type descriptor: name index=58, type index=219
+304: tag=12: name and type descriptor: name index=101, type index=220
+305: tag=12: name and type descriptor: name index=34, type index=221
+306: tag=12: name and type descriptor: name index=146, type index=222
+307: tag=12: name and type descriptor: name index=78, type index=223
+308: tag=12: name and type descriptor: name index=163, type index=224
+309: tag=12: name and type descriptor: name index=82, type index=225
+310: tag=12: name and type descriptor: name index=80, type index=226
+311: tag=12: name and type descriptor: name index=93, type index=227
+312: tag=12: name and type descriptor: name index=57, type index=228
+313: tag=12: name and type descriptor: name index=89, type index=229
+314: tag=12: name and type descriptor: name index=90, type index=230
+315: tag=12: name and type descriptor: name index=154, type index=231
+316: tag=12: name and type descriptor: name index=34, type index=233
+317: tag=12: name and type descriptor: name index=69, type index=234
+318: tag=12: name and type descriptor: name index=92, type index=235
+319: tag=12: name and type descriptor: name index=62, type index=24
+320: tag=12: name and type descriptor: name index=64, type index=24
+321: tag=12: name and type descriptor: name index=34, type index=27
+322: tag=12: name and type descriptor: name index=34, type index=236
+323: tag=12: name and type descriptor: name index=99, type index=237
+324: tag=12: name and type descriptor: name index=59, type index=238
+325: tag=12: name and type descriptor: name index=34, type index=239
+326: tag=12: name and type descriptor: name index=61, type index=241
+327: tag=12: name and type descriptor: name index=34, type index=243
+328: tag=12: name and type descriptor: name index=34, type index=245
+329: tag=12: name and type descriptor: name index=94, type index=246
+330: tag=12: name and type descriptor: name index=76, type index=248
+331: tag=12: name and type descriptor: name index=34, type index=249
+332: tag=12: name and type descriptor: name index=77, type index=250
+333: tag=12: name and type descriptor: name index=101, type index=251
+334: tag=12: name and type descriptor: name index=65, type index=252
+335: tag=12: name and type descriptor: name index=65, type index=254
+336: tag=12: name and type descriptor: name index=100, type index=22
+337: tag=12: name and type descriptor: name index=69, type index=255
+338: tag=12: name and type descriptor: name index=69, type index=256
+339: tag=12: name and type descriptor: name index=83, type index=28
+340: tag=12: name and type descriptor: name index=34, type index=260
+341: tag=12: name and type descriptor: name index=65, type index=261
+342: tag=12: name and type descriptor: name index=68, type index=263
+343: tag=12: name and type descriptor: name index=68, type index=264
+344: tag=9: field: Class index=164, Name and Type index=265
+345: tag=9: field: Class index=164, Name and Type index=266
+346: tag=9: field: Class index=186, Name and Type index=267
+347: tag=9: field: Class index=186, Name and Type index=268
+348: tag=9: field: Class index=186, Name and Type index=276
+349: tag=9: field: Class index=203, Name and Type index=269
+350: tag=9: field: Class index=203, Name and Type index=270
+351: tag=9: field: Class index=203, Name and Type index=271
+352: tag=9: field: Class index=203, Name and Type index=272
+353: tag=9: field: Class index=203, Name and Type index=273
+354: tag=9: field: Class index=203, Name and Type index=274
+355: tag=9: field: Class index=203, Name and Type index=275
+356: tag=10: method: Class index=165, Name and Type index=321
+357: tag=10: method: Class index=167, Name and Type index=339
+358: tag=10: method: Class index=174, Name and Type index=280
+359: tag=10: method: Class index=174, Name and Type index=304
+360: tag=10: method: Class index=175, Name and Type index=325
+361: tag=10: method: Class index=176, Name and Type index=295
+362: tag=10: method: Class index=177, Name and Type index=279
+363: tag=10: method: Class index=178, Name and Type index=277
+364: tag=10: method: Class index=178, Name and Type index=282
+365: tag=10: method: Class index=178, Name and Type index=286
+366: tag=10: method: Class index=178, Name and Type index=293
+367: tag=10: method: Class index=178, Name and Type index=294
+368: tag=10: method: Class index=178, Name and Type index=296
+369: tag=10: method: Class index=178, Name and Type index=297
+370: tag=10: method: Class index=178, Name and Type index=319
+371: tag=10: method: Class index=179, Name and Type index=278
+372: tag=10: method: Class index=179, Name and Type index=292
+373: tag=10: method: Class index=179, Name and Type index=324
+374: tag=10: method: Class index=180, Name and Type index=287
+375: tag=10: method: Class index=181, Name and Type index=298
+376: tag=10: method: Class index=182, Name and Type index=283
+377: tag=10: method: Class index=182, Name and Type index=336
+378: tag=10: method: Class index=183, Name and Type index=300
+379: tag=10: method: Class index=184, Name and Type index=321
+380: tag=10: method: Class index=185, Name and Type index=288
+381: tag=10: method: Class index=185, Name and Type index=289
+382: tag=10: method: Class index=185, Name and Type index=291
+383: tag=10: method: Class index=185, Name and Type index=306
+384: tag=10: method: Class index=186, Name and Type index=318
+385: tag=10: method: Class index=186, Name and Type index=333
+386: tag=10: method: Class index=186, Name and Type index=334
+387: tag=10: method: Class index=186, Name and Type index=335
+388: tag=10: method: Class index=186, Name and Type index=341
+389: tag=10: method: Class index=186, Name and Type index=342
+390: tag=10: method: Class index=186, Name and Type index=343
+391: tag=10: method: Class index=187, Name and Type index=322
+392: tag=10: method: Class index=188, Name and Type index=322
+393: tag=10: method: Class index=189, Name and Type index=331
+394: tag=10: method: Class index=190, Name and Type index=340
+395: tag=10: method: Class index=191, Name and Type index=316
+396: tag=10: method: Class index=192, Name and Type index=305
+397: tag=10: method: Class index=193, Name and Type index=278
+398: tag=10: method: Class index=194, Name and Type index=311
+399: tag=10: method: Class index=195, Name and Type index=308
+400: tag=10: method: Class index=196, Name and Type index=309
+401: tag=10: method: Class index=196, Name and Type index=317
+402: tag=10: method: Class index=196, Name and Type index=337
+403: tag=10: method: Class index=196, Name and Type index=338
+404: tag=10: method: Class index=197, Name and Type index=301
+405: tag=10: method: Class index=197, Name and Type index=328
+406: tag=10: method: Class index=198, Name and Type index=290
+407: tag=10: method: Class index=199, Name and Type index=312
+408: tag=10: method: Class index=200, Name and Type index=285
+409: tag=10: method: Class index=201, Name and Type index=278
+410: tag=10: method: Class index=201, Name and Type index=284
+411: tag=10: method: Class index=201, Name and Type index=329
+412: tag=10: method: Class index=202, Name and Type index=323
+413: tag=10: method: Class index=204, Name and Type index=313
+414: tag=10: method: Class index=204, Name and Type index=332
+415: tag=10: method: Class index=205, Name and Type index=281
+416: tag=10: method: Class index=205, Name and Type index=299
+417: tag=10: method: Class index=205, Name and Type index=307
+418: tag=10: method: Class index=205, Name and Type index=310
+419: tag=10: method: Class index=205, Name and Type index=314
+420: tag=10: method: Class index=206, Name and Type index=315
+421: tag=10: method: Class index=207, Name and Type index=302
+422: tag=10: method: Class index=207, Name and Type index=303
+423: tag=10: method: Class index=207, Name and Type index=305
+424: tag=10: method: Class index=207, Name and Type index=326
+425: tag=10: method: Class index=207, Name and Type index=327
+426: tag=10: method: Class index=207, Name and Type index=330
+427: tag=10: method: Class index=208, Name and Type index=320
+flag 33public super
+this class: java/net/URLClassLoader
+super class: java/security/SecureClassLoader
+interfaces: 0
+fields: 3
+
+field name: ucp
+field type: Lsun/misc/URLClassPath;
+attr count: 0
+private
+field name: acc
+field type: Ljava/security/AccessControlContext;
+attr count: 0
+private static final
+field name: defineClassNoVerifyMethod
+field type: Ljava/lang/reflect/Method;
+attr count: 0
+methods: 18
+public
+method name: <init>
+method type: ([Ljava/net/URL;Ljava/lang/ClassLoader;)V
+attr count: 1
+  attribute 0 name: Code
+  max stack: 4
+  max locals: 4
+  code length: 37
+0: 1 aload_0
+1: 1 aload_2
+2: 3 invokespecial java/security/SecureClassLoader <init> java/lang/ClassLoader V
+5: 3 invokestatic java/lang/System getSecurityManager  Ljava/lang/SecurityManager;
+8: 1 astore_3
+9: 1 aload_3
+10: 3 ifnull 7
+13: 1 aload_3
+14: 3 invokevirtual java/lang/SecurityManager checkCreateClassLoader  V
+17: 1 aload_0
+18: 3 new sun/misc/URLClassPath
+21: 1 dup
+22: 1 aload_1
+23: 3 invokespecial sun/misc/URLClassPath <init> [java/net/URL V
+26: 3 putfield java/net/URLClassLoader ucp Lsun/misc/URLClassPath;
+29: 1 aload_0
+30: 3 invokestatic java/security/AccessController getContext  Ljava/security/AccessControlContext;
+33: 3 putfield java/net/URLClassLoader acc Ljava/security/AccessControlContext;
+36: 1 return
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 30
+
+
+public
+method name: <init>
+method type: ([Ljava/net/URL;)V
+attr count: 1
+  attribute 0 name: Code
+  max stack: 4
+  max locals: 3
+  code length: 36
+0: 1 aload_0
+1: 3 invokespecial java/security/SecureClassLoader <init>  V
+4: 3 invokestatic java/lang/System getSecurityManager  Ljava/lang/SecurityManager;
+7: 1 astore_2
+8: 1 aload_2
+9: 3 ifnull 7
+12: 1 aload_2
+13: 3 invokevirtual java/lang/SecurityManager checkCreateClassLoader  V
+16: 1 aload_0
+17: 3 new sun/misc/URLClassPath
+20: 1 dup
+21: 1 aload_1
+22: 3 invokespecial sun/misc/URLClassPath <init> [java/net/URL V
+25: 3 putfield java/net/URLClassLoader ucp Lsun/misc/URLClassPath;
+28: 1 aload_0
+29: 3 invokestatic java/security/AccessController getContext  Ljava/security/AccessControlContext;
+32: 3 putfield java/net/URLClassLoader acc Ljava/security/AccessControlContext;
+35: 1 return
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 30
+
+
+public
+method name: <init>
+method type: ([Ljava/net/URL;Ljava/lang/ClassLoader;Ljava/net/URLStreamHandlerFactory;)V
+attr count: 1
+  attribute 0 name: Code
+  max stack: 5
+  max locals: 5
+  code length: 41
+0: 1 aload_0
+1: 1 aload_2
+2: 3 invokespecial java/security/SecureClassLoader <init> java/lang/ClassLoader V
+5: 3 invokestatic java/lang/System getSecurityManager  Ljava/lang/SecurityManager;
+8: 2 astore 4
+10: 2 aload 4
+12: 3 ifnull 8
+15: 2 aload 4
+17: 3 invokevirtual java/lang/SecurityManager checkCreateClassLoader  V
+20: 1 aload_0
+21: 3 new sun/misc/URLClassPath
+24: 1 dup
+25: 1 aload_1
+26: 1 aload_3
+27: 3 invokespecial sun/misc/URLClassPath <init> [java/net/URL java/net/URLStreamHandlerFactory V
+30: 3 putfield java/net/URLClassLoader ucp Lsun/misc/URLClassPath;
+33: 1 aload_0
+34: 3 invokestatic java/security/AccessController getContext  Ljava/security/AccessControlContext;
+37: 3 putfield java/net/URLClassLoader acc Ljava/security/AccessControlContext;
+40: 1 return
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 30
+
+
+protected
+method name: addURL
+method type: (Ljava/net/URL;)V
+attr count: 1
+  attribute 0 name: Code
+  max stack: 2
+  max locals: 2
+  code length: 9
+0: 1 aload_0
+1: 3 getfield java/net/URLClassLoader ucp Lsun/misc/URLClassPath;
+4: 1 aload_1
+5: 3 invokevirtual sun/misc/URLClassPath addURL java/net/URL V
+8: 1 return
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 10
+
+
+public
+method name: getURLs
+method type: ()[Ljava/net/URL;
+attr count: 1
+  attribute 0 name: Code
+  max stack: 1
+  max locals: 1
+  code length: 8
+0: 1 aload_0
+1: 3 getfield java/net/URLClassLoader ucp Lsun/misc/URLClassPath;
+4: 3 invokevirtual sun/misc/URLClassPath getURLs  [Ljava/net/URL;
+7: 1 areturn
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 6
+
+
+protected
+method name: findClass
+method type: (Ljava/lang/String;)Ljava/lang/Class;
+attr count: 3
+  attribute 0 name: Code
+  max stack: 4
+  max locals: 3
+  code length: 29
+0: 3 new java/net/URLClassLoader$1
+3: 1 dup
+4: 1 aload_0
+5: 1 aload_1
+6: 3 invokespecial java/net/URLClassLoader$1 <init> java/net/URLClassLoader java/lang/String V
+9: 1 aload_0
+10: 3 getfield java/net/URLClassLoader acc Ljava/security/AccessControlContext;
+13: 3 invokestatic java/security/AccessController doPrivileged java/security/PrivilegedExceptionAction java/security/AccessControlContext Ljava/lang/Object;
+16: 3 checkcast java/lang/Class
+19: 1 areturn
+20: 1 astore_2
+21: 1 aload_2
+22: 3 invokevirtual java/security/PrivilegedActionException getException  Ljava/lang/Exception;
+25: 3 checkcast java/lang/ClassNotFoundException
+28: 1 athrow
+  exceptions length: 1
+    start_pc: 0
+    end_pc: 19
+    handler_pc: 20
+    catch_type: java/security/PrivilegedActionException
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 14
+
+
+  attribute 1 name: Exceptions
+  attribute 1 length: 4
+
+  attribute 2 name: Signature
+  attribute 2 value: (Ljava/lang/String;)Ljava/lang/Class<*>;
+
+private
+method name: defineClass
+method type: (Ljava/lang/String;Lsun/misc/Resource;)Ljava/lang/Class;
+attr count: 2
+  attribute 0 name: Code
+  max stack: 4
+  max locals: 3
+  code length: 8
+0: 1 aload_0
+1: 1 aload_1
+2: 1 aload_2
+3: 1 iconst_1
+4: 3 invokespecial java/net/URLClassLoader defineClass java/lang/String sun/misc/Resource Z Ljava/lang/Class;
+7: 1 areturn
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 6
+
+
+  attribute 1 name: Exceptions
+  attribute 1 length: 4
+
+private
+method name: defineClass
+method type: (Ljava/lang/String;Lsun/misc/Resource;Z)Ljava/lang/Class;
+attr count: 2
+  attribute 0 name: Code
+  max stack: 9
+  max locals: 13
+  code length: 373
+0: 1 aload_1
+1: 2 bipush 46
+3: 3 invokevirtual java/lang/String lastIndexOf I I
+6: 2 istore 4
+8: 1 aload_2
+9: 3 invokevirtual sun/misc/Resource getCodeSourceURL  Ljava/net/URL;
+12: 2 astore 5
+14: 2 iload 4
+16: 1 iconst_m1
+17: 3 if_icmpeq 164
+20: 1 aload_1
+21: 1 iconst_0
+22: 2 iload 4
+24: 3 invokevirtual java/lang/String substring I I Ljava/lang/String;
+27: 2 astore 6
+29: 1 aload_0
+30: 2 aload 6
+32: 3 invokevirtual java/net/URLClassLoader getPackage java/lang/String Ljava/lang/Package;
+35: 2 astore 7
+37: 1 aload_2
+38: 3 invokevirtual sun/misc/Resource getManifest  Ljava/util/jar/Manifest;
+41: 2 astore 8
+43: 2 aload 7
+45: 3 ifnull 103
+48: 2 aload 7
+50: 3 invokevirtual java/lang/Package isSealed  Z
+53: 3 ifeq 46
+56: 2 aload 7
+58: 2 aload 5
+60: 3 invokevirtual java/lang/Package isSealed java/net/URL Z
+63: 3 ifne 118
+66: 3 new java/lang/SecurityException
+69: 1 dup
+70: 3 new java/lang/StringBuilder
+73: 1 dup
+74: 3 invokespecial java/lang/StringBuilder <init>  V
+77: 2 ldc sealing violation: package 
+79: 3 invokevirtual java/lang/StringBuilder append java/lang/String Ljava/lang/StringBuilder;
+82: 2 aload 6
+84: 3 invokevirtual java/lang/StringBuilder append java/lang/String Ljava/lang/StringBuilder;
+87: 2 ldc  is sealed
+89: 3 invokevirtual java/lang/StringBuilder append java/lang/String Ljava/lang/StringBuilder;
+92: 3 invokevirtual java/lang/StringBuilder toString  Ljava/lang/String;
+95: 3 invokespecial java/lang/SecurityException <init> java/lang/String V
+98: 1 athrow
+99: 2 aload 8
+101: 3 ifnull 80
+104: 1 aload_0
+105: 2 aload 6
+107: 2 aload 8
+109: 3 invokespecial java/net/URLClassLoader isSealed java/lang/String java/util/jar/Manifest Z
+112: 3 ifeq 69
+115: 3 new java/lang/SecurityException
+118: 1 dup
+119: 3 new java/lang/StringBuilder
+122: 1 dup
+123: 3 invokespecial java/lang/StringBuilder <init>  V
+126: 2 ldc sealing violation: can't seal package 
+128: 3 invokevirtual java/lang/StringBuilder append java/lang/String Ljava/lang/StringBuilder;
+131: 2 aload 6
+133: 3 invokevirtual java/lang/StringBuilder append java/lang/String Ljava/lang/StringBuilder;
+136: 2 ldc : already loaded
+138: 3 invokevirtual java/lang/StringBuilder append java/lang/String Ljava/lang/StringBuilder;
+141: 3 invokevirtual java/lang/StringBuilder toString  Ljava/lang/String;
+144: 3 invokespecial java/lang/SecurityException <init> java/lang/String V
+147: 1 athrow
+148: 2 aload 8
+150: 3 ifnull 17
+153: 1 aload_0
+154: 2 aload 6
+156: 2 aload 8
+158: 2 aload 5
+160: 3 invokevirtual java/net/URLClassLoader definePackage java/lang/String java/util/jar/Manifest java/net/URL Ljava/lang/Package;
+163: 1 pop
+164: 3 goto 17
+167: 1 aload_0
+168: 2 aload 6
+170: 1 aconst_null
+171: 1 aconst_null
+172: 1 aconst_null
+173: 1 aconst_null
+174: 1 aconst_null
+175: 1 aconst_null
+176: 1 aconst_null
+177: 3 invokevirtual java/net/URLClassLoader definePackage java/lang/String java/lang/String java/lang/String java/lang/String java/lang/String java/lang/String java/lang/String java/net/URL Ljava/lang/Package;
+180: 1 pop
+181: 1 aload_2
+182: 3 invokevirtual sun/misc/Resource getByteBuffer  Ljava/nio/ByteBuffer;
+185: 2 astore 6
+187: 2 aload 6
+189: 3 ifnonnull 10
+192: 1 aload_2
+193: 3 invokevirtual sun/misc/Resource getBytes  [B
+196: 3 goto 4
+199: 1 aconst_null
+200: 2 astore 7
+202: 1 aload_2
+203: 3 invokevirtual sun/misc/Resource getCodeSigners  [Ljava/security/CodeSigner;
+206: 2 astore 8
+208: 3 new java/security/CodeSource
+211: 1 dup
+212: 2 aload 5
+214: 2 aload 8
+216: 3 invokespecial java/security/CodeSource <init> java/net/URL [java/security/CodeSigner V
+219: 2 astore 9
+221: 1 iload_3
+222: 3 ifne 120
+225: 1 iconst_3
+226: 3 anewarray java/lang/Object
+229: 1 dup
+230: 1 iconst_0
+231: 1 aload_1
+232: 1 aastore
+233: 1 dup
+234: 1 iconst_1
+235: 2 aload 6
+237: 3 ifnonnull 11
+240: 2 aload 7
+242: 3 invokestatic java/nio/ByteBuffer wrap [B Ljava/nio/ByteBuffer;
+245: 3 goto 5
+248: 2 aload 6
+250: 1 aastore
+251: 1 dup
+252: 1 iconst_2
+253: 2 aload 9
+255: 1 aastore
+256: 2 astore 10
+258: 3 getstatic java/net/URLClassLoader defineClassNoVerifyMethod Ljava/lang/reflect/Method;
+261: 1 aload_0
+262: 2 aload 10
+264: 3 invokevirtual java/lang/reflect/Method invoke java/lang/Object [java/lang/Object Ljava/lang/Object;
+267: 3 checkcast java/lang/Class
+270: 1 areturn
+271: 2 astore 11
+273: 3 goto 69
+276: 2 astore 11
+278: 2 aload 11
+280: 3 invokevirtual java/lang/reflect/InvocationTargetException getTargetException  Ljava/lang/Throwable;
+283: 2 astore 12
+285: 2 aload 12
+287: 3 instanceof java/lang/LinkageError
+290: 3 ifeq 9
+293: 2 aload 12
+295: 3 checkcast java/lang/LinkageError
+298: 1 athrow
+299: 2 aload 12
+301: 3 instanceof java/lang/RuntimeException
+304: 3 ifeq 9
+307: 2 aload 12
+309: 3 checkcast java/lang/RuntimeException
+312: 1 athrow
+313: 3 new java/lang/RuntimeException
+316: 1 dup
+317: 3 new java/lang/StringBuilder
+320: 1 dup
+321: 3 invokespecial java/lang/StringBuilder <init>  V
+324: 2 ldc Error defining class 
+326: 3 invokevirtual java/lang/StringBuilder append java/lang/String Ljava/lang/StringBuilder;
+329: 1 aload_1
+330: 3 invokevirtual java/lang/StringBuilder append java/lang/String Ljava/lang/StringBuilder;
+333: 3 invokevirtual java/lang/StringBuilder toString  Ljava/lang/String;
+336: 2 aload 12
+338: 3 invokespecial java/lang/RuntimeException <init> java/lang/String java/lang/Throwable V
+341: 1 athrow
+342: 2 aload 6
+344: 3 ifnull 15
+347: 1 aload_0
+348: 1 aload_1
+349: 2 aload 6
+351: 2 aload 9
+353: 3 invokevirtual java/net/URLClassLoader defineClass java/lang/String java/nio/ByteBuffer java/security/CodeSource Ljava/lang/Class;
+356: 3 goto 16
+359: 1 aload_0
+360: 1 aload_1
+361: 2 aload 7
+363: 1 iconst_0
+364: 2 aload 7
+366: 1 arraylength
+367: 2 aload 9
+369: 3 invokevirtual java/net/URLClassLoader defineClass java/lang/String [B I I java/security/CodeSource Ljava/lang/Class;
+372: 1 areturn
+  exceptions length: 2
+    start_pc: 258
+    end_pc: 270
+    handler_pc: 271
+    catch_type: java/lang/IllegalAccessException
+    start_pc: 258
+    end_pc: 270
+    handler_pc: 276
+    catch_type: java/lang/reflect/InvocationTargetException
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 130
+
+
+  attribute 1 name: Exceptions
+  attribute 1 length: 4
+
+protected
+method name: definePackage
+method type: (Ljava/lang/String;Ljava/util/jar/Manifest;Ljava/net/URL;)Ljava/lang/Package;
+attr count: 2
+  attribute 0 name: Code
+  max stack: 9
+  max locals: 14
+  code length: 271
+0: 1 aload_1
+1: 2 bipush 46
+3: 2 bipush 47
+5: 3 invokevirtual java/lang/String replace C C Ljava/lang/String;
+8: 2 ldc /
+10: 3 invokevirtual java/lang/String concat java/lang/String Ljava/lang/String;
+13: 2 astore 4
+15: 1 aconst_null
+16: 2 astore 5
+18: 1 aconst_null
+19: 2 astore 6
+21: 1 aconst_null
+22: 2 astore 7
+24: 1 aconst_null
+25: 2 astore 8
+27: 1 aconst_null
+28: 2 astore 9
+30: 1 aconst_null
+31: 2 astore 10
+33: 1 aconst_null
+34: 2 astore 11
+36: 1 aconst_null
+37: 2 astore 12
+39: 1 aload_2
+40: 2 aload 4
+42: 3 invokevirtual java/util/jar/Manifest getAttributes java/lang/String Ljava/util/jar/Attributes;
+45: 2 astore 13
+47: 2 aload 13
+49: 3 ifnull 73
+52: 2 aload 13
+54: 3 getstatic java/util/jar/Attributes$Name SPECIFICATION_TITLE Ljava/util/jar/Attributes$Name;
+57: 3 invokevirtual java/util/jar/Attributes getValue java/util/jar/Attributes$Name Ljava/lang/String;
+60: 2 astore 5
+62: 2 aload 13
+64: 3 getstatic java/util/jar/Attributes$Name SPECIFICATION_VERSION Ljava/util/jar/Attributes$Name;
+67: 3 invokevirtual java/util/jar/Attributes getValue java/util/jar/Attributes$Name Ljava/lang/String;
+70: 2 astore 6
+72: 2 aload 13
+74: 3 getstatic java/util/jar/Attributes$Name SPECIFICATION_VENDOR Ljava/util/jar/Attributes$Name;
+77: 3 invokevirtual java/util/jar/Attributes getValue java/util/jar/Attributes$Name Ljava/lang/String;
+80: 2 astore 7
+82: 2 aload 13
+84: 3 getstatic java/util/jar/Attributes$Name IMPLEMENTATION_TITLE Ljava/util/jar/Attributes$Name;
+87: 3 invokevirtual java/util/jar/Attributes getValue java/util/jar/Attributes$Name Ljava/lang/String;
+90: 2 astore 8
+92: 2 aload 13
+94: 3 getstatic java/util/jar/Attributes$Name IMPLEMENTATION_VERSION Ljava/util/jar/Attributes$Name;
+97: 3 invokevirtual java/util/jar/Attributes getValue java/util/jar/Attributes$Name Ljava/lang/String;
+100: 2 astore 9
+102: 2 aload 13
+104: 3 getstatic java/util/jar/Attributes$Name IMPLEMENTATION_VENDOR Ljava/util/jar/Attributes$Name;
+107: 3 invokevirtual java/util/jar/Attributes getValue java/util/jar/Attributes$Name Ljava/lang/String;
+110: 2 astore 10
+112: 2 aload 13
+114: 3 getstatic java/util/jar/Attributes$Name SEALED Ljava/util/jar/Attributes$Name;
+117: 3 invokevirtual java/util/jar/Attributes getValue java/util/jar/Attributes$Name Ljava/lang/String;
+120: 2 astore 11
+122: 1 aload_2
+123: 3 invokevirtual java/util/jar/Manifest getMainAttributes  Ljava/util/jar/Attributes;
+126: 2 astore 13
+128: 2 aload 13
+130: 3 ifnull 108
+133: 2 aload 5
+135: 3 ifnonnull 13
+138: 2 aload 13
+140: 3 getstatic java/util/jar/Attributes$Name SPECIFICATION_TITLE Ljava/util/jar/Attributes$Name;
+143: 3 invokevirtual java/util/jar/Attributes getValue java/util/jar/Attributes$Name Ljava/lang/String;
+146: 2 astore 5
+148: 2 aload 6
+150: 3 ifnonnull 13
+153: 2 aload 13
+155: 3 getstatic java/util/jar/Attributes$Name SPECIFICATION_VERSION Ljava/util/jar/Attributes$Name;
+158: 3 invokevirtual java/util/jar/Attributes getValue java/util/jar/Attributes$Name Ljava/lang/String;
+161: 2 astore 6
+163: 2 aload 7
+165: 3 ifnonnull 13
+168: 2 aload 13
+170: 3 getstatic java/util/jar/Attributes$Name SPECIFICATION_VENDOR Ljava/util/jar/Attributes$Name;
+173: 3 invokevirtual java/util/jar/Attributes getValue java/util/jar/Attributes$Name Ljava/lang/String;
+176: 2 astore 7
+178: 2 aload 8
+180: 3 ifnonnull 13
+183: 2 aload 13
+185: 3 getstatic java/util/jar/Attributes$Name IMPLEMENTATION_TITLE Ljava/util/jar/Attributes$Name;
+188: 3 invokevirtual java/util/jar/Attributes getValue java/util/jar/Attributes$Name Ljava/lang/String;
+191: 2 astore 8
+193: 2 aload 9
+195: 3 ifnonnull 13
+198: 2 aload 13
+200: 3 getstatic java/util/jar/Attributes$Name IMPLEMENTATION_VERSION Ljava/util/jar/Attributes$Name;
+203: 3 invokevirtual java/util/jar/Attributes getValue java/util/jar/Attributes$Name Ljava/lang/String;
+206: 2 astore 9
+208: 2 aload 10
+210: 3 ifnonnull 13
+213: 2 aload 13
+215: 3 getstatic java/util/jar/Attributes$Name IMPLEMENTATION_VENDOR Ljava/util/jar/Attributes$Name;
+218: 3 invokevirtual java/util/jar/Attributes getValue java/util/jar/Attributes$Name Ljava/lang/String;
+221: 2 astore 10
+223: 2 aload 11
+225: 3 ifnonnull 13
+228: 2 aload 13
+230: 3 getstatic java/util/jar/Attributes$Name SEALED Ljava/util/jar/Attributes$Name;
+233: 3 invokevirtual java/util/jar/Attributes getValue java/util/jar/Attributes$Name Ljava/lang/String;
+236: 2 astore 11
+238: 2 ldc true
+240: 2 aload 11
+242: 3 invokevirtual java/lang/String equalsIgnoreCase java/lang/String Z
+245: 3 ifeq 6
+248: 1 aload_3
+249: 2 astore 12
+251: 1 aload_0
+252: 1 aload_1
+253: 2 aload 5
+255: 2 aload 6
+257: 2 aload 7
+259: 2 aload 8
+261: 2 aload 9
+263: 2 aload 10
+265: 2 aload 12
+267: 3 invokevirtual java/net/URLClassLoader definePackage java/lang/String java/lang/String java/lang/String java/lang/String java/lang/String java/lang/String java/lang/String java/net/URL Ljava/lang/Package;
+270: 1 areturn
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 134
+
+
+  attribute 1 name: Exceptions
+  attribute 1 length: 4
+
+private
+method name: isSealed
+method type: (Ljava/lang/String;Ljava/util/jar/Manifest;)Z
+attr count: 1
+  attribute 0 name: Code
+  max stack: 3
+  max locals: 6
+  code length: 72
+0: 1 aload_1
+1: 2 bipush 46
+3: 2 bipush 47
+5: 3 invokevirtual java/lang/String replace C C Ljava/lang/String;
+8: 2 ldc /
+10: 3 invokevirtual java/lang/String concat java/lang/String Ljava/lang/String;
+13: 1 astore_3
+14: 1 aload_2
+15: 1 aload_3
+16: 3 invokevirtual java/util/jar/Manifest getAttributes java/lang/String Ljava/util/jar/Attributes;
+19: 2 astore 4
+21: 1 aconst_null
+22: 2 astore 5
+24: 2 aload 4
+26: 3 ifnull 13
+29: 2 aload 4
+31: 3 getstatic java/util/jar/Attributes$Name SEALED Ljava/util/jar/Attributes$Name;
+34: 3 invokevirtual java/util/jar/Attributes getValue java/util/jar/Attributes$Name Ljava/lang/String;
+37: 2 astore 5
+39: 2 aload 5
+41: 3 ifnonnull 23
+44: 1 aload_2
+45: 3 invokevirtual java/util/jar/Manifest getMainAttributes  Ljava/util/jar/Attributes;
+48: 1 dup
+49: 2 astore 4
+51: 3 ifnull 13
+54: 2 aload 4
+56: 3 getstatic java/util/jar/Attributes$Name SEALED Ljava/util/jar/Attributes$Name;
+59: 3 invokevirtual java/util/jar/Attributes getValue java/util/jar/Attributes$Name Ljava/lang/String;
+62: 2 astore 5
+64: 2 ldc true
+66: 2 aload 5
+68: 3 invokevirtual java/lang/String equalsIgnoreCase java/lang/String Z
+71: 1 ireturn
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 38
+
+
+public
+method name: findResource
+method type: (Ljava/lang/String;)Ljava/net/URL;
+attr count: 1
+  attribute 0 name: Code
+  max stack: 4
+  max locals: 3
+  code length: 37
+0: 3 new java/net/URLClassLoader$2
+3: 1 dup
+4: 1 aload_0
+5: 1 aload_1
+6: 3 invokespecial java/net/URLClassLoader$2 <init> java/net/URLClassLoader java/lang/String V
+9: 1 aload_0
+10: 3 getfield java/net/URLClassLoader acc Ljava/security/AccessControlContext;
+13: 3 invokestatic java/security/AccessController doPrivileged java/security/PrivilegedAction java/security/AccessControlContext Ljava/lang/Object;
+16: 3 checkcast java/net/URL
+19: 1 astore_2
+20: 1 aload_2
+21: 3 ifnull 14
+24: 1 aload_0
+25: 3 getfield java/net/URLClassLoader ucp Lsun/misc/URLClassPath;
+28: 1 aload_2
+29: 3 invokevirtual sun/misc/URLClassPath checkURL java/net/URL Ljava/net/URL;
+32: 3 goto 4
+35: 1 aconst_null
+36: 1 areturn
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 10
+
+
+public
+method name: findResources
+method type: (Ljava/lang/String;)Ljava/util/Enumeration;
+attr count: 3
+  attribute 0 name: Code
+  max stack: 4
+  max locals: 3
+  code length: 20
+0: 1 aload_0
+1: 3 getfield java/net/URLClassLoader ucp Lsun/misc/URLClassPath;
+4: 1 aload_1
+5: 1 iconst_1
+6: 3 invokevirtual sun/misc/URLClassPath findResources java/lang/String Z Ljava/util/Enumeration;
+9: 1 astore_2
+10: 3 new java/net/URLClassLoader$3
+13: 1 dup
+14: 1 aload_0
+15: 1 aload_2
+16: 3 invokespecial java/net/URLClassLoader$3 <init> java/net/URLClassLoader java/util/Enumeration V
+19: 1 areturn
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 10
+
+
+  attribute 1 name: Exceptions
+  attribute 1 length: 4
+
+  attribute 2 name: Signature
+  attribute 2 value: (Ljava/lang/String;)Ljava/util/Enumeration<Ljava/net/URL;>;
+
+protected
+method name: getPermissions
+method type: (Ljava/security/CodeSource;)Ljava/security/PermissionCollection;
+attr count: 1
+  attribute 0 name: Code
+  max stack: 5
+  max locals: 8
+  code length: 287
+0: 1 aload_0
+1: 1 aload_1
+2: 3 invokespecial java/security/SecureClassLoader getPermissions java/security/CodeSource Ljava/security/PermissionCollection;
+5: 1 astore_2
+6: 1 aload_1
+7: 3 invokevirtual java/security/CodeSource getLocation  Ljava/net/URL;
+10: 1 astore_3
+11: 1 aload_3
+12: 3 invokevirtual java/net/URL openConnection  Ljava/net/URLConnection;
+15: 2 astore 5
+17: 2 aload 5
+19: 3 invokevirtual java/net/URLConnection getPermission  Ljava/security/Permission;
+22: 2 astore 4
+24: 3 goto 11
+27: 2 astore 6
+29: 1 aconst_null
+30: 2 astore 4
+32: 1 aconst_null
+33: 2 astore 5
+35: 2 aload 4
+37: 3 instanceof java/io/FilePermission
+40: 3 ifeq 59
+43: 2 aload 4
+45: 3 invokevirtual java/security/Permission getName  Ljava/lang/String;
+48: 2 astore 6
+50: 2 aload 6
+52: 3 getstatic java/io/File separator Ljava/lang/String;
+55: 3 invokevirtual java/lang/String endsWith java/lang/String Z
+58: 3 ifeq 38
+61: 3 new java/lang/StringBuilder
+64: 1 dup
+65: 3 invokespecial java/lang/StringBuilder <init>  V
+68: 2 aload 6
+70: 3 invokevirtual java/lang/StringBuilder append java/lang/String Ljava/lang/StringBuilder;
+73: 2 ldc -
+75: 3 invokevirtual java/lang/StringBuilder append java/lang/String Ljava/lang/StringBuilder;
+78: 3 invokevirtual java/lang/StringBuilder toString  Ljava/lang/String;
+81: 2 astore 6
+83: 3 new java/io/FilePermission
+86: 1 dup
+87: 2 aload 6
+89: 2 ldc read
+91: 3 invokespecial java/io/FilePermission <init> java/lang/String java/lang/String V
+94: 2 astore 4
+96: 3 goto 144
+99: 2 aload 4
+101: 3 ifnonnull 85
+104: 1 aload_3
+105: 3 invokevirtual java/net/URL getProtocol  Ljava/lang/String;
+108: 2 ldc file
+110: 3 invokevirtual java/lang/String equals java/lang/Object Z
+113: 3 ifeq 73
+116: 1 aload_3
+117: 3 invokevirtual java/net/URL getFile  Ljava/lang/String;
+120: 2 bipush 47
+122: 3 getstatic java/io/File separatorChar C
+125: 3 invokevirtual java/lang/String replace C C Ljava/lang/String;
+128: 2 astore 6
+130: 2 aload 6
+132: 3 invokestatic sun/net/www/ParseUtil decode java/lang/String Ljava/lang/String;
+135: 2 astore 6
+137: 2 aload 6
+139: 3 getstatic java/io/File separator Ljava/lang/String;
+142: 3 invokevirtual java/lang/String endsWith java/lang/String Z
+145: 3 ifeq 25
+148: 3 new java/lang/StringBuilder
+151: 1 dup
+152: 3 invokespecial java/lang/StringBuilder <init>  V
+155: 2 aload 6
+157: 3 invokevirtual java/lang/StringBuilder append java/lang/String Ljava/lang/StringBuilder;
+160: 2 ldc -
+162: 3 invokevirtual java/lang/StringBuilder append java/lang/String Ljava/lang/StringBuilder;
+165: 3 invokevirtual java/lang/StringBuilder toString  Ljava/lang/String;
+168: 2 astore 6
+170: 3 new java/io/FilePermission
+173: 1 dup
+174: 2 aload 6
+176: 2 ldc read
+178: 3 invokespecial java/io/FilePermission <init> java/lang/String java/lang/String V
+181: 2 astore 4
+183: 3 goto 57
+186: 1 aload_3
+187: 2 astore 6
+189: 2 aload 5
+191: 3 instanceof java/net/JarURLConnection
+194: 3 ifeq 13
+197: 2 aload 5
+199: 3 checkcast java/net/JarURLConnection
+202: 3 invokevirtual java/net/JarURLConnection getJarFileURL  Ljava/net/URL;
+205: 2 astore 6
+207: 2 aload 6
+209: 3 invokevirtual java/net/URL getHost  Ljava/lang/String;
+212: 2 astore 7
+214: 2 aload 7
+216: 3 ifnull 24
+219: 2 aload 7
+221: 3 invokevirtual java/lang/String length  I
+224: 3 ifle 16
+227: 3 new java/net/SocketPermission
+230: 1 dup
+231: 2 aload 7
+233: 2 ldc connect,accept
+235: 3 invokespecial java/net/SocketPermission <init> java/lang/String java/lang/String V
+238: 2 astore 4
+240: 2 aload 4
+242: 3 ifnull 43
+245: 3 invokestatic java/lang/System getSecurityManager  Ljava/lang/SecurityManager;
+248: 2 astore 6
+250: 2 aload 6
+252: 3 ifnull 27
+255: 2 aload 4
+257: 2 astore 7
+259: 3 new java/net/URLClassLoader$4
+262: 1 dup
+263: 1 aload_0
+264: 2 aload 6
+266: 2 aload 7
+268: 3 invokespecial java/net/URLClassLoader$4 <init> java/net/URLClassLoader java/lang/SecurityManager java/security/Permission V
+271: 1 aload_0
+272: 3 getfield java/net/URLClassLoader acc Ljava/security/AccessControlContext;
+275: 3 invokestatic java/security/AccessController doPrivileged java/security/PrivilegedAction java/security/AccessControlContext Ljava/lang/Object;
+278: 1 pop
+279: 1 aload_2
+280: 2 aload 4
+282: 3 invokevirtual java/security/PermissionCollection add java/security/Permission V
+285: 1 aload_2
+286: 1 areturn
+  exceptions length: 1
+    start_pc: 11
+    end_pc: 24
+    handler_pc: 27
+    catch_type: java/io/IOException
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 134
+
+
+public static
+method name: newInstance
+method type: ([Ljava/net/URL;Ljava/lang/ClassLoader;)Ljava/net/URLClassLoader;
+attr count: 1
+  attribute 0 name: Code
+  max stack: 4
+  max locals: 4
+  code length: 27
+0: 3 invokestatic java/security/AccessController getContext  Ljava/security/AccessControlContext;
+3: 1 astore_2
+4: 3 new java/net/URLClassLoader$5
+7: 1 dup
+8: 1 aload_0
+9: 1 aload_1
+10: 3 invokespecial java/net/URLClassLoader$5 <init> [java/net/URL java/lang/ClassLoader V
+13: 3 invokestatic java/security/AccessController doPrivileged java/security/PrivilegedAction Ljava/lang/Object;
+16: 3 checkcast java/net/URLClassLoader
+19: 1 astore_3
+20: 1 aload_3
+21: 1 aload_2
+22: 3 putfield java/net/URLClassLoader acc Ljava/security/AccessControlContext;
+25: 1 aload_3
+26: 1 areturn
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 18
+
+
+public static
+method name: newInstance
+method type: ([Ljava/net/URL;)Ljava/net/URLClassLoader;
+attr count: 1
+  attribute 0 name: Code
+  max stack: 3
+  max locals: 3
+  code length: 26
+0: 3 invokestatic java/security/AccessController getContext  Ljava/security/AccessControlContext;
+3: 1 astore_1
+4: 3 new java/net/URLClassLoader$6
+7: 1 dup
+8: 1 aload_0
+9: 3 invokespecial java/net/URLClassLoader$6 <init> [java/net/URL V
+12: 3 invokestatic java/security/AccessController doPrivileged java/security/PrivilegedAction Ljava/lang/Object;
+15: 3 checkcast java/net/URLClassLoader
+18: 1 astore_2
+19: 1 aload_2
+20: 1 aload_1
+21: 3 putfield java/net/URLClassLoader acc Ljava/security/AccessControlContext;
+24: 1 aload_2
+25: 1 areturn
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 18
+
+
+static synthetic
+method name: access$000
+method type: (Ljava/net/URLClassLoader;Ljava/lang/String;Lsun/misc/Resource;Z)Ljava/lang/Class;
+attr count: 2
+  attribute 0 name: Code
+  max stack: 4
+  max locals: 4
+  code length: 8
+0: 1 aload_0
+1: 1 aload_1
+2: 1 aload_2
+3: 1 iload_3
+4: 3 invokespecial java/net/URLClassLoader defineClass java/lang/String sun/misc/Resource Z Ljava/lang/Class;
+7: 1 areturn
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 6
+
+
+  attribute 1 name: Exceptions
+  attribute 1 length: 4
+
+static synthetic
+method name: access$100
+method type: (Ljava/net/URLClassLoader;)Ljava/security/AccessControlContext;
+attr count: 1
+  attribute 0 name: Code
+  max stack: 1
+  max locals: 1
+  code length: 5
+0: 1 aload_0
+1: 3 getfield java/net/URLClassLoader acc Ljava/security/AccessControlContext;
+4: 1 areturn
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 6
+
+
+static
+method name: <clinit>
+method type: ()V
+attr count: 1
+  attribute 0 name: Code
+  max stack: 6
+  max locals: 2
+  code length: 57
+0: 3 new java/net/URLClassLoader$7
+3: 1 dup
+4: 3 invokespecial java/net/URLClassLoader$7 <init>  V
+7: 3 invokestatic sun/misc/SharedSecrets setJavaNetAccess sun/misc/JavaNetAccess V
+string(31) "java/security/SecureClassLoader"
+minor version: 0
+major version: 49
+constant_pool_count = 183
+1: tag=8: String: utf8 index=7
+2: tag=8: String: utf8 index=8
+3: tag=8: String: utf8 index=18
+4: tag=8: String: utf8 index=20
+5: tag=8: String: utf8 index=34
+6: tag=8: String: utf8 index=69
+7: tag=1: 
+Warning: fread(): Length parameter must be greater than 0 in C:\Users\jean_roldao\Desktop\prog\DataInputStream.php on line 48
+utf8 string: 
+8: tag=1: utf8 string:  getPermissions 
+9: tag=1: utf8 string: ()Ljava/lang/String;
+10: tag=1: utf8 string: ()V
+11: tag=1: utf8 string: (I)V
+12: tag=1: utf8 string: (Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
+13: tag=1: utf8 string: (Ljava/lang/String;)V
+14: tag=1: utf8 string: (Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
+15: tag=1: utf8 string: (Z)V
+16: tag=1: utf8 string: <clinit>
+17: tag=1: utf8 string: <init>
+18: tag=1: utf8 string: ClassLoader object not initialized
+19: tag=1: utf8 string: Code
+20: tag=1: utf8 string: Error defining class 
+21: tag=1: utf8 string: FALSE
+22: tag=1: utf8 string: LineNumberTable
+23: tag=1: utf8 string: Ljava/lang/Class;
+24: tag=1: utf8 string: Ljava/lang/reflect/Method;
+25: tag=1: utf8 string: Signature
+26: tag=1: utf8 string: SourceFile
+27: tag=1: utf8 string: TYPE
+28: tag=1: utf8 string: Z
+29: tag=1: utf8 string: append
+30: tag=1: utf8 string: check
+31: tag=1: utf8 string: checkCreateClassLoader
+32: tag=1: utf8 string: debug
+33: tag=1: utf8 string: defineClass
+34: tag=1: utf8 string: defineClassCond
+35: tag=1: utf8 string: defineClassCondMethod
+36: tag=1: utf8 string: defineClassNoVerify
+37: tag=1: utf8 string: get
+38: tag=1: utf8 string: getDeclaredMethod
+39: tag=1: utf8 string: getInstance
+40: tag=1: utf8 string: getPermissions
+41: tag=1: utf8 string: getProtectionDomain
+42: tag=1: utf8 string: getSecurityManager
+43: tag=1: utf8 string: getTargetException
+44: tag=1: utf8 string: initialized
+45: tag=1: utf8 string: invoke
+46: tag=1: utf8 string: java/lang/Boolean
+47: tag=1: utf8 string: java/lang/Class
+48: tag=1: utf8 string: java/lang/ClassLoader
+49: tag=1: utf8 string: java/lang/IllegalAccessException
+50: tag=1: utf8 string: java/lang/LinkageError
+51: tag=1: utf8 string: java/lang/NoSuchMethodException
+52: tag=1: utf8 string: java/lang/Object
+53: tag=1: utf8 string: java/lang/RuntimeException
+54: tag=1: utf8 string: java/lang/SecurityException
+55: tag=1: utf8 string: java/lang/SecurityManager
+56: tag=1: utf8 string: java/lang/String
+57: tag=1: utf8 string: java/lang/StringBuilder
+58: tag=1: utf8 string: java/lang/System
+59: tag=1: utf8 string: java/lang/reflect/InvocationTargetException
+60: tag=1: utf8 string: java/lang/reflect/Method
+61: tag=1: utf8 string: java/nio/ByteBuffer
+62: tag=1: utf8 string: java/security/Permissions
+63: tag=1: utf8 string: java/security/ProtectionDomain
+64: tag=1: utf8 string: java/security/SecureClassLoader
+65: tag=1: utf8 string: java/util/HashMap
+66: tag=1: utf8 string: pdcache
+67: tag=1: utf8 string: println
+68: tag=1: utf8 string: put
+69: tag=1: utf8 string: scl
+70: tag=1: utf8 string: setAccessible
+71: tag=1: utf8 string: sun/security/util/Debug
+72: tag=1: utf8 string: toString
+73: tag=7: Class: utf8 index=46
+74: tag=7: Class: utf8 index=47
+75: tag=7: Class: utf8 index=48
+76: tag=7: Class: utf8 index=49
+77: tag=7: Class: utf8 index=50
+78: tag=7: Class: utf8 index=51
+79: tag=7: Class: utf8 index=52
+80: tag=7: Class: utf8 index=53
+81: tag=7: Class: utf8 index=54
+82: tag=7: Class: utf8 index=55
+83: tag=7: Class: utf8 index=56
+84: tag=7: Class: utf8 index=57
+85: tag=7: Class: utf8 index=58
+86: tag=7: Class: utf8 index=59
+87: tag=7: Class: utf8 index=60
+88: tag=7: Class: utf8 index=61
+89: tag=7: Class: utf8 index=62
+90: tag=7: Class: utf8 index=63
+91: tag=7: Class: utf8 index=64
+92: tag=7: Class: utf8 index=65
+93: tag=7: Class: utf8 index=71
+94: tag=1: utf8 string: Ljava/lang/Boolean;
+95: tag=1: utf8 string: Ljava/util/HashMap;
+96: tag=1: utf8 string: Lsun/security/util/Debug;
+97: tag=1: utf8 string: (Ljava/lang/ClassLoader;)V
+98: tag=1: utf8 string: ()Ljava/lang/SecurityManager;
+99: tag=1: utf8 string: ()Ljava/lang/Throwable;
+100: tag=1: utf8 string: (Ljava/lang/String;[BII)Ljava/lang/Class;
+101: tag=1: utf8 string: (Ljava/lang/Object;)Ljava/lang/Object;
+102: tag=1: utf8 string: (Ljava/lang/Object;)Ljava/lang/StringBuilder;
+103: tag=1: utf8 string: (Ljava/lang/String;)Ljava/lang/StringBuilder;
+104: tag=1: utf8 string: (Ljava/lang/String;Ljava/lang/Throwable;)V
+105: tag=1: utf8 string: (Ljava/security/CodeSource;)Ljava/security/PermissionCollection;
+106: tag=1: utf8 string: (Ljava/security/CodeSource;)Ljava/security/ProtectionDomain;
+107: tag=1: utf8 string: (Ljava/lang/String;)Lsun/security/util/Debug;
+108: tag=1: utf8 string: (Ljava/lang/String;[BIILjava/security/CodeSource;)Ljava/lang/Class;
+109: tag=1: utf8 string: (Ljava/lang/String;[BIILjava/security/CodeSource;)Ljava/lang/Class<*>;
+110: tag=1: utf8 string: (Ljava/lang/String;[BIILjava/security/ProtectionDomain;)Ljava/lang/Class;
+111: tag=1: utf8 string: (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+112: tag=1: utf8 string: (Ljava/lang/String;Ljava/nio/ByteBuffer;Ljava/security/CodeSource;)Ljava/lang/Class;
+113: tag=1: utf8 string: (Ljava/lang/String;Ljava/nio/ByteBuffer;Ljava/security/CodeSource;)Ljava/lang/Class<*>;
+114: tag=1: utf8 string: (Ljava/lang/String;Ljava/nio/ByteBuffer;Ljava/security/ProtectionDomain;)Ljava/lang/Class;
+115: tag=1: utf8 string: (Ljava/security/CodeSource;Ljava/security/PermissionCollection;Ljava/lang/ClassLoader;[Ljava/security/Principal;)V
+116: tag=12: name and type descriptor: name index=44, type index=28
+117: tag=12: name and type descriptor: name index=21, type index=94
+118: tag=12: name and type descriptor: name index=27, type index=23
+119: tag=12: name and type descriptor: name index=35, type index=24
+120: tag=12: name and type descriptor: name index=66, type index=95
+121: tag=12: name and type descriptor: name index=32, type index=96
+122: tag=12: name and type descriptor: name index=17, type index=10
+123: tag=12: name and type descriptor: name index=30, type index=10
+124: tag=12: name and type descriptor: name index=31, type index=10
+125: tag=12: name and type descriptor: name index=17, type index=11
+126: tag=12: name and type descriptor: name index=70, type index=15
+127: tag=12: name and type descriptor: name index=17, type index=97
+128: tag=12: name and type descriptor: name index=42, type index=98
+129: tag=12: name and type descriptor: name index=72, type index=9
+130: tag=12: name and type descriptor: name index=17, type index=13
+131: tag=12: name and type descriptor: name index=67, type index=13
+132: tag=12: name and type descriptor: name index=43, type index=99
+133: tag=12: name and type descriptor: name index=33, type index=100
+134: tag=12: name and type descriptor: name index=37, type index=101
+135: tag=12: name and type descriptor: name index=29, type index=102
+136: tag=12: name and type descriptor: name index=29, type index=103
+137: tag=12: name and type descriptor: name index=17, type index=104
+138: tag=12: name and type descriptor: name index=40, type index=105
+139: tag=12: name and type descriptor: name index=41, type index=106
+140: tag=12: name and type descriptor: name index=39, type index=107
+141: tag=12: name and type descriptor: name index=33, type index=110
+142: tag=12: name and type descriptor: name index=68, type index=111
+143: tag=12: name and type descriptor: name index=45, type index=12
+144: tag=12: name and type descriptor: name index=38, type index=14
+145: tag=12: name and type descriptor: name index=33, type index=112
+146: tag=12: name and type descriptor: name index=33, type index=114
+147: tag=12: name and type descriptor: name index=17, type index=115
+148: tag=9: field: Class index=73, Name and Type index=117
+149: tag=9: field: Class index=73, Name and Type index=118
+150: tag=9: field: Class index=91, Name and Type index=116
+151: tag=9: field: Class index=91, Name and Type index=119
+152: tag=9: field: Class index=91, Name and Type index=120
+153: tag=9: field: Class index=91, Name and Type index=121
+154: tag=10: method: Class index=74, Name and Type index=144
+155: tag=10: method: Class index=75, Name and Type index=122
+156: tag=10: method: Class index=75, Name and Type index=127
+157: tag=10: method: Class index=80, Name and Type index=137
+158: tag=10: method: Class index=81, Name and Type index=130
+159: tag=10: method: Class index=82, Name and Type index=124
+160: tag=10: method: Class index=84, Name and Type index=122
+161: tag=10: method: Class index=84, Name and Type index=129
+162: tag=10: method: Class index=84, Name and Type index=135
+163: tag=10: method: Class index=84, Name and Type index=136
+164: tag=10: method: Class index=85, Name and Type index=128
+165: tag=10: method: Class index=86, Name and Type index=132
+166: tag=10: method: Class index=87, Name and Type index=126
+167: tag=10: method: Class index=87, Name and Type index=143
+168: tag=10: method: Class index=89, Name and Type index=122
+169: tag=10: method: Class index=90, Name and Type index=147
+170: tag=10: method: Class index=91, Name and Type index=123
+171: tag=10: method: Class index=91, Name and Type index=133
+172: tag=10: method: Class index=91, Name and Type index=138
+173: tag=10: method: Class index=91, Name and Type index=139
+174: tag=10: method: Class index=91, Name and Type index=141
+175: tag=10: method: Class index=91, Name and Type index=145
+176: tag=10: method: Class index=91, Name and Type index=146
+177: tag=10: method: Class index=92, Name and Type index=125
+178: tag=10: method: Class index=92, Name and Type index=134
+179: tag=10: method: Class index=92, Name and Type index=142
+180: tag=10: method: Class index=93, Name and Type index=131
+181: tag=10: method: Class index=93, Name and Type index=140
+182: tag=1: utf8 string: SecureClassLoader.java
+flag 33public super
+this class: java/security/SecureClassLoader
+super class: java/lang/ClassLoader
+interfaces: 0
+fields: 4
+private
+field name: initialized
+field type: Z
+attr count: 0
+private
+field name: pdcache
+field type: Ljava/util/HashMap;
+attr count: 0
+private static final
+field name: debug
+field type: Lsun/security/util/Debug;
+attr count: 0
+private static final
+field name: defineClassCondMethod
+field type: Ljava/lang/reflect/Method;
+attr count: 0
+methods: 9
+protected
+method name: <init>
+method type: (Ljava/lang/ClassLoader;)V
+attr count: 1
+  attribute 0 name: Code
+  max stack: 4
+  max locals: 3
+  code length: 41
+0: 1 aload_0
+1: 1 aload_1
+2: 3 invokespecial java/lang/ClassLoader <init> java/lang/ClassLoader V
+5: 1 aload_0
+6: 1 iconst_0
+7: 3 putfield java/security/SecureClassLoader initialized Z
+10: 1 aload_0
+11: 3 new java/util/HashMap
+14: 1 dup
+15: 2 bipush 11
+17: 3 invokespecial java/util/HashMap <init> I V
+20: 3 putfield java/security/SecureClassLoader pdcache Ljava/util/HashMap;
+23: 3 invokestatic java/lang/System getSecurityManager  Ljava/lang/SecurityManager;
+26: 1 astore_2
+27: 1 aload_2
+28: 3 ifnull 7
+31: 1 aload_2
+32: 3 invokevirtual java/lang/SecurityManager checkCreateClassLoader  V
+35: 1 aload_0
+36: 1 iconst_1
+37: 3 putfield java/security/SecureClassLoader initialized Z
+40: 1 return
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 34
+
+
+protected
+method name: <init>
+method type: ()V
+attr count: 1
+  attribute 0 name: Code
+  max stack: 4
+  max locals: 2
+  code length: 40
+0: 1 aload_0
+1: 3 invokespecial java/lang/ClassLoader <init>  V
+4: 1 aload_0
+5: 1 iconst_0
+6: 3 putfield java/security/SecureClassLoader initialized Z
+9: 1 aload_0
+10: 3 new java/util/HashMap
+13: 1 dup
+14: 2 bipush 11
+16: 3 invokespecial java/util/HashMap <init> I V
+19: 3 putfield java/security/SecureClassLoader pdcache Ljava/util/HashMap;
+22: 3 invokestatic java/lang/System getSecurityManager  Ljava/lang/SecurityManager;
+25: 1 astore_1
+26: 1 aload_1
+27: 3 ifnull 7
+30: 1 aload_1
+31: 3 invokevirtual java/lang/SecurityManager checkCreateClassLoader  V
+34: 1 aload_0
+35: 1 iconst_1
+36: 3 putfield java/security/SecureClassLoader initialized Z
+39: 1 return
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 34
+
+
+protected final
+method name: defineClass
+method type: (Ljava/lang/String;[BIILjava/security/CodeSource;)Ljava/lang/Class;
+attr count: 2
+  attribute 0 name: Code
+  max stack: 7
+  max locals: 6
+  code length: 31
+0: 2 aload 5
+2: 3 ifnonnull 13
+5: 1 aload_0
+6: 1 aload_1
+7: 1 aload_2
+8: 1 iload_3
+9: 2 iload 4
+11: 3 invokevirtual java/security/SecureClassLoader defineClass java/lang/String [B I I Ljava/lang/Class;
+14: 1 areturn
+15: 1 aload_0
+16: 1 aload_1
+17: 1 aload_2
+18: 1 iload_3
+19: 2 iload 4
+21: 1 aload_0
+22: 2 aload 5
+24: 3 invokespecial java/security/SecureClassLoader getProtectionDomain java/security/CodeSource Ljava/security/ProtectionDomain;
+27: 3 invokevirtual java/security/SecureClassLoader defineClass java/lang/String [B I I java/security/ProtectionDomain Ljava/lang/Class;
+30: 1 areturn
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 14
+
+
+  attribute 1 name: Signature
+  attribute 1 value: (Ljava/lang/String;[BIILjava/security/CodeSource;)Ljava/lang/Class<*>;
+
+protected final
+method name: defineClass
+method type: (Ljava/lang/String;Ljava/nio/ByteBuffer;Ljava/security/CodeSource;)Ljava/lang/Class;
+attr count: 2
+  attribute 0 name: Code
+  max stack: 5
+  max locals: 4
+  code length: 27
+0: 1 aload_3
+1: 3 ifnonnull 14
+4: 1 aload_0
+5: 1 aload_1
+6: 1 aload_2
+7: 1 aconst_null
+8: 3 checkcast java/security/ProtectionDomain
+11: 3 invokevirtual java/security/SecureClassLoader defineClass java/lang/String java/nio/ByteBuffer java/security/ProtectionDomain Ljava/lang/Class;
+14: 1 areturn
+15: 1 aload_0
+16: 1 aload_1
+17: 1 aload_2
+18: 1 aload_0
+19: 1 aload_3
+20: 3 invokespecial java/security/SecureClassLoader getProtectionDomain java/security/CodeSource Ljava/security/ProtectionDomain;
+23: 3 invokevirtual java/security/SecureClassLoader defineClass java/lang/String java/nio/ByteBuffer java/security/ProtectionDomain Ljava/lang/Class;
+26: 1 areturn
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 14
+
+
+  attribute 1 name: Signature
+  attribute 1 value: (Ljava/lang/String;Ljava/nio/ByteBuffer;Ljava/security/CodeSource;)Ljava/lang/Class<*>;
+
+private final
+method name: defineClassNoVerify
+method type: (Ljava/lang/String;Ljava/nio/ByteBuffer;Ljava/security/CodeSource;)Ljava/lang/Class;
+attr count: 2
+  attribute 0 name: Code
+  max stack: 7
+  max locals: 6
+  code length: 127
+0: 3 getstatic java/security/SecureClassLoader defineClassCondMethod Ljava/lang/reflect/Method;
+3: 1 aload_0
+4: 1 iconst_4
+5: 3 anewarray java/lang/Object
+8: 1 dup
+9: 1 iconst_0
+10: 1 aload_1
+11: 1 aastore
+12: 1 dup
+13: 1 iconst_1
+14: 1 aload_2
+15: 1 aastore
+16: 1 dup
+17: 1 iconst_2
+18: 1 aload_3
+19: 3 ifnonnull 10
+22: 1 aconst_null
+23: 3 checkcast java/security/ProtectionDomain
+26: 3 goto 8
+29: 1 aload_0
+30: 1 aload_3
+31: 3 invokespecial java/security/SecureClassLoader getProtectionDomain java/security/CodeSource Ljava/security/ProtectionDomain;
+34: 1 aastore
+35: 1 dup
+36: 1 iconst_3
+37: 3 getstatic java/lang/Boolean FALSE Ljava/lang/Boolean;
+40: 1 aastore
+41: 3 invokevirtual java/lang/reflect/Method invoke java/lang/Object [java/lang/Object Ljava/lang/Object;
+44: 3 checkcast java/lang/Class
+47: 3 checkcast java/lang/Class
+50: 1 areturn
+51: 2 astore 4
+53: 1 aload_0
+54: 1 aload_1
+55: 1 aload_2
+56: 1 aload_3
+57: 3 invokevirtual java/security/SecureClassLoader defineClass java/lang/String java/nio/ByteBuffer java/security/CodeSource Ljava/lang/Class;
+60: 1 areturn
+61: 2 astore 4
+63: 2 aload 4
+65: 3 invokevirtual java/lang/reflect/InvocationTargetException getTargetException  Ljava/lang/Throwable;
+68: 2 astore 5
+70: 2 aload 5
+72: 3 instanceof java/lang/LinkageError
+75: 3 ifeq 9
+78: 2 aload 5
+80: 3 checkcast java/lang/LinkageError
+83: 1 athrow
+84: 2 aload 5
+86: 3 instanceof java/lang/RuntimeException
+89: 3 ifeq 9
+92: 2 aload 5
+94: 3 checkcast java/lang/RuntimeException
+97: 1 athrow
+98: 3 new java/lang/RuntimeException
+101: 1 dup
+102: 3 new java/lang/StringBuilder
+105: 1 dup
+106: 3 invokespecial java/lang/StringBuilder <init>  V
+109: 2 ldc Error defining class 
+111: 3 invokevirtual java/lang/StringBuilder append java/lang/String Ljava/lang/StringBuilder;
+114: 1 aload_1
+115: 3 invokevirtual java/lang/StringBuilder append java/lang/String Ljava/lang/StringBuilder;
+118: 3 invokevirtual java/lang/StringBuilder toString  Ljava/lang/String;
+121: 2 aload 5
+123: 3 invokespecial java/lang/RuntimeException <init> java/lang/String java/lang/Throwable V
+126: 1 athrow
+  exceptions length: 2
+    start_pc: 0
+    end_pc: 50
+    handler_pc: 51
+    catch_type: java/lang/IllegalAccessException
+    start_pc: 0
+    end_pc: 50
+    handler_pc: 61
+    catch_type: java/lang/reflect/InvocationTargetException
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 42
+
+
+  attribute 1 name: Signature
+  attribute 1 value: (Ljava/lang/String;Ljava/nio/ByteBuffer;Ljava/security/CodeSource;)Ljava/lang/Class<*>;
+
+protected
+method name: getPermissions
+method type: (Ljava/security/CodeSource;)Ljava/security/PermissionCollection;
+attr count: 1
+  attribute 0 name: Code
+  max stack: 2
+  max locals: 2
+  code length: 12
+0: 1 aload_0
+1: 3 invokespecial java/security/SecureClassLoader check  V
+4: 3 new java/security/Permissions
+7: 1 dup
+8: 3 invokespecial java/security/Permissions <init>  V
+11: 1 areturn
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 10
+
+
+private
+method name: getProtectionDomain
+method type: (Ljava/security/CodeSource;)Ljava/security/ProtectionDomain;
+attr count: 1
+  attribute 0 name: Code
+  max stack: 6
+  max locals: 6
+  code length: 118
+0: 1 aload_1
+1: 3 ifnonnull 5
+4: 1 aconst_null
+5: 1 areturn
+6: 1 aconst_null
+7: 1 astore_2
+8: 1 aload_0
+9: 3 getfield java/security/SecureClassLoader pdcache Ljava/util/HashMap;
+12: 1 dup
+13: 1 astore_3
+14: 1 monitorenter
+15: 1 aload_0
+16: 3 getfield java/security/SecureClassLoader pdcache Ljava/util/HashMap;
+19: 1 aload_1
+20: 3 invokevirtual java/util/HashMap get java/lang/Object Ljava/lang/Object;
+23: 3 checkcast java/security/ProtectionDomain
+26: 1 astore_2
+27: 1 aload_2
+28: 3 ifnonnull 76
+31: 1 aload_0
+32: 1 aload_1
+33: 3 invokevirtual java/security/SecureClassLoader getPermissions java/security/CodeSource Ljava/security/PermissionCollection;
+36: 2 astore 4
+38: 3 new java/security/ProtectionDomain
+41: 1 dup
+42: 1 aload_1
+43: 2 aload 4
+45: 1 aload_0
+46: 1 aconst_null
+47: 3 invokespecial java/security/ProtectionDomain <init> java/security/CodeSource java/security/PermissionCollection java/lang/ClassLoader [java/security/Principal V
+50: 1 astore_2
+51: 1 aload_2
+52: 3 ifnull 52
+55: 1 aload_0
+56: 3 getfield java/security/SecureClassLoader pdcache Ljava/util/HashMap;
+59: 1 aload_1
+60: 1 aload_2
+61: 3 invokevirtual java/util/HashMap put java/lang/Object java/lang/Object Ljava/lang/Object;
+64: 1 pop
+65: 3 getstatic java/security/SecureClassLoader debug Lsun/security/util/Debug;
+68: 3 ifnull 36
+71: 3 getstatic java/security/SecureClassLoader debug Lsun/security/util/Debug;
+74: 3 new java/lang/StringBuilder
+77: 1 dup
+78: 3 invokespecial java/lang/StringBuilder <init>  V
+81: 2 ldc  getPermissions 
+83: 3 invokevirtual java/lang/StringBuilder append java/lang/String Ljava/lang/StringBuilder;
+86: 1 aload_2
+87: 3 invokevirtual java/lang/StringBuilder append java/lang/Object Ljava/lang/StringBuilder;
+90: 3 invokevirtual java/lang/StringBuilder toString  Ljava/lang/String;
+93: 3 invokevirtual sun/security/util/Debug println java/lang/String V
+96: 3 getstatic java/security/SecureClassLoader debug Lsun/security/util/Debug;
+99: 2 ldc 
+101: 3 invokevirtual sun/security/util/Debug println java/lang/String V
+104: 1 aload_3
+105: 1 monitorexit
+106: 3 goto 10
+109: 2 astore 5
+111: 1 aload_3
+112: 1 monitorexit
+113: 2 aload 5
+115: 1 athrow
+116: 1 aload_2
+117: 1 areturn
+  exceptions length: 2
+    start_pc: 15
+    end_pc: 106
+    handler_pc: 109
+    catch_type: Exception
+    start_pc: 109
+    end_pc: 113
+    handler_pc: 109
+    catch_type: Exception
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 62
+
+
+private
+method name: check
+method type: ()V
+attr count: 1
+  attribute 0 name: Code
+  max stack: 3
+  max locals: 1
+  code length: 18
+0: 1 aload_0
+1: 3 getfield java/security/SecureClassLoader initialized Z
+4: 3 ifne 13
+7: 3 new java/lang/SecurityException
+10: 1 dup
+11: 2 ldc ClassLoader object not initialized
+13: 3 invokespecial java/lang/SecurityException <init> java/lang/String V
+16: 1 athrow
+17: 1 return
+  exceptions length: 0
+  code atributes count: 1
+  attribute 0 name: LineNumberTable
+  attribute 0 length: 14
+
+
+static
+method name: <clinit>
+method type: ()V
+attr count: 1
+  attribute 0 name: Code
+  max stack: 6
+  max locals: 2
+  code length: 61
+0: 2 ldc scl
+2: 3 invokestatic sun/security/util/Debug getInstance java/lang/String Lsun/security/util/Debug;
+5: 3 putstatic java/security/SecureClassLoader debug Lsun/security/util/Debug;
+string(21) "java/lang/ClassLoader"
+
+Fatal error: Cannot redeclare class java\lang\ClassLoader in C:\Users\jean_roldao\Desktop\prog\php_javaClass.php(348) : eval()'d code on line 280

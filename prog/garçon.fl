@@ -1,0 +1,25 @@
+#!/usr/local/bin/falcon
+
+ // International class; name and street
+ class q( なまえ, Straße )
+    // set class name and street address
+    नाम = なまえ
+    شَارِع   =  Straße
+    // Say who am I!
+    function f()
+      >@"I am $(self.नाम) from ",self.شَارِع
+    end
+ end
+ // all the people of the world!
+ l = [ q( "t Friederich", "ch" ),
+    q( "Smith asd", "Cantu" ),
+    q( "Stanisw Lec", "plo" ) ]
+ 
+ l.listar = function()
+   for ç in self
+     ç.f()
+   end
+ end
+ 
+ l.listar()
+ //for garçon in l: garçon.f()

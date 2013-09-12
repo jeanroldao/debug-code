@@ -1,0 +1,334 @@
+<loading HashMap>
+minor version: 0
+major version: 49
+constant_pool_count = 321
+1: tag=3: int: 1073741824
+2: tag=3: int: 2147483647
+3: tag=4: float: 0.75
+5: tag=8: String: utf8 index=32
+6: tag=8: String: utf8 index=33
+7: tag=1: utf8 string: ()F
+8: tag=1: utf8 string: ()I
+9: tag=1: utf8 string: ()Ljava/lang/String;
+10: tag=1: utf8 string: ()TV;
+11: tag=1: utf8 string: ()V
+12: tag=1: utf8 string: ()Z
+13: tag=1: utf8 string: (F)Z
+14: tag=1: utf8 string: (I)I
+15: tag=1: utf8 string: (I)V
+16: tag=1: utf8 string: (IF)V
+17: tag=1: utf8 string: (II)I
+18: tag=1: utf8 string: (ITK;TV;I)V
+19: tag=1: utf8 string: (Ljava/lang/Object;)Z
+20: tag=1: utf8 string: (Ljava/lang/String;)V
+21: tag=1: utf8 string: (TK;TV;)TV;
+22: tag=1: utf8 string: (TK;TV;)V
+23: tag=1: utf8 string: (TV;)TV;
+24: tag=1: utf8 string: <init>
+25: tag=1: utf8 string: Code
+26: tag=1: utf8 string: ConstantValue
+27: tag=1: utf8 string: DEFAULT_INITIAL_CAPACITY
+28: tag=1: utf8 string: DEFAULT_LOAD_FACTOR
+29: tag=1: utf8 string: Entry
+30: tag=1: utf8 string: Exceptions
+31: tag=1: utf8 string: F
+32: tag=1: utf8 string: I
+33: tag=1: utf8 string: Illegal initial capacity: 
+34: tag=1: utf8 string: Illegal load factor: 
+35: tag=1: utf8 string: InnerClasses
+36: tag=1: utf8 string: J
+37: tag=1: utf8 string: LineNumberTable
+38: tag=1: utf8 string: Ljava/lang/Object;
+39: tag=1: utf8 string: MAXIMUM_CAPACITY
+40: tag=1: utf8 string: Signature
+41: tag=1: utf8 string: SourceFile
+42: tag=1: utf8 string: addEntry
+43: tag=1: utf8 string: append
+44: tag=1: utf8 string: capacity
+45: tag=1: utf8 string: clear
+46: tag=1: utf8 string: clone
+47: tag=1: utf8 string: containsKey
+48: tag=1: utf8 string: containsNullValue
+49: tag=1: utf8 string: containsValue
+50: tag=1: utf8 string: createEntry
+51: tag=1: utf8 string: defaultReadObject
+52: tag=1: utf8 string: defaultWriteObject
+53: tag=1: utf8 string: entrySet
+54: tag=1: utf8 string: entrySet0
+55: tag=1: utf8 string: equals
+56: tag=1: utf8 string: get
+57: tag=1: utf8 string: getEntry
+58: tag=1: utf8 string: getForNullKey
+59: tag=1: utf8 string: getKey
+60: tag=1: utf8 string: getValue
+61: tag=1: utf8 string: hasNext
+62: tag=1: utf8 string: hash
+63: tag=1: utf8 string: hashCode
+64: tag=1: utf8 string: indexFor
+65: tag=1: utf8 string: init
+66: tag=1: utf8 string: isEmpty
+67: tag=1: utf8 string: isNaN
+68: tag=1: utf8 string: iterator
+69: tag=1: utf8 string: java/io/IOException
+70: tag=1: utf8 string: java/io/ObjectInputStream
+71: tag=1: utf8 string: java/io/ObjectOutputStream
+72: tag=1: utf8 string: java/io/Serializable
+73: tag=1: utf8 string: java/lang/ClassNotFoundException
+74: tag=1: utf8 string: java/lang/CloneNotSupportedException
+75: tag=1: utf8 string: java/lang/Cloneable
+76: tag=1: utf8 string: java/lang/Float
+77: tag=1: utf8 string: java/lang/IllegalArgumentException
+78: tag=1: utf8 string: java/lang/Math
+79: tag=1: utf8 string: java/lang/Object
+80: tag=1: utf8 string: java/lang/StringBuilder
+81: tag=1: utf8 string: java/util/AbstractMap
+82: tag=1: utf8 string: java/util/HashMap
+83: tag=1: utf8 string: java/util/HashMap$1
+84: tag=1: utf8 string: java/util/HashMap$Entry
+85: tag=1: utf8 string: java/util/HashMap$EntryIterator
+86: tag=1: utf8 string: java/util/HashMap$EntrySet
+87: tag=1: utf8 string: java/util/HashMap$HashIterator
+88: tag=1: utf8 string: java/util/HashMap$KeyIterator
+89: tag=1: utf8 string: java/util/HashMap$KeySet
+90: tag=1: utf8 string: java/util/HashMap$ValueIterator
+91: tag=1: utf8 string: java/util/HashMap$Values
+92: tag=1: utf8 string: java/util/Iterator
+93: tag=1: utf8 string: java/util/Map
+94: tag=1: utf8 string: java/util/Map$Entry
+95: tag=1: utf8 string: java/util/Set
+96: tag=1: utf8 string: key
+97: tag=1: utf8 string: keySet
+98: tag=1: utf8 string: loadFactor
+99: tag=1: utf8 string: max
+100: tag=1: utf8 string: modCount
+101: tag=1: utf8 string: newEntryIterator
+102: tag=1: utf8 string: newKeyIterator
+103: tag=1: utf8 string: newValueIterator
+104: tag=1: utf8 string: next
+105: tag=1: utf8 string: put
+106: tag=1: utf8 string: putAll
+107: tag=1: utf8 string: putAllForCreate
+108: tag=1: utf8 string: putForCreate
+109: tag=1: utf8 string: putForNullKey
+110: tag=1: utf8 string: readInt
+111: tag=1: utf8 string: readObject
+112: tag=1: utf8 string: recordAccess
+113: tag=1: utf8 string: recordRemoval
+114: tag=1: utf8 string: remove
+115: tag=1: utf8 string: removeEntryForKey
+116: tag=1: utf8 string: removeMapping
+117: tag=1: utf8 string: resize
+118: tag=1: utf8 string: serialVersionUID
+119: tag=1: utf8 string: size
+120: tag=1: utf8 string: table
+121: tag=1: utf8 string: threshold
+122: tag=1: utf8 string: toString
+123: tag=1: utf8 string: transfer
+124: tag=1: utf8 string: value
+125: tag=1: utf8 string: values
+126: tag=1: utf8 string: writeInt
+127: tag=1: utf8 string: writeObject
+128: tag=3: int: 16
+129: tag=5: long: 3.6249882076318E+17
+131: tag=7: Class: utf8 index=68
+132: tag=7: Class: utf8 index=69
+133: tag=7: Class: utf8 index=70
+134: tag=7: Class: utf8 index=71
+135: tag=7: Class: utf8 index=72
+136: tag=7: Class: utf8 index=73
+137: tag=7: Class: utf8 index=74
+138: tag=7: Class: utf8 index=75
+139: tag=7: Class: utf8 index=76
+140: tag=7: Class: utf8 index=77
+141: tag=7: Class: utf8 index=78
+142: tag=7: Class: utf8 index=79
+143: tag=7: Class: utf8 index=80
+144: tag=7: Class: utf8 index=81
+145: tag=7: Class: utf8 index=82
+146: tag=7: Class: utf8 index=83
+147: tag=7: Class: utf8 index=84
+148: tag=7: Class: utf8 index=85
+149: tag=7: Class: utf8 index=86
+150: tag=7: Class: utf8 index=87
+151: tag=7: Class: utf8 index=88
+152: tag=7: Class: utf8 index=89
+153: tag=7: Class: utf8 index=90
+154: tag=7: Class: utf8 index=91
+155: tag=7: Class: utf8 index=92
+156: tag=7: Class: utf8 index=93
+157: tag=7: Class: utf8 index=94
+158: tag=1: utf8 string: Ljava/util/Collection;
+159: tag=1: utf8 string: Ljava/util/HashMap$Entry;
+160: tag=1: utf8 string: [Ljava/util/HashMap$Entry;
+161: tag=1: utf8 string: Ljava/util/Set;
+162: tag=1: utf8 string: Ljava/util/Set<Ljava/util/Map$Entry<TK;TV;>;>;
+163: tag=1: utf8 string: <K:Ljava/lang/Object;V:Ljava/lang/Object;>Ljava/util/AbstractMap<TK;TV;>;Ljava/util/Map<TK;TV;>;Ljava/lang/Cloneable;Ljava/io/Serializable;
+164: tag=1: utf8 string: (Ljava/io/ObjectInputStream;)V
+165: tag=1: utf8 string: (Ljava/io/ObjectOutputStream;)V
+166: tag=1: utf8 string: ()Ljava/lang/Object;
+167: tag=1: utf8 string: (Ljava/lang/Object;)TV;
+168: tag=1: utf8 string: (Ljava/lang/Object;)V
+169: tag=1: utf8 string: (F)Ljava/lang/StringBuilder;
+170: tag=1: utf8 string: (I)Ljava/lang/StringBuilder;
+171: tag=1: utf8 string: ()Ljava/util/Collection;
+172: tag=1: utf8 string: ()Ljava/util/Collection<TV;>;
+173: tag=1: utf8 string: (Ljava/util/HashMap;)V
+174: tag=1: utf8 string: ([Ljava/util/HashMap$Entry;)V
+175: tag=1: utf8 string: ()Ljava/util/Iterator;
+176: tag=1: utf8 string: ()Ljava/util/Iterator<TK;>;
+177: tag=1: utf8 string: ()Ljava/util/Iterator<TV;>;
+178: tag=1: utf8 string: (Ljava/util/Map;)V
+179: tag=1: utf8 string: (Ljava/util/Map<+TK;+TV;>;)V
+180: tag=1: utf8 string: ()Ljava/util/Set;
+181: tag=1: utf8 string: ()Ljava/util/Set<TK;>;
+182: tag=1: utf8 string: (ILjava/lang/Object;Ljava/lang/Object;I)V
+183: tag=1: utf8 string: (Ljava/lang/Object;)Ljava/lang/Object;
+184: tag=1: utf8 string: (Ljava/lang/Object;Ljava/lang/Object;)V
+185: tag=1: utf8 string: (Ljava/lang/String;)Ljava/lang/StringBuilder;
+186: tag=1: utf8 string: (Ljava/util/HashMap;Ljava/util/HashMap$1;)V
+187: tag=1: utf8 string: (Ljava/lang/Object;)Ljava/util/HashMap$Entry;
+188: tag=1: utf8 string: (Ljava/lang/Object;)Ljava/util/HashMap$Entry<TK;TV;>;
+189: tag=1: utf8 string: ()Ljava/util/Iterator<Ljava/util/Map$Entry<TK;TV;>;>;
+190: tag=1: utf8 string: ()Ljava/util/Set<Ljava/util/Map$Entry<TK;TV;>;>;
+191: tag=1: utf8 string: (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+192: tag=1: utf8 string: (ILjava/lang/Object;Ljava/lang/Object;Ljava/util/HashMap$Entry;)V
+193: tag=12: name and type descriptor: name index=97, type index=30
+194: tag=12: name and type descriptor: name index=61, type index=31
+195: tag=12: name and type descriptor: name index=99, type index=31
+196: tag=12: name and type descriptor: name index=118, type index=31
+197: tag=12: name and type descriptor: name index=120, type index=31
+198: tag=12: name and type descriptor: name index=95, type index=37
+199: tag=12: name and type descriptor: name index=123, type index=37
+200: tag=12: name and type descriptor: name index=124, type index=157
+201: tag=12: name and type descriptor: name index=103, type index=158
+202: tag=12: name and type descriptor: name index=119, type index=159
+203: tag=12: name and type descriptor: name index=52, type index=160
+204: tag=12: name and type descriptor: name index=96, type index=160
+205: tag=12: name and type descriptor: name index=62, type index=7
+206: tag=12: name and type descriptor: name index=109, type index=7
+207: tag=12: name and type descriptor: name index=118, type index=7
+208: tag=12: name and type descriptor: name index=23, type index=10
+209: tag=12: name and type descriptor: name index=50, type index=10
+210: tag=12: name and type descriptor: name index=51, type index=10
+211: tag=12: name and type descriptor: name index=64, type index=10
+212: tag=12: name and type descriptor: name index=47, type index=11
+213: tag=12: name and type descriptor: name index=60, type index=11
+214: tag=12: name and type descriptor: name index=66, type index=12
+215: tag=12: name and type descriptor: name index=61, type index=13
+216: tag=12: name and type descriptor: name index=116, type index=14
+217: tag=12: name and type descriptor: name index=125, type index=14
+218: tag=12: name and type descriptor: name index=23, type index=15
+219: tag=12: name and type descriptor: name index=63, type index=16
+220: tag=12: name and type descriptor: name index=98, type index=16
+221: tag=12: name and type descriptor: name index=45, type index=165
+222: tag=12: name and type descriptor: name index=57, type index=165
+223: tag=12: name and type descriptor: name index=58, type index=165
+224: tag=12: name and type descriptor: name index=59, type index=165
+225: tag=12: name and type descriptor: name index=103, type index=165
+226: tag=12: name and type descriptor: name index=110, type index=165
+227: tag=12: name and type descriptor: name index=126, type index=167
+228: tag=12: name and type descriptor: name index=54, type index=18
+229: tag=12: name and type descriptor: name index=121, type index=8
+230: tag=12: name and type descriptor: name index=23, type index=19
+231: tag=12: name and type descriptor: name index=42, type index=168
+232: tag=12: name and type descriptor: name index=42, type index=169
+233: tag=12: name and type descriptor: name index=111, type index=172
+234: tag=12: name and type descriptor: name index=112, type index=172
+235: tag=12: name and type descriptor: name index=122, type index=173
+236: tag=12: name and type descriptor: name index=67, type index=174
+237: tag=12: name and type descriptor: name index=106, type index=177
+238: tag=12: name and type descriptor: name index=52, type index=179
+239: tag=12: name and type descriptor: name index=53, type index=179
+240: tag=12: name and type descriptor: name index=41, type index=181
+241: tag=12: name and type descriptor: name index=49, type index=181
+242: tag=12: name and type descriptor: name index=108, type index=182
+243: tag=12: name and type descriptor: name index=107, type index=183
+244: tag=12: name and type descriptor: name index=42, type index=184
+245: tag=12: name and type descriptor: name index=23, type index=185
+246: tag=12: name and type descriptor: name index=56, type index=186
+247: tag=12: name and type descriptor: name index=114, type index=186
+248: tag=12: name and type descriptor: name index=104, type index=190
+249: tag=12: name and type descriptor: name index=23, type index=191
+250: tag=9: field: Class index=143, Name and Type index=192
+251: tag=9: field: Class index=143, Name and Type index=194
+252: tag=9: field: Class index=143, Name and Type index=195
+253: tag=9: field: Class index=143, Name and Type index=196
+254: tag=9: field: Class index=143, Name and Type index=199
+255: tag=9: field: Class index=143, Name and Type index=201
+256: tag=9: field: Class index=143, Name and Type index=202
+257: tag=9: field: Class index=143, Name and Type index=203
+258: tag=9: field: Class index=145, Name and Type index=193
+259: tag=9: field: Class index=145, Name and Type index=197
+260: tag=9: field: Class index=145, Name and Type index=198
+261: tag=9: field: Class index=145, Name and Type index=200
+262: tag=10: method: Class index=131, Name and Type index=205
+263: tag=10: method: Class index=131, Name and Type index=208
+264: tag=10: method: Class index=131, Name and Type index=225
+265: tag=10: method: Class index=132, Name and Type index=209
+266: tag=10: method: Class index=132, Name and Type index=216
+267: tag=10: method: Class index=132, Name and Type index=226
+268: tag=10: method: Class index=137, Name and Type index=213
+269: tag=10: method: Class index=138, Name and Type index=229
+270: tag=10: method: Class index=139, Name and Type index=219
+271: tag=10: method: Class index=140, Name and Type index=204
+272: tag=10: method: Class index=140, Name and Type index=227
+273: tag=10: method: Class index=141, Name and Type index=207
+274: tag=10: method: Class index=141, Name and Type index=228
+275: tag=10: method: Class index=141, Name and Type index=230
+276: tag=10: method: Class index=141, Name and Type index=231
+277: tag=10: method: Class index=141, Name and Type index=243
+278: tag=10: method: Class index=142, Name and Type index=207
+279: tag=10: method: Class index=142, Name and Type index=220
+280: tag=10: method: Class index=143, Name and Type index=210
+281: tag=10: method: Class index=143, Name and Type index=211
+282: tag=10: method: Class index=143, Name and Type index=214
+283: tag=10: method: Class index=143, Name and Type index=215
+284: tag=10: method: Class index=143, Name and Type index=217
+285: tag=10: method: Class index=143, Name and Type index=218
+286: tag=10: method: Class index=143, Name and Type index=221
+287: tag=10: method: Class index=143, Name and Type index=234
+288: tag=10: method: Class index=143, Name and Type index=236
+289: tag=10: method: Class index=143, Name and Type index=238
+290: tag=10: method: Class index=143, Name and Type index=239
+291: tag=10: method: Class index=143, Name and Type index=240
+292: tag=10: method: Class index=143, Name and Type index=241
+293: tag=10: method: Class index=143, Name and Type index=242
+294: tag=10: method: Class index=143, Name and Type index=245
+295: tag=10: method: Class index=143, Name and Type index=246
+296: tag=10: method: Class index=143, Name and Type index=247
+297: tag=10: method: Class index=145, Name and Type index=227
+298: tag=10: method: Class index=145, Name and Type index=232
+299: tag=10: method: Class index=145, Name and Type index=233
+300: tag=10: method: Class index=145, Name and Type index=248
+301: tag=10: method: Class index=146, Name and Type index=244
+302: tag=10: method: Class index=147, Name and Type index=244
+303: tag=10: method: Class index=149, Name and Type index=244
+304: tag=10: method: Class index=150, Name and Type index=244
+305: tag=10: method: Class index=151, Name and Type index=244
+306: tag=10: method: Class index=152, Name and Type index=244
+307: tag=11: interface: Class index=153, Name and Type index=212
+308: tag=11: interface: Class index=153, Name and Type index=224
+309: tag=11: interface: Class index=154, Name and Type index=206
+310: tag=11: interface: Class index=154, Name and Type index=237
+311: tag=11: interface: Class index=155, Name and Type index=222
+312: tag=11: interface: Class index=155, Name and Type index=223
+313: tag=11: interface: Class index=156, Name and Type index=235
+314: tag=1: utf8 string: EntryIterator
+315: tag=1: utf8 string: EntrySet
+316: tag=1: utf8 string: HashIterator
+317: tag=1: utf8 string: HashMap.java
+318: tag=1: utf8 string: KeyIterator
+319: tag=1: utf8 string: KeySet
+320: tag=1: utf8 string: ValueIterator
+flag 256native
+
+Fatal error: Uncaught exception 'Exception' with message 'constant not found! ( 1622)' in C:\Users\jean_roldao\Desktop\prog\php_javaClass.php:958
+Stack trace:
+#0 C:\Users\jean_roldao\Desktop\prog\php_javaClass.php(833): php_javaClass->getConstant(1622)
+#1 C:\Users\jean_roldao\Desktop\prog\php_javaClass.php(165): php_javaClass->getClassName(1622)
+#2 C:\Users\jean_roldao\Desktop\prog\php_javaClass.php(22): php_javaClass->readClass('HashMap.class')
+#3 C:\Users\jean_roldao\Desktop\prog\JavaLoader.php(9): php_javaClass->__construct('HashMap')
+#4 [internal function]: JavaLoader::loadClass('HashMap')
+#5 C:\Users\jean_roldao\Desktop\prog\php_javaClass.php(1030): spl_autoload_call('HashMap')
+#6 {main}
+  thrown in C:\Users\jean_roldao\Desktop\prog\php_javaClass.php on line 958

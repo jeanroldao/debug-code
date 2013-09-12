@@ -1,0 +1,54 @@
+Compiled from "snipet.java"
+class Act extends java.lang.Object
+  SourceFile: "snipet.java"
+  minor version: 3
+  major version: 45
+  Constant pool:
+const #1 = class	#12;	//  java/lang/Object
+const #2 = class	#13;	//  Act
+const #3 = Method	#1.#4;	//  java/lang/Object."<init>":()V
+const #4 = NameAndType	#14:#16;//  "<init>":()V
+const #5 = Asciz	ConstantValue;
+const #6 = Asciz	doMathForever;
+const #7 = Asciz	Exceptions;
+const #8 = Asciz	LineNumberTable;
+const #9 = Asciz	SourceFile;
+const #10 = Asciz	LocalVariables;
+const #11 = Asciz	Code;
+const #12 = Asciz	java/lang/Object;
+const #13 = Asciz	Act;
+const #14 = Asciz	<init>;
+const #15 = Asciz	snipet.java;
+const #16 = Asciz	()V;
+
+{
+public static void doMathForever();
+  Code:
+   Stack=2, Locals=1, Args_size=0
+   0:	iconst_0
+   1:	istore_0
+   2:	iinc	0, 1
+   5:	iload_0
+   6:	iconst_2
+   7:	imul
+   8:	istore_0
+   9:	goto	2
+  LineNumberTable: 
+   line 4: 0
+   line 6: 2
+   line 7: 5
+   line 5: 9
+
+
+Act();
+  Code:
+   Stack=1, Locals=1, Args_size=1
+   0:	aload_0
+   1:	invokespecial	#3; //Method java/lang/Object."<init>":()V
+   4:	return
+  LineNumberTable: 
+   line 2: 0
+
+
+}
+

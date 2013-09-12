@@ -1,0 +1,307 @@
+Classfile /C:/Users/asus/Desktop/prog/TestePointers.class
+  Last modified 22/08/2013; size 1432 bytes
+  MD5 checksum 16cb9d145c213ca7291e06276f1dcfcf
+  Compiled from "TestePointers.java"
+public class TestePointers
+  SourceFile: "TestePointers.java"
+  minor version: 0
+  major version: 51
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Class              #47            //  TestePointers
+   #2 = Methodref          #1.#48         //  TestePointers."<init>":()V
+   #3 = Methodref          #21.#48        //  java/lang/Object."<init>":()V
+   #4 = String             #49            //  resultado
+   #5 = Methodref          #1.#50         //  TestePointers.storeString:(Ljava/lang/String;)I
+   #6 = Fieldref           #51.#52        //  java/lang/System.out:Ljava/io/PrintStream;
+   #7 = Methodref          #53.#54        //  java/io/PrintStream.println:(I)V
+   #8 = Methodref          #1.#55         //  TestePointers.getString:(I)Ljava/lang/String;
+   #9 = Methodref          #53.#56        //  java/io/PrintStream.println:(Ljava/lang/String;)V
+  #10 = String             #57            //  edfg
+  #11 = Fieldref           #1.#58         //  TestePointers.p:I
+  #12 = Methodref          #15.#59        //  java/lang/String.toCharArray:()[C
+  #13 = Fieldref           #1.#60         //  TestePointers.mem:[I
+  #14 = Methodref          #1.#61         //  TestePointers.sizeOf:(I)I
+  #15 = Class              #62            //  java/lang/String
+  #16 = Methodref          #15.#63        //  java/lang/String."<init>":([C)V
+  #17 = Class              #64            //  java/util/Scanner
+  #18 = Fieldref           #51.#65        //  java/lang/System.in:Ljava/io/InputStream;
+  #19 = Methodref          #17.#66        //  java/util/Scanner."<init>":(Ljava/io/InputStream;)V
+  #20 = Fieldref           #1.#67         //  TestePointers.scan:Ljava/util/Scanner;
+  #21 = Class              #68            //  java/lang/Object
+  #22 = Utf8               scan
+  #23 = Utf8               Ljava/util/Scanner;
+  #24 = Utf8               mem
+  #25 = Utf8               [I
+  #26 = Utf8               p
+  #27 = Utf8               I
+  #28 = Utf8               main
+  #29 = Utf8               ([Ljava/lang/String;)V
+  #30 = Utf8               Code
+  #31 = Utf8               LineNumberTable
+  #32 = Utf8               Exceptions
+  #33 = Class              #69            //  java/lang/Exception
+  #34 = Utf8               <init>
+  #35 = Utf8               ()V
+  #36 = Utf8               storeString
+  #37 = Utf8               (Ljava/lang/String;)I
+  #38 = Utf8               StackMapTable
+  #39 = Class              #70            //  "[C"
+  #40 = Utf8               getString
+  #41 = Utf8               (I)Ljava/lang/String;
+  #42 = Utf8               sizeOf
+  #43 = Utf8               (I)I
+  #44 = Utf8               <clinit>
+  #45 = Utf8               SourceFile
+  #46 = Utf8               TestePointers.java
+  #47 = Utf8               TestePointers
+  #48 = NameAndType        #34:#35        //  "<init>":()V
+  #49 = Utf8               resultado
+  #50 = NameAndType        #36:#37        //  storeString:(Ljava/lang/String;)I
+  #51 = Class              #71            //  java/lang/System
+  #52 = NameAndType        #72:#73        //  out:Ljava/io/PrintStream;
+  #53 = Class              #74            //  java/io/PrintStream
+  #54 = NameAndType        #75:#76        //  println:(I)V
+  #55 = NameAndType        #40:#41        //  getString:(I)Ljava/lang/String;
+  #56 = NameAndType        #75:#77        //  println:(Ljava/lang/String;)V
+  #57 = Utf8               edfg
+  #58 = NameAndType        #26:#27        //  p:I
+  #59 = NameAndType        #78:#79        //  toCharArray:()[C
+  #60 = NameAndType        #24:#25        //  mem:[I
+  #61 = NameAndType        #42:#43        //  sizeOf:(I)I
+  #62 = Utf8               java/lang/String
+  #63 = NameAndType        #34:#80        //  "<init>":([C)V
+  #64 = Utf8               java/util/Scanner
+  #65 = NameAndType        #81:#82        //  in:Ljava/io/InputStream;
+  #66 = NameAndType        #34:#83        //  "<init>":(Ljava/io/InputStream;)V
+  #67 = NameAndType        #22:#23        //  scan:Ljava/util/Scanner;
+  #68 = Utf8               java/lang/Object
+  #69 = Utf8               java/lang/Exception
+  #70 = Utf8               [C
+  #71 = Utf8               java/lang/System
+  #72 = Utf8               out
+  #73 = Utf8               Ljava/io/PrintStream;
+  #74 = Utf8               java/io/PrintStream
+  #75 = Utf8               println
+  #76 = Utf8               (I)V
+  #77 = Utf8               (Ljava/lang/String;)V
+  #78 = Utf8               toCharArray
+  #79 = Utf8               ()[C
+  #80 = Utf8               ([C)V
+  #81 = Utf8               in
+  #82 = Utf8               Ljava/io/InputStream;
+  #83 = Utf8               (Ljava/io/InputStream;)V
+{
+  static java.util.Scanner scan;
+    flags: ACC_STATIC
+
+  static int[] mem;
+    flags: ACC_STATIC
+
+  static int p;
+    flags: ACC_STATIC
+
+  public static void main(java.lang.String[]) throws java.lang.Exception;
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: new           #1                  // class TestePointers
+         3: dup           
+         4: invokespecial #2                  // Method "<init>":()V
+         7: pop           
+         8: return        
+      LineNumberTable:
+        line 13: 0
+        line 14: 8
+    Exceptions:
+      throws java.lang.Exception
+
+  TestePointers();
+    flags: 
+    Code:
+      stack=3, locals=3, args_size=1
+         0: aload_0       
+         1: invokespecial #3                  // Method java/lang/Object."<init>":()V
+         4: aload_0       
+         5: ldc           #4                  // String resultado
+         7: invokevirtual #5                  // Method storeString:(Ljava/lang/String;)I
+        10: istore_1      
+        11: getstatic     #6                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        14: iload_1       
+        15: invokevirtual #7                  // Method java/io/PrintStream.println:(I)V
+        18: getstatic     #6                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        21: aload_0       
+        22: iload_1       
+        23: invokevirtual #8                  // Method getString:(I)Ljava/lang/String;
+        26: invokevirtual #9                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+        29: aload_0       
+        30: ldc           #10                 // String edfg
+        32: invokevirtual #5                  // Method storeString:(Ljava/lang/String;)I
+        35: istore_2      
+        36: getstatic     #6                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        39: iload_2       
+        40: invokevirtual #7                  // Method java/io/PrintStream.println:(I)V
+        43: getstatic     #6                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        46: aload_0       
+        47: iload_2       
+        48: invokevirtual #8                  // Method getString:(I)Ljava/lang/String;
+        51: invokevirtual #9                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+        54: return        
+      LineNumberTable:
+        line 16: 0
+        line 18: 4
+        line 19: 11
+        line 20: 18
+        line 22: 29
+        line 23: 36
+        line 24: 43
+        line 25: 54
+
+  int storeString(java.lang.String);
+    flags: 
+    Code:
+      stack=4, locals=5, args_size=2
+         0: getstatic     #11                 // Field p:I
+         3: istore_2      
+         4: aload_1       
+         5: invokevirtual #12                 // Method java/lang/String.toCharArray:()[C
+         8: astore_3      
+         9: iconst_0      
+        10: istore        4
+        12: iload         4
+        14: aload_3       
+        15: arraylength   
+        16: if_icmpge     42
+        19: getstatic     #13                 // Field mem:[I
+        22: getstatic     #11                 // Field p:I
+        25: dup           
+        26: iconst_1      
+        27: iadd          
+        28: putstatic     #11                 // Field p:I
+        31: aload_3       
+        32: iload         4
+        34: caload        
+        35: iastore       
+        36: iinc          4, 1
+        39: goto          12
+        42: getstatic     #13                 // Field mem:[I
+        45: getstatic     #11                 // Field p:I
+        48: dup           
+        49: iconst_1      
+        50: iadd          
+        51: putstatic     #11                 // Field p:I
+        54: iconst_0      
+        55: iastore       
+        56: iload_2       
+        57: ireturn       
+      LineNumberTable:
+        line 29: 0
+        line 30: 4
+        line 31: 9
+        line 32: 19
+        line 31: 36
+        line 34: 42
+        line 35: 56
+      StackMapTable: number_of_entries = 2
+           frame_type = 254 /* append */
+             offset_delta = 12
+        locals = [ int, class "[C", int ]
+           frame_type = 250 /* chop */
+          offset_delta = 29
+
+
+  java.lang.String getString(int);
+    flags: 
+    Code:
+      stack=5, locals=5, args_size=2
+         0: aload_0       
+         1: iload_1       
+         2: invokevirtual #14                 // Method sizeOf:(I)I
+         5: istore_2      
+         6: iload_2       
+         7: newarray       char
+         9: astore_3      
+        10: iconst_0      
+        11: istore        4
+        13: iload         4
+        15: iload_2       
+        16: if_icmpge     38
+        19: aload_3       
+        20: iload         4
+        22: getstatic     #13                 // Field mem:[I
+        25: iload_1       
+        26: iload         4
+        28: iadd          
+        29: iaload        
+        30: i2c           
+        31: castore       
+        32: iinc          4, 1
+        35: goto          13
+        38: new           #15                 // class java/lang/String
+        41: dup           
+        42: aload_3       
+        43: invokespecial #16                 // Method java/lang/String."<init>":([C)V
+        46: areturn       
+      LineNumberTable:
+        line 39: 0
+        line 40: 6
+        line 41: 10
+        line 42: 19
+        line 41: 32
+        line 45: 38
+      StackMapTable: number_of_entries = 2
+           frame_type = 254 /* append */
+             offset_delta = 13
+        locals = [ int, class "[C", int ]
+           frame_type = 250 /* chop */
+          offset_delta = 24
+
+
+  int sizeOf(int);
+    flags: 
+    Code:
+      stack=3, locals=3, args_size=2
+         0: iconst_0      
+         1: istore_2      
+         2: getstatic     #13                 // Field mem:[I
+         5: iload_1       
+         6: iload_2       
+         7: iadd          
+         8: iaload        
+         9: ifeq          18
+        12: iinc          2, 1
+        15: goto          2
+        18: iload_2       
+        19: ireturn       
+      LineNumberTable:
+        line 49: 0
+        line 50: 2
+        line 51: 12
+        line 53: 18
+      StackMapTable: number_of_entries = 2
+           frame_type = 252 /* append */
+             offset_delta = 2
+        locals = [ int ]
+           frame_type = 15 /* same */
+
+
+  static {};
+    flags: ACC_STATIC
+    Code:
+      stack=3, locals=0, args_size=0
+         0: new           #17                 // class java/util/Scanner
+         3: dup           
+         4: getstatic     #18                 // Field java/lang/System.in:Ljava/io/InputStream;
+         7: invokespecial #19                 // Method java/util/Scanner."<init>":(Ljava/io/InputStream;)V
+        10: putstatic     #20                 // Field scan:Ljava/util/Scanner;
+        13: sipush        1024
+        16: newarray       int
+        18: putstatic     #13                 // Field mem:[I
+        21: iconst_0      
+        22: putstatic     #11                 // Field p:I
+        25: return        
+      LineNumberTable:
+        line 6: 0
+        line 8: 13
+        line 10: 21
+}

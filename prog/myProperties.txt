@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>nao sei comentar</comment>
+<entry key="java.runtime.name">Java(TM) SE Runtime Environment</entry>
+<entry key="sun.boot.library.path">C:\Program Files (x86)\Java\jdk1.6.0_41\jre\bin</entry>
+<entry key="java.vm.version">20.14-b01</entry>
+<entry key="java.vm.vendor">Sun Microsystems Inc.</entry>
+<entry key="java.vendor.url">http://java.sun.com/</entry>
+<entry key="path.separator">;</entry>
+<entry key="java.vm.name">Java HotSpot(TM) Client VM</entry>
+<entry key="file.encoding.pkg">sun.io</entry>
+<entry key="sun.java.launcher">SUN_STANDARD</entry>
+<entry key="user.country">US</entry>
+<entry key="sun.os.patch.level">Service Pack 1</entry>
+<entry key="java.vm.specification.name">Java Virtual Machine Specification</entry>
+<entry key="user.dir">C:\Users\jean_roldao\Desktop\prog</entry>
+<entry key="java.runtime.version">1.6.0_41-b02</entry>
+<entry key="java.awt.graphicsenv">sun.awt.Win32GraphicsEnvironment</entry>
+<entry key="java.endorsed.dirs">C:\Program Files (x86)\Java\jdk1.6.0_41\jre\lib\endorsed</entry>
+<entry key="os.arch">x86</entry>
+<entry key="java.io.tmpdir">C:\Users\jean_roldao\AppData\Local\Temp\</entry>
+<entry key="line.separator">&#13;
+</entry>
+<entry key="java.vm.specification.vendor">Sun Microsystems Inc.</entry>
+<entry key="user.variant"/>
+<entry key="os.name">Windows 7</entry>
+<entry key="sun.jnu.encoding">Cp1252</entry>
+<entry key="java.library.path">C:\Program Files (x86)\Java\jdk1.6.0_41\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft Application Virtualization Client;C:\Program Files\1E\NomadBranch\;C:\Program Files (x86)\Java\jdk1.6.0_41\bin;.</entry>
+<entry key="java.specification.name">Java Platform API Specification</entry>
+<entry key="java.class.version">50.0</entry>
+<entry key="sun.management.compiler">HotSpot Client Compiler</entry>
+<entry key="os.version">6.1</entry>
+<entry key="user.home">C:\Users\jean_roldao</entry>
+<entry key="user.timezone"/>
+<entry key="java.awt.printerjob">sun.awt.windows.WPrinterJob</entry>
+<entry key="file.encoding">Cp1252</entry>
+<entry key="java.specification.version">1.6</entry>
+<entry key="java.class.path">.;C:\Program Files\Java\jdk1.6.0_41\lib</entry>
+<entry key="user.name">Jean_Roldao</entry>
+<entry key="java.vm.specification.version">1.0</entry>
+<entry key="sun.java.command">proptest</entry>
+<entry key="java.home">C:\Program Files (x86)\Java\jdk1.6.0_41\jre</entry>
+<entry key="sun.arch.data.model">32</entry>
+<entry key="user.language">en</entry>
+<entry key="java.specification.vendor">Sun Microsystems Inc.</entry>
+<entry key="awt.toolkit">sun.awt.windows.WToolkit</entry>
+<entry key="java.vm.info">mixed mode, sharing</entry>
+<entry key="java.version">1.6.0_41</entry>
+<entry key="java.ext.dirs">C:\Program Files (x86)\Java\jdk1.6.0_41\jre\lib\ext;C:\Windows\Sun\Java\lib\ext</entry>
+<entry key="sun.boot.class.path">C:\Program Files (x86)\Java\jdk1.6.0_41\jre\lib\resources.jar;C:\Program Files (x86)\Java\jdk1.6.0_41\jre\lib\rt.jar;C:\Program Files (x86)\Java\jdk1.6.0_41\jre\lib\sunrsasign.jar;C:\Program Files (x86)\Java\jdk1.6.0_41\jre\lib\jsse.jar;C:\Program Files (x86)\Java\jdk1.6.0_41\jre\lib\jce.jar;C:\Program Files (x86)\Java\jdk1.6.0_41\jre\lib\charsets.jar;C:\Program Files (x86)\Java\jdk1.6.0_41\jre\lib\modules\jdk.boot.jar;C:\Program Files (x86)\Java\jdk1.6.0_41\jre\classes</entry>
+<entry key="java.vendor">Sun Microsystems Inc.</entry>
+<entry key="file.separator">\</entry>
+<entry key="java.vendor.url.bug">http://java.sun.com/cgi-bin/bugreport.cgi</entry>
+<entry key="sun.io.unicode.encoding">UnicodeLittle</entry>
+<entry key="sun.cpu.endian">little</entry>
+<entry key="sun.desktop">windows</entry>
+<entry key="sun.cpu.isalist">pentium_pro+mmx pentium_pro pentium+mmx pentium i486 i386 i86</entry>
+</properties>

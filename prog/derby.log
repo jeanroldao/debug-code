@@ -1,0 +1,19 @@
+----------------------------------------------------------------
+Tue Jun 18 12:12:08 BRT 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.1.1 - (1458268): instance a816c00e-013f-57d7-cb05-000000b61e18 
+on database directory C:\Users\jean_roldao\Desktop\prog\derbyDB with class loader sun.misc.Launcher$AppClassLoader@197d257 
+Loaded from file:/C:/Apache/db-derby-10.10.1.1-bin/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_21-b11
+user.dir=C:\Users\jean_roldao\Desktop\prog
+os.name=Windows 7
+os.arch=x86
+os.version=6.1
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Tue Jun 18 12:12:09 BRT 2013: Shutting down Derby engine
+----------------------------------------------------------------
+Tue Jun 18 12:12:09 BRT 2013:
+Shutting down instance a816c00e-013f-57d7-cb05-000000b61e18 on database directory C:\Users\jean_roldao\Desktop\prog\derbyDB with class loader sun.misc.Launcher$AppClassLoader@197d257 
+----------------------------------------------------------------

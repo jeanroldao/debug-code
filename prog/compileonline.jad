@@ -1,0 +1,75 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   compileonline.java
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class compileonline
+{
+
+    public compileonline()
+    {
+    }
+
+    public static void main(String args[])
+    {
+        lists(args);
+        scanner();
+        System.out.println("EOF?");
+    }
+
+    static void scanner()
+    {
+        String s;
+        for(Scanner scanner1 = new Scanner(System.in); scanner1.hasNextLine(); System.out.println(s))
+        {
+            s = scanner1.nextLine();
+            s = s.replace(";", "|");
+        }
+
+    }
+
+    static void lists(String as[])
+    {
+        String as1[] = as;
+        int i = as1.length;
+        for(int j = 0; j < i; j++)
+        {
+            String s = as1[j];
+            System.out.println(s);
+        }
+
+        System.out.println("Hello World");
+        System.out.println((new StringBuilder()).append("Number to int: ").append(Double.valueOf(5.7000000000000002D).intValue()).toString());
+        Integer integer = Integer.valueOf(5);
+        System.out.println(integer.toString());
+        Integer ainteger[] = {
+            Integer.valueOf(2), Integer.valueOf(1)
+        };
+        Integer ainteger1[] = ainteger;
+        Object aobj[] = ainteger1;
+        int k = aobj.length;
+        for(int l = 0; l < k; l++)
+        {
+            Integer integer1 = aobj[l];
+            System.out.println(integer1.toString());
+        }
+
+        aobj = (new int[] {
+            3, 2
+        });
+        int ai[] = ((int []) (aobj));
+        int i1 = ai.length;
+        for(int j1 = 0; j1 < i1; j1++)
+        {
+            Integer integer2 = Integer.valueOf(ai[j1]);
+            System.out.println(integer2.toString());
+        }
+
+        System.out.println();
+        ArrayList arraylist = new ArrayList();
+    }
+}

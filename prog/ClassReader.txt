@@ -1,0 +1,33 @@
+Compiled from "Teste.java"
+class Teste extends java.lang.Object{
+Teste();
+  Code:
+   0:	aload_0
+   1:	invokespecial	#1; //Method java/lang/Object."<init>":()V
+   4:	return
+
+public static void main(java.lang.String[]);
+  Code:
+   0:	getstatic	#2; //Field java/lang/System.out:Ljava/io/PrintStream;
+   3:	ldc	#3; //String \n
+   5:	invokevirtual	#4; //Method java/io/PrintStream.print:(Ljava/lang/String;)V
+   8:	iconst_0
+   9:	istore_1
+   10:	iload_1
+   11:	iconst_4
+   12:	if_icmpge	36
+   15:	getstatic	#2; //Field java/lang/System.out:Ljava/io/PrintStream;
+   18:	iload_1
+   19:	invokevirtual	#5; //Method java/io/PrintStream.print:(I)V
+   22:	getstatic	#2; //Field java/lang/System.out:Ljava/io/PrintStream;
+   25:	ldc	#3; //String \n
+   27:	invokevirtual	#4; //Method java/io/PrintStream.print:(Ljava/lang/String;)V
+   30:	iinc	1, 1
+   33:	goto	10
+   36:	getstatic	#2; //Field java/lang/System.out:Ljava/io/PrintStream;
+   39:	ldc	#3; //String \n
+   41:	invokevirtual	#6; //Method java/io/PrintStream.println:(Ljava/lang/String;)V
+   44:	return
+
+}
+
