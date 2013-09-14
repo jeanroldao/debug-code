@@ -230,7 +230,7 @@ eval(<<<'CODE'
 namespace java\io;
 	
 class PrintStream extends \java\lang\Object {
-	public function __call($func, $args) {
+	public function & __call($func, $args) {
 		//var_dump($args);readline();
 		if ($func == 'print') {
 			foreach ($args as $arg) {

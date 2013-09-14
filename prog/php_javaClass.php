@@ -290,7 +290,7 @@ class php_javaClass extends \java\lang\Object {
 		foreach ($this->class_attr['methods'] as $m) {
 			//var_dump($m);readline();
 			$fname = $m['name'];
-			if ($arfnums[strtolower($fname)] || $fname == '<clinit>') {
+			if (isset($arfnums[strtolower($fname)]) || $fname == '<clinit>') {
 				continue;
 			}
 			
