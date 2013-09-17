@@ -4,6 +4,7 @@ include 'JavaLoader.php';
 include 'DataInputStream.php';
 include 'JavaInterpreter.php';
 include 'JavaPhpCompiler.php';
+include 'PhpThread.php';
 
 //spl_autoload_register([\java\lang\ClassLoader::getSystemClassLoader(), 'loadClass']);
 spl_autoload_register(function($className){
@@ -275,13 +276,18 @@ class php_javaClass extends \java\lang\Object {
 		$super = '\\'.str_replace('/', '\\', str_replace('$', '_S_', $this->class_attr['super']));
 		
 		$fields = '';
-		$dump = 'var_dump(';
+		//$dump = 'var_dump(';
 		foreach ($this->class_attr['fields'] as $field) {
-			$fields .= 'public static $'.str_replace('$', '_S_', $field['name']).';'.PHP_EOL;
-			$dump .= '"'.$field['name'].'",';
-			$dump .= $className.'::$'.$field['name'].',';
+			//var_dump($field); exit;
+			if (strpos($field['flags'], 'static') !== false) {
+				$fields .= 'public static $'.str_replace('$', '_S_', $field['name']).';'.PHP_EOL;
+			} else {
+				$fields .= 'public $'.str_replace('$', '_S_', $field['name']).';'.PHP_EOL;
+			}
+			//$dump .= '"'.$field['name'].'",';
+			//$dump .= $className.'::$'.$field['name'].',';
 		}
-		$dump .= 'null);';
+		//$dump .= 'null);';
 		//var_dump($dump);exit;
 		
 		//var_dump($this->class_attr['methods']);
@@ -325,6 +331,9 @@ class php_javaClass extends \java\lang\Object {
 			} else {
 				$methods .= 'public function '.$fname.'() {
 					$args = func_get_args();
+					if (self::$javaClass) {
+						//
+					}
 					return self::$javaClass->run("'.$m['name'].'", $args, $this);
 				}'.PHP_EOL;
 			}
@@ -347,7 +356,7 @@ class php_javaClass extends \java\lang\Object {
 		$namespace
 		class $className extends $super {
 			public static \$javaClass;
-			public static function & __callstatic(\$method, \$args) {
+			public static function __callstatic(\$method, \$args) {
 				try {
 					return self::\$javaClass->run(\$method, \$args);
 				} catch(\\Exception \$e) {
@@ -355,7 +364,7 @@ class php_javaClass extends \java\lang\Object {
 				}
 			}
 			
-			public function & __call(\$method, \$args) {
+			public function __call(\$method, \$args) {
 				try {
 					return self::\$javaClass->run(\$method, \$args, \$this);
 				} catch(\\Exception \$e) {
@@ -372,8 +381,9 @@ class php_javaClass extends \java\lang\Object {
 CODE
 );
 		//echo ($s);readline();
+		echo explode(PHP_EOL, $s)[33];
 		if ($eval === false) {
-			echo explode(PHP_EOL, $s)[1];
+			echo explode(PHP_EOL, $s)[27];
 			exit;
 		}
 		$className = str_replace('/', '\\', $this->class_attr['name']);
@@ -382,7 +392,7 @@ CODE
 		}
 	}
 	
-	public function & run($method_name, $args = [], $thisObj = null) {
+	public function run($method_name, $args = [], $thisObj = null) {
 		$method = $this->findMethod($method_name, $args);
 		
 		if (strpos($method['flags'], 'native') !== false) {
@@ -445,7 +455,7 @@ CODE
 		return $method($args, $this);
 	}
 	
-	private function & runCode($code, $args = [], $method = '') {
+	private function runCode($code, $args = [], $method = '') {
 		//var_dump($code);exit;
 		//return $this->compileAndRun($code, $args, $method);
 		

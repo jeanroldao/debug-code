@@ -21,7 +21,7 @@ class Object {
 		return Clazz::forName(str_replace('\\', '.', str_replace('_S_', '$', get_class($this))));
 	}
 	
-	public function & __call($method, $args) {
+	public function __call($method, $args) {
 		$fname = $method;
 		if ($method == '<init>') {
 			$fname = '__construct';
@@ -45,7 +45,7 @@ class Object {
 		}
 	}
 
-	public static function & __callstatic($method, $args) {
+	public static function __callstatic($method, $args) {
 		$fname = $method;
 		if ($method == '<init>') {
 			$fname = '__construct';
@@ -230,7 +230,7 @@ eval(<<<'CODE'
 namespace java\io;
 	
 class PrintStream extends \java\lang\Object {
-	public function & __call($func, $args) {
+	public function __call($func, $args) {
 		//var_dump($args);readline();
 		if ($func == 'print') {
 			foreach ($args as $arg) {
@@ -1077,11 +1077,23 @@ class Thread extends Object {
 	
 	/* java\lang\ClassLoader */ 
 	private $contextClassLoader;
+	
+	private $nativeThread;
+	
+	private $runnable;
 
-	public function __construct() {
+	public function __construct($runnable = null) {
+		$this->runnable = $runnable;
 		$this->tid = self::$incrementThreadId++;
 		
 		self::$threads[$this->tid] = $this;
+	}
+	
+	public function start() {
+		//var_dump($this->runnable); exit;
+		//$this->nativeThread = new \PhpThread([$this->runnable, 'run'], [], $this);		
+		//$this->nativeThread->start();
+		$this->runnable->run();
 	}
 	
 	/* long */

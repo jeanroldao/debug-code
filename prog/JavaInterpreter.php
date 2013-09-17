@@ -114,7 +114,7 @@ trait JavaInterpreter {
 				$class = str_replace('/', '\\', $opcode[2]['class']);
 				$refClass = new ReflectionClass($class);
 				$property = $refClass->getProperty($opcode[2]['field']);
-				$stack[] = &$property->getValue();
+				$stack[] = $property->getValue();
 				break;
 			case 'putstatic':
 				
