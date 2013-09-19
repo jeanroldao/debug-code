@@ -44,6 +44,7 @@ class Async extends Thread {
 
 //$future = Async::call("file_get_contents", array("http://www.php.net"));
 function teste1($n) {
+	//var_dump($GLOBALS);exit;
 	for ($i = 0; $i < 100; $i++) {
 		echo "$n-$i" . PHP_EOL;
 		usleep(100000);
@@ -53,10 +54,11 @@ function teste1($n) {
 //Async::call("teste1", [2]);
 
 $threads = [];
-for ($i = 0; $i < 100; $i++) {
+for ($i = 0; $i < 2; $i++) {
 	$t = new Async("teste1", [$i]);
 	$t->start();
-	$threads[] = $t;
+	//$threads[] = $t;
+	$t = null;
 }
 
 echo "start...", PHP_EOL;

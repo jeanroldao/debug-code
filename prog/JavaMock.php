@@ -215,8 +215,7 @@ class System extends Object {
 	}
 	
 	public static function loadLibrary($lib) {
-		$trace = debug_backtrace();
-		self::$native_classes[$trace[5]['class']][] = str_replace('/', '\\', "$lib");
+		include_once "$lib.php";
 	}
 }
 

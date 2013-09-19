@@ -381,7 +381,7 @@ class php_javaClass extends \java\lang\Object {
 CODE
 );
 		//echo ($s);readline();
-		echo explode(PHP_EOL, $s)[33];
+		//echo explode(PHP_EOL, $s)[33];
 		if ($eval === false) {
 			echo explode(PHP_EOL, $s)[27];
 			exit;
@@ -396,26 +396,12 @@ CODE
 		$method = $this->findMethod($method_name, $args);
 		
 		if (strpos($method['flags'], 'native') !== false) {
-			$native_classes = \java\lang\System::$native_classes;
-			//var_dump($native_classes[$this->getPhpClassName()]);
-			foreach ((array)$native_classes[$this->getPhpClassName()] as $cls) {
-				$cls = "$cls";
-				if(method_exists($cls, $method_name)) {
-					if (!property_exists($thisObj, 'php_objs')) {
-						$thisObj->php_objs = [];
-					}
-					
-					if (empty($thisObj->php_objs[$cls])) {
-						$reflect = new ReflectionClass($cls);
-						$thisObj->php_objs[$cls] = $reflect->newInstanceWithoutConstructor();
-					}
-					
-					//$thisObj->php_objs["$cls"]->$method_name
-					return call_user_func_array([$thisObj->php_objs[$cls], $method_name], $args);
-				}
+			$php_function = 'Java_'.str_replace('\\', '_', $this->getPhpClassName()).'_'.$method_name;
+			//echo "$php_function()";
+			if ($thisObj !== null) {
+				$args = array_merge([$thisObj], $args);
 			}
-			//exit;
-			//return;
+			return call_user_func_array($php_function, $args);
 		}
 		
 		if (empty($method['attr']['Code'])) {
