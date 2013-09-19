@@ -17,14 +17,12 @@ public class Teste13 {
 		return nome;
 	}
 	
-	public native void falar();
-	
-	public native String getFrase();
+	public native void falar(String prop);
 	
 	public static void main(String[] args) throws Exception {
 		Teste13 t = new Teste13();
-		t.setNome("jean");
-		t.falar();
+		t.setNome("twenty");
+		t.falar("age");
 	}
 	
 }
