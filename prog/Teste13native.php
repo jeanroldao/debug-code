@@ -1,5 +1,5 @@
 <?php
 
 function Java_Teste13_falar($thisObj, $prop) {
-	echo "my $prop is: " . $thisObj->nome, PHP_EOL;
+	printf("my %s is %s?\n", $prop, $thisObj->nome);
 }

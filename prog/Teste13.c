@@ -22,11 +22,8 @@ JNIEXPORT void JNICALL Java_Teste13_falar(JNIEnv *env, jobject thisObj, jstring 
 	if (NULL == cStrnome) return;
 
 	// Step 2: Perform its intended operations
-	printf("my %s is: %s\n", inCStrprop, cStrnome);
+	printf("my %s is %s?\n", inCStrprop, cStrnome);
 	
 	(*env)->ReleaseStringUTFChars(env, prop, inCStrprop);  // release resources
 	(*env)->ReleaseStringUTFChars(env, nome, cStrnome);
-
-	//printf("Hello World cara!!!\n");
-	return;
 }
