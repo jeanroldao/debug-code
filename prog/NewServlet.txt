@@ -1,0 +1,485 @@
+Classfile /C:/Program Files/EasyPHP-12.1/www/debug/prog/jeanroldao/web/NewServlet.class
+  Last modified 25/09/2013; size 3434 bytes
+  MD5 checksum 3e13dd96689bb34819d7a23838df9eb9
+  Compiled from "NewServlet.java"
+public class jeanroldao.web.NewServlet extends javax.servlet.http.HttpServlet
+  SourceFile: "NewServlet.java"
+  RuntimeVisibleAnnotations:
+    0: #98(#99=s#100,#101=[s#102])
+  InnerClasses:
+       static #52= #12 of #50; //Pessoa=class jeanroldao/web/NewServlet$Pessoa of class jeanroldao/web/NewServlet
+  minor version: 0
+  major version: 51
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+    #1 = Methodref          #51.#103      //  javax/servlet/http/HttpServlet."<init>":()V
+    #2 = Fieldref           #50.#104      //  jeanroldao/web/NewServlet.visitas:I
+    #3 = Class              #105          //  java/util/ArrayList
+    #4 = Methodref          #3.#103       //  java/util/ArrayList."<init>":()V
+    #5 = Fieldref           #50.#106      //  jeanroldao/web/NewServlet.lista:Ljava/util/List;
+    #6 = String             #77           //  nome
+    #7 = InterfaceMethodref #107.#108     //  javax/servlet/http/HttpServletRequest.getParameter:(Ljava/lang/String;)Ljava/lang/String;
+    #8 = Methodref          #109.#110     //  java/lang/String.length:()I
+    #9 = String             #111          //  clear
+   #10 = Methodref          #109.#112     //  java/lang/String.equals:(Ljava/lang/Object;)Z
+   #11 = InterfaceMethodref #113.#114     //  java/util/List.clear:()V
+   #12 = Class              #115          //  jeanroldao/web/NewServlet$Pessoa
+   #13 = Methodref          #12.#116      //  jeanroldao/web/NewServlet$Pessoa."<init>":(Ljava/lang/String;)V
+   #14 = InterfaceMethodref #113.#117     //  java/util/List.add:(Ljava/lang/Object;)Z
+   #15 = String             #118          //  text/html;charset=UTF-8
+   #16 = InterfaceMethodref #119.#120     //  javax/servlet/http/HttpServletResponse.setContentType:(Ljava/lang/String;)V
+   #17 = InterfaceMethodref #119.#121     //  javax/servlet/http/HttpServletResponse.getWriter:()Ljava/io/PrintWriter;
+   #18 = String             #122          //  <!DOCTYPE html>
+   #19 = Methodref          #123.#124     //  java/io/PrintWriter.println:(Ljava/lang/String;)V
+   #20 = String             #125          //  <html>
+   #21 = String             #126          //  <head>
+   #22 = String             #127          //  <title>Servlet NewServlet</title>
+   #23 = String             #128          //  </head>
+   #24 = String             #129          //  <body>
+   #25 = Class              #130          //  java/lang/StringBuilder
+   #26 = Methodref          #25.#103      //  java/lang/StringBuilder."<init>":()V
+   #27 = String             #131          //  <h1>Servlet NewServlet at 
+   #28 = Methodref          #25.#132      //  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+   #29 = InterfaceMethodref #107.#133     //  javax/servlet/http/HttpServletRequest.getContextPath:()Ljava/lang/String;
+   #30 = String             #134          //  </h1>
+   #31 = Methodref          #25.#135      //  java/lang/StringBuilder.toString:()Ljava/lang/String;
+   #32 = String             #136          //  <h2>visitas: 
+   #33 = Methodref          #25.#137      //  java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+   #34 = String             #138          //  </h2>
+   #35 = String             #139          //  <form><input name=\"nome\" /><input type=\"submit\"/></form>
+   #36 = String             #140          //  <div>(registros=
+   #37 = InterfaceMethodref #113.#141     //  java/util/List.size:()I
+   #38 = String             #142          //  )</div>
+   #39 = InterfaceMethodref #113.#143     //  java/util/List.iterator:()Ljava/util/Iterator;
+   #40 = InterfaceMethodref #144.#145     //  java/util/Iterator.hasNext:()Z
+   #41 = InterfaceMethodref #144.#146     //  java/util/Iterator.next:()Ljava/lang/Object;
+   #42 = String             #147          //  <div>
+   #43 = Methodref          #12.#148      //  jeanroldao/web/NewServlet$Pessoa.getNome:()Ljava/lang/String;
+   #44 = String             #149          //  </div>
+   #45 = String             #150          //  </body>
+   #46 = String             #151          //  </html>
+   #47 = Methodref          #123.#152     //  java/io/PrintWriter.close:()V
+   #48 = Methodref          #50.#153      //  jeanroldao/web/NewServlet.processRequest:(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V
+   #49 = String             #154          //  Short description
+   #50 = Class              #155          //  jeanroldao/web/NewServlet
+   #51 = Class              #156          //  javax/servlet/http/HttpServlet
+   #52 = Utf8               Pessoa
+   #53 = Utf8               InnerClasses
+   #54 = Utf8               visitas
+   #55 = Utf8               I
+   #56 = Utf8               lista
+   #57 = Utf8               Ljava/util/List;
+   #58 = Utf8               Signature
+   #59 = Utf8               Ljava/util/List<Ljeanroldao/web/NewServlet$Pessoa;>;
+   #60 = Utf8               <init>
+   #61 = Utf8               ()V
+   #62 = Utf8               Code
+   #63 = Utf8               LineNumberTable
+   #64 = Utf8               LocalVariableTable
+   #65 = Utf8               this
+   #66 = Utf8               Ljeanroldao/web/NewServlet;
+   #67 = Utf8               processRequest
+   #68 = Utf8               (Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V
+   #69 = Utf8               p
+   #70 = Utf8               Ljeanroldao/web/NewServlet$Pessoa;
+   #71 = Utf8               i$
+   #72 = Utf8               Ljava/util/Iterator;
+   #73 = Utf8               request
+   #74 = Utf8               Ljavax/servlet/http/HttpServletRequest;
+   #75 = Utf8               response
+   #76 = Utf8               Ljavax/servlet/http/HttpServletResponse;
+   #77 = Utf8               nome
+   #78 = Utf8               Ljava/lang/String;
+   #79 = Utf8               out
+   #80 = Utf8               Ljava/io/PrintWriter;
+   #81 = Utf8               StackMapTable
+   #82 = Class              #157          //  java/lang/String
+   #83 = Class              #158          //  java/io/PrintWriter
+   #84 = Class              #159          //  java/util/Iterator
+   #85 = Class              #160          //  java/lang/Throwable
+   #86 = Utf8               Exceptions
+   #87 = Class              #161          //  javax/servlet/ServletException
+   #88 = Class              #162          //  java/io/IOException
+   #89 = Utf8               doGet
+   #90 = Utf8               org.netbeans.SourceLevelAnnotations
+   #91 = Utf8               Ljava/lang/Override;
+   #92 = Utf8               doPost
+   #93 = Utf8               getServletInfo
+   #94 = Utf8               ()Ljava/lang/String;
+   #95 = Utf8               SourceFile
+   #96 = Utf8               NewServlet.java
+   #97 = Utf8               RuntimeVisibleAnnotations
+   #98 = Utf8               Ljavax/servlet/annotation/WebServlet;
+   #99 = Utf8               name
+  #100 = Utf8               NewServlet
+  #101 = Utf8               urlPatterns
+  #102 = Utf8               /NewServlet
+  #103 = NameAndType        #60:#61       //  "<init>":()V
+  #104 = NameAndType        #54:#55       //  visitas:I
+  #105 = Utf8               java/util/ArrayList
+  #106 = NameAndType        #56:#57       //  lista:Ljava/util/List;
+  #107 = Class              #163          //  javax/servlet/http/HttpServletRequest
+  #108 = NameAndType        #164:#165     //  getParameter:(Ljava/lang/String;)Ljava/lang/String;
+  #109 = Class              #157          //  java/lang/String
+  #110 = NameAndType        #166:#167     //  length:()I
+  #111 = Utf8               clear
+  #112 = NameAndType        #168:#169     //  equals:(Ljava/lang/Object;)Z
+  #113 = Class              #170          //  java/util/List
+  #114 = NameAndType        #111:#61      //  clear:()V
+  #115 = Utf8               jeanroldao/web/NewServlet$Pessoa
+  #116 = NameAndType        #60:#171      //  "<init>":(Ljava/lang/String;)V
+  #117 = NameAndType        #172:#169     //  add:(Ljava/lang/Object;)Z
+  #118 = Utf8               text/html;charset=UTF-8
+  #119 = Class              #173          //  javax/servlet/http/HttpServletResponse
+  #120 = NameAndType        #174:#171     //  setContentType:(Ljava/lang/String;)V
+  #121 = NameAndType        #175:#176     //  getWriter:()Ljava/io/PrintWriter;
+  #122 = Utf8               <!DOCTYPE html>
+  #123 = Class              #158          //  java/io/PrintWriter
+  #124 = NameAndType        #177:#171     //  println:(Ljava/lang/String;)V
+  #125 = Utf8               <html>
+  #126 = Utf8               <head>
+  #127 = Utf8               <title>Servlet NewServlet</title>
+  #128 = Utf8               </head>
+  #129 = Utf8               <body>
+  #130 = Utf8               java/lang/StringBuilder
+  #131 = Utf8               <h1>Servlet NewServlet at 
+  #132 = NameAndType        #178:#179     //  append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  #133 = NameAndType        #180:#94      //  getContextPath:()Ljava/lang/String;
+  #134 = Utf8               </h1>
+  #135 = NameAndType        #181:#94      //  toString:()Ljava/lang/String;
+  #136 = Utf8               <h2>visitas: 
+  #137 = NameAndType        #178:#182     //  append:(I)Ljava/lang/StringBuilder;
+  #138 = Utf8               </h2>
+  #139 = Utf8               <form><input name=\"nome\" /><input type=\"submit\"/></form>
+  #140 = Utf8               <div>(registros=
+  #141 = NameAndType        #183:#167     //  size:()I
+  #142 = Utf8               )</div>
+  #143 = NameAndType        #184:#185     //  iterator:()Ljava/util/Iterator;
+  #144 = Class              #159          //  java/util/Iterator
+  #145 = NameAndType        #186:#187     //  hasNext:()Z
+  #146 = NameAndType        #188:#189     //  next:()Ljava/lang/Object;
+  #147 = Utf8               <div>
+  #148 = NameAndType        #190:#94      //  getNome:()Ljava/lang/String;
+  #149 = Utf8               </div>
+  #150 = Utf8               </body>
+  #151 = Utf8               </html>
+  #152 = NameAndType        #191:#61      //  close:()V
+  #153 = NameAndType        #67:#68       //  processRequest:(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V
+  #154 = Utf8               Short description
+  #155 = Utf8               jeanroldao/web/NewServlet
+  #156 = Utf8               javax/servlet/http/HttpServlet
+  #157 = Utf8               java/lang/String
+  #158 = Utf8               java/io/PrintWriter
+  #159 = Utf8               java/util/Iterator
+  #160 = Utf8               java/lang/Throwable
+  #161 = Utf8               javax/servlet/ServletException
+  #162 = Utf8               java/io/IOException
+  #163 = Utf8               javax/servlet/http/HttpServletRequest
+  #164 = Utf8               getParameter
+  #165 = Utf8               (Ljava/lang/String;)Ljava/lang/String;
+  #166 = Utf8               length
+  #167 = Utf8               ()I
+  #168 = Utf8               equals
+  #169 = Utf8               (Ljava/lang/Object;)Z
+  #170 = Utf8               java/util/List
+  #171 = Utf8               (Ljava/lang/String;)V
+  #172 = Utf8               add
+  #173 = Utf8               javax/servlet/http/HttpServletResponse
+  #174 = Utf8               setContentType
+  #175 = Utf8               getWriter
+  #176 = Utf8               ()Ljava/io/PrintWriter;
+  #177 = Utf8               println
+  #178 = Utf8               append
+  #179 = Utf8               (Ljava/lang/String;)Ljava/lang/StringBuilder;
+  #180 = Utf8               getContextPath
+  #181 = Utf8               toString
+  #182 = Utf8               (I)Ljava/lang/StringBuilder;
+  #183 = Utf8               size
+  #184 = Utf8               iterator
+  #185 = Utf8               ()Ljava/util/Iterator;
+  #186 = Utf8               hasNext
+  #187 = Utf8               ()Z
+  #188 = Utf8               next
+  #189 = Utf8               ()Ljava/lang/Object;
+  #190 = Utf8               getNome
+  #191 = Utf8               close
+{
+  public jeanroldao.web.NewServlet();
+    flags: ACC_PUBLIC
+    Code:
+      stack=3, locals=1, args_size=1
+         0: aload_0       
+         1: invokespecial #1                  // Method javax/servlet/http/HttpServlet."<init>":()V
+         4: aload_0       
+         5: iconst_0      
+         6: putfield      #2                  // Field visitas:I
+         9: aload_0       
+        10: new           #3                  // class java/util/ArrayList
+        13: dup           
+        14: invokespecial #4                  // Method java/util/ArrayList."<init>":()V
+        17: putfield      #5                  // Field lista:Ljava/util/List;
+        20: return        
+      LineNumberTable:
+        line 22: 0
+        line 35: 4
+        line 36: 9
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+               0      21     0  this   Ljeanroldao/web/NewServlet;
+
+  protected void processRequest(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse) throws javax.servlet.ServletException, java.io.IOException;
+    flags: ACC_PROTECTED
+    Code:
+      stack=6, locals=8, args_size=3
+         0: aload_1       
+         1: ldc           #6                  // String nome
+         3: invokeinterface #7,  2            // InterfaceMethod javax/servlet/http/HttpServletRequest.getParameter:(Ljava/lang/String;)Ljava/lang/String;
+         8: astore_3      
+         9: aload_3       
+        10: ifnull        59
+        13: aload_3       
+        14: invokevirtual #8                  // Method java/lang/String.length:()I
+        17: ifle          59
+        20: aload_3       
+        21: ldc           #9                  // String clear
+        23: invokevirtual #10                 // Method java/lang/String.equals:(Ljava/lang/Object;)Z
+        26: ifeq          41
+        29: aload_0       
+        30: getfield      #5                  // Field lista:Ljava/util/List;
+        33: invokeinterface #11,  1           // InterfaceMethod java/util/List.clear:()V
+        38: goto          59
+        41: aload_0       
+        42: getfield      #5                  // Field lista:Ljava/util/List;
+        45: new           #12                 // class jeanroldao/web/NewServlet$Pessoa
+        48: dup           
+        49: aload_3       
+        50: invokespecial #13                 // Method jeanroldao/web/NewServlet$Pessoa."<init>":(Ljava/lang/String;)V
+        53: invokeinterface #14,  2           // InterfaceMethod java/util/List.add:(Ljava/lang/Object;)Z
+        58: pop           
+        59: aload_2       
+        60: ldc           #15                 // String text/html;charset=UTF-8
+        62: invokeinterface #16,  2           // InterfaceMethod javax/servlet/http/HttpServletResponse.setContentType:(Ljava/lang/String;)V
+        67: aload_2       
+        68: invokeinterface #17,  1           // InterfaceMethod javax/servlet/http/HttpServletResponse.getWriter:()Ljava/io/PrintWriter;
+        73: astore        4
+        75: aload         4
+        77: ldc           #18                 // String <!DOCTYPE html>
+        79: invokevirtual #19                 // Method java/io/PrintWriter.println:(Ljava/lang/String;)V
+        82: aload         4
+        84: ldc           #20                 // String <html>
+        86: invokevirtual #19                 // Method java/io/PrintWriter.println:(Ljava/lang/String;)V
+        89: aload         4
+        91: ldc           #21                 // String <head>
+        93: invokevirtual #19                 // Method java/io/PrintWriter.println:(Ljava/lang/String;)V
+        96: aload         4
+        98: ldc           #22                 // String <title>Servlet NewServlet</title>
+       100: invokevirtual #19                 // Method java/io/PrintWriter.println:(Ljava/lang/String;)V
+       103: aload         4
+       105: ldc           #23                 // String </head>
+       107: invokevirtual #19                 // Method java/io/PrintWriter.println:(Ljava/lang/String;)V
+       110: aload         4
+       112: ldc           #24                 // String <body>
+       114: invokevirtual #19                 // Method java/io/PrintWriter.println:(Ljava/lang/String;)V
+       117: aload         4
+       119: new           #25                 // class java/lang/StringBuilder
+       122: dup           
+       123: invokespecial #26                 // Method java/lang/StringBuilder."<init>":()V
+       126: ldc           #27                 // String <h1>Servlet NewServlet at 
+       128: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       131: aload_1       
+       132: invokeinterface #29,  1           // InterfaceMethod javax/servlet/http/HttpServletRequest.getContextPath:()Ljava/lang/String;
+       137: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       140: ldc           #30                 // String </h1>
+       142: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       145: invokevirtual #31                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+       148: invokevirtual #19                 // Method java/io/PrintWriter.println:(Ljava/lang/String;)V
+       151: aload         4
+       153: new           #25                 // class java/lang/StringBuilder
+       156: dup           
+       157: invokespecial #26                 // Method java/lang/StringBuilder."<init>":()V
+       160: ldc           #32                 // String <h2>visitas: 
+       162: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       165: aload_0       
+       166: dup           
+       167: getfield      #2                  // Field visitas:I
+       170: dup_x1        
+       171: iconst_1      
+       172: iadd          
+       173: putfield      #2                  // Field visitas:I
+       176: invokevirtual #33                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+       179: ldc           #34                 // String </h2>
+       181: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       184: invokevirtual #31                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+       187: invokevirtual #19                 // Method java/io/PrintWriter.println:(Ljava/lang/String;)V
+       190: aload         4
+       192: ldc           #35                 // String <form><input name=\"nome\" /><input type=\"submit\"/></form>
+       194: invokevirtual #19                 // Method java/io/PrintWriter.println:(Ljava/lang/String;)V
+       197: aload         4
+       199: new           #25                 // class java/lang/StringBuilder
+       202: dup           
+       203: invokespecial #26                 // Method java/lang/StringBuilder."<init>":()V
+       206: ldc           #36                 // String <div>(registros=
+       208: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       211: aload_0       
+       212: getfield      #5                  // Field lista:Ljava/util/List;
+       215: invokeinterface #37,  1           // InterfaceMethod java/util/List.size:()I
+       220: invokevirtual #33                 // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+       223: ldc           #38                 // String )</div>
+       225: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       228: invokevirtual #31                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+       231: invokevirtual #19                 // Method java/io/PrintWriter.println:(Ljava/lang/String;)V
+       234: aload_0       
+       235: getfield      #5                  // Field lista:Ljava/util/List;
+       238: invokeinterface #39,  1           // InterfaceMethod java/util/List.iterator:()Ljava/util/Iterator;
+       243: astore        5
+       245: aload         5
+       247: invokeinterface #40,  1           // InterfaceMethod java/util/Iterator.hasNext:()Z
+       252: ifeq          303
+       255: aload         5
+       257: invokeinterface #41,  1           // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+       262: checkcast     #12                 // class jeanroldao/web/NewServlet$Pessoa
+       265: astore        6
+       267: aload         4
+       269: new           #25                 // class java/lang/StringBuilder
+       272: dup           
+       273: invokespecial #26                 // Method java/lang/StringBuilder."<init>":()V
+       276: ldc           #42                 // String <div>
+       278: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       281: aload         6
+       283: invokevirtual #43                 // Method jeanroldao/web/NewServlet$Pessoa.getNome:()Ljava/lang/String;
+       286: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       289: ldc           #44                 // String </div>
+       291: invokevirtual #28                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       294: invokevirtual #31                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+       297: invokevirtual #19                 // Method java/io/PrintWriter.println:(Ljava/lang/String;)V
+       300: goto          245
+       303: aload         4
+       305: ldc           #45                 // String </body>
+       307: invokevirtual #19                 // Method java/io/PrintWriter.println:(Ljava/lang/String;)V
+       310: aload         4
+       312: ldc           #46                 // String </html>
+       314: invokevirtual #19                 // Method java/io/PrintWriter.println:(Ljava/lang/String;)V
+       317: aload         4
+       319: invokevirtual #47                 // Method java/io/PrintWriter.close:()V
+       322: goto          335
+       325: astore        7
+       327: aload         4
+       329: invokevirtual #47                 // Method java/io/PrintWriter.close:()V
+       332: aload         7
+       334: athrow        
+       335: return        
+      Exception table:
+         from    to  target type
+            75   317   325   any
+           325   327   325   any
+      LineNumberTable:
+        line 51: 0
+        line 52: 9
+        line 53: 20
+        line 54: 29
+        line 56: 41
+        line 60: 59
+        line 61: 67
+        line 64: 75
+        line 65: 82
+        line 66: 89
+        line 67: 96
+        line 68: 103
+        line 69: 110
+        line 70: 117
+        line 71: 151
+        line 72: 190
+        line 73: 197
+        line 74: 234
+        line 75: 267
+        line 76: 300
+        line 78: 303
+        line 79: 310
+        line 81: 317
+        line 82: 322
+        line 81: 325
+        line 83: 335
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+             267      33     6     p   Ljeanroldao/web/NewServlet$Pessoa;
+             245      58     5    i$   Ljava/util/Iterator;
+               0     336     0  this   Ljeanroldao/web/NewServlet;
+               0     336     1 request   Ljavax/servlet/http/HttpServletRequest;
+               0     336     2 response   Ljavax/servlet/http/HttpServletResponse;
+               9     327     3  nome   Ljava/lang/String;
+              75     261     4   out   Ljava/io/PrintWriter;
+      StackMapTable: number_of_entries = 6
+           frame_type = 252 /* append */
+             offset_delta = 41
+        locals = [ class java/lang/String ]
+           frame_type = 17 /* same */
+           frame_type = 253 /* append */
+             offset_delta = 185
+        locals = [ class java/io/PrintWriter, class java/util/Iterator ]
+           frame_type = 250 /* chop */
+          offset_delta = 57
+           frame_type = 85 /* same_locals_1_stack_item */
+          stack = [ class java/lang/Throwable ]
+           frame_type = 9 /* same */
+
+    Exceptions:
+      throws javax.servlet.ServletException, java.io.IOException
+
+  protected void doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse) throws javax.servlet.ServletException, java.io.IOException;
+    flags: ACC_PROTECTED
+    Code:
+      stack=3, locals=3, args_size=3
+         0: aload_0       
+         1: aload_1       
+         2: aload_2       
+         3: invokevirtual #48                 // Method processRequest:(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V
+         6: return        
+      LineNumberTable:
+        line 98: 0
+        line 99: 6
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+               0       7     0  this   Ljeanroldao/web/NewServlet;
+               0       7     1 request   Ljavax/servlet/http/HttpServletRequest;
+               0       7     2 response   Ljavax/servlet/http/HttpServletResponse;
+    Exceptions:
+      throws javax.servlet.ServletException, java.io.IOException
+      org.netbeans.SourceLevelAnnotations: length = 0x6
+       00 01 00 5B 00 00 
+
+  protected void doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse) throws javax.servlet.ServletException, java.io.IOException;
+    flags: ACC_PROTECTED
+    Code:
+      stack=3, locals=3, args_size=3
+         0: aload_0       
+         1: aload_1       
+         2: aload_2       
+         3: invokevirtual #48                 // Method processRequest:(Ljavax/servlet/http/HttpServletRequest;Ljavax/servlet/http/HttpServletResponse;)V
+         6: return        
+      LineNumberTable:
+        line 113: 0
+        line 114: 6
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+               0       7     0  this   Ljeanroldao/web/NewServlet;
+               0       7     1 request   Ljavax/servlet/http/HttpServletRequest;
+               0       7     2 response   Ljavax/servlet/http/HttpServletResponse;
+    Exceptions:
+      throws javax.servlet.ServletException, java.io.IOException
+      org.netbeans.SourceLevelAnnotations: length = 0x6
+       00 01 00 5B 00 00 
+
+  public java.lang.String getServletInfo();
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: ldc           #49                 // String Short description
+         2: areturn       
+      LineNumberTable:
+        line 123: 0
+      LocalVariableTable:
+        Start  Length  Slot  Name   Signature
+               0       3     0  this   Ljeanroldao/web/NewServlet;
+      org.netbeans.SourceLevelAnnotations: length = 0x6
+       00 01 00 5B 00 00 
+}

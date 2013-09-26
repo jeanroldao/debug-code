@@ -229,23 +229,39 @@ eval(<<<'CODE'
 namespace java\io;
 	
 class PrintStream extends \java\lang\Object {
+	
+	private $writer;
+	
+	public function __construct($writer = null) {
+		if ($writer !== null) {
+			$this->writer = $writer;
+		}
+	}
+	
 	public function __call($func, $args) {
 		//var_dump($args);readline();
+		$writer = $this->writer;
 		if ($func == 'print') {
 			foreach ($args as $arg) {
 				if ($arg === null) {
 					$arg = 'null';
 				}
-				echo new \java\lang\String($arg);
+				if ($writer !== null) {
+					$writer->write((string)new \java\lang\String($arg));
+				} else {
+					echo new \java\lang\String($arg);
+				}
 			}
 		} else {
 			parent::__call($func, $args);
 		}
 	}
 	public function println($s = '') {
-		$this->print($s, PHP_EOL);
 		//var_dump($s);
+		$this->print($s, PHP_EOL);
 	}
+	
+	public function close() {}
 }
 \java\lang\System::$out = new \java\io\PrintStream();
 
@@ -608,6 +624,10 @@ class ArrayList extends \java\lang\Object {
 	
 	public function set($i, $obj) {
 		$this->array["$i"] = $obj;
+	}
+	
+	public function clear() {
+		$this->array = [];
 	}
 	
 	public function contains($obj) {

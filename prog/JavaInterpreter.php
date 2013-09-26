@@ -99,10 +99,11 @@ trait JavaInterpreter {
 				$stack[] = $locals[explode('_', $opcode[1])[1]];
 				break;
 			case 'dup':
-			case 'dup_x1':
-				//var_dump($stack);
 				$stack[] = $stack[count($stack)-1];
-				//var_dump($stack);
+				break;
+			case 'dup_x1':
+				list($value1, $value2) = [array_pop($stack), array_pop($stack)];
+				list($stack[], $stack[], $stack[]) = [$value1, $value2, $value1];
 				break;
 			case 'getstatic':
 				/*
