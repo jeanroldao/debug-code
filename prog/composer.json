@@ -1,5 +1,6 @@
 {
     "require": {
-        "react/react": "0.3.*"
+        "react/react": "0.3.*",
+        "phastlight/phastlight": "*"
     }
 }

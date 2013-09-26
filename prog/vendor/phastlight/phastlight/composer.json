@@ -1,0 +1,29 @@
+{
+  "name": "phastlight/phastlight",
+    "description": "Phastlight -- Asynchronous, event-driven command line tool and web server written in PHP 5.3+ inspired by Node.js",
+    "keywords": ["webserver","nodejs","event-driven","asynchronous"],
+    "homepage": "https://github.com/phastlight/phastlight",
+    "license": "MIT",
+    "authors": [
+    {
+      "name": "Zike Huang (Jim)",
+      "email": "jim.javathunderbird@gmail.com",
+      "homepage": "http://www.pamground.com",
+      "role": "Developer"
+    }
+  ],
+    "require": {
+      "php": ">=5.3.0",
+      "symfony/process": "*"
+    },
+    "autoload": {
+      "psr-0": {
+        "Phastlight": "src"
+      }
+    },
+    "extra": {
+      "branch-alias": {
+        "dev-master": "0.1.5.10-dev"
+      }
+    }
+}
