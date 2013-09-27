@@ -13,29 +13,80 @@ $loop = React\EventLoop\Factory::create();
 $socket = new React\Socket\Server($loop);
 $http = new React\Http\Server($socket);
 
-$servlet = new jeanroldao\web\NewServlet();
-$http->on('request', function ($request, $response) use (&$i, $servlet) {
+$applications = [
+	'WebApplication1' => [
+		'NewServlet' => new jeanroldao\web\NewServlet()
+	]
+];
+$http->on('request', function ($request, $response) use ($applications) {
 	$headers = array('Content-Type' => 'text/plain');
 	
-	if (substr($request->getPath(), 0, 27) == '/WebApplication1/NewServlet') {
+	$path = explode('/', $request->getPath());
+	if (empty($path[1])) {
+		$response->writeHead(200, array('Content-Type' => 'text/html'));
+		ob_start();
+		?>
+			<h1>List of applications</h1>
+			<ul>
+				<?php
+				foreach ($applications as $appName => $servlets) {
+					?>
+					<li><a href="/<?=$appName?>/"><?=$appName?></a> (servlets: <?=count($servlets)?>)</li>
+					<?php
+				}
+				?>
+			</ul>
+		<?php
+		$response->end(ob_get_contents());
+		ob_end_clean();
+	} else if (isset($applications[$path[1]]) && empty($path[2])) {
+		$response->writeHead(200, array('Content-Type' => 'text/html'));
+		ob_start();
+		?>
+			<h1>List of servlets in <?=$path[1]?></h1>
+			<ul>
+				<?php
+				foreach ($applications[$path[1]] as $servletName => $servlet) {
+					?>
+					<li><a href="/<?=$path[1]?>/<?=$servletName?>"><?=$servletName?></a> (<?=$servlet->getServletInfo()?>)</li>
+					<?php
+				}
+				?>
+			</ul>
+		<?php
+		$response->end(ob_get_contents());
+		ob_end_clean();
+	} else if (isset($applications[$path[1]]) && isset($applications[$path[1]][$path[2]])) {
+		$servlet = $applications[$path[1]][$path[2]];
+		
 		$response->writeHead(200, array('Content-Type' => 'text/html'));
 		
-		$javaRequest = new javax\servlet\http\HttpServletRequest($request);
+		$javaRequest  = new javax\servlet\http\HttpServletRequest($request);
 		$javaResponse = new javax\servlet\http\HttpServletResponse($response);
 		
 		$servlet->doGet($javaRequest, $javaResponse);
 		
-		//$response->write('test');
 		$response->end();
-	} else if (substr($request->getPath(), 0, 12) == '/test/') {
-		$i++;
-
-		echo $text = "This is request number $i.\n";
-
-		$response->writeHead(200, $headers);
-		$response->end($text);
+	} else if (file_exists('.'.$request->getPath())) {
+		$file = '.'.$request->getPath();
+		
+		if (substr($file, -3) == 'php') {
+			$response->writeHead(200, array('Content-Type' => 'text/html'));
+			foreach ($_GET as $iG => $vG) {
+				unset($_GET[$iG]);
+			}
+			$_GET += $request->getQuery();
+			ob_start();
+			include $file;
+			$response->end(ob_get_contents());
+			ob_end_clean();
+		} else {
+			$response->writeHead(200, array('Content-Type' => 'image'));
+			var_dump($file);
+			$response->end(file_get_contents($file));
+		}
 	} else {
-		$response->writeHead(404, $headers);
+		$response->writeHead(200, $headers);
 		$response->end("Not found: ".$request->getPath()."\n");
 	}
 });

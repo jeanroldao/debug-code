@@ -11,6 +11,8 @@ class CampoMinado {
 	
 	private $gameOver = false;
 	
+	private $qt_minas = 0;
+	
 	public function __construct($args = array()) {
 	
 		$this->rawMap = $this->GerarCampoMinado($args);
@@ -215,8 +217,10 @@ function newArray($valueIni, array $dimentions) {
 	return array_fill(0, $size, newArray($valueIni, $dimentions));
 }
 
-function readLine() {
-	return trim(fgets(STDIN));
+if (!function_exists('readLine')) {
+	function readLine() {
+		return trim(fgets(STDIN));
+	}
 }
 
 if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
