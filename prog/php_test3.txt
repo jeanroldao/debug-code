@@ -1,0 +1,104 @@
+Finding entry points
+Branch analysis from position: 0
+Return found
+filename:       C:\Users\jean_roldao\Downloads\debug-code-master\prog\php_test3.php
+function name:  (null)
+number of ops:  14
+compiled vars:  !0 = $a
+line     # *  op                           fetch          ext  return  operands
+---------------------------------------------------------------------------------
+   3     0  >   NOP                                                      
+  14     1      NOP                                                      
+         2      NOP                                                      
+  21     3      FETCH_CLASS                                   4  :3      'B'
+         4      NEW                                              $4      :3
+         5      DO_FCALL_BY_NAME                              0          
+         6      ASSIGN                                                   !0, $4
+  23     7      INIT_METHOD_CALL                                         !0, 'falar'
+         8      FETCH_CLASS                                   4  :8      'A'
+         9      NEW                                              $9      :8
+        10      DO_FCALL_BY_NAME                              0          
+        11      SEND_VAR_NO_REF                               0          $9
+        12      DO_FCALL_BY_NAME                              1          
+        13    > RETURN                                                   1
+
+Class A:
+Function falar:
+Finding entry points
+Branch analysis from position: 0
+Return found
+filename:       C:\Users\jean_roldao\Downloads\debug-code-master\prog\php_test3.php
+function name:  falar
+number of ops:  9
+compiled vars:  !0 = $outro
+line     # *  op                           fetch          ext  return  operands
+---------------------------------------------------------------------------------
+   5     0  >   RECV                                             !0      
+   6     1      INIT_METHOD_CALL                                         'getMsg'
+         2      DO_FCALL_BY_NAME                              0  $1      
+         3      CONCAT                                           ~2      $1, '+%2B+'
+         4      INIT_METHOD_CALL                                         !0, 'getMsg'
+         5      DO_FCALL_BY_NAME                              0  $4      
+         6      CONCAT                                           ~5      ~2, $4
+         7      ECHO                                                     ~5
+   7     8    > RETURN                                                   null
+
+End of function falar.
+
+Function getmsg:
+Finding entry points
+Branch analysis from position: 0
+Return found
+filename:       C:\Users\jean_roldao\Downloads\debug-code-master\prog\php_test3.php
+function name:  getMsg
+number of ops:  2
+compiled vars:  none
+line     # *  op                           fetch          ext  return  operands
+---------------------------------------------------------------------------------
+  10     0  > > RETURN                                                   'from+A'
+  11     1*   > RETURN                                                   null
+
+End of function getmsg.
+
+End of class A.
+
+Class B:
+Function getmsg:
+Finding entry points
+Branch analysis from position: 0
+Return found
+filename:       C:\Users\jean_roldao\Downloads\debug-code-master\prog\php_test3.php
+function name:  getMsg
+number of ops:  2
+compiled vars:  none
+line     # *  op                           fetch          ext  return  operands
+---------------------------------------------------------------------------------
+  17     0  > > RETURN                                                   'from+B'
+  18     1*   > RETURN                                                   null
+
+End of function getmsg.
+
+Function falar:
+Finding entry points
+Branch analysis from position: 0
+Return found
+filename:       C:\Users\jean_roldao\Downloads\debug-code-master\prog\php_test3.php
+function name:  falar
+number of ops:  9
+compiled vars:  !0 = $outro
+line     # *  op                           fetch          ext  return  operands
+---------------------------------------------------------------------------------
+   5     0  >   RECV                                             !0      
+   6     1      INIT_METHOD_CALL                                         'getMsg'
+         2      DO_FCALL_BY_NAME                              0  $1      
+         3      CONCAT                                           ~2      $1, '+%2B+'
+         4      INIT_METHOD_CALL                                         !0, 'getMsg'
+         5      DO_FCALL_BY_NAME                              0  $4      
+         6      CONCAT                                           ~5      ~2, $4
+         7      ECHO                                                     ~5
+   7     8    > RETURN                                                   null
+
+End of function falar.
+
+End of class B.
+

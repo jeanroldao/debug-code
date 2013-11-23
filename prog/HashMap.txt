@@ -1,0 +1,1593 @@
+Classfile /C:/Program Files/EasyPHP-12.1/www/debug/prog/HashMap.class
+  Last modified 08/02/2013; size 8846 bytes
+  MD5 checksum 55cb6495fb76c786af5d387d029ba65e
+  Compiled from "HashMap.java"
+public class java.util.HashMap<K extends java.lang.Object, V extends java.lang.Object> extends java.util.AbstractMap<K, V> implements java.util.Map<K, V>, java.lang.Cloneable, java.io.Serializable
+  SourceFile: "HashMap.java"
+  Signature: #162                         // <K:Ljava/lang/Object;V:Ljava/lang/Object;>Ljava/util/AbstractMap<TK;TV;>;Ljava/util/Map<TK;TV;>;Ljava/lang/Cloneable;Ljava/io/Serializable;
+  InnerClasses:
+       static #144 of #143; //class java/util/HashMap$1 of class java/util/HashMap
+       static #28= #145 of #143; //Entry=class java/util/HashMap$Entry of class java/util/HashMap
+       public static #28= #155 of #154; //Entry=class java/util/Map$Entry of class java/util/Map
+  minor version: 0
+  major version: 49
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+    #1 = Integer            1073741824
+    #2 = Integer            2147483647
+    #3 = Float              0.75f
+    #4 = String             #32           //  Illegal initial capacity: 
+    #5 = String             #33           //  Illegal load factor: 
+    #6 = Utf8               ()F
+    #7 = Utf8               ()I
+    #8 = Utf8               ()Ljava/lang/String;
+    #9 = Utf8               ()TV;
+   #10 = Utf8               ()V
+   #11 = Utf8               ()Z
+   #12 = Utf8               (F)Z
+   #13 = Utf8               (I)I
+   #14 = Utf8               (I)V
+   #15 = Utf8               (IF)V
+   #16 = Utf8               (II)I
+   #17 = Utf8               (ITK;TV;I)V
+   #18 = Utf8               (Ljava/lang/Object;)Z
+   #19 = Utf8               (Ljava/lang/String;)V
+   #20 = Utf8               (TK;TV;)TV;
+   #21 = Utf8               (TK;TV;)V
+   #22 = Utf8               (TV;)TV;
+   #23 = Utf8               <init>
+   #24 = Utf8               Code
+   #25 = Utf8               ConstantValue
+   #26 = Utf8               DEFAULT_INITIAL_CAPACITY
+   #27 = Utf8               DEFAULT_LOAD_FACTOR
+   #28 = Utf8               Entry
+   #29 = Utf8               Exceptions
+   #30 = Utf8               F
+   #31 = Utf8               I
+   #32 = Utf8               Illegal initial capacity: 
+   #33 = Utf8               Illegal load factor: 
+   #34 = Utf8               InnerClasses
+   #35 = Utf8               J
+   #36 = Utf8               LineNumberTable
+   #37 = Utf8               Ljava/lang/Object;
+   #38 = Utf8               MAXIMUM_CAPACITY
+   #39 = Utf8               Signature
+   #40 = Utf8               SourceFile
+   #41 = Utf8               addEntry
+   #42 = Utf8               append
+   #43 = Utf8               capacity
+   #44 = Utf8               clear
+   #45 = Utf8               clone
+   #46 = Utf8               containsKey
+   #47 = Utf8               containsNullValue
+   #48 = Utf8               containsValue
+   #49 = Utf8               createEntry
+   #50 = Utf8               defaultReadObject
+   #51 = Utf8               defaultWriteObject
+   #52 = Utf8               entrySet
+   #53 = Utf8               entrySet0
+   #54 = Utf8               equals
+   #55 = Utf8               get
+   #56 = Utf8               getEntry
+   #57 = Utf8               getForNullKey
+   #58 = Utf8               getKey
+   #59 = Utf8               getValue
+   #60 = Utf8               hasNext
+   #61 = Utf8               hash
+   #62 = Utf8               hashCode
+   #63 = Utf8               indexFor
+   #64 = Utf8               init
+   #65 = Utf8               isEmpty
+   #66 = Utf8               isNaN
+   #67 = Utf8               iterator
+   #68 = Utf8               java/io/IOException
+   #69 = Utf8               java/io/ObjectInputStream
+   #70 = Utf8               java/io/ObjectOutputStream
+   #71 = Utf8               java/io/Serializable
+   #72 = Utf8               java/lang/ClassNotFoundException
+   #73 = Utf8               java/lang/CloneNotSupportedException
+   #74 = Utf8               java/lang/Cloneable
+   #75 = Utf8               java/lang/Float
+   #76 = Utf8               java/lang/IllegalArgumentException
+   #77 = Utf8               java/lang/Math
+   #78 = Utf8               java/lang/Object
+   #79 = Utf8               java/lang/StringBuilder
+   #80 = Utf8               java/util/AbstractMap
+   #81 = Utf8               java/util/HashMap
+   #82 = Utf8               java/util/HashMap$1
+   #83 = Utf8               java/util/HashMap$Entry
+   #84 = Utf8               java/util/HashMap$EntryIterator
+   #85 = Utf8               java/util/HashMap$EntrySet
+   #86 = Utf8               java/util/HashMap$HashIterator
+   #87 = Utf8               java/util/HashMap$KeyIterator
+   #88 = Utf8               java/util/HashMap$KeySet
+   #89 = Utf8               java/util/HashMap$ValueIterator
+   #90 = Utf8               java/util/HashMap$Values
+   #91 = Utf8               java/util/Iterator
+   #92 = Utf8               java/util/Map
+   #93 = Utf8               java/util/Map$Entry
+   #94 = Utf8               java/util/Set
+   #95 = Utf8               key
+   #96 = Utf8               keySet
+   #97 = Utf8               loadFactor
+   #98 = Utf8               max
+   #99 = Utf8               modCount
+  #100 = Utf8               newEntryIterator
+  #101 = Utf8               newKeyIterator
+  #102 = Utf8               newValueIterator
+  #103 = Utf8               next
+  #104 = Utf8               put
+  #105 = Utf8               putAll
+  #106 = Utf8               putAllForCreate
+  #107 = Utf8               putForCreate
+  #108 = Utf8               putForNullKey
+  #109 = Utf8               readInt
+  #110 = Utf8               readObject
+  #111 = Utf8               recordAccess
+  #112 = Utf8               recordRemoval
+  #113 = Utf8               remove
+  #114 = Utf8               removeEntryForKey
+  #115 = Utf8               removeMapping
+  #116 = Utf8               resize
+  #117 = Utf8               serialVersionUID
+  #118 = Utf8               size
+  #119 = Utf8               table
+  #120 = Utf8               threshold
+  #121 = Utf8               toString
+  #122 = Utf8               transfer
+  #123 = Utf8               value
+  #124 = Utf8               values
+  #125 = Utf8               writeInt
+  #126 = Utf8               writeObject
+  #127 = Integer            16
+  #128 = Long               362498820763181265l
+  #130 = Class              #68           //  java/io/IOException
+  #131 = Class              #69           //  java/io/ObjectInputStream
+  #132 = Class              #70           //  java/io/ObjectOutputStream
+  #133 = Class              #71           //  java/io/Serializable
+  #134 = Class              #72           //  java/lang/ClassNotFoundException
+  #135 = Class              #73           //  java/lang/CloneNotSupportedException
+  #136 = Class              #74           //  java/lang/Cloneable
+  #137 = Class              #75           //  java/lang/Float
+  #138 = Class              #76           //  java/lang/IllegalArgumentException
+  #139 = Class              #77           //  java/lang/Math
+  #140 = Class              #78           //  java/lang/Object
+  #141 = Class              #79           //  java/lang/StringBuilder
+  #142 = Class              #80           //  java/util/AbstractMap
+  #143 = Class              #81           //  java/util/HashMap
+  #144 = Class              #82           //  java/util/HashMap$1
+  #145 = Class              #83           //  java/util/HashMap$Entry
+  #146 = Class              #84           //  java/util/HashMap$EntryIterator
+  #147 = Class              #85           //  java/util/HashMap$EntrySet
+  #148 = Class              #86           //  java/util/HashMap$HashIterator
+  #149 = Class              #87           //  java/util/HashMap$KeyIterator
+  #150 = Class              #88           //  java/util/HashMap$KeySet
+  #151 = Class              #89           //  java/util/HashMap$ValueIterator
+  #152 = Class              #90           //  java/util/HashMap$Values
+  #153 = Class              #91           //  java/util/Iterator
+  #154 = Class              #92           //  java/util/Map
+  #155 = Class              #93           //  java/util/Map$Entry
+  #156 = Class              #94           //  java/util/Set
+  #157 = Utf8               Ljava/util/Collection;
+  #158 = Utf8               Ljava/util/HashMap$Entry;
+  #159 = Utf8               [Ljava/util/HashMap$Entry;
+  #160 = Utf8               Ljava/util/Set;
+  #161 = Utf8               Ljava/util/Set<Ljava/util/Map$Entry<TK;TV;>;>;
+  #162 = Utf8               <K:Ljava/lang/Object;V:Ljava/lang/Object;>Ljava/util/AbstractMap<TK;TV;>;Ljava/util/Map<TK;TV;>;Ljava/lang/Cloneable;Ljava/io/Serializable;
+  #163 = Utf8               (Ljava/io/ObjectInputStream;)V
+  #164 = Utf8               (Ljava/io/ObjectOutputStream;)V
+  #165 = Utf8               ()Ljava/lang/Object;
+  #166 = Utf8               (Ljava/lang/Object;)TV;
+  #167 = Utf8               (Ljava/lang/Object;)V
+  #168 = Utf8               (F)Ljava/lang/StringBuilder;
+  #169 = Utf8               (I)Ljava/lang/StringBuilder;
+  #170 = Utf8               ()Ljava/util/Collection;
+  #171 = Utf8               ()Ljava/util/Collection<TV;>;
+  #172 = Utf8               (Ljava/util/HashMap;)V
+  #173 = Utf8               ([Ljava/util/HashMap$Entry;)V
+  #174 = Utf8               ()Ljava/util/Iterator;
+  #175 = Utf8               ()Ljava/util/Iterator<TK;>;
+  #176 = Utf8               ()Ljava/util/Iterator<TV;>;
+  #177 = Utf8               (Ljava/util/Map;)V
+  #178 = Utf8               (Ljava/util/Map<+TK;+TV;>;)V
+  #179 = Utf8               ()Ljava/util/Set;
+  #180 = Utf8               ()Ljava/util/Set<TK;>;
+  #181 = Utf8               (ILjava/lang/Object;Ljava/lang/Object;I)V
+  #182 = Utf8               (Ljava/lang/Object;)Ljava/lang/Object;
+  #183 = Utf8               (Ljava/lang/Object;Ljava/lang/Object;)V
+  #184 = Utf8               (Ljava/lang/String;)Ljava/lang/StringBuilder;
+  #185 = Utf8               (Ljava/util/HashMap;Ljava/util/HashMap$1;)V
+  #186 = Utf8               (Ljava/lang/Object;)Ljava/util/HashMap$Entry;
+  #187 = Utf8               (Ljava/lang/Object;)Ljava/util/HashMap$Entry<TK;TV;>;
+  #188 = Utf8               ()Ljava/util/Iterator<Ljava/util/Map$Entry<TK;TV;>;>;
+  #189 = Utf8               ()Ljava/util/Set<Ljava/util/Map$Entry<TK;TV;>;>;
+  #190 = Utf8               (Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+  #191 = Utf8               (ILjava/lang/Object;Ljava/lang/Object;Ljava/util/HashMap$Entry;)V
+  #192 = NameAndType        #97:#30       //  loadFactor:F
+  #193 = NameAndType        #61:#31       //  hash:I
+  #194 = NameAndType        #99:#31       //  modCount:I
+  #195 = NameAndType        #118:#31      //  size:I
+  #196 = NameAndType        #120:#31      //  threshold:I
+  #197 = NameAndType        #95:#37       //  key:Ljava/lang/Object;
+  #198 = NameAndType        #123:#37      //  value:Ljava/lang/Object;
+  #199 = NameAndType        #124:#157     //  values:Ljava/util/Collection;
+  #200 = NameAndType        #103:#158     //  next:Ljava/util/HashMap$Entry;
+  #201 = NameAndType        #119:#159     //  table:[Ljava/util/HashMap$Entry;
+  #202 = NameAndType        #52:#160      //  entrySet:Ljava/util/Set;
+  #203 = NameAndType        #96:#160      //  keySet:Ljava/util/Set;
+  #204 = NameAndType        #62:#7        //  hashCode:()I
+  #205 = NameAndType        #109:#7       //  readInt:()I
+  #206 = NameAndType        #118:#7       //  size:()I
+  #207 = NameAndType        #23:#10       //  "<init>":()V
+  #208 = NameAndType        #50:#10       //  defaultReadObject:()V
+  #209 = NameAndType        #51:#10       //  defaultWriteObject:()V
+  #210 = NameAndType        #64:#10       //  init:()V
+  #211 = NameAndType        #47:#11       //  containsNullValue:()Z
+  #212 = NameAndType        #60:#11       //  hasNext:()Z
+  #213 = NameAndType        #66:#12       //  isNaN:(F)Z
+  #214 = NameAndType        #61:#13       //  hash:(I)I
+  #215 = NameAndType        #116:#14      //  resize:(I)V
+  #216 = NameAndType        #125:#14      //  writeInt:(I)V
+  #217 = NameAndType        #23:#15       //  "<init>":(IF)V
+  #218 = NameAndType        #63:#16       //  indexFor:(II)I
+  #219 = NameAndType        #98:#16       //  max:(II)I
+  #220 = NameAndType        #45:#165      //  clone:()Ljava/lang/Object;
+  #221 = NameAndType        #57:#165      //  getForNullKey:()Ljava/lang/Object;
+  #222 = NameAndType        #58:#165      //  getKey:()Ljava/lang/Object;
+  #223 = NameAndType        #59:#165      //  getValue:()Ljava/lang/Object;
+  #224 = NameAndType        #103:#165     //  next:()Ljava/lang/Object;
+  #225 = NameAndType        #110:#165     //  readObject:()Ljava/lang/Object;
+  #226 = NameAndType        #126:#167     //  writeObject:(Ljava/lang/Object;)V
+  #227 = NameAndType        #54:#18       //  equals:(Ljava/lang/Object;)Z
+  #228 = NameAndType        #121:#8       //  toString:()Ljava/lang/String;
+  #229 = NameAndType        #23:#19       //  "<init>":(Ljava/lang/String;)V
+  #230 = NameAndType        #42:#168      //  append:(F)Ljava/lang/StringBuilder;
+  #231 = NameAndType        #42:#169      //  append:(I)Ljava/lang/StringBuilder;
+  #232 = NameAndType        #111:#172     //  recordAccess:(Ljava/util/HashMap;)V
+  #233 = NameAndType        #112:#172     //  recordRemoval:(Ljava/util/HashMap;)V
+  #234 = NameAndType        #122:#173     //  transfer:([Ljava/util/HashMap$Entry;)V
+  #235 = NameAndType        #67:#174      //  iterator:()Ljava/util/Iterator;
+  #236 = NameAndType        #106:#177     //  putAllForCreate:(Ljava/util/Map;)V
+  #237 = NameAndType        #52:#179      //  entrySet:()Ljava/util/Set;
+  #238 = NameAndType        #53:#179      //  entrySet0:()Ljava/util/Set;
+  #239 = NameAndType        #41:#181      //  addEntry:(ILjava/lang/Object;Ljava/lang/Object;I)V
+  #240 = NameAndType        #49:#181      //  createEntry:(ILjava/lang/Object;Ljava/lang/Object;I)V
+  #241 = NameAndType        #108:#182     //  putForNullKey:(Ljava/lang/Object;)Ljava/lang/Object;
+  #242 = NameAndType        #107:#183     //  putForCreate:(Ljava/lang/Object;Ljava/lang/Object;)V
+  #243 = NameAndType        #42:#184      //  append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  #244 = NameAndType        #23:#185      //  "<init>":(Ljava/util/HashMap;Ljava/util/HashMap$1;)V
+  #245 = NameAndType        #56:#186      //  getEntry:(Ljava/lang/Object;)Ljava/util/HashMap$Entry;
+  #246 = NameAndType        #114:#186     //  removeEntryForKey:(Ljava/lang/Object;)Ljava/util/HashMap$Entry;
+  #247 = NameAndType        #104:#190     //  put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+  #248 = NameAndType        #23:#191      //  "<init>":(ILjava/lang/Object;Ljava/lang/Object;Ljava/util/HashMap$Entry;)V
+  #249 = Fieldref           #143.#192     //  java/util/HashMap.loadFactor:F
+  #250 = Fieldref           #143.#194     //  java/util/HashMap.modCount:I
+  #251 = Fieldref           #143.#195     //  java/util/HashMap.size:I
+  #252 = Fieldref           #143.#196     //  java/util/HashMap.threshold:I
+  #253 = Fieldref           #143.#199     //  java/util/HashMap.values:Ljava/util/Collection;
+  #254 = Fieldref           #143.#201     //  java/util/HashMap.table:[Ljava/util/HashMap$Entry;
+  #255 = Fieldref           #143.#202     //  java/util/HashMap.entrySet:Ljava/util/Set;
+  #256 = Fieldref           #143.#203     //  java/util/HashMap.keySet:Ljava/util/Set;
+  #257 = Fieldref           #145.#193     //  java/util/HashMap$Entry.hash:I
+  #258 = Fieldref           #145.#197     //  java/util/HashMap$Entry.key:Ljava/lang/Object;
+  #259 = Fieldref           #145.#198     //  java/util/HashMap$Entry.value:Ljava/lang/Object;
+  #260 = Fieldref           #145.#200     //  java/util/HashMap$Entry.next:Ljava/util/HashMap$Entry;
+  #261 = Methodref          #131.#205     //  java/io/ObjectInputStream.readInt:()I
+  #262 = Methodref          #131.#208     //  java/io/ObjectInputStream.defaultReadObject:()V
+  #263 = Methodref          #131.#225     //  java/io/ObjectInputStream.readObject:()Ljava/lang/Object;
+  #264 = Methodref          #132.#209     //  java/io/ObjectOutputStream.defaultWriteObject:()V
+  #265 = Methodref          #132.#216     //  java/io/ObjectOutputStream.writeInt:(I)V
+  #266 = Methodref          #132.#226     //  java/io/ObjectOutputStream.writeObject:(Ljava/lang/Object;)V
+  #267 = Methodref          #137.#213     //  java/lang/Float.isNaN:(F)Z
+  #268 = Methodref          #138.#229     //  java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+  #269 = Methodref          #139.#219     //  java/lang/Math.max:(II)I
+  #270 = Methodref          #140.#204     //  java/lang/Object.hashCode:()I
+  #271 = Methodref          #140.#227     //  java/lang/Object.equals:(Ljava/lang/Object;)Z
+  #272 = Methodref          #141.#207     //  java/lang/StringBuilder."<init>":()V
+  #273 = Methodref          #141.#228     //  java/lang/StringBuilder.toString:()Ljava/lang/String;
+  #274 = Methodref          #141.#230     //  java/lang/StringBuilder.append:(F)Ljava/lang/StringBuilder;
+  #275 = Methodref          #141.#231     //  java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+  #276 = Methodref          #141.#243     //  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  #277 = Methodref          #142.#207     //  java/util/AbstractMap."<init>":()V
+  #278 = Methodref          #142.#220     //  java/util/AbstractMap.clone:()Ljava/lang/Object;
+  #279 = Methodref          #143.#210     //  java/util/HashMap.init:()V
+  #280 = Methodref          #143.#211     //  java/util/HashMap.containsNullValue:()Z
+  #281 = Methodref          #143.#214     //  java/util/HashMap.hash:(I)I
+  #282 = Methodref          #143.#215     //  java/util/HashMap.resize:(I)V
+  #283 = Methodref          #143.#217     //  java/util/HashMap."<init>":(IF)V
+  #284 = Methodref          #143.#218     //  java/util/HashMap.indexFor:(II)I
+  #285 = Methodref          #143.#221     //  java/util/HashMap.getForNullKey:()Ljava/lang/Object;
+  #286 = Methodref          #143.#234     //  java/util/HashMap.transfer:([Ljava/util/HashMap$Entry;)V
+  #287 = Methodref          #143.#236     //  java/util/HashMap.putAllForCreate:(Ljava/util/Map;)V
+  #288 = Methodref          #143.#238     //  java/util/HashMap.entrySet0:()Ljava/util/Set;
+  #289 = Methodref          #143.#239     //  java/util/HashMap.addEntry:(ILjava/lang/Object;Ljava/lang/Object;I)V
+  #290 = Methodref          #143.#240     //  java/util/HashMap.createEntry:(ILjava/lang/Object;Ljava/lang/Object;I)V
+  #291 = Methodref          #143.#241     //  java/util/HashMap.putForNullKey:(Ljava/lang/Object;)Ljava/lang/Object;
+  #292 = Methodref          #143.#242     //  java/util/HashMap.putForCreate:(Ljava/lang/Object;Ljava/lang/Object;)V
+  #293 = Methodref          #143.#245     //  java/util/HashMap.getEntry:(Ljava/lang/Object;)Ljava/util/HashMap$Entry;
+  #294 = Methodref          #143.#246     //  java/util/HashMap.removeEntryForKey:(Ljava/lang/Object;)Ljava/util/HashMap$Entry;
+  #295 = Methodref          #143.#247     //  java/util/HashMap.put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+  #296 = Methodref          #145.#227     //  java/util/HashMap$Entry.equals:(Ljava/lang/Object;)Z
+  #297 = Methodref          #145.#232     //  java/util/HashMap$Entry.recordAccess:(Ljava/util/HashMap;)V
+  #298 = Methodref          #145.#233     //  java/util/HashMap$Entry.recordRemoval:(Ljava/util/HashMap;)V
+  #299 = Methodref          #145.#248     //  java/util/HashMap$Entry."<init>":(ILjava/lang/Object;Ljava/lang/Object;Ljava/util/HashMap$Entry;)V
+  #300 = Methodref          #146.#244     //  java/util/HashMap$EntryIterator."<init>":(Ljava/util/HashMap;Ljava/util/HashMap$1;)V
+  #301 = Methodref          #147.#244     //  java/util/HashMap$EntrySet."<init>":(Ljava/util/HashMap;Ljava/util/HashMap$1;)V
+  #302 = Methodref          #149.#244     //  java/util/HashMap$KeyIterator."<init>":(Ljava/util/HashMap;Ljava/util/HashMap$1;)V
+  #303 = Methodref          #150.#244     //  java/util/HashMap$KeySet."<init>":(Ljava/util/HashMap;Ljava/util/HashMap$1;)V
+  #304 = Methodref          #151.#244     //  java/util/HashMap$ValueIterator."<init>":(Ljava/util/HashMap;Ljava/util/HashMap$1;)V
+  #305 = Methodref          #152.#244     //  java/util/HashMap$Values."<init>":(Ljava/util/HashMap;Ljava/util/HashMap$1;)V
+  #306 = InterfaceMethodref #153.#212     //  java/util/Iterator.hasNext:()Z
+  #307 = InterfaceMethodref #153.#224     //  java/util/Iterator.next:()Ljava/lang/Object;
+  #308 = InterfaceMethodref #154.#206     //  java/util/Map.size:()I
+  #309 = InterfaceMethodref #154.#237     //  java/util/Map.entrySet:()Ljava/util/Set;
+  #310 = InterfaceMethodref #155.#222     //  java/util/Map$Entry.getKey:()Ljava/lang/Object;
+  #311 = InterfaceMethodref #155.#223     //  java/util/Map$Entry.getValue:()Ljava/lang/Object;
+  #312 = InterfaceMethodref #156.#235     //  java/util/Set.iterator:()Ljava/util/Iterator;
+  #313 = Utf8               EntryIterator
+  #314 = Utf8               EntrySet
+  #315 = Utf8               HashIterator
+  #316 = Utf8               HashMap.java
+  #317 = Utf8               KeyIterator
+  #318 = Utf8               KeySet
+  #319 = Utf8               ValueIterator
+  #320 = Utf8               Values
+{
+  static final int DEFAULT_INITIAL_CAPACITY;
+    flags: ACC_STATIC, ACC_FINAL
+    ConstantValue: int 16
+
+  static final int MAXIMUM_CAPACITY;
+    flags: ACC_STATIC, ACC_FINAL
+    ConstantValue: int 1073741824
+
+  static final float DEFAULT_LOAD_FACTOR;
+    flags: ACC_STATIC, ACC_FINAL
+    ConstantValue: float 0.75f
+
+  transient java.util.HashMap$Entry[] table;
+    flags: ACC_TRANSIENT
+
+  transient int size;
+    flags: ACC_TRANSIENT
+
+  int threshold;
+    flags: 
+
+  final float loadFactor;
+    flags: ACC_FINAL
+
+  volatile transient int modCount;
+    flags: ACC_VOLATILE, ACC_TRANSIENT
+
+  public java.util.HashMap(int, float);
+    flags: ACC_PUBLIC
+    Code:
+      stack=4, locals=4, args_size=3
+         0: aload_0       
+         1: invokespecial #277                // Method java/util/AbstractMap."<init>":()V
+         4: aload_0       
+         5: aconst_null   
+         6: putfield      #255                // Field entrySet:Ljava/util/Set;
+         9: iload_1       
+        10: ifge          40
+        13: new           #138                // class java/lang/IllegalArgumentException
+        16: dup           
+        17: new           #141                // class java/lang/StringBuilder
+        20: dup           
+        21: invokespecial #272                // Method java/lang/StringBuilder."<init>":()V
+        24: ldc           #4                  // String Illegal initial capacity: 
+        26: invokevirtual #276                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        29: iload_1       
+        30: invokevirtual #275                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+        33: invokevirtual #273                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+        36: invokespecial #268                // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+        39: athrow        
+        40: iload_1       
+        41: ldc           #1                  // int 1073741824
+        43: if_icmple     49
+        46: ldc           #1                  // int 1073741824
+        48: istore_1      
+        49: fload_2       
+        50: fconst_0      
+        51: fcmpg         
+        52: ifle          62
+        55: fload_2       
+        56: invokestatic  #267                // Method java/lang/Float.isNaN:(F)Z
+        59: ifeq          89
+        62: new           #138                // class java/lang/IllegalArgumentException
+        65: dup           
+        66: new           #141                // class java/lang/StringBuilder
+        69: dup           
+        70: invokespecial #272                // Method java/lang/StringBuilder."<init>":()V
+        73: ldc           #5                  // String Illegal load factor: 
+        75: invokevirtual #276                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        78: fload_2       
+        79: invokevirtual #274                // Method java/lang/StringBuilder.append:(F)Ljava/lang/StringBuilder;
+        82: invokevirtual #273                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+        85: invokespecial #268                // Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+        88: athrow        
+        89: iconst_1      
+        90: istore_3      
+        91: iload_3       
+        92: iload_1       
+        93: if_icmpge     103
+        96: iload_3       
+        97: iconst_1      
+        98: ishl          
+        99: istore_3      
+       100: goto          91
+       103: aload_0       
+       104: fload_2       
+       105: putfield      #249                // Field loadFactor:F
+       108: aload_0       
+       109: iload_3       
+       110: i2f           
+       111: fload_2       
+       112: fmul          
+       113: f2i           
+       114: putfield      #252                // Field threshold:I
+       117: aload_0       
+       118: iload_3       
+       119: anewarray     #145                // class java/util/HashMap$Entry
+       122: putfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+       125: aload_0       
+       126: invokevirtual #279                // Method init:()V
+       129: return        
+      LineNumberTable:
+        line 170: 0
+        line 852: 4
+        line 171: 9
+        line 172: 13
+        line 174: 40
+        line 175: 46
+        line 176: 49
+        line 177: 62
+        line 181: 89
+        line 182: 91
+        line 183: 96
+        line 185: 103
+        line 186: 108
+        line 187: 117
+        line 188: 125
+        line 189: 129
+
+  public java.util.HashMap(int);
+    flags: ACC_PUBLIC
+    Code:
+      stack=3, locals=2, args_size=2
+         0: aload_0       
+         1: iload_1       
+         2: ldc           #3                  // float 0.75f
+         4: invokespecial #283                // Method "<init>":(IF)V
+         7: return        
+      LineNumberTable:
+        line 199: 0
+        line 200: 7
+
+  public java.util.HashMap();
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: aload_0       
+         1: invokespecial #277                // Method java/util/AbstractMap."<init>":()V
+         4: aload_0       
+         5: aconst_null   
+         6: putfield      #255                // Field entrySet:Ljava/util/Set;
+         9: aload_0       
+        10: ldc           #3                  // float 0.75f
+        12: putfield      #249                // Field loadFactor:F
+        15: aload_0       
+        16: bipush        12
+        18: putfield      #252                // Field threshold:I
+        21: aload_0       
+        22: bipush        16
+        24: anewarray     #145                // class java/util/HashMap$Entry
+        27: putfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        30: aload_0       
+        31: invokevirtual #279                // Method init:()V
+        34: return        
+      LineNumberTable:
+        line 206: 0
+        line 852: 4
+        line 207: 9
+        line 208: 15
+        line 209: 21
+        line 210: 30
+        line 211: 34
+
+  public java.util.HashMap(java.util.Map<? extends K, ? extends V>);
+    flags: ACC_PUBLIC
+    Code:
+      stack=3, locals=2, args_size=2
+         0: aload_0       
+         1: aload_1       
+         2: invokeinterface #308,  1          // InterfaceMethod java/util/Map.size:()I
+         7: i2f           
+         8: ldc           #3                  // float 0.75f
+        10: fdiv          
+        11: f2i           
+        12: iconst_1      
+        13: iadd          
+        14: bipush        16
+        16: invokestatic  #269                // Method java/lang/Math.max:(II)I
+        19: ldc           #3                  // float 0.75f
+        21: invokespecial #283                // Method "<init>":(IF)V
+        24: aload_0       
+        25: aload_1       
+        26: invokespecial #287                // Method putAllForCreate:(Ljava/util/Map;)V
+        29: return        
+      LineNumberTable:
+        line 223: 0
+        line 225: 24
+        line 226: 29
+    Signature: #178                         // (Ljava/util/Map<+TK;+TV;>;)V
+
+  void init();
+    flags: 
+    Code:
+      stack=0, locals=1, args_size=1
+         0: return        
+      LineNumberTable:
+        line 238: 0
+
+  static int hash(int);
+    flags: ACC_STATIC
+    Code:
+      stack=4, locals=1, args_size=1
+         0: iload_0       
+         1: iload_0       
+         2: bipush        20
+         4: iushr         
+         5: iload_0       
+         6: bipush        12
+         8: iushr         
+         9: ixor          
+        10: ixor          
+        11: istore_0      
+        12: iload_0       
+        13: iload_0       
+        14: bipush        7
+        16: iushr         
+        17: ixor          
+        18: iload_0       
+        19: iconst_4      
+        20: iushr         
+        21: ixor          
+        22: ireturn       
+      LineNumberTable:
+        line 251: 0
+        line 252: 12
+
+  static int indexFor(int, int);
+    flags: ACC_STATIC
+    Code:
+      stack=3, locals=2, args_size=2
+         0: iload_0       
+         1: iload_1       
+         2: iconst_1      
+         3: isub          
+         4: iand          
+         5: ireturn       
+      LineNumberTable:
+        line 259: 0
+
+  public int size();
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0       
+         1: getfield      #251                // Field size:I
+         4: ireturn       
+      LineNumberTable:
+        line 268: 0
+
+  public boolean isEmpty();
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0       
+         1: getfield      #251                // Field size:I
+         4: ifne          11
+         7: iconst_1      
+         8: goto          12
+        11: iconst_0      
+        12: ireturn       
+      LineNumberTable:
+        line 277: 0
+
+  public V get(java.lang.Object);
+    flags: ACC_PUBLIC
+    Code:
+      stack=3, locals=5, args_size=2
+         0: aload_1       
+         1: ifnonnull     9
+         4: aload_0       
+         5: invokespecial #285                // Method getForNullKey:()Ljava/lang/Object;
+         8: areturn       
+         9: aload_1       
+        10: invokevirtual #270                // Method java/lang/Object.hashCode:()I
+        13: invokestatic  #281                // Method hash:(I)I
+        16: istore_2      
+        17: aload_0       
+        18: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        21: iload_2       
+        22: aload_0       
+        23: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        26: arraylength   
+        27: invokestatic  #284                // Method indexFor:(II)I
+        30: aaload        
+        31: astore_3      
+        32: aload_3       
+        33: ifnull        77
+        36: aload_3       
+        37: getfield      #257                // Field java/util/HashMap$Entry.hash:I
+        40: iload_2       
+        41: if_icmpne     69
+        44: aload_3       
+        45: getfield      #258                // Field java/util/HashMap$Entry.key:Ljava/lang/Object;
+        48: dup           
+        49: astore        4
+        51: aload_1       
+        52: if_acmpeq     64
+        55: aload_1       
+        56: aload         4
+        58: invokevirtual #271                // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+        61: ifeq          69
+        64: aload_3       
+        65: getfield      #259                // Field java/util/HashMap$Entry.value:Ljava/lang/Object;
+        68: areturn       
+        69: aload_3       
+        70: getfield      #260                // Field java/util/HashMap$Entry.next:Ljava/util/HashMap$Entry;
+        73: astore_3      
+        74: goto          32
+        77: aconst_null   
+        78: areturn       
+      LineNumberTable:
+        line 298: 0
+        line 299: 4
+        line 300: 9
+        line 301: 17
+        line 302: 32
+        line 305: 36
+        line 306: 64
+        line 303: 69
+        line 308: 77
+    Signature: #166                         // (Ljava/lang/Object;)TV;
+
+  public boolean containsKey(java.lang.Object);
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0       
+         1: aload_1       
+         2: invokevirtual #293                // Method getEntry:(Ljava/lang/Object;)Ljava/util/HashMap$Entry;
+         5: ifnull        12
+         8: iconst_1      
+         9: goto          13
+        12: iconst_0      
+        13: ireturn       
+      LineNumberTable:
+        line 335: 0
+
+  final java.util.HashMap$Entry<K, V> getEntry(java.lang.Object);
+    flags: ACC_FINAL
+    Code:
+      stack=3, locals=5, args_size=2
+         0: aload_1       
+         1: ifnonnull     8
+         4: iconst_0      
+         5: goto          15
+         8: aload_1       
+         9: invokevirtual #270                // Method java/lang/Object.hashCode:()I
+        12: invokestatic  #281                // Method hash:(I)I
+        15: istore_2      
+        16: aload_0       
+        17: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        20: iload_2       
+        21: aload_0       
+        22: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        25: arraylength   
+        26: invokestatic  #284                // Method indexFor:(II)I
+        29: aaload        
+        30: astore_3      
+        31: aload_3       
+        32: ifnull        77
+        35: aload_3       
+        36: getfield      #257                // Field java/util/HashMap$Entry.hash:I
+        39: iload_2       
+        40: if_icmpne     69
+        43: aload_3       
+        44: getfield      #258                // Field java/util/HashMap$Entry.key:Ljava/lang/Object;
+        47: dup           
+        48: astore        4
+        50: aload_1       
+        51: if_acmpeq     67
+        54: aload_1       
+        55: ifnull        69
+        58: aload_1       
+        59: aload         4
+        61: invokevirtual #271                // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+        64: ifeq          69
+        67: aload_3       
+        68: areturn       
+        69: aload_3       
+        70: getfield      #260                // Field java/util/HashMap$Entry.next:Ljava/util/HashMap$Entry;
+        73: astore_3      
+        74: goto          31
+        77: aconst_null   
+        78: areturn       
+      LineNumberTable:
+        line 344: 0
+        line 345: 16
+        line 346: 31
+        line 349: 35
+        line 351: 67
+        line 347: 69
+        line 353: 77
+    Signature: #187                         // (Ljava/lang/Object;)Ljava/util/HashMap$Entry<TK;TV;>;
+
+  public V put(K, V);
+    flags: ACC_PUBLIC
+    Code:
+      stack=5, locals=8, args_size=3
+         0: aload_1       
+         1: ifnonnull     10
+         4: aload_0       
+         5: aload_2       
+         6: invokespecial #291                // Method putForNullKey:(Ljava/lang/Object;)Ljava/lang/Object;
+         9: areturn       
+        10: aload_1       
+        11: invokevirtual #270                // Method java/lang/Object.hashCode:()I
+        14: invokestatic  #281                // Method hash:(I)I
+        17: istore_3      
+        18: iload_3       
+        19: aload_0       
+        20: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        23: arraylength   
+        24: invokestatic  #284                // Method indexFor:(II)I
+        27: istore        4
+        29: aload_0       
+        30: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        33: iload         4
+        35: aaload        
+        36: astore        5
+        38: aload         5
+        40: ifnull        105
+        43: aload         5
+        45: getfield      #257                // Field java/util/HashMap$Entry.hash:I
+        48: iload_3       
+        49: if_icmpne     95
+        52: aload         5
+        54: getfield      #258                // Field java/util/HashMap$Entry.key:Ljava/lang/Object;
+        57: dup           
+        58: astore        6
+        60: aload_1       
+        61: if_acmpeq     73
+        64: aload_1       
+        65: aload         6
+        67: invokevirtual #271                // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+        70: ifeq          95
+        73: aload         5
+        75: getfield      #259                // Field java/util/HashMap$Entry.value:Ljava/lang/Object;
+        78: astore        7
+        80: aload         5
+        82: aload_2       
+        83: putfield      #259                // Field java/util/HashMap$Entry.value:Ljava/lang/Object;
+        86: aload         5
+        88: aload_0       
+        89: invokevirtual #297                // Method java/util/HashMap$Entry.recordAccess:(Ljava/util/HashMap;)V
+        92: aload         7
+        94: areturn       
+        95: aload         5
+        97: getfield      #260                // Field java/util/HashMap$Entry.next:Ljava/util/HashMap$Entry;
+       100: astore        5
+       102: goto          38
+       105: aload_0       
+       106: dup           
+       107: getfield      #250                // Field modCount:I
+       110: iconst_1      
+       111: iadd          
+       112: putfield      #250                // Field modCount:I
+       115: aload_0       
+       116: iload_3       
+       117: aload_1       
+       118: aload_2       
+       119: iload         4
+       121: invokevirtual #289                // Method addEntry:(ILjava/lang/Object;Ljava/lang/Object;I)V
+       124: aconst_null   
+       125: areturn       
+      LineNumberTable:
+        line 370: 0
+        line 371: 4
+        line 372: 10
+        line 373: 18
+        line 374: 29
+        line 376: 43
+        line 377: 73
+        line 378: 80
+        line 379: 86
+        line 380: 92
+        line 374: 95
+        line 384: 105
+        line 385: 115
+        line 386: 124
+    Signature: #20                          // (TK;TV;)TV;
+
+  void resize(int);
+    flags: 
+    Code:
+      stack=3, locals=5, args_size=2
+         0: aload_0       
+         1: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+         4: astore_2      
+         5: aload_2       
+         6: arraylength   
+         7: istore_3      
+         8: iload_3       
+         9: ldc           #1                  // int 1073741824
+        11: if_icmpne     21
+        14: aload_0       
+        15: ldc           #2                  // int 2147483647
+        17: putfield      #252                // Field threshold:I
+        20: return        
+        21: iload_1       
+        22: anewarray     #145                // class java/util/HashMap$Entry
+        25: astore        4
+        27: aload_0       
+        28: aload         4
+        30: invokevirtual #286                // Method transfer:([Ljava/util/HashMap$Entry;)V
+        33: aload_0       
+        34: aload         4
+        36: putfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        39: aload_0       
+        40: iload_1       
+        41: i2f           
+        42: aload_0       
+        43: getfield      #249                // Field loadFactor:F
+        46: fmul          
+        47: f2i           
+        48: putfield      #252                // Field threshold:I
+        51: return        
+      LineNumberTable:
+        line 455: 0
+        line 456: 5
+        line 457: 8
+        line 458: 14
+        line 459: 20
+        line 462: 21
+        line 463: 27
+        line 464: 33
+        line 465: 39
+        line 466: 51
+
+  void transfer(java.util.HashMap$Entry[]);
+    flags: 
+    Code:
+      stack=3, locals=8, args_size=2
+         0: aload_0       
+         1: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+         4: astore_2      
+         5: aload_1       
+         6: arraylength   
+         7: istore_3      
+         8: iconst_0      
+         9: istore        4
+        11: iload         4
+        13: aload_2       
+        14: arraylength   
+        15: if_icmpge     82
+        18: aload_2       
+        19: iload         4
+        21: aaload        
+        22: astore        5
+        24: aload         5
+        26: ifnull        76
+        29: aload_2       
+        30: iload         4
+        32: aconst_null   
+        33: aastore       
+        34: aload         5
+        36: getfield      #260                // Field java/util/HashMap$Entry.next:Ljava/util/HashMap$Entry;
+        39: astore        6
+        41: aload         5
+        43: getfield      #257                // Field java/util/HashMap$Entry.hash:I
+        46: iload_3       
+        47: invokestatic  #284                // Method indexFor:(II)I
+        50: istore        7
+        52: aload         5
+        54: aload_1       
+        55: iload         7
+        57: aaload        
+        58: putfield      #260                // Field java/util/HashMap$Entry.next:Ljava/util/HashMap$Entry;
+        61: aload_1       
+        62: iload         7
+        64: aload         5
+        66: aastore       
+        67: aload         6
+        69: astore        5
+        71: aload         5
+        73: ifnonnull     34
+        76: iinc          4, 1
+        79: goto          11
+        82: return        
+      LineNumberTable:
+        line 472: 0
+        line 473: 5
+        line 474: 8
+        line 475: 18
+        line 476: 24
+        line 477: 29
+        line 479: 34
+        line 480: 41
+        line 481: 52
+        line 482: 61
+        line 483: 67
+        line 484: 71
+        line 474: 76
+        line 487: 82
+
+  public void putAll(java.util.Map<? extends K, ? extends V>);
+    flags: ACC_PUBLIC
+    Code:
+      stack=3, locals=5, args_size=2
+         0: aload_1       
+         1: invokeinterface #308,  1          // InterfaceMethod java/util/Map.size:()I
+         6: istore_2      
+         7: iload_2       
+         8: ifne          12
+        11: return        
+        12: iload_2       
+        13: aload_0       
+        14: getfield      #252                // Field threshold:I
+        17: if_icmple     78
+        20: iload_2       
+        21: i2f           
+        22: aload_0       
+        23: getfield      #249                // Field loadFactor:F
+        26: fdiv          
+        27: fconst_1      
+        28: fadd          
+        29: f2i           
+        30: istore_3      
+        31: iload_3       
+        32: ldc           #1                  // int 1073741824
+        34: if_icmple     40
+        37: ldc           #1                  // int 1073741824
+        39: istore_3      
+        40: aload_0       
+        41: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        44: arraylength   
+        45: istore        4
+        47: iload         4
+        49: iload_3       
+        50: if_icmpge     62
+        53: iload         4
+        55: iconst_1      
+        56: ishl          
+        57: istore        4
+        59: goto          47
+        62: iload         4
+        64: aload_0       
+        65: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        68: arraylength   
+        69: if_icmple     78
+        72: aload_0       
+        73: iload         4
+        75: invokevirtual #282                // Method resize:(I)V
+        78: aload_1       
+        79: invokeinterface #309,  1          // InterfaceMethod java/util/Map.entrySet:()Ljava/util/Set;
+        84: invokeinterface #312,  1          // InterfaceMethod java/util/Set.iterator:()Ljava/util/Iterator;
+        89: astore_3      
+        90: aload_3       
+        91: invokeinterface #306,  1          // InterfaceMethod java/util/Iterator.hasNext:()Z
+        96: ifeq          132
+        99: aload_3       
+       100: invokeinterface #307,  1          // InterfaceMethod java/util/Iterator.next:()Ljava/lang/Object;
+       105: checkcast     #155                // class java/util/Map$Entry
+       108: astore        4
+       110: aload_0       
+       111: aload         4
+       113: invokeinterface #310,  1          // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+       118: aload         4
+       120: invokeinterface #311,  1          // InterfaceMethod java/util/Map$Entry.getValue:()Ljava/lang/Object;
+       125: invokevirtual #295                // Method put:(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;
+       128: pop           
+       129: goto          90
+       132: return        
+      LineNumberTable:
+        line 498: 0
+        line 499: 7
+        line 500: 11
+        line 511: 12
+        line 512: 20
+        line 513: 31
+        line 514: 37
+        line 515: 40
+        line 516: 47
+        line 517: 53
+        line 518: 62
+        line 519: 72
+        line 522: 78
+        line 523: 99
+        line 524: 110
+        line 525: 129
+        line 526: 132
+    Signature: #178                         // (Ljava/util/Map<+TK;+TV;>;)V
+
+  public V remove(java.lang.Object);
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=3, args_size=2
+         0: aload_0       
+         1: aload_1       
+         2: invokevirtual #294                // Method removeEntryForKey:(Ljava/lang/Object;)Ljava/util/HashMap$Entry;
+         5: astore_2      
+         6: aload_2       
+         7: ifnonnull     14
+        10: aconst_null   
+        11: goto          18
+        14: aload_2       
+        15: getfield      #259                // Field java/util/HashMap$Entry.value:Ljava/lang/Object;
+        18: areturn       
+      LineNumberTable:
+        line 538: 0
+        line 539: 6
+    Signature: #166                         // (Ljava/lang/Object;)TV;
+
+  final java.util.HashMap$Entry<K, V> removeEntryForKey(java.lang.Object);
+    flags: ACC_FINAL
+    Code:
+      stack=3, locals=8, args_size=2
+         0: aload_1       
+         1: ifnonnull     8
+         4: iconst_0      
+         5: goto          15
+         8: aload_1       
+         9: invokevirtual #270                // Method java/lang/Object.hashCode:()I
+        12: invokestatic  #281                // Method hash:(I)I
+        15: istore_2      
+        16: iload_2       
+        17: aload_0       
+        18: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        21: arraylength   
+        22: invokestatic  #284                // Method indexFor:(II)I
+        25: istore_3      
+        26: aload_0       
+        27: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        30: iload_3       
+        31: aaload        
+        32: astore        4
+        34: aload         4
+        36: astore        5
+        38: aload         5
+        40: ifnull        149
+        43: aload         5
+        45: getfield      #260                // Field java/util/HashMap$Entry.next:Ljava/util/HashMap$Entry;
+        48: astore        6
+        50: aload         5
+        52: getfield      #257                // Field java/util/HashMap$Entry.hash:I
+        55: iload_2       
+        56: if_icmpne     138
+        59: aload         5
+        61: getfield      #258                // Field java/util/HashMap$Entry.key:Ljava/lang/Object;
+        64: dup           
+        65: astore        7
+        67: aload_1       
+        68: if_acmpeq     84
+        71: aload_1       
+        72: ifnull        138
+        75: aload_1       
+        76: aload         7
+        78: invokevirtual #271                // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+        81: ifeq          138
+        84: aload_0       
+        85: dup           
+        86: getfield      #250                // Field modCount:I
+        89: iconst_1      
+        90: iadd          
+        91: putfield      #250                // Field modCount:I
+        94: aload_0       
+        95: dup           
+        96: getfield      #251                // Field size:I
+        99: iconst_1      
+       100: isub          
+       101: putfield      #251                // Field size:I
+       104: aload         4
+       106: aload         5
+       108: if_acmpne     122
+       111: aload_0       
+       112: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+       115: iload_3       
+       116: aload         6
+       118: aastore       
+       119: goto          129
+       122: aload         4
+       124: aload         6
+       126: putfield      #260                // Field java/util/HashMap$Entry.next:Ljava/util/HashMap$Entry;
+       129: aload         5
+       131: aload_0       
+       132: invokevirtual #298                // Method java/util/HashMap$Entry.recordRemoval:(Ljava/util/HashMap;)V
+       135: aload         5
+       137: areturn       
+       138: aload         5
+       140: astore        4
+       142: aload         6
+       144: astore        5
+       146: goto          38
+       149: aload         5
+       151: areturn       
+      LineNumberTable:
+        line 548: 0
+        line 549: 16
+        line 550: 26
+        line 551: 34
+        line 553: 38
+        line 554: 43
+        line 556: 50
+        line 558: 84
+        line 559: 94
+        line 560: 104
+        line 561: 111
+        line 563: 122
+        line 564: 129
+        line 565: 135
+        line 567: 138
+        line 568: 142
+        line 569: 146
+        line 571: 149
+    Signature: #187                         // (Ljava/lang/Object;)Ljava/util/HashMap$Entry<TK;TV;>;
+
+  final java.util.HashMap$Entry<K, V> removeMapping(java.lang.Object);
+    flags: ACC_FINAL
+    Code:
+      stack=3, locals=9, args_size=2
+         0: aload_1       
+         1: instanceof    #155                // class java/util/Map$Entry
+         4: ifne          9
+         7: aconst_null   
+         8: areturn       
+         9: aload_1       
+        10: checkcast     #155                // class java/util/Map$Entry
+        13: astore_2      
+        14: aload_2       
+        15: invokeinterface #310,  1          // InterfaceMethod java/util/Map$Entry.getKey:()Ljava/lang/Object;
+        20: astore_3      
+        21: aload_3       
+        22: ifnonnull     29
+        25: iconst_0      
+        26: goto          36
+        29: aload_3       
+        30: invokevirtual #270                // Method java/lang/Object.hashCode:()I
+        33: invokestatic  #281                // Method hash:(I)I
+        36: istore        4
+        38: iload         4
+        40: aload_0       
+        41: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        44: arraylength   
+        45: invokestatic  #284                // Method indexFor:(II)I
+        48: istore        5
+        50: aload_0       
+        51: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        54: iload         5
+        56: aaload        
+        57: astore        6
+        59: aload         6
+        61: astore        7
+        63: aload         7
+        65: ifnull        160
+        68: aload         7
+        70: getfield      #260                // Field java/util/HashMap$Entry.next:Ljava/util/HashMap$Entry;
+        73: astore        8
+        75: aload         7
+        77: getfield      #257                // Field java/util/HashMap$Entry.hash:I
+        80: iload         4
+        82: if_icmpne     149
+        85: aload         7
+        87: aload_2       
+        88: invokevirtual #296                // Method java/util/HashMap$Entry.equals:(Ljava/lang/Object;)Z
+        91: ifeq          149
+        94: aload_0       
+        95: dup           
+        96: getfield      #250                // Field modCount:I
+        99: iconst_1      
+       100: iadd          
+       101: putfield      #250                // Field modCount:I
+       104: aload_0       
+       105: dup           
+       106: getfield      #251                // Field size:I
+       109: iconst_1      
+       110: isub          
+       111: putfield      #251                // Field size:I
+       114: aload         6
+       116: aload         7
+       118: if_acmpne     133
+       121: aload_0       
+       122: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+       125: iload         5
+       127: aload         8
+       129: aastore       
+       130: goto          140
+       133: aload         6
+       135: aload         8
+       137: putfield      #260                // Field java/util/HashMap$Entry.next:Ljava/util/HashMap$Entry;
+       140: aload         7
+       142: aload_0       
+       143: invokevirtual #298                // Method java/util/HashMap$Entry.recordRemoval:(Ljava/util/HashMap;)V
+       146: aload         7
+       148: areturn       
+       149: aload         7
+       151: astore        6
+       153: aload         8
+       155: astore        7
+       157: goto          63
+       160: aload         7
+       162: areturn       
+      LineNumberTable:
+        line 578: 0
+        line 579: 7
+        line 581: 9
+        line 582: 14
+        line 583: 21
+        line 584: 38
+        line 585: 50
+        line 586: 59
+        line 588: 63
+        line 589: 68
+        line 590: 75
+        line 591: 94
+        line 592: 104
+        line 593: 114
+        line 594: 121
+        line 596: 133
+        line 597: 140
+        line 598: 146
+        line 600: 149
+        line 601: 153
+        line 602: 157
+        line 604: 160
+    Signature: #187                         // (Ljava/lang/Object;)Ljava/util/HashMap$Entry<TK;TV;>;
+
+  public void clear();
+    flags: ACC_PUBLIC
+    Code:
+      stack=3, locals=3, args_size=1
+         0: aload_0       
+         1: dup           
+         2: getfield      #250                // Field modCount:I
+         5: iconst_1      
+         6: iadd          
+         7: putfield      #250                // Field modCount:I
+        10: aload_0       
+        11: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        14: astore_1      
+        15: iconst_0      
+        16: istore_2      
+        17: iload_2       
+        18: aload_1       
+        19: arraylength   
+        20: if_icmpge     33
+        23: aload_1       
+        24: iload_2       
+        25: aconst_null   
+        26: aastore       
+        27: iinc          2, 1
+        30: goto          17
+        33: aload_0       
+        34: iconst_0      
+        35: putfield      #251                // Field size:I
+        38: return        
+      LineNumberTable:
+        line 612: 0
+        line 613: 10
+        line 614: 15
+        line 615: 23
+        line 614: 27
+        line 616: 33
+        line 617: 38
+
+  public boolean containsValue(java.lang.Object);
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=5, args_size=2
+         0: aload_1       
+         1: ifnonnull     9
+         4: aload_0       
+         5: invokespecial #280                // Method containsNullValue:()Z
+         8: ireturn       
+         9: aload_0       
+        10: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        13: astore_2      
+        14: iconst_0      
+        15: istore_3      
+        16: iload_3       
+        17: aload_2       
+        18: arraylength   
+        19: if_icmpge     62
+        22: aload_2       
+        23: iload_3       
+        24: aaload        
+        25: astore        4
+        27: aload         4
+        29: ifnull        56
+        32: aload_1       
+        33: aload         4
+        35: getfield      #259                // Field java/util/HashMap$Entry.value:Ljava/lang/Object;
+        38: invokevirtual #271                // Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+        41: ifeq          46
+        44: iconst_1      
+        45: ireturn       
+        46: aload         4
+        48: getfield      #260                // Field java/util/HashMap$Entry.next:Ljava/util/HashMap$Entry;
+        51: astore        4
+        53: goto          27
+        56: iinc          3, 1
+        59: goto          16
+        62: iconst_0      
+        63: ireturn       
+      LineNumberTable:
+        line 628: 0
+        line 629: 4
+        line 631: 9
+        line 632: 14
+        line 633: 22
+        line 634: 32
+        line 635: 44
+        line 633: 46
+        line 632: 56
+        line 636: 62
+
+  public java.lang.Object clone();
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=3, args_size=1
+         0: aconst_null   
+         1: astore_1      
+         2: aload_0       
+         3: invokespecial #278                // Method java/util/AbstractMap.clone:()Ljava/lang/Object;
+         6: checkcast     #143                // class java/util/HashMap
+         9: astore_1      
+        10: goto          14
+        13: astore_2      
+        14: aload_1       
+        15: aload_0       
+        16: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        19: arraylength   
+        20: anewarray     #145                // class java/util/HashMap$Entry
+        23: putfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        26: aload_1       
+        27: aconst_null   
+        28: putfield      #255                // Field entrySet:Ljava/util/Set;
+        31: aload_1       
+        32: iconst_0      
+        33: putfield      #250                // Field modCount:I
+        36: aload_1       
+        37: iconst_0      
+        38: putfield      #251                // Field size:I
+        41: aload_1       
+        42: invokevirtual #279                // Method init:()V
+        45: aload_1       
+        46: aload_0       
+        47: invokespecial #287                // Method putAllForCreate:(Ljava/util/Map;)V
+        50: aload_1       
+        51: areturn       
+      Exception table:
+         from    to  target type
+             2    10    13   Class java/lang/CloneNotSupportedException
+      LineNumberTable:
+        line 658: 0
+        line 660: 2
+        line 663: 10
+        line 661: 13
+        line 664: 14
+        line 665: 26
+        line 666: 31
+        line 667: 36
+        line 668: 41
+        line 669: 45
+        line 671: 50
+
+  void addEntry(int, K, V, int);
+    flags: 
+    Code:
+      stack=8, locals=6, args_size=5
+         0: aload_0       
+         1: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+         4: iload         4
+         6: aaload        
+         7: astore        5
+         9: aload_0       
+        10: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        13: iload         4
+        15: new           #145                // class java/util/HashMap$Entry
+        18: dup           
+        19: iload_1       
+        20: aload_2       
+        21: aload_3       
+        22: aload         5
+        24: invokespecial #299                // Method java/util/HashMap$Entry."<init>":(ILjava/lang/Object;Ljava/lang/Object;Ljava/util/HashMap$Entry;)V
+        27: aastore       
+        28: aload_0       
+        29: dup           
+        30: getfield      #251                // Field size:I
+        33: dup_x1        
+        34: iconst_1      
+        35: iadd          
+        36: putfield      #251                // Field size:I
+        39: aload_0       
+        40: getfield      #252                // Field threshold:I
+        43: if_icmplt     57
+        46: aload_0       
+        47: iconst_2      
+        48: aload_0       
+        49: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        52: arraylength   
+        53: imul          
+        54: invokevirtual #282                // Method resize:(I)V
+        57: return        
+      LineNumberTable:
+        line 752: 0
+        line 753: 9
+        line 754: 28
+        line 755: 46
+        line 756: 57
+    Signature: #17                          // (ITK;TV;I)V
+
+  void createEntry(int, K, V, int);
+    flags: 
+    Code:
+      stack=8, locals=6, args_size=5
+         0: aload_0       
+         1: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+         4: iload         4
+         6: aaload        
+         7: astore        5
+         9: aload_0       
+        10: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+        13: iload         4
+        15: new           #145                // class java/util/HashMap$Entry
+        18: dup           
+        19: iload_1       
+        20: aload_2       
+        21: aload_3       
+        22: aload         5
+        24: invokespecial #299                // Method java/util/HashMap$Entry."<init>":(ILjava/lang/Object;Ljava/lang/Object;Ljava/util/HashMap$Entry;)V
+        27: aastore       
+        28: aload_0       
+        29: dup           
+        30: getfield      #251                // Field size:I
+        33: iconst_1      
+        34: iadd          
+        35: putfield      #251                // Field size:I
+        38: return        
+      LineNumberTable:
+        line 767: 0
+        line 768: 9
+        line 769: 28
+        line 770: 38
+    Signature: #17                          // (ITK;TV;I)V
+
+  java.util.Iterator<K> newKeyIterator();
+    flags: 
+    Code:
+      stack=4, locals=1, args_size=1
+         0: new           #149                // class java/util/HashMap$KeyIterator
+         3: dup           
+         4: aload_0       
+         5: aconst_null   
+         6: invokespecial #302                // Method java/util/HashMap$KeyIterator."<init>":(Ljava/util/HashMap;Ljava/util/HashMap$1;)V
+         9: areturn       
+      LineNumberTable:
+        line 840: 0
+    Signature: #175                         // ()Ljava/util/Iterator<TK;>;
+
+  java.util.Iterator<V> newValueIterator();
+    flags: 
+    Code:
+      stack=4, locals=1, args_size=1
+         0: new           #151                // class java/util/HashMap$ValueIterator
+         3: dup           
+         4: aload_0       
+         5: aconst_null   
+         6: invokespecial #304                // Method java/util/HashMap$ValueIterator."<init>":(Ljava/util/HashMap;Ljava/util/HashMap$1;)V
+         9: areturn       
+      LineNumberTable:
+        line 843: 0
+    Signature: #176                         // ()Ljava/util/Iterator<TV;>;
+
+  java.util.Iterator<java.util.Map$Entry<K, V>> newEntryIterator();
+    flags: 
+    Code:
+      stack=4, locals=1, args_size=1
+         0: new           #146                // class java/util/HashMap$EntryIterator
+         3: dup           
+         4: aload_0       
+         5: aconst_null   
+         6: invokespecial #300                // Method java/util/HashMap$EntryIterator."<init>":(Ljava/util/HashMap;Ljava/util/HashMap$1;)V
+         9: areturn       
+      LineNumberTable:
+        line 846: 0
+    Signature: #188                         // ()Ljava/util/Iterator<Ljava/util/Map$Entry<TK;TV;>;>;
+
+  public java.util.Set<K> keySet();
+    flags: ACC_PUBLIC
+    Code:
+      stack=5, locals=2, args_size=1
+         0: aload_0       
+         1: getfield      #256                // Field keySet:Ljava/util/Set;
+         4: astore_1      
+         5: aload_1       
+         6: ifnull        13
+         9: aload_1       
+        10: goto          27
+        13: aload_0       
+        14: new           #150                // class java/util/HashMap$KeySet
+        17: dup           
+        18: aload_0       
+        19: aconst_null   
+        20: invokespecial #303                // Method java/util/HashMap$KeySet."<init>":(Ljava/util/HashMap;Ljava/util/HashMap$1;)V
+        23: dup_x1        
+        24: putfield      #256                // Field keySet:Ljava/util/Set;
+        27: areturn       
+      LineNumberTable:
+        line 868: 0
+        line 869: 5
+    Signature: #180                         // ()Ljava/util/Set<TK;>;
+
+  public java.util.Collection<V> values();
+    flags: ACC_PUBLIC
+    Code:
+      stack=5, locals=2, args_size=1
+         0: aload_0       
+         1: getfield      #253                // Field values:Ljava/util/Collection;
+         4: astore_1      
+         5: aload_1       
+         6: ifnull        13
+         9: aload_1       
+        10: goto          27
+        13: aload_0       
+        14: new           #152                // class java/util/HashMap$Values
+        17: dup           
+        18: aload_0       
+        19: aconst_null   
+        20: invokespecial #305                // Method java/util/HashMap$Values."<init>":(Ljava/util/HashMap;Ljava/util/HashMap$1;)V
+        23: dup_x1        
+        24: putfield      #253                // Field values:Ljava/util/Collection;
+        27: areturn       
+      LineNumberTable:
+        line 904: 0
+        line 905: 5
+    Signature: #171                         // ()Ljava/util/Collection<TV;>;
+
+  public java.util.Set<java.util.Map$Entry<K, V>> entrySet();
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0       
+         1: invokespecial #288                // Method entrySet0:()Ljava/util/Set;
+         4: areturn       
+      LineNumberTable:
+        line 940: 0
+    Signature: #189                         // ()Ljava/util/Set<Ljava/util/Map$Entry<TK;TV;>;>;
+
+  int capacity();
+    flags: 
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0       
+         1: getfield      #254                // Field table:[Ljava/util/HashMap$Entry;
+         4: arraylength   
+         5: ireturn       
+      LineNumberTable:
+        line 1036: 0
+
+  float loadFactor();
+    flags: 
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0       
+         1: getfield      #249                // Field loadFactor:F
+         4: freturn       
+      LineNumberTable:
+        line 1037: 0
+}

@@ -1,0 +1,166 @@
+<?php
+$opcodes = <<<CODES
+0	NOP	yes
+1	ADD	yes
+2	SUB	yes
+3	MUL	yes
+4	DIV	yes
+5	MOD	yes
+6	SL	yes
+7	SR	yes
+8	CONCAT	yes
+9	BW_OR	yes
+10	BW_AND	yes
+11	BW_XOR	yes
+12	BW_NOT	yes
+13	BOOL_NOT	yes
+14	BOOL_XOR	yes
+15	IS_IDENTICAL	yes
+16	IS_NOT_IDENTICAL	yes
+17	IS_EQUAL	yes
+18	IS_NOT_EQUAL	yes
+19	IS_SMALLER	yes
+20	IS_SMALLER_OR_EQUAL	yes
+21	CAST	yes
+22	QM_ASSIGN	yes
+23	ASSIGN_ADD	yes
+24	ASSIGN_SUB	yes
+25	ASSIGN_MUL	yes
+26	ASSIGN_DIV	yes
+27	ASSIGN_MOD	yes
+28	ASSIGN_SL	yes
+29	ASSIGN_SR	yes
+30	ASSIGN_CONCAT	yes
+31	ASSIGN_BW_OR	yes
+32	ASSIGN_BW_AND	yes
+33	ASSIGN_BW_XOR	yes
+34	PRE_INC	yes
+35	PRE_DEC	yes
+36	POST_INC	yes
+37	POST_DEC	yes
+38	ASSIGN	yes
+39	ASSIGN_REF	yes
+40	ECHO	yes
+41	PRINT	yes
+42	JMP	yes
+43	JMPZ	yes
+44	JMPNZ	yes
+45	JMPZNZ	yes
+46	JMPZ_EX	yes
+47	JMPNZ_EX	yes
+48	CASE	yes
+49	SWITCH_FREE	yes
+50	BRK	yes
+51	CONT	yes
+52	BOOL	yes
+53	INIT_STRING	yes
+54	ADD_CHAR	yes
+55	ADD_STRING	yes
+56	ADD_VAR	yes
+57	BEGIN_SILENCE	yes
+58	END_SILENCE	yes
+59	INIT_FCALL_BY_NAME	yes
+60	DO_FCALL	yes
+61	DO_FCALL_BY_NAME	yes
+62	RETURN	yes
+63	RECV	yes
+64	RECV_INIT	yes
+65	SEND_VAL	yes
+66	SEND_VAR	yes
+67	SEND_REF	yes
+68	NEW	yes
+69	INIT_NS_FCALL_BY_NAME	no
+70	FREE	yes
+71	INIT_ARRAY	yes
+72	ADD_ARRAY_ELEMENT	yes
+73	INCLUDE_OR_EVAL	yes
+74	UNSET_VAR	yes
+75	UNSET_DIM	yes
+76	UNSET_OBJ	yes
+77	FE_RESET	yes
+78	FE_FETCH	yes
+79	EXIT	yes
+80	FETCH_R	yes
+81	FETCH_DIM_R	yes
+82	FETCH_OBJ_R	yes
+83	FETCH_W	yes
+84	FETCH_DIM_W	yes
+85	FETCH_OBJ_W	yes
+86	FETCH_RW	yes
+87	FETCH_DIM_RW	yes
+88	FETCH_OBJ_RW	yes
+89	FETCH_IS	yes
+90	FETCH_DIM_IS	no
+91	FETCH_OBJ_IS	no
+92	FETCH_FUNC_ARG	yes
+93	FETCH_DIM_FUNC_ARG	yes
+94	FETCH_OBJ_FUNC_ARG	yes
+95	FETCH_UNSET	no
+96	FETCH_DIM_UNSET	no
+97	FETCH_OBJ_UNSET	no
+98	FETCH_DIM_TMP_VAR	yes
+99	FETCH_CONSTANT	yes
+100	GOTO	no
+101	EXT_STMT	no
+102	EXT_FCALL_BEGIN	no
+103	EXT_FCALL_END	no
+104	EXT_NOP	no
+105	TICKS	yes
+106	SEND_VAR_NO_REF	no
+107	CATCH	yes
+108	THROW	yes
+109	FETCH_CLASS	yes
+110	CLONE	yes
+111	RETURN_BY_REF	no
+112	INIT_METHOD_CALL	yes
+113	INIT_STATIC_METHOD_CALL	yes
+114	ISSET_ISEMPTY_VAR	yes
+115	ISSET_ISEMPTY_DIM_OBJ	yes
+116	not documented	no
+117	not documented	no
+118	not documented	no
+119	not documented	no
+120	not documented	no
+121	not documented	no
+122	not documented	no
+123	not documented	no
+124	not documented	no
+125	not documented	no
+126	not documented	no
+127	not documented	no
+128	not documented	no
+129	not documented	no
+130	not documented	no
+131	not documented	no
+132	PRE_INC_OBJ	yes
+133	PRE_DEC_OBJ	yes
+134	POST_INC_OBJ	yes
+135	POST_DEC_OBJ	yes
+136	ASSIGN_OBJ	yes
+137	not documented	no
+138	INSTANCEOF	yes
+139	DECLARE_CLASS	yes
+140	DECLARE_INHERITED_CLASS	yes
+141	DECLARE_FUNCTION	yes
+142	RAISE_ABSTRACT_ERROR	yes
+143	DECLARE_CONST	no
+144	ADD_INTERFACE	no
+145	DECLARE_INHERITED_CLASS_DELAYED	no
+146	VERIFY_ABSTRACT_CLASS	no
+147	ASSIGN_DIM	yes
+148	ISSET_ISEMPTY_PROP_OBJ	yes
+149	HANDLE_EXCEPTION	yes
+150	USER_OPCODE	no
+152	ZEND_JMP_SET	no
+153	ZEND_DECLARE_LAMBDA_FUNCTION	no
+CODES;
+
+echo "enum OPCODES { ";
+foreach (explode("\n", $opcodes) as $line) {
+	$opcode = trim(explode("\t", $line)[1]);
+	if (count(explode(' ', $opcode)) > 1) {
+		continue;
+	}
+	echo $opcode. ', ';
+}
+echo "}";

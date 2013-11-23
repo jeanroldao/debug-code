@@ -145,8 +145,6 @@ class DataInputStream implements DataInput {
 	 */
 	function readUTF() {
 		$len = $this->readShort();
-		//println("($len)");
-		if ($len == 0) {return '';}
 		return utf8_decode($this->readChar($len));
 	}
 	

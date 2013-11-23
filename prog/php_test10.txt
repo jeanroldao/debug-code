@@ -1,0 +1,26 @@
+Finding entry points
+Branch analysis from position: 0
+Return found
+filename:       C:\Users\jean_roldao\Downloads\debug-code-master\prog\php_test10.php
+function name:  (null)
+number of ops:  16
+compiled vars:  none
+line     # *  op                           fetch          ext  return  operands
+---------------------------------------------------------------------------------
+   2     0  >   FETCH_CONSTANT                                   ~0      'STDOUT'
+         1      SEND_VAL                                                 ~0
+         2      SEND_VAL                                                 'oi'
+         3      DO_FCALL                                      2          'fputs'
+   3     4      FETCH_CONSTANT                                   ~2      'STDOUT'
+         5      SEND_VAL                                                 ~2
+         6      SEND_VAL                                                 -2
+         7      SEND_VAL                                                 1
+         8      DO_FCALL                                      3          'fseek'
+   4     9      SEND_VAL                                                 1
+        10      DO_FCALL                                      1          'sleep'
+   5    11      FETCH_CONSTANT                                   ~5      'STDOUT'
+        12      SEND_VAL                                                 ~5
+        13      SEND_VAL                                                 'e+ai%3F%0A'
+        14      DO_FCALL                                      2          'fputs'
+   7    15    > RETURN                                                   1
+

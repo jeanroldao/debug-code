@@ -1,0 +1,33 @@
+Finding entry points
+Branch analysis from position: 0
+Return found
+filename:       C:\Users\jean_roldao\Downloads\debug-code-master\prog\Teste13native.php
+function name:  (null)
+number of ops:  2
+compiled vars:  none
+line     # *  op                           fetch          ext  return  operands
+---------------------------------------------------------------------------------
+   3     0  >   NOP                                                      
+   6     1    > RETURN                                                   1
+
+Function java_teste13_falar:
+Finding entry points
+Branch analysis from position: 0
+Return found
+filename:       C:\Users\jean_roldao\Downloads\debug-code-master\prog\Teste13native.php
+function name:  Java_Teste13_falar
+number of ops:  8
+compiled vars:  !0 = $thisObj, !1 = $prop
+line     # *  op                           fetch          ext  return  operands
+---------------------------------------------------------------------------------
+   3     0  >   RECV                                             !0      
+         1      RECV                                             !1      
+   4     2      SEND_VAL                                                 'my+%25s+is+%25s%3F%0A'
+         3      SEND_VAR                                                 !1
+         4      FETCH_OBJ_R                                      $0      !0, 'nome'
+         5      SEND_VAR                                                 $0
+         6      DO_FCALL                                      3          'printf'
+   5     7    > RETURN                                                   null
+
+End of function java_teste13_falar.
+

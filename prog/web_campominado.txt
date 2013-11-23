@@ -1,0 +1,78 @@
+Finding entry points
+Branch analysis from position: 0
+Jump found. Position 1 = 7, Position 2 = 17
+Branch analysis from position: 7
+Jump found. Position 1 = 21
+Branch analysis from position: 21
+Return found
+Branch analysis from position: 17
+Return found
+filename:       C:\Users\jean_roldao\Downloads\debug-code-master\prog\web_campominado.php
+function name:  (null)
+number of ops:  29
+compiled vars:  !0 = $campoMinado
+line     # *  op                           fetch          ext  return  operands
+---------------------------------------------------------------------------------
+  15     0  >   ECHO                                                     '%3Cscript+type%3D%22text%2Fjavascript%22%3E%0Afunction+auto_submit%28event%29+%7B%0A%09var+x+%3D+parseInt%28%28event.x+-+14%29+%2F+8%29+%2B+65%3B%0A%09%2F%2Fvar+x+%3D+event.x%3B%0A%09var+y+%3D+parseInt%28%28event.y+-+56%29+%2F+16%29+%2B+65%3B%0A%09%2F%2Fvar+y+%3D+event.y%3B%0A%09%0A%09%2F%2Fconsole.log%28%5BString.fromCharCode%28x%29%2C+String.fromCharCode%28y%29%5D%29%3B%0A%09%0A%09document.getElementById%28%27input%27%29.value+%3D+String.fromCharCode%28y%29+%2B+String.fromCharCode%28x%29%3B%0A%09document.getElementById%28%27input%27%29.form.submit%28%29%3B%0A%7D%0A%3C%2Fscript%3E%0A%3Cpre+onclick%3D%22auto_submit%28event%29%22+style%3D%22cursor%3A+pointer%3B%22%3E%0A'
+  16     1      INCLUDE_OR_EVAL                                          'php_campominado.php', INCLUDE
+  18     2      FETCH_CLASS                                   4  :1      'CampoMinado'
+         3      DECLARE_INHERITED_CLASS                                  '%00campominadowebC%3A%5CUsers%5Cjean_roldao%5CDownloads%5Cdebug-code-master%5Cprog%5Cweb_campominado.php025DDCA8', 'campominadoweb'
+  30     4      FETCH_R                      global              $3      '_POST'
+         5      FETCH_DIM_R                                      $4      $3, 'campoMinado'
+         6    > JMPZ                                                     $4, ->17
+  31     7  >   FETCH_R                      global              $5      '_POST'
+         8      FETCH_DIM_R                                      $6      $5, 'campoMinado'
+         9      SEND_VAR                                                 $6
+        10      DO_FCALL                                      1  $7      'base64_decode'
+        11      SEND_VAR_NO_REF                               6          $7
+        12      DO_FCALL                                      1  $8      'unserialize'
+        13      ASSIGN                                                   !0, $8
+  32    14      INIT_METHOD_CALL                                         !0, 'readGameInput'
+        15      DO_FCALL_BY_NAME                              0          
+  33    16    > JMP                                                      ->21
+  34    17  >   FETCH_CLASS                                   4  :12     'CampoMinadoWeb'
+        18      NEW                                              $13     :12
+        19      DO_FCALL_BY_NAME                              0          
+        20      ASSIGN                                                   !0, $13
+  39    21  >   ECHO                                                     '%3C%2Fpre%3E%0A%3Cform+method%3D%22post%22%3E%0A%09%3Cinput+type%3D%22hidden%22+name%3D%22campoMinado%22+value%3D%22'
+        22      SEND_VAR                                                 !0
+        23      DO_FCALL                                      1  $16     'serialize'
+        24      SEND_VAR_NO_REF                               6          $16
+        25      DO_FCALL                                      1  $17     'base64_encode'
+        26      ECHO                                                     $17
+  42    27      ECHO                                                     '%22+%2F%3E%0A%09%3Cinput+type%3D%22text%22+++name%3D%22input%22+id%3D%22input%22+%2F%3E%0A%09%3Cinput+type%3D%22submit%22+%2F%3E%0A%3C%2Fform%3E'
+        28    > RETURN                                                   1
+
+Class CampoMinadoWeb:
+Function readline:
+Finding entry points
+Branch analysis from position: 0
+Return found
+filename:       C:\Users\jean_roldao\Downloads\debug-code-master\prog\web_campominado.php
+function name:  readLine
+number of ops:  17
+compiled vars:  !0 = $input, !1 = $ret
+line     # *  op                           fetch          ext  return  operands
+---------------------------------------------------------------------------------
+  22     0  >   SEND_VAL                                                 '%2C'
+         1      FETCH_R                      global              $0      '_POST'
+         2      FETCH_DIM_R                                      $1      $0, 'input'
+         3      SEND_VAR                                                 $1
+         4      DO_FCALL                                      2  $2      'explode'
+         5      ASSIGN                                                   !0, $2
+  23     6      SEND_REF                                                 !0
+         7      DO_FCALL                                      1  $4      'array_shift'
+         8      ASSIGN                                                   !1, $4
+  24     9      SEND_VAL                                                 '%2C'
+        10      SEND_VAR                                                 !0
+        11      DO_FCALL                                      2  $8      'implode'
+        12      FETCH_W                      global              $6      '_POST'
+        13      ASSIGN_DIM                                               $6, 'input'
+        14      OP_DATA                                                  $8, $9
+  25    15    > RETURN                                                   !1
+  26    16*   > RETURN                                                   null
+
+End of function readline.
+
+End of class CampoMinadoWeb.
+

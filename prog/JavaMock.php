@@ -1,11 +1,50 @@
 <?php
 
+function jstring($str) {
+	return new \java\lang\String($str);
+}
+
+function fixPhpClassName($className) {
+	$replace_ar = [
+		'Class' => '__Class',
+		'Array' => '__Array',
+		'List' => '__List',
+	];
+	foreach ($replace_ar as $oldName => $newName) {
+		if ($className == $oldName) {
+			return $newName;
+		}
+	}
+	return $className;
+	//return str_replace(array_keys($replace_ar), array_values($replace_ar), $className);
+}
+
+function fixPhpFuncName($method) {
+	if ($method == '<init>') {
+		return '__construct';
+	} else if ($method == 'clone') {
+		return '_clone';
+	} else if ($method == 'empty') {
+		return '__empty';
+	} else if ($method == 'echo') {
+		return '__echo';
+	} else if ($method == 'print') {
+		return '__print';
+	} else if ($method == 'exit') {
+		return '__exit';
+	} else if ($method == 'list') {
+		return '__list';
+	} else {
+		return $method;
+	}
+}
+
 //java/lang/Object
 eval(<<<'CODE'
 
 namespace java\lang;
 	
-class Object {
+trait ObjectTrait {
 	public function __construct() {}
 	
 	public function toString() {
@@ -22,22 +61,7 @@ class Object {
 	}
 	
 	public function __call($method, $args) {
-		$fname = $method;
-		if ($method == '<init>') {
-			$fname = '__construct';
-		} else if ($method == 'clone') {
-			$fname = '_clone';
-		} else if ($method == 'empty') {
-			$fname = '__empty';
-		} else if ($method == 'echo') {
-			$fname = '__echo';
-		} else if ($method == 'print') {
-			$fname = '__print';
-		} else if ($method == 'exit') {
-			$fname = '__exit';
-		} else if ($method == 'list') {
-			$fname = '__list';
-		}
+		$fname = fixPhpFuncName($method);
 		if ($fname != $method) {
 			return call_user_func_array([$this, $fname], $args);
 		} else {
@@ -46,22 +70,7 @@ class Object {
 	}
 
 	public static function __callstatic($method, $args) {
-		$fname = $method;
-		if ($method == '<init>') {
-			$fname = '__construct';
-		} else if ($method == 'clone') {
-			$fname = '_clone';
-		} else if ($method == 'empty') {
-			$fname = '__empty';
-		} else if ($method == 'echo') {
-			$fname = '__echo';
-		} else if ($method == 'print') {
-			$fname = '__print';
-		} else if ($method == 'exit') {
-			$fname = '__exit';
-		} else if ($method == 'list') {
-			$fname = '__list';
-		}
+		$fname = fixPhpFuncName($method);
 		if ($fname != $method) {
 			return call_user_func_array([get_class($this), $fname], $args);
 		} else {
@@ -82,7 +91,7 @@ class Object {
 		return $this == $o;
 	}
 }
-
+class Object {use ObjectTrait;}
 
 CODE
 ) !== false or exit;
@@ -97,18 +106,43 @@ class Clazz extends Object {
 	private $name;
 	private $refClass;
 	
+	private $annotations;
+	private $declaredAnnotations;
+	
+	private static $loadedClasses = [];
+	
 	public function __construct($name) {
 		$this->name = "$name";
 		
-		//teste para tipos primitivos
-		if ($name !== strtolower($name)) {
+		//ob_end_flush();
+		//var_dump("$name", isset(self::$loadedClasses["$name"]), class_exists("$name", false));readline();
+		return;
+		
+		//teste para tipos primitivos?
+		if ($name !== strtolower($name) && !isset(self::$loadedClasses["$name"])) {
+			self::$loadedClasses["$name"] = true;
 			$this->getRefClass();
 		}
 	}
 	
 	private function getRefClass() {
+		//Thread::currentThread()->getContextClassLoader()->loadClass($this->name);
+		//var_dump($this->name);
+		//var_dump($this->refClass);
 		if ($this->refClass === null) {
-			$this->refClass = new \ReflectionClass(str_replace('.', '\\', str_replace('$', '_S_', $this->name)));
+			$name = str_replace('.', '\\', str_replace('$', '_S_', $this->name));
+			if (substr($name, 0, 1) == '[') {
+				$this->refClass = new \ReflectionClass('JavaArray');
+			} else {
+				$this->refClass = new \ReflectionClass($name);
+				/*
+				try {
+				} catch (Exception $er) {
+					//println($this->name);
+					//var_dump(file_exists($this->name.'.class'));
+					//exit;
+				}*/
+			}
 		}
 		return $this->refClass;
 	}
@@ -159,11 +193,16 @@ class Clazz extends Object {
 	
 	public function getClassLoader() {
 		try {
-			return $this->getRefClass()
+			$cl = $this->getRefClass()
 						->getProperty('javaClass')
 						->getValue()
-						->getClassLoader();
+						//->getPhpClassName()
+						->getClassLoader()
+						;
+			//var_dump($cl);
+			return $cl;
 		} catch(\Exception $e) {
+			//println($e->getMessage());exit;
 			return null;
 		}
 	}
@@ -179,6 +218,83 @@ class Clazz extends Object {
 			return null;
 		}
 	}
+	
+	public function getClasses() {
+		$members = new \java\util\ArrayList();
+		$current = $this;
+		while ($current != null) {
+			foreach ($current->getDeclaredClasses() as $cls) {
+				$members->add($cls);
+			}
+			$current = $current->getSuperclass();
+		}
+		
+		$returnList = new \JavaArray($members->size(), 'java.lang.Class');
+		return $members->toArray($returnList);
+	}
+	
+	public function getDeclaredClasses() {
+		//DESAFIO ACEITO!!!
+		//$classLoader = $this->getClassLoader();
+		//var_dump($classLoader);exit;
+		//return new \JavaArray(0, 'java.lang.Class');
+		$classes = [];
+		/*
+		foreach(get_declared_classes() as $cls) {
+			$enclosingClass = $this->name.'_S_';
+			if (substr($cls, 0, strlen($enclosingClass)) == $enclosingClass) {
+				$classes[] = $cls;
+			}
+		}*/
+		if (property_exists($this->name, 'javaClass')) {
+			$class_name = $this->name;
+			if (isset($class_name::$javaClass->class_attr['attr']['InnerClasses'])) {
+				foreach ($class_name::$javaClass->class_attr['attr']['InnerClasses'] as $innerClass) {
+					//var_dump($innerClass);exit;
+					if ($innerClass['outer_class_name'] == $this->name) {
+						$classes[] = self::forName($innerClass['inner_class_name']);
+					}
+				}
+			}
+		}
+		$classes = \JavaArray::fromArray($classes, 'java.lang.Class');
+		return $classes;
+	}
+	
+	public function getSuperclass() {
+		$superClass = get_parent_class($this->name);
+		if ($superClass) {
+			return self::forName($superClass);
+		} else {
+			return null;
+		}
+	}
+	
+	public function getComponentType() {
+		//var_dump(substr($this->name, 2, -1));exit;
+		//return self::forName(substr($this->name, 1, -1));
+		if (substr($this->name, 0, 1) != '[') {
+			return null;
+		}
+		$name = substr($this->name, 1);
+		if (substr($name, 0, 1) != '[') {
+			$name = substr($name, 1, -1);
+		}
+		return self::forName($name);
+	}
+	
+	public function getAnnotation($annotationClass) {
+		/*
+		if ($annotationClass === null) {
+			throw new NullPointerException();
+		}
+		$this->initAnnotationsIfNecessary();
+		return $this->annotations->get($annotationClass);
+		*/
+		return null;
+	}
+	
+	private function initAnnotationsIfNecessary() {}
 	
 }
 CODE
@@ -197,12 +313,10 @@ class System extends Object {
 	public static $native_classes = [];
 	
 	public static function currentTimeMillis() {
-		//var_dump((microtime(true) * 1000));
-		//var_dump(intval(microtime(true) * 1000));
 		return intval(microtime(true) * 1000);
 	}
 	
-	public static function identityHashCode(Object $obj) {
+	public static function identityHashCode($obj) {
 		//var_dump($obj);
 		//return spl_object_hash($obj);
 		ob_start(); var_dump($obj); $dump = ob_get_contents(); ob_end_clean();
@@ -212,6 +326,16 @@ class System extends Object {
 			return \base_convert(\substr($hash, 0, 6), 16, 10);
 		}	
 		return 0;
+	}
+	
+	public static function arraycopy($src, $srcPos, $dest, $destPos, $length) {
+		try {
+			for ($i = 0; $i < $length; $i++) {
+				$dest[$destPos + $i] = $src[$srcPos + $i];
+			}
+		} catch (\RuntimeException $e) {
+			throw new \java\lang\Exception('out of bounds');
+		}
 	}
 	
 	public static function loadLibrary($lib) {
@@ -304,6 +428,10 @@ class Scanner extends \java\lang\Object {
 	
 	public function nextLine() {
 		return $this->stream->nextLine();
+	}
+	
+	public function nextInt() {
+		return intval((string) $this->nextLine());
 	}
 	
 	public function hasNextLine() {
@@ -434,7 +562,10 @@ class String extends \java\lang\Object {
 		return $ar;
 	}
 	
-	public function substring($start, $end) {
+	public function substring($start, $end = null) {
+		if ($end === null) {
+			$end = strlen($this->string) - $start;
+		}
 		return new self(substr($this->string, $start, $end - $start));
 	}
 	
@@ -503,11 +634,23 @@ class String extends \java\lang\Object {
         return (int)$h;
 	}
 	
-	public static function valueOf($o) {
-		return new String("$o");
+	public static function format($str, $args) {
+		$args = func_get_args();
+		$args[0] = ''.$args[0];
+		return new self(call_user_func_array('sprintf', $args));
 	}
 	
+	public static function valueOf($o) {
+		return (new String("$o"))->intern();
+	}
+	
+	private static $interned_strings = [];
 	public function intern() {
+		if (isset(self::$interned_strings[$this->string])) {
+			return self::$interned_strings[$this->string];
+		} else {
+			self::$interned_strings[$this->string] = $this;
+		}
 		return $this;
 	}
 	
@@ -534,9 +677,17 @@ class StringBuilder extends \java\lang\Object {
 	public function __construct($string = '') {
 		$this->string = $string;
 	}
-	public function append($s) {
+	public function append($s, $offset = null, $length = null) {
 		//var_dump($s);
-		$this->string .= $s;
+		
+		if ($offset !== null && $length !== null) {
+			for ($i = 0; $i < $length; $i++) {
+				$this->string .= chr($s[$offset + $i]);
+			}
+			return $this;
+		}
+		
+		$this->string .= jstring($s);
 		return $this;
 	}
 	
@@ -601,7 +752,7 @@ eval(<<<'CODE'
 
 namespace java\util;
 	
-class ArrayList extends \java\lang\Object {
+class ArrayList1 extends \java\lang\Object {
 	
 	protected $array;
 	
@@ -656,7 +807,7 @@ class ArrayList extends \java\lang\Object {
 	}
 }
 
-class Arrays extends \java\lang\Object {
+class Arrays1 extends \java\lang\Object {
 	public static function asList($array) {
 		return new ArrayList($array->toArray());
 	}
@@ -670,7 +821,7 @@ eval(<<<'CODE'
 
 namespace java\util;
 	
-class Vector extends ArrayList {
+class Vector1 extends ArrayList1 {
 }
 
 CODE
@@ -702,7 +853,7 @@ eval(<<<'CODE'
 
 namespace java\util;
 	
-class HashMap extends ArrayList {
+class HashMap1 extends ArrayList1 {
 
 	public function put($key, $value) {
 		$key = "$key";
@@ -731,7 +882,7 @@ eval(<<<'CODE'
 
 namespace java\util;
 	
-class HashSet extends ArrayList {
+class HashSet1 extends ArrayList1 {
 	
 	public function __construct($array = []) {
 		parent::__construct($array);
@@ -752,7 +903,7 @@ eval(<<<'CODE'
 
 namespace java\util;
 	
-class HashIterator extends \ArrayIterator {
+class HashIterator1 extends \ArrayIterator {
 	
 	
 	public function next() {
@@ -774,7 +925,7 @@ eval(<<<'CODE'
 
 namespace java\util;
 	
-class Hashtable extends HashMap {
+class Hashtable1 extends HashMap1 {
 	
 }
 CODE
@@ -785,7 +936,7 @@ eval(<<<'CODE'
 
 namespace java\util;
 	
-class WeakHashMap extends HashMap {
+class WeakHashMap1 extends HashMap1 {
 	
 }
 CODE
@@ -796,7 +947,7 @@ eval(<<<'CODE'
 
 namespace java\util;
 	
-class Properties extends Hashtable {
+class Properties1 extends Hashtable1 {
 	public function setProperty($key, $value) {
 		return $this->put($key, $value);
 	}
@@ -850,7 +1001,12 @@ class Number extends Object {
 	
 	protected $v;
 	
-	public function __construct($v) {
+	public function __construct($v = null) {
+		if ($v === null) {
+			var_dump("Number parser error!");
+			var_dump($this);
+			exit;
+		}
 		if (!is_numeric("$v")) {
 			throw new \java\lang\NumberFormatException("For input string: \"$v\"");
 		}
@@ -871,6 +1027,10 @@ class Number extends Object {
 	
 	public function floatValue() {
 		return $this->doubleValue();
+	}
+	
+	public static function toHexString($n) {
+		return \jstring(\dechex($n));
 	}
 	
 	public function toString($i = null) {
@@ -898,6 +1058,8 @@ namespace java\lang;
 	
 class Integer extends Number {
 	
+	const MAX_VALUE = 0x7fffffff;
+	
 	public static $TYPE;
 
 	public static function parseInt($in) {
@@ -909,6 +1071,40 @@ class Integer extends Number {
 	}
 }
 Integer::$TYPE = Clazz::getPrimitiveClass('int');
+
+CODE
+) !== false or exit;
+
+//java/util/concurrent/atomic/AtomicInteger
+eval(<<<'CODE'
+
+namespace java\util\concurrent\atomic;
+	
+class AtomicInteger extends \java\lang\Number {
+
+	public function __construct($v = 0) {
+		parent::__construct($v);
+	}
+
+	public function get() {
+		return $this->v;
+	}
+	
+	public function set($v) {
+		if (!is_numeric("$v")) {
+			throw new \java\lang\NumberFormatException("For input string: \"$v\"");
+		}
+		$this->v = +"$v";
+	}
+
+	public static function parseInt($in) {
+		return intval($in.'');
+	}
+
+	public static function valueOf($v) {
+		return new self($v);
+	}
+}
 
 CODE
 ) !== false or exit;
@@ -972,6 +1168,10 @@ class Float extends Number {
 	
 	public static function valueOf($v) {
 		return new self($v);
+	}
+	
+	public static function isNaN($f) {
+		return false;//WTF?
 	}
 }
 Float::$TYPE = Clazz::getPrimitiveClass('float');
@@ -1066,9 +1266,28 @@ namespace java\lang;
 	
 //class Exception extends \Exception {}
 class Throwable extends \Exception {
-	public function __construct($message = '', $code = 0, Exception $previous = NULL) {
+	use ObjectTrait;
+	
+	public function __construct($message = '', $code = 0, $previous = NULL) {
 		parent::__construct($message, $code, $previous);
 		$this->message = new \java\lang\String($message);
+	}
+	
+	public function printStackTrace($outstream = null) {
+		if ($outstream === null) {
+			$outstream = System::$out;
+		}
+		$outstream->println($this->getTraceAsString());
+	}
+	
+	public function getLocalizedMessage() {
+		return $this->getMessage();
+	}
+	
+	public function toString() {
+		$s = $this->getClass()->getName();
+		$message = $this->getLocalizedMessage();
+		return $message != null ? jstring("$s: $message") : $s;
 	}
 }
 
@@ -1151,6 +1370,612 @@ class Thread extends Object {
 CODE
 ) !== false or exit;
 
+//java/lang/ThreadLocal
+eval(<<<'CODE'
+
+namespace java\lang;
+	
+class ThreadLocal extends \java\lang\Object {
+	private $value = [];
+	
+	public function get() {
+		return $this->value[Thread::currentThread()->getId()];
+	}
+	
+	public function set($value) {
+		$this->value[Thread::currentThread()->getId()] = $value;
+	}
+}
+
+CODE
+) !== false or exit;
+
+
+//java/io/FileInputStream
+eval(<<<'CODE'
+
+namespace java\io;
+	
+class FileInputStream extends \java\lang\Object {
+	
+	private $file;
+	private $stream;
+	
+	public function __construct($file) {
+		$this->file = fopen($file, 'rb');
+		$this->stream = new \DataInputStream($this->file);
+	}
+	
+	public function read($b = null, $off = null, $len = null) {
+		if ($b === null) {
+			return $this->readByte();
+		} else {
+			$this->readFully($b, $off, $len);
+			return $len;
+		}
+	}
+	
+	public function readByte() {
+		return $this->stream->readByte();
+	}
+	
+	public function peek() {
+		return $this->peekByte();
+	}
+	
+	public function peekByte() {
+		$b = $this->readByte();
+		$this->stream->skipBytes(-1);
+		return $b;
+	}
+	
+	public function readShort() {
+		//return $this->stream->readShort();
+        $ch1 = $this->stream->readByte();
+        $ch2 = $this->stream->readByte();
+        if (($ch1 | $ch2) < 0) {
+            throw new EOFException();
+		}
+        return (($ch1 << 8) + ($ch2 << 0));
+	}
+	
+	public function readUnsignedShort() {
+		//var_dump('readUnsignedShort');
+		//var_dump(decbin($this->readShort()));
+		//var_dump(decbin(27));
+		//exit;
+		return $this->readShort();
+	}
+	
+	public function readUTF() {
+		//return $this->stream->readUTF();
+		//$len = $this->stream->readInt();
+		$len = $this->readShort();
+		if ($len > 100) {
+			println("(e".($len & 0xFFFF).")");
+			$len = $this->readShort();
+		}
+		println("($len)");
+		if ($len == 0) {return '';}
+		return utf8_decode($this->stream->readChar($len));
+	}
+	
+	public function readLongUTF() {
+		$len = $this->stream->readLong();
+		if ($len == 0) {return '';}
+		return utf8_decode($this->stream->readChar($len));
+	}
+	
+	public function readFully(\SplFixedArray $ar, $offset, $length) {
+		for ($i = 0; $i < $length; $i++) {
+			$ar[$offset + $i] = $this->readByte();
+		}
+	}
+	
+	public function close() {
+		$this->file = null;
+	}
+}
+
+CODE
+) !== false or exit;
+
+//java/io/DataInputStream
+eval(<<<'CODE'
+
+namespace java\io;
+	
+class DataInputStream extends \java\lang\Object {
+	
+	private $input;
+	
+	public function __construct($input) {
+		$this->input = $input;
+	}
+	
+	public function readUnsignedShort() {
+		$ch1 = $this->input->read();
+        $ch2 = $this->input->read();
+        //var_dump("DataInputStream::readUnsignedShort");var_dump($ch1, $ch2);readline();
+        if (($ch1 | $ch2) < 0) {
+			//var_dump("?EOFException");
+			//var_dump($ch1, $ch2);
+			//var_dump("exit");
+			//exit;
+			throw new EOFException();
+		}
+        return ($ch1 << 8) + ($ch2 << 0);
+	}
+}
+
+CODE
+) !== false or exit;
+
+//java/io/ObjectInputStream
+eval(<<<'CODE'
+
+namespace java\io;
+	
+class ObjectInputStream extends \java\lang\Object {
+	
+	const STREAM_MAGIC = 0xACED;
+	const STREAM_VERSION = 5;
+	
+	const TC_STRING = 0x74;
+	const TC_LONGSTRING = 0x7c;
+	const TC_OBJECT = 0x73;
+	
+	const TC_NULL = 0x70;
+	const TC_REFERENCE = 0x71;
+	const TC_PROXYCLASSDESC = 0x7d;
+	const TC_CLASSDESC = 0x72;
+	
+	const NULL_HANDLE = -1;
+	
+	private $input;
+	
+	private $bin;
+	
+	public $defaultDataEnd = false;
+	
+	private $passHandle;
+	
+	const baseWireHandle = 0x7e0000;
+	
+	public function __construct($input) {
+		$this->passHandle = self::NULL_HANDLE;
+		$this->input = $input;
+		$this->bin = new ObjectInputStream_S_BlockInputStream($this, $input);
+		$this->readStreamHeader();
+		$this->bin->setBlockDataMode(true);
+	}
+	
+	private function readStreamHeader() {
+		$s0 = $this->input->readShort();
+		$s1 = $this->input->readShort();
+		if ($s0 !== self::STREAM_MAGIC || $s1 !== self::STREAM_VERSION) {
+			throw new StreamCorruptedException(
+			\java\lang\String::format("invalid stream header: %04X%04X", $s0, $s1));
+		}
+	}
+	
+	public function readObject() {
+		//return null;
+		
+		$tc = $this->input->peekByte();
+		
+		switch ($tc) {
+			case self::TC_STRING:
+			case self::TC_LONGSTRING:
+				return $this->readString();
+			case self::TC_OBJECT:
+				return $this->readOrdinaryObject();
+			default:
+				throw new StreamCorruptedException(
+				\java\lang\String::format("invalid type code: %02X", $tc));
+		}
+	}
+	
+	public function readOrdinaryObject() {
+		if ($this->input->readByte() != self::TC_OBJECT) {
+			throw new \java\lang\InternalError();
+		}
+		$desc = $this->readClassDesc();
+		$desc->checkDeserialize();
+	}
+	
+	private function readClassDesc() {
+		$tc = $this->input->peekByte();
+		switch ($tc) {
+			case self::TC_NULL:
+				return $this->readNull();
+
+			case self::TC_REFERENCE:
+				return $this->readHandle();
+
+			case self::TC_PROXYCLASSDESC:
+				return $this->readProxyDesc();
+
+			case self::TC_CLASSDESC:
+				return $this->readNonProxyDesc();
+			
+			default:
+				throw new StreamCorruptedException(
+					\java\lang\String::format("invalid type code: %02X", $tc));
+		}
+	}
+	
+	public function readNull() {
+		if ($this->input->readByte() != self::TC_NULL) {
+			throw new \java\lang\InternalError();
+		}
+		$this->passHandle = self::NULL_HANDLE;
+		return null;
+	}
+	
+	public function readHandle() {
+		if ($this->input->readByte() != self::TC_REFERENCE) {
+			throw new \java\lang\InternalError();
+		}
+		$this->passHandle = $this->input->readInt() - self::baseWireHandle;
+		
+		if ($this->passHandle < 0 || $this->passHandle >= $this->handles->size()) {
+			throw new StreamCorruptedException(
+				\java\lang\String::format("invalid handle value: %08X", $this->passHandle + 
+				self::baseWireHandle));
+		}
+	}
+	
+	public function readUTF() {
+		//return new \java\lang\String($this->input->readUTF());
+		//return $this->readObject();
+		//var_dump("ObjectInputStream::readUTF");readline();
+		return $this->bin->readUTF();
+	}
+	
+	private function readString() {
+		$tc = $this->input->readByte();
+		
+		switch ($tc) {
+			case self::TC_STRING:
+				$str = $this->input->readUTF();
+				break;
+			
+			case self::TC_LONGSTRING:
+				$str = $this->input->readLongUTF();
+				break;
+			
+			default:
+				throw new StreamCorruptedException(
+					\java\lang\String::format("invalid type code: %02X", $tc));
+		}
+		
+		return new \java\lang\String($str);
+	}
+	
+	public function close() {
+		$this->input->close();
+	}
+}
+
+CODE
+) !== false or exit;
+
+//java/io/ObjectInputStream$BlockInputStream
+eval(<<<'CODE'
+
+namespace java\io;
+	
+class ObjectInputStream_S_BlockInputStream extends \java\lang\Object {
+	
+	private $this0;
+	
+	const MAX_BLOCK_SIZE = 1024;
+	const CHAR_BUF_SIZE = 256;
+	const MAX_HEADER_SIZE = 5;
+	
+	const HEADER_BLOCKED = -2;
+	
+	const TC_BASE = 0x70;
+	const TC_BLOCKDATA = 0x77;
+	const TC_RESET = 0x79;
+	const TC_MAX = 0x7E;
+	const TC_BLOCKDATALONG = 0x7A;
+	
+	private $input;
+	private $din;
+	
+	private $blockDataMode = false;
+	
+	private $pos = 0;
+	private $end = 0;
+	private $unread = 0;
+	
+	private $buf = [];
+	private $hbuf = [];
+	private $cbuf = [];
+	
+	public function __construct($this0, $input) {
+		$this->this0 = $this0;
+		
+		$this->buf = new \SplFixedArray(self::MAX_BLOCK_SIZE);
+		
+		$this->hbuf = new \SplFixedArray(self::MAX_HEADER_SIZE);
+		$this->cbuf = new \SplFixedArray(self::MAX_BLOCK_SIZE);
+		
+		$this->input = $input;
+		$this->din = new DataInputStream($this);
+	}
+	
+	public function setBlockDataMode($mode) {
+		if ($this->blockDataMode == $mode) {
+			return $mode;
+		}
+		
+		if ($mode) {
+			$this->pos = 0;
+			$this->end = 0;
+			$this->unread = 0;
+		} else if ($this->pos < $this->end) {
+			throw new \java\lang\IllegalStateException(jstring("unread block data"));
+		}
+		
+		$this->blockDataMode = $mode;
+		return !$mode;
+	}
+	
+	public function getBlockDataMode() {
+		return $this->blockDataMode;
+	}
+	
+	public function read() {
+		if ($this->blockDataMode) {
+			if ($this->pos == $this->end) {
+				$this->refill();
+			}
+			//var_dump('$this->end', $this->end, $this->pos, $this->buf[$this->pos++]);
+			return ($this->end >= 0) ? ($this->buf[$this->pos++] & 0xFF) : -1;
+		} else {
+			return $this->input->read();
+	    }
+	}
+	
+	private function refill() {
+		try {
+			do {
+				$this->pos = 0;
+				if ($this->unread > 0) {
+					$n = $this->input->read($this->buf, 0, \java\lang\Math::min($this->unread, self::MAX_BLOCK_SIZE));
+					if ($n >= 0) {
+						$this->end = $n;
+						$this->unread -= $n;
+					} else {
+						throw new StreamCorruptedException(jstring("unexpected EOF in middle of data block"));
+					}
+				} else {
+					$n = $this->readBlockHeader(true);
+					if ($n >= 0) {
+						$this->end = 0;
+						$this->unread = $n;
+					} else {
+						$this->end = -1;
+						$this->unread = 0;
+					}
+				}
+			} while ($this->pos == $this->end);
+		} catch (IOException $ex) {
+			$this->pos = 0;
+			$this->end = -1;
+			$this->unread = 0;
+			throw $ex;
+		}
+	}
+	
+	private function readBlockHeader($canBlock) {
+		if ($this->this0->defaultDataEnd) {
+			return -1;
+		}
+	    try {
+			for (;;) {
+				$avail = $canBlock ? \java\lang\Integer::MAX_VALUE : $this->input->available();
+				if ($avail == 0) {
+					return self::HEADER_BLOCKED;
+				}
+				
+				$tc = $this->input->peek();
+				switch ($tc) {
+					case self::TC_BLOCKDATA:
+						if ($avail < 2) {
+							return self::HEADER_BLOCKED;
+						}
+						$this->input->readFully($this->hbuf, 0, 2);
+						return $this->hbuf[1] & 0xFF;
+						
+					case self::TC_BLOCKDATALONG:
+						if ($avail < 5) {
+							return self::HEADER_BLOCKED;
+						}
+						$this->input->readFully($this->hbuf, 0, 5);
+						$len = Bits::getInt($this->hbuf, 1);
+						if ($len < 0) {
+							throw new StreamCorruptedException(
+								jstring("illegal block data header length: " . $len));
+						}
+						return $len;
+
+					/*
+					 * TC_RESETs may occur in between data blocks.
+					 * Unfortunately, this case must be parsed at a lower
+					 * level than other typecodes, since primitive data
+					 * reads may span data blocks separated by a TC_RESET.
+					 */
+					case self::TC_RESET:
+						$this->input->read();
+						$this->this0->handleReset();
+						break;
+
+					default:
+						if ($tc >= 0 && ($tc < self::TC_BASE || $tc > self::TC_MAX)) {
+						throw new StreamCorruptedException(
+							\java\lang\String::format("invalid type code: %02X", $tc));
+						}
+						return -1;
+				}
+			}
+	    } catch (EOFException $ex) {
+			throw new StreamCorruptedException(jstring("unexpected EOF while reading block data header"));
+	    }
+	}
+	
+	public function readUTF() {
+		//return readUTFBody(readUnsignedShort());
+		
+		//var_dump("BlockInputStream::readUTF");readline();
+		$len = $this->readUnsignedShort();
+		//var_dump($len); exit;
+		if ($len === 0) { return jstring('');}
+		return $this->readUTFBody($len);
+	}
+	
+	private function readUTFBody($len) {
+		$sb = new \java\lang\StringBuilder();
+		
+		if (!$this->blockDataMode) {
+			$this->end = $this->pos = 0;
+		}
+		
+		while ($len > 0) {
+			$avail = $this->end - $this->pos;
+			
+			if ($avail >= 3 || $avail == $len) {
+				$len -= $this->readUTFSpan($sb, $len);
+			} else {
+				if ($this->blockDataMode) {
+					$len -= $this->readUTFSpan($sb, $len);
+				} else {
+				
+					if (avail > 0) {
+						\java\lang\System::arraycopy($this->buf, $this->pos, $this->buf, 0, $avail);
+					}
+					$this->pos = 0;
+					$this->end = \java\lang\Math::min(self::MAX_BLOCK_SIZE, $length);
+					
+					$this->input->readFully($this->buf, $avail, $this->end - $avail);
+				}
+			}
+		}
+		
+		return $sb->toString();
+	}
+	
+	private function readUTFSpan($stringBuilder, $length) {
+		$cpos = 0;
+		$start = $this->pos;
+		$avail = min($this->end - $this->pos, self::CHAR_BUF_SIZE);
+		
+		$stop = $this->pos + (($length > $avail) ? $avail - 2 : $length);
+		
+		$outOfBounds = false;
+		
+		try {
+			while ($this->pos < $stop) {
+				$b1 = $this->buf[$this->pos++] & 0xFF;
+				switch ($b1 >> 4) {
+					case 0:
+					case 1:
+					case 2:
+					case 3:
+					case 4:
+					case 5:
+					case 6:
+					case 7:	  // 1 byte format: 0xxxxxxx
+						$this->cbuf[$cpos++] = $b1;
+						break;
+
+					case 12:
+					case 13:  // 2 byte format: 110xxxxx 10xxxxxx
+						$b2 = $this->buf[$this->pos++];
+						if (($b2 & 0xC0) != 0x80) {
+							throw new UTFDataFormatException();
+						}
+						$this->cbuf[$cpos++] = ((($b1 & 0x1F) << 6) | 
+								   (($b2 & 0x3F) << 0));
+						break;
+
+					case 14:  // 3 byte format: 1110xxxx 10xxxxxx 10xxxxxx
+						$b3 = $this->buf[$this->pos + 1];
+						$b2 = $this->buf[$this->pos + 0];
+						$this->pos += 2;
+						if (($b2 & 0xC0) != 0x80 || ($b3 & 0xC0) != 0x80) {
+							throw new UTFDataFormatException();
+						}
+						$this->cbuf[$cpos++] = ((($b1 & 0x0F) << 12) | 
+								   (($b2 & 0x3F) << 6) | 
+								   (($b3 & 0x3F) << 0));
+						break;
+
+					default:  // 10xx xxxx, 1111 xxxx
+						throw new UTFDataFormatException();
+				}
+			}
+		} catch (\RuntimeException $e) {
+			$outOfBounds = true;
+		} finally {
+			if ($outOfBounds || ($this->pos - $start) > $length) {
+				/*
+				 * Fix for 4450867: if a malformed utf char causes the
+				 * conversion loop to scan past the expected end of the utf
+				 * string, only consume the expected number of utf bytes.
+				 */
+				$this->pos = $start + $length;
+				throw new UTFDataFormatException();
+			}
+		}
+		$stringBuilder->append($this->cbuf, 0, $cpos);
+		//var_dump($stringBuilder); exit;
+		return $this->pos - $start;
+	}
+	
+	private function readUnsignedShort() {
+		if (!$this->blockDataMode) {
+			$this->pos = 0;
+			$this->input->readFully($this->buf, 0, 2);
+		} else if ($this->end - $this->pos < 2) {
+			//var_dump("ObjectInputStream::readUnsignedShort");readline();
+			return $this->din->readUnsignedShort();
+		}
+		$v = Bits::getShort($this->buf, $this->pos);
+		$this->pos += 2;
+		return $v;
+	}
+}
+
+CODE
+) !== false or exit;
+
+//java/io/Bits
+eval(<<<'CODE'
+
+namespace java\io;
+	
+class Bits extends \java\lang\Object {
+	
+	public static function getShort(\SplFixedArray $b, $off) {
+		return ((($b[$off + 1] & 0xFF) << 0) + 
+				(($b[$off + 0]) << 8));
+	}
+	
+	public static function getInt(\SplFixedArray $b, $off) {
+		return (($b[$off + 3] & 0xFF) << 0) +
+			   (($b[$off + 2] & 0xFF) << 8) +
+			   (($b[$off + 1] & 0xFF) << 16) +
+			   (($b[$off + 0]) << 24);
+	}
+}
+
+CODE
+) !== false or exit;
+
 //java/sql/DriverManager
 eval(<<<'CODE'
 
@@ -1173,10 +1998,25 @@ class DriverManager extends \java\lang\Object {
 		}
 	}
 	
-	public static function getConnection(/*String*/ $url, /*Properties or String user*/ $info, /*String*/ $password) {
+	public static function getConnection(/*String*/ $url, /*Properties or String user*/ $info = null, /*String*/ $password = null) {
 		
-		if (false && !$info instanceof \java\util\Properties) {
-			
+		if ($info === null) {
+			if (class_exists('java\util\Properties', false) == false) {
+				eval(<<<'EVAL'
+					namespace java\util;
+					
+					class Properties extends HashMap {
+						public function getProperty($name) {
+							return $this->get($name);
+						}
+						public function setProperty($name, $value) {
+							$this->put($name, $value);
+						}
+					}
+EVAL
+) !== false or exit;
+			}
+			$info = new \java\util\Properties();
 		}
 		return self::getDriver($url)->connect($url, $info);
 	}

@@ -43,7 +43,7 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 	
 	private $classpath = [];
 	
-	private $debug_log = false;
+	private $debug_log = true;
 	
 	public function __construct() {
 		$this->addClasspath(dirname(__FILE__));
@@ -62,7 +62,11 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 		if (!$path || !realpath($path)) {
 			throw new \Exception('Path not found');
 		}
-		$this->classpath[] = realpath($path).'/';
+		if (is_file($path) && substr($path, -4) == '.jar') {
+			$this->addJarClassPath(realpath($path));
+		} else {
+			$this->classpath[] = realpath($path).'/';
+		}
 	}
 	
 	public function addJarClasspath($jarPath) {
@@ -94,60 +98,39 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 	public function loadClass($className) {
 		$className = "$className";
 		//var_dump(['autoload', $className]);
-		if (class_exists($className, false)) {
+		if (class_exists(str_replace('.', '\\', str_replace('$', '_S_', $className)), false)) {
 			return \java\lang\Clazz::forName($className);
 		}
 		//debug_print_backtrace();
 		
 		//var_dump(self::$classpath);exit;
 		foreach ($this->classpath as $path) {
+			/*
 			$filenameSrc = ($path.str_replace('\\', '/', $className).'.java');
 			if (file_exists($filenameSrc)) {
 				//$this->compileJavaFile($filenameSrc);
-			}
+			}*/
 			
-			$filename = ($path.str_replace('\\', '/', $className).'.class');
+			$filename = ($path.str_replace('.', '/', $className).'.class');
+			if ($this->debug_log) { echo "<loading $className ...>".PHP_EOL; }
 			if ($this->readClassFile($filename)) {
-				if ($this->debug_log) {
-					echo "<loading $className>".PHP_EOL;
-				}
-				if (!class_exists($className)) {
-					echo 'class loader error!';
+				if ($this->debug_log) { echo "<$className ok>".PHP_EOL; }
+				$classNamePhp = str_replace('.', '\\', str_replace('$', '_S_', $className));
+				if (!class_exists($classNamePhp) && !interface_exists($classNamePhp)) {
+					echo 'class loader error! (class not loaded? "'.$classNamePhp.'")'.PHP_EOL;
 					exit;
 				}
-				$className::$javaClass->setClassLoader($this);
+				//var_dump($classNamePhp, $className);
+				if (interface_exists($classNamePhp)) {
+					$classNamePhp .= '_interface';
+				}
+				$classNamePhp::$javaClass->setClassLoader($this);
 				//\java\lang\Clazz::setClassLoader($className, $this);
 				return \java\lang\Clazz::forName($className);
 			}
-		}
-		return;
-		if (file_exists('rt.jar')) {
-			/*
-			$zip = new ZipArchive; 
-			$zip->open('rt.jar', ZIPARCHIVE::CHECKCONS); 
-			$file = $zip->getFromName(str_replace('\\', '/', $className.'.class'));
-			var_dump(strlen($file));
-			*/
-			try {
-				$filename = 'zip://' . dirname(__FILE__) . '/rt.jar#'.str_replace('\\', '/', str_replace('_S_', '$', $className).'.class');
-				if (file_exists($filename)) {
-					$fp = fopen($filename, 'rb');
-					echo "<loading rt.jar $className>".PHP_EOL;readline();
-					$javaClass = new php_javaClass();
-					$javaClass->readClass($fp);
-					return;
-				}
-			} catch (\Exception $e) {
-				var_dump($className);
-				var_dump($e->getMessage());
-				echo($e->getTraceAsString());
-				//debug_print_backtrace();
-			}
-			//var_dump(strlen(stream_get_contents($fp)));
-			//var_dump(class_exists($className));
-			//exit;
+			if ($this->debug_log) { echo "<$className not found>".PHP_EOL; }
 		}
 	}
 }
 
-class_alias('\sun\misc\Launcher_S_AppClassLoader', '\sun\misc\Launcher$AppClassLoader');
+class_alias('sun\misc\Launcher_S_AppClassLoader', 'sun\misc\Launcher$AppClassLoader');

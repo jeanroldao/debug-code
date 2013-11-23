@@ -1,13 +1,15 @@
 <?php
 
 trait JavaInterpreter {
-	private function interpreter(&$i, $opcode, &$stack, &$locals, $method) {
+	private function interpret(&$i, $opcode, &$stack, &$locals, $method) {
 		//var_dump([$i, $opcode, $stack]);
 		//var_dump($stack);readline();
 		//var_dump([$locals, $stack, $opcode, $method, $i]);readline();
 		//var_dump([$locals, $stack, $opcode, $i]);
-		if ('java/lang/Enum::valueOf' == $method) {
-			//var_dump([$locals, $stack, $opcode, $i]);readline();
+		//var_dump($method);
+		if ('Teste22$1::<clinit>' == $method) {
+			//var_dump(['$locals' => $locals, '$stack' =>$stack, '$opcode' => $opcode, '$i' =>$i]);
+			//readline();
 			//var_dump([$opcode, $stack, $i]);readline();
 		}
 		$stack = array_values($stack);
@@ -15,19 +17,21 @@ trait JavaInterpreter {
 			case 'aaload':
 				$args = $this->stackArrayPop($stack, 2);
 				if (!array_key_exists($args[1], $args[0])) {
+					//var_dump($args[1], $args[0], $method, $i);readline();
 					throw new \java\lang\Exception('out of bounds');
 				}
-				$stack[] = &$args[0][$args[1]];
+				$stack[] = $args[0][$args[1]];
 				break;
 			case 'aastore':
 				$args = $this->stackArrayPop($stack, 3);
 				if (!array_key_exists($args[1], $args[0])) {
+					var_dump($args[1], $args[0]);readline();
 					throw new \java\lang\Exception('out of bounds');
 				}
 				$args[0][$args[1]] = $args[2];
 				break;
 			case 'arraylength':
-				$stack[] = count(array_pop($stack));
+				$stack[] = array_pop($stack)->getSize();
 				break;
 			case 'bipush':
 				$stack[] = $opcode[2];
@@ -38,7 +42,7 @@ trait JavaInterpreter {
 			case 'aload_1':
 			case 'aload_2':
 			case 'aload_3':
-				$stack[] = &$locals[explode('_', $opcode[1])[1]];
+				$stack[] = $locals[explode('_', $opcode[1])[1]];
 				break;
 			case 'iaload':
 			case 'laload':
@@ -112,9 +116,10 @@ trait JavaInterpreter {
 				eval("\$stack[] = &$class::$var;");
 				*/
 				
-				$class = str_replace('/', '\\', $opcode[2]['class']);
+				$class = str_replace('$', '_S_', str_replace('/', '\\', $opcode[2]['class']));
 				$refClass = new ReflectionClass($class);
-				$property = $refClass->getProperty($opcode[2]['field']);
+				$var = str_replace('$', '_S_', $opcode[2]['field']);
+				$property = $refClass->getProperty($var);
 				$stack[] = $property->getValue();
 				break;
 			case 'putstatic':
@@ -122,7 +127,7 @@ trait JavaInterpreter {
 				$class = str_replace('$', '_S_', str_replace('/', '\\', $opcode[2]['class']));
 				$var = '$'.str_replace('$', '_S_', $opcode[2]['field']);
 				$args = $this->stackArrayPop($stack, 1);
-				eval("$class::$var = &\$args[0];");
+				eval("$class::$var = \$args[0];");
 				break;
 				
 				/*
@@ -136,14 +141,22 @@ trait JavaInterpreter {
 			case 'getfield':
 				$var = $opcode[2]['field'];
 				//$args = $this->stackArrayPop($stack, 1);
-				$stack[] = &array_pop($stack)->$var;
+				//$stack[] = array_pop($stack)->$var;
+				$obj = array_pop($stack);
+				if (!is_object($obj)) {
+					var_dump($obj);
+					var_dump($var);
+					var_dump(['$method' => $method, '$opcode' => $opcode, '$i' =>$i]);
+					readline();
+				}
+				$stack[] = $obj->$var;
 				break;
 			case 'putfield':
 				//$class = str_replace('/', '\\', $opcode[2]['class']);
 				$var = $opcode[2]['field'];
 				$args = $this->stackArrayPop($stack, 2);
 				//var_dump($args, $var, $method);readline();
-				$args[0]->$var = &$args[1];
+				$args[0]->$var = $args[1];
 				break;
 			case 'goto':
 				$i += $opcode[2];
@@ -169,10 +182,22 @@ trait JavaInterpreter {
 			case 'fconst_0':
 			case 'fconst_1':
 			case 'fconst_2':
-				$stack[] = (explode('_', $opcode[1])[1]);
+			case 'dconst_0':
+			case 'dconst_1':
+			case 'dconst_2':
+				$stack[] = +(explode('_', $opcode[1])[1]);
 				break;
-			//case 'instanceof':
-				break;
+			case 'tableswitch':
+			case 'lookupswitch':
+				
+				$offset = array_pop($stack);
+				$jump = $opcode[2]['default'];
+				
+				if (isset($opcode[2][$offset])) {
+					$jump = $opcode[2][$offset];
+				}
+				$i += $jump;
+				return;
 			case 'ifnull':
 				if (array_pop($stack) === null) {
 					$i += $opcode[2];
@@ -268,16 +293,30 @@ trait JavaInterpreter {
 					return;
 				}
 				break;
+			case 'fcmpl':
 			case 'dcmpl':
 				list($v1, $v2) = $this->stackArrayPop($stack, 2);
 				//var_dump($v1, $v2, "$v1" == "$v2");
 				if ("$v1" === "$v2") {
 					$stack[] = 0;
 				} else if ($v1 < $v2) {
-					$stack[] = 1;
-				} else {
 					$stack[] = -1;
+				} else {
+					$stack[] = 1;
 				}
+				break;
+			case 'fcmpg':
+			case 'dcmpg':
+				list($v1, $v2) = $this->stackArrayPop($stack, 2);
+				//var_dump($v1, $v2, "$v1" == "$v2");
+				if ("$v1" === "$v2") {
+					$stack[] = 0;
+				} else if ($v1 < $v2) {
+					$stack[] = -1;
+				} else {
+					$stack[] = 1;
+				}
+				//var_dump($method, "$v1 === $v2", $stack);readline();
 				break;
 			case 'fcmp':
 			case 'dcmp':
@@ -321,6 +360,7 @@ trait JavaInterpreter {
 				}
 				$stack[] = $n1 / $n2;
 				break;
+			case 'fmul':
 			case 'dmul':
 			case 'imul':
 			case 'lmul':
@@ -334,11 +374,27 @@ trait JavaInterpreter {
 				}
 				$stack[] = $n1 % $n2;
 				break;
-			//case 'irem':
+			case 'iand':
+				list($n1, $n2) = $this->stackArrayPop($stack, 2);
+				$stack[] = $n1 & $n2;
+				break;
+			case 'ixor':
+				list($n1, $n2) = $this->stackArrayPop($stack, 2);
+				$stack[] = $n1 xor $n2;
 				break;
 			case 'lneg':
 			case 'ineg':
 				$stack[] = -array_pop($stack);
+				break;
+			case 'ishl':
+			//case 'lshl':
+				list($n1, $n2) = $this->stackArrayPop($stack, 2);
+				$stack[] = $n1 << $n2;
+				break;
+			case 'ishr':
+			case 'lshr':
+				list($n1, $n2) = $this->stackArrayPop($stack, 2);
+				$stack[] = $n1 >> $n2;
 				break;
 			case 'lushr':
 			case 'iushr':
@@ -357,9 +413,7 @@ trait JavaInterpreter {
 			case 'invokespecial':
 				//var_dump([$stack, $opcode, $i]);
 				//ReflectionMethod
-				if ($opcode[2]['method'] == '<init>') {
-					$opcode[2]['method'] = '__construct';
-				}
+				$opcode[2]['method'] = fixPhpFuncName($opcode[2]['method']);
 				$numArgs = 1 + count($opcode[2]['args']);
 				$args = $this->stackArrayPop($stack, $numArgs);
 				$obj = array_shift($args);
@@ -399,9 +453,10 @@ trait JavaInterpreter {
 				//var_dump($locals);
 				$args = $this->stackArrayPop($stack, $numArgs);
 				$obj = array_shift($args);
-				if (!is_object($obj)) {
-					var_dump([$method, $i, $obj, $args, $stack, $opcode[2]['method'], 'need object']);
-					exit;
+				if ($obj == null) {
+					throw new \java\lang\NullPointerException();
+					//var_dump([$method, $i, $obj, $args, $stack, $opcode[2]['method'], 'need object']);
+					//exit;
 				}
 				//if ($args[0] == 35) {var_dump($i, $opcode, $args);exit;}
 				foreach ($opcode[2]['args'] as $iArg => $arg) {
@@ -425,7 +480,7 @@ trait JavaInterpreter {
 			case 'astore_3':
 				$args = $this->stackArrayPop($stack, 1);
 				unset($locals[explode('_', $opcode[1])[1]]);
-				$locals[explode('_', $opcode[1])[1]] = &$args[0];
+				$locals[explode('_', $opcode[1])[1]] = $args[0];
 				break;
 			case 'istore':
 			case 'lstore':
@@ -443,11 +498,11 @@ trait JavaInterpreter {
 			case 'dstore_0':
 			case 'dstore_1':
 			case 'dstore_2':
-			case 'dstore_4':
+			case 'dstore_3':
 			case 'fstore_0':
 			case 'fstore_1':
 			case 'fstore_2':
-			case 'fstore_4':
+			case 'fstore_3':
 				//$locals[explode('_', $opcode[1])[1]] = array_pop($stack);
 				unset($locals[explode('_', $opcode[1])[1]]);
 				list($locals[explode('_', $opcode[1])[1]]) 
@@ -465,8 +520,9 @@ trait JavaInterpreter {
 				break;
 			case 'anewarray':
 				//var_dump($i, $stack);readline();
+				//var_dump($opcode[2]);readline();
 				$args = $this->stackArrayPop($stack, 1);
-				$stack[] = $this->newArray(null, [$args[0]]);
+				$stack[] = $this->newArray(null, [$args[0]], $opcode[2]);
 				break;
 			case 'newarray':
 				$args = $this->stackArrayPop($stack, 1);
@@ -483,9 +539,17 @@ trait JavaInterpreter {
 				$class = str_replace('/', '\\', $opcode[2]);
 				
 				$reflect = new ReflectionClass($class);
-				$stack[] = $reflect->newInstanceWithoutConstructor();
+				
+				if (is_a($class, 'Exception', true)) {
+					$stack[] = $reflect->newInstance();
+				} else {
+					$stack[] = $reflect->newInstanceWithoutConstructor();
+				}
 				//var_dump($reflect);exit;
 				break;
+			//case 'pop2':
+				//unset($stack[count($stack)-1]);
+				//var_dump($stack);exit;
 			case 'pop':
 				//array_pop($stack);
 				unset($stack[count($stack)-1]);
@@ -519,13 +583,13 @@ trait JavaInterpreter {
 			//case 'monitorexit':
 				break;
 			case 'instanceof':
-				$class = '\\'.str_replace('/', '\\', $opcode[2]);
-				$stack[] = is_a(array_pop($stack), $class);
+				$class = str_replace('/', '\\', $opcode[2]);
+				$stack[] = checkcast(array_pop($stack), $class);
 				break;
 			case 'checkcast':
-				$class = '\\'.str_replace('/', '\\', $opcode[2]);
+				$class = str_replace('/', '\\', $opcode[2]);
 				$obj = $stack[count($stack)-1];//end($stack);
-				if ($obj !== null && !is_a($obj, $class)) {
+				if ($obj !== null && !checkcast($obj, $class)) {
 					$class = str_replace('/', '.', $opcode[2]);
 					$msg = $obj->getClass()->getName() . ' cannot be cast to ' . $class;
 					throw new \java\lang\ClassCastException($msg);
@@ -568,23 +632,91 @@ trait JavaInterpreter {
 		return array_reverse($args);
 	}
 	
-	public function newArray($valueIni, array $dimentions) {
+	public function newArray($valueIni, array $dimentions, $type = null) {
 		if (count($dimentions) == 0) {
 			return $valueIni;
 		}
 		if (count($dimentions) == 1) {
-			return new SplFixedArray($dimentions[0]);
+			if ($dimentions[0] < 0) {
+				throw new \java\lang\NegativeArraySizeException();
+			}
+			$arr = new JavaArray($dimentions[0], $type);
+			if ($valueIni !== null) {
+				for ($i = 0; $i < $dimentions[0]; $i++) {
+					$arr[$i] = $valueIni;
+				}
+			}
+			return $arr;
 		}
 		
 		$size = array_shift($dimentions);
 		if ($size == 0) {
 			return [];
 		}
-		if (! $size > 0) {
-			echo '$size > 0: '.$size.PHP_EOL;
-			debug_print_backtrace();
+		if ($size < 0) {
+			//echo '$size < 0: '.$size.PHP_EOL;
+			//debug_print_backtrace();
+			throw new \java\lang\NegativeArraySizeException();
 		}
 		
 		return array_fill(0, $size, $this->newArray($valueIni, $dimentions));
+	}
+}
+
+function checkcast($obj, $class) {
+	if ($obj === null) {
+		return true;
+	} else if ($obj instanceof JavaArray) {
+		$className = $obj->getClass()->getName()->replace('.', '\\').'';
+		if ($className == $class) {
+			return true;
+		}
+		while (substr($className, 0, 1) == '[') {
+			$className = substr($className, 1);
+			$class = substr($class, 1);
+		}
+		//var_dump(substr($className, 1, -1), substr($class, 1, -1), true);
+		return is_a(substr($className, 1, -1), substr($class, 1, -1), true);
+		
+	} else {
+		return is_a($obj, $class);
+	}
+}
+
+class JavaArray extends SplFixedArray {
+	use \java\lang\ObjectTrait; /*{
+		\java\lang\ObjectTrait::__construct as private __ObjConstruct;
+		\java\lang\ObjectTrait::getClass as private getClassTrait;
+	}*/
+	
+	private $type;
+	
+	public function __construct($size, $type = null) {
+		//println("new JavaArray($size, $type);");
+		parent::__construct($size);
+		$this->type = "$type";
+	}
+	
+	public function __wakeup() {
+		$type = $this->type;
+		unset($this->type);
+		parent::__wakeup();
+		$this->type = $type;
+	}
+	
+	public function getClass() {
+		//var_dump($this->type);
+		//return $this->getClassTrait();
+		$name = '[L'.str_replace('/', '.', str_replace('_S_', '$', $this->type)).';';
+		return \java\lang\Clazz::forName($name);
+	}
+	
+	public static function fromArray($array, $type = null) {
+		$size = count($array);
+		$javaArray = new self($size, $type);
+		for ($i = 0; $i < $size; $i++) {
+			$javaArray[$i] = $array[$i];
+		}
+		return $javaArray;
 	}
 }

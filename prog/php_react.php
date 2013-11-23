@@ -2,77 +2,78 @@
 require 'vendor/autoload.php';
 include 'php_javaClass.php';
 include 'ServletMock.php';
-
+/*
 \java\lang\Thread::currentThread()->getContextClassLoader()->addClasspath(
 'C:\Users\asus\Documents\NetBeansProjects\WebApplication1\build\web\WEB-INF\classes'
-);
-
-$i = 0;
+);*/
 
 $loop = React\EventLoop\Factory::create();
 $socket = new React\Socket\Server($loop);
 $http = new React\Http\Server($socket);
 
+//$servlet = new jeanroldao\web\NewServlet();
+
 $applications = [
 	'WebApplication1' => [
+		'NewServlet' => new jeanroldao\web\NewServlet()
+	],
+	'WebApplication2' => [
 		'NewServlet' => new jeanroldao\web\NewServlet()
 	]
 ];
 $http->on('request', function ($request, $response) use ($applications) {
-	$headers = array('Content-Type' => 'text/plain');
-	
+	$headers = array('Content-Type' => 'text/html');
 	$path = explode('/', $request->getPath());
+	//var_dump($path);
 	if (empty($path[1])) {
-		$response->writeHead(200, array('Content-Type' => 'text/html'));
+		$response->writeHead(200, $headers);
 		ob_start();
 		?>
-			<h1>List of applications</h1>
-			<ul>
-				<?php
-				foreach ($applications as $appName => $servlets) {
-					?>
-					<li><a href="/<?=$appName?>/"><?=$appName?></a> (servlets: <?=count($servlets)?>)</li>
-					<?php
-				}
-				?>
-			</ul>
+		<div>List of applications</div>
+		<?php
+		foreach ($applications as $name => $servlets) {
+			?>
+			<div><a href="/<?=$name?>/"><?=$name?></a></div>
+			<?php
+		}
+		?>
 		<?php
 		$response->end(ob_get_contents());
 		ob_end_clean();
-	} else if (isset($applications[$path[1]]) && empty($path[2])) {
-		$response->writeHead(200, array('Content-Type' => 'text/html'));
+	} else if (!empty($applications[$path[1]]) && empty($path[2])) {
+		$response->writeHead(200, $headers);
 		ob_start();
 		?>
-			<h1>List of servlets in <?=$path[1]?></h1>
-			<ul>
-				<?php
-				foreach ($applications[$path[1]] as $servletName => $servlet) {
-					?>
-					<li><a href="/<?=$path[1]?>/<?=$servletName?>"><?=$servletName?></a> (<?=$servlet->getServletInfo()?>)</li>
-					<?php
-				}
-				?>
-			</ul>
+		<div>List of servlets in <?=$path[1]?></div>
+		<?php
+		foreach ($applications[$path[1]] as $name => $servlet) {
+			?>
+			<div>
+				<a href="/<?=$path[1].'/'.$name?>/"><?=$name?></a>
+				(<?=$servlet->getServletInfo()?>)
+			</div>
+			<?php
+		}
+		?>
 		<?php
 		$response->end(ob_get_contents());
 		ob_end_clean();
-	} else if (isset($applications[$path[1]]) && isset($applications[$path[1]][$path[2]])) {
-		$servlet = $applications[$path[1]][$path[2]];
+	} else if (!empty($applications[$path[1]]) && !empty($applications[$path[1]][$path[2]])) {
+		$response->writeHead(200, $headers);
 		
-		$response->writeHead(200, array('Content-Type' => 'text/html'));
-		
-		$javaRequest  = new javax\servlet\http\HttpServletRequest($request);
+		$javaRequest = new javax\servlet\http\HttpServletRequest($request);
 		$javaResponse = new javax\servlet\http\HttpServletResponse($response);
+		
+		$servlet = $applications[$path[1]][$path[2]];
 		
 		$servlet->doGet($javaRequest, $javaResponse);
 		
 		$response->end();
 	} else if (file_exists('.'.$request->getPath())) {
 		$file = '.'.$request->getPath();
-		
 		if (substr($file, -3) == 'php') {
-			$response->writeHead(200, array('Content-Type' => 'text/html'));
-			foreach ($_GET as $iG => $vG) {
+			$response->writeHead(200, $headers);
+			foreach($_GET as $iG => $vG) {
 				unset($_GET[$iG]);
 			}
 			$_GET += $request->getQuery();
@@ -81,13 +82,13 @@ $http->on('request', function ($request, $response) use ($applications) {
 			$response->end(ob_get_contents());
 			ob_end_clean();
 		} else {
-			$response->writeHead(200, array('Content-Type' => 'image'));
-			var_dump($file);
+			$type = 'image/gif';
+			$response->writeHead(200, array('Content-Type' => $type));
 			$response->end(file_get_contents($file));
 		}
 	} else {
 		$response->writeHead(200, $headers);
-		$response->end("Not found: ".$request->getPath()."\n");
+		$response->end('page not found: '.$request->getPath());
 	}
 });
 

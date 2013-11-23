@@ -1,10 +1,14 @@
 <?php
-include 'JavaMock.php';
-include 'JavaLoader.php';
 include 'DataInputStream.php';
+include 'JavaMock.php';
+include 'JavaNative.php';
+include 'JavaLoader.php';
+include 'JavaTranslator.php';
 include 'JavaInterpreter.php';
 include 'JavaPhpCompiler.php';
 include 'PhpThread.php';
+
+error_reporting(E_ALL ^ E_STRICT);
 
 //spl_autoload_register([\java\lang\ClassLoader::getSystemClassLoader(), 'loadClass']);
 spl_autoload_register(function($className){
@@ -17,11 +21,12 @@ spl_autoload_register(function($className){
 	}
 	
 	//$classLoader->setDefaultAssertionStatus(true);
-	$className = str_replace('_S_', '$', $className);
+	$className = str_replace('\\', '.', str_replace('_S_', '$', $className));
 	$classLoader->loadClass($className);
 });
 
 class php_javaClass extends \java\lang\Object {
+	use \JavaTranslator;
 	use \JavaInterpreter;
 	use \JavaPhpCompiler;
 	
@@ -35,7 +40,7 @@ class php_javaClass extends \java\lang\Object {
 	
 	private $constant_pool = array();
 	
-	private $class_attr = array();
+	public $class_attr = array();
 	
 	private $classLoader = null;
 	
@@ -256,13 +261,69 @@ class php_javaClass extends \java\lang\Object {
 		
 		$attr_count = $input->readShort();
 		println("\nclass attr count: " . $attr_count);
-		$this->attr($attr_count);
-		
+		$this->class_attr['attr'] = $this->attr($attr_count);
+		//var_dump(array_keys($this->class_attr['attr']));exit;
 		//print_r($this->class_attr);
 		println('the end?');
 		ob_end_clean();
 		
 		$this->createPhpClass();
+	}
+	
+	private function attr($count) {
+		$attrs = [];
+		for ($i = 0; $i < $count; $i++) {
+			//System.out.println("attribute name index: " + input.readShort());
+			//ConstantValue
+			$attr_name = $this->getString($this->input->readShort());
+			println("  attribute $i name: " . $attr_name);
+			
+			$attr_length = $this->input->readInt();
+			if ($attr_name == 'ConstantValue') {
+				$attrs[$attr_name] = $this->getDataFromRef($this->input->readShort());
+				println("  attribute $i value: " . $attrs[$attr_name]);
+			} else if ($attr_name == 'SourceFile') {
+				$attrs[$attr_name] = $this->getString($this->input->readShort());
+				println("  attribute $i value: " . $attrs[$attr_name]);
+			} else if ($attr_name == 'Signature') {
+				$attrs[$attr_name] = $this->getString($this->input->readShort());
+				println("  attribute $i value: " . $attrs[$attr_name]);
+			} else if ($attr_name == 'Code') {
+				$attrs[$attr_name] = $this->getCodeAttr($attr_length);
+			} else if ($attr_name == 'InnerClasses') {
+				$number_of_classes = $this->input->readShort();
+				println("  attribute $i length: " . $attr_length);
+				println("  attribute $i number_of_classes: " . $number_of_classes);
+				
+				$classes = [];
+				for ($class_i = 0; $class_i < $number_of_classes; $class_i++) {
+					$enc_class_attr = [];
+					$enc_class_attr['inner_class_name'] = $this->getClassName($this->input->readShort());
+					println("    enclosing class $class_i/$number_of_classes inner_class_name: " . $enc_class_attr['inner_class_name']);
+					
+					$outer_class_name_index = $this->input->readShort();
+					$outer_class_name = $outer_class_name_index ? $this->getClassName($outer_class_name_index) : '';
+					$enc_class_attr['outer_class_name'] = $outer_class_name;
+					println("    enclosing class $class_i/$number_of_classes outer_class_name " . $enc_class_attr['outer_class_name']);
+					
+					$inner_name_index = $this->input->readShort();
+					$inner_name = $inner_name_index ? $this->getString($inner_name_index) : '';
+					$enc_class_attr['inner_name'] = $inner_name;
+					println("    enclosing class $class_i/$number_of_classes inner_name " . $enc_class_attr['inner_name']);
+					$enc_class_attr['inner_class_access_flags'] = $this->input->readShort();
+					println("    enclosing class $class_i/$number_of_classes inner_class_access_flags " . $enc_class_attr['inner_class_access_flags']);
+					$classes[] = $enc_class_attr;
+					//println("    enclosing class $class_i/$number_of_classes " . $enc_class_attr['inner_class_name']);
+				}
+				$attrs[$attr_name] = $classes;
+			} else {
+				$attrs[$attr_name] = '(?)length '.$attr_length;
+				println("  attribute $i length: " . $attr_length);
+				$this->input->skipBytes($attr_length);
+			}
+			println();
+		}
+		return $attrs;
 	}
 	
 	public function getPhpClassName() {
@@ -275,14 +336,26 @@ class php_javaClass extends \java\lang\Object {
 		
 		$super = '\\'.str_replace('/', '\\', str_replace('$', '_S_', $this->class_attr['super']));
 		
+		//$isInterface = strpos($this->class_attr['flags'], 'interface') !== false;
+		$isInterface = false;
+		
+		$implements = '';
+		if (!empty($this->class_attr['interfaces'])) {
+			//$implements = str_replace('/', '\\', 'implements /'.implode(', /', $this->class_attr['interfaces']));
+		}
+		
 		$fields = '';
 		//$dump = 'var_dump(';
 		foreach ($this->class_attr['fields'] as $field) {
 			//var_dump($field); exit;
+			$iniValue = 'null';
+			if (in_array($field['type'], ['J', 'I'])) {
+				$iniValue = '0';
+			}
 			if (strpos($field['flags'], 'static') !== false) {
-				$fields .= 'public static $'.str_replace('$', '_S_', $field['name']).';'.PHP_EOL;
+				$fields .= 'public static $'.str_replace('$', '_S_', $field['name'])." = $iniValue;".PHP_EOL;
 			} else {
-				$fields .= 'public $'.str_replace('$', '_S_', $field['name']).';'.PHP_EOL;
+				$fields .= 'public $'.str_replace('$', '_S_', $field['name'])." = $iniValue;".PHP_EOL;
 			}
 			//$dump .= '"'.$field['name'].'",';
 			//$dump .= $className.'::$'.$field['name'].',';
@@ -323,6 +396,10 @@ class php_javaClass extends \java\lang\Object {
 			if (strpos($m['flags'], 'static') !== false) {
 				if ($fname == 'toString') {
 					$fname = 'staticToString';//bug?
+				} else if ($fname == 'hashCode') {
+					$fname = 'staticHashCode';
+				} else if ($fname == 'equals') {
+					$fname = 'staticEquals';
 				}
 				$methods .= 'public static function '.$fname.'() {
 					$args = func_get_args();
@@ -340,10 +417,7 @@ class php_javaClass extends \java\lang\Object {
 		}
 		$namespace = str_replace('/', '\\', dirname($className));
 		$namespace = $namespace != '.' ? "namespace $namespace;" : '';
-		$className = basename($className);
-		if ($className == 'Class') {
-			$className = '__Class';
-		}
+		$className = fixPhpClassName(basename($className));
 		$clinit = '';
 		try {
 			$this->findMethod('<clinit>');
@@ -351,40 +425,93 @@ class php_javaClass extends \java\lang\Object {
 		} catch (\Exception $e) {
 			//
 		}
+		//$classDeclaration = $isInterface ? 'interface': 'class';
 		
-		$eval = eval($s=<<<CODE
-		$namespace
-		class $className extends $super {
-			public static \$javaClass;
-			public static function __callstatic(\$method, \$args) {
-				try {
-					return self::\$javaClass->run(\$method, \$args);
-				} catch(\\Exception \$e) {
-					return parent::\$javaClass->run(\$method, \$args);
-				}
-			}
-			
-			public function __call(\$method, \$args) {
-				try {
-					return self::\$javaClass->run(\$method, \$args, \$this);
-				} catch(\\Exception \$e) {
-					return parent::\$javaClass->run(\$method, \$args, \$this);
-				}
-			}
-			$fields
-			
-			$methods
-		}
-		$className::\$javaClass = \$this;
+		//var_dump($namespace, $className, class_exists($className, false));
 		
-		$clinit
+		if (!$isInterface) {
+			$eval = eval($s=<<<CODE
+			$namespace
+			class $className extends $super $implements {
+				public static \$javaClass;
+				public static function __callstatic(\$method, \$args) {
+					try {
+						return self::\$javaClass->run(\$method, \$args);
+					} catch(\\JavaMethodNotFoundException \$e) {
+						return parent::\$javaClass->run(\$method, \$args);
+					}
+				}
+				
+				public function __call(\$method, \$args) {
+					try {
+						return self::\$javaClass->run(\$method, \$args, \$this);
+					} catch(\\JavaMethodNotFoundException \$e) {
+						return parent::\$javaClass->run(\$method, \$args, \$this);
+					}
+				}
+				$fields
+				
+				$methods
+			}
+			$className::\$javaClass = \$this;
+			
+			$clinit
 CODE
 );
+		} else {
+			
+			$implements = str_replace('implements', 'extends', $implements);
+			$eval = eval($s=<<<CODE
+			$namespace
+			
+			interface $className $implements {}
+			
+			class {$className}_interface  {
+				public static \$javaClass;
+				public static function __callstatic(\$method, \$args) {
+					try {
+						return self::\$javaClass->run(\$method, \$args);
+					} catch(\\JavaMethodNotFoundException \$e) {
+						return parent::\$javaClass->run(\$method, \$args);
+					}
+				}
+				
+				public function __call(\$method, \$args) {
+					try {
+						return self::\$javaClass->run(\$method, \$args, \$this);
+					} catch(\\JavaMethodNotFoundException \$e) {
+						return parent::\$javaClass->run(\$method, \$args, \$this);
+					}
+				}
+				$fields
+				
+				$methods
+			}
+			{$className}_interface::\$javaClass = \$this;
+			
+			$clinit
+CODE
+);
+			//exit;
+		}
 		//echo ($s);readline();
 		//echo explode(PHP_EOL, $s)[33];
 		if ($eval === false) {
-			echo explode(PHP_EOL, $s)[27];
+			//echo explode(PHP_EOL, $s)[27];
+			echo $s;
 			exit;
+		}
+		
+		$package = dirname($this->getPhpClassName());
+		if ($package == '.') {
+			$realClassName = $className;
+		} else {
+			$realClassName = $package . '\\' . $className;
+		}
+		
+		//var_dump($this->getPhpClassName(), $realClassName);
+		if ($this->getPhpClassName() != $realClassName) {
+			class_alias($realClassName, $this->getPhpClassName());
 		}
 		$className = str_replace('/', '\\', $this->class_attr['name']);
 		if ($this->getPhpClassName() != $className) {
@@ -404,16 +531,41 @@ CODE
 			return call_user_func_array($php_function, $args);
 		}
 		
-		if (empty($method['attr']['Code'])) {
-			var_dump($this->getPhpClassName());
-			var_dump($method);
-			//exit;
-			return;//?? java native?
-		}
+		
 		if ($thisObj !== null) {
 			$args = array_merge([$thisObj], $args);
 		}
+		
+		$args = $this->fixLocalArgsIndexes($args, $method['type'], $this->class_attr['name'].'::'.$method_name);
+		//var_dump($method['type']);readline();
 		return $this->runCode($method['attr']['Code'], $args, $this->class_attr['name'].'::'.$method_name);
+	}
+	
+	private function fixLocalArgsIndexes($args, $type, $name) {
+		$args_type = $this->getArgsType($type);
+		
+		$newArgs = [];
+		
+		if (count($args_type['args']) === count($args)) {
+			$index = 0;
+			$newIndex = 0;
+		} else {
+			$newArgs[0] = $args[0];
+			$index = 1;
+			$newIndex = 1;
+		}
+		//var_dump(count($args), count($args_type['args']), $args, $args_type, $name);readline();
+		foreach ($args_type['args'] as $arg) {
+			$newArgs[$newIndex] = $args[$index];
+			
+			$index++;
+			$newIndex++;
+			
+			if ($arg === 'J') {
+				$newIndex++;
+			}
+		}
+		return $newArgs;
 	}
 	
 	private function & compileAndRun($code, $args = [], $method = '') {
@@ -455,21 +607,26 @@ CODE
 		
 		$stack = [];
 		$locals = $args;
+		//var_dump($code);readline();
+		//$this->getArgsType
 		//var_dump($instructions);exit;
 		for ($i = 0;$i !== null && $i <= $last_index;) {
+			//var_dump($i);
 			$opcode = $instructions[$i];
-			//var_dump($opcode);exit;
 			try {
-				$this->interpreter($i, $opcode, $stack, $locals, $method);
+				$this->interpret($i, $opcode, $stack, $locals, $method);
 			} catch (\Exception $e) {
 				foreach ($code['exceptions'] as $exception) {
-					if (is_a($e, str_replace('/', '\\', '\\'.$exception['catch_type']))) {
-						//var_dump($exception);exit;
+					if (is_a($e, str_replace('/', '\\', '\\'.$exception['catch_type'])) 
+						&& $i >= $exception['start_pc'] 
+						&& $i < $exception['end_pc']) {
+						//var_dump($exception);readline();
 						$i = $exception['handler_pc'];
 						$stack = [$e];
 						continue 2;
 					}
 				}
+				//var_dump(get_class($i));readline();
 				//echo "OPS".PHP_EOL; echo get_class($e);
 				throw $e;
 			}
@@ -500,7 +657,7 @@ CODE
 				return $method;
 			}
 		}
-		throw new \Exception('method not found!');
+		throw new \JavaMethodNotFoundException('method ' . $name . ' not found!');
 		
 		foreach ($this->class_attr['methods'] as $method) {
 			var_dump($method['name']);
@@ -511,36 +668,6 @@ CODE
 		if ($name != '<clinit>') {
 			var_dump([$name, $countArgs]);exit;
 		}
-	}
-	
-	private function attr($count) {
-		$attrs = [];
-		for ($i = 0; $i < $count; $i++) {
-			//System.out.println("attribute name index: " + input.readShort());
-			//ConstantValue
-			$attr_name = $this->getString($this->input->readShort());
-			println("  attribute $i name: " . $attr_name);
-			
-			$attr_length = $this->input->readInt();
-			if ($attr_name == 'ConstantValue') {
-				$attrs[$attr_name] = $this->getDataFromRef($this->input->readShort());
-				println("  attribute $i value: " . $attrs[$attr_name]);
-			} else if ($attr_name == 'SourceFile') {
-				$attrs[$attr_name] = $this->getString($this->input->readShort());
-				println("  attribute $i value: " . $attrs[$attr_name]);
-			} else if ($attr_name == 'Signature') {
-				$attrs[$attr_name] = $this->getString($this->input->readShort());
-				println("  attribute $i value: " . $attrs[$attr_name]);
-			} else if ($attr_name == 'Code') {
-				$attrs[$attr_name] = $this->getCodeAttr($attr_length);
-			} else {
-				$attrs[$attr_name] = '(?)length '.$attr_length;
-				println("  attribute $i length: " . $attr_length);
-				$this->input->skipBytes($attr_length);
-			}
-			println();
-		}
-		return $attrs;
 	}
 	
 	private function getCodeAttr($attr_length) {
@@ -610,424 +737,6 @@ CODE
 			return implode(' ', $s);
 		} else {
 			return (string) $a;
-		}
-	}
-	
-	private function translateHexOpcode($hexOpcode, &$i) {
-		$input = $this->input;
-
-		$hexOpcode = hexdec($hexOpcode);
-		switch ($hexOpcode) {
-			case 0x00:
-				return [1, 'nop'];
-			case 0x01:
-				return [1, 'aconst_null'];
-			case 0x02:
-				return [1, 'iconst_m1'];
-			case 0x03:
-			case 0x04:
-			case 0x05:
-			case 0x06:
-			case 0x07:
-			case 0x08:
-				return [1, 'iconst_'.($hexOpcode-3 & bindec('000111'))];
-			case 0x09:
-			case 0x0a:
-				return [1, 'lconst_'.($hexOpcode-1 & bindec('000111'))];
-			case 0x0b:
-			case 0x0c:
-			case 0x0d:
-				return [1, 'fconst_'.($hexOpcode-3 & bindec('000111'))];
-			case 0x0e:
-			case 0x0f:
-				return [1, 'dconst_'.($hexOpcode-6 & bindec('000111'))];
-			case 0x10:
-				$i++;
-				return [2, 'bipush', $input->readByte()];
-			case 0x11:
-				$i += 2;
-				return [3, 'sipush', $input->readShort()];
-			case 0x12:
-				$i++;
-				return [2, 'ldc', $this->getDataFromRef($input->readByte())];
-			case 0x13:
-				$i += 2;
-				return [3, 'ldc_w', $this->getDataFromRef($input->readShort())];
-			case 0x14:
-				$i += 2;
-				return [3, 'ldc2_w', $this->getDataFromRef($input->readShort())];
-			case 0x15:
-				$i++;
-				return [2, 'iload', $input->readByte()];
-			case 0x16:
-				$i++;
-				return [2, 'lload', $input->readByte()];
-			case 0x18:
-				$i++;
-				return [2, 'dload', $input->readByte()];
-			case 0x19:
-				$i++;
-				return [2, 'aload', $input->readByte()];
-			case 0x1a:
-			case 0x1b:
-			case 0x1c:
-			case 0x1d:
-				return [1, 'iload_'.($hexOpcode-2 & bindec('000111'))];
-			case 0x1e:
-			case 0x1f:
-			case 0x20:
-			case 0x21:
-				return [1, 'lload_'.($hexOpcode-6 & bindec('000111'))];
-			case 0x22:
-			case 0x23:
-			case 0x24:
-			case 0x25:
-				return [1, 'fload_'.($hexOpcode-2 & bindec('000111'))];
-			case 0x26:
-			case 0x27:
-			case 0x28:
-			case 0x29:
-				return [1, 'dload_'.($hexOpcode-6 & bindec('000111'))];
-			case 0x2a:
-			case 0x2b:
-			case 0x2c:
-			case 0x2d:
-				return [1, 'aload_'.($hexOpcode-2 & bindec('000111'))];
-			case 0x2e:
-				return [1, 'iaload'];
-			case 0x2f:
-				return [1, 'laload'];
-			case 0x32:
-				return [1, 'aaload'];
-			case 0x33:
-				return [1, 'baload'];
-			case 0x34:
-				return [1, 'caload'];
-			case 0x35:
-				return [1, 'saload'];
-			case 0x36:
-				$i++;
-				return [2, 'istore', $input->readByte()];
-			case 0x37:
-				$i++;
-				return [2, 'lstore', $input->readByte()];
-			case 0x39:
-				$i++;
-				return [2, 'dstore', $input->readByte()];
-			case 0x3a:
-				$i++;
-				return [2, 'astore', $input->readByte()];
-			case 0x3b:
-			case 0x3c:
-			case 0x3d:
-			case 0x3e:
-				return [1, 'istore_'.($hexOpcode-3 & bindec('000111'))];
-			case 0x3f:
-			case 0x40:
-			case 0x41:
-			case 0x42:
-				return [1, 'lstore_'.($hexOpcode+1 & bindec('000111'))];
-			case 0x43:
-			case 0x44:
-			case 0x45:
-			case 0x46:
-				return [1, 'fstore_'.($hexOpcode-3 & bindec('000111'))];
-			case 0x47:
-			case 0x48:
-			case 0x49:
-			case 0x4a:
-				return [1, 'dstore_'.($hexOpcode+1 & bindec('000111'))];
-			case 0x4b:
-			case 0x4c:
-			case 0x4d:
-			case 0x4e:
-				return [1, 'astore_'.($hexOpcode-3 & bindec('000111'))];
-			case 0x4f:
-				return [1, 'iastore'];
-			case 0x50:
-				return [1, 'lastore'];
-			case 0x53:
-				return [1, 'aastore'];
-			case 0x54:
-				return [1, 'bastore'];
-			case 0x55:
-				return [1, 'castore'];
-			case 0x56:
-				return [1, 'sastore'];
-			case 0x57:
-				return [1, 'pop'];
-			case 0x59:
-				return [1, 'dup'];
-			case 0x5a:
-				return [1, 'dup_x1'];
-			case 0x5c:
-				return [1, 'dup2'];
-			case 0x5e:
-				return [1, 'dup2_x2'];
-			case 0x60:
-				return [1, 'iadd'];
-			case 0x61:
-				return [1, 'ladd'];
-			case 0x62:
-				return [1, 'fadd'];
-			case 0x63:
-				return [1, 'dadd'];
-			case 0x64:
-				return [1, 'isub'];
-			case 0x65:
-				return [1, 'lsub'];
-			case 0x66:
-				return [1, 'fsub'];
-			case 0x67:
-				return [1, 'dsub'];
-			case 0x68:
-				return [1, 'imul'];
-			case 0x6a:
-				return [1, 'fmul'];
-			case 0x6b:
-				return [1, 'dmul'];
-			case 0x6c:
-				return [1, 'idiv'];
-			case 0x6d:
-				return [1, 'ldiv'];
-			case 0x6e:
-				return [1, 'fdiv'];
-			case 0x6f:
-				return [1, 'ddiv'];
-			case 0x69:
-				return [1, 'lmul'];
-			case 0x70:
-				return [1, 'irem'];
-			case 0x71:
-				return [1, 'lrem'];
-			case 0x74:
-				return [1, 'ineg'];
-			case 0x75:
-				return [1, 'lneg'];
-			case 0x78:
-				return [1, 'ishl'];
-			case 0x79:
-				return [1, 'lshl'];
-			case 0x7a:
-				return [1, 'ishr'];
-			case 0x7b:
-				return [1, 'lshr'];
-			case 0x7c:
-				return [1, 'iushr'];
-			case 0x7d:
-				return [1, 'lushr'];
-			case 0x7e:
-				return [1, 'iand'];
-			case 0x7f:
-				return [1, 'land'];
-			case 0x80:
-				return [1, 'ior'];
-			case 0x81:
-				return [1, 'lor'];
-			case 0x82:
-				return [1, 'ixor'];
-			case 0x83:
-				return [1, 'lxor'];
-			case 0x84:
-				$i += 2;
-				return [3, 'iinc', ($input->readByte()), ($input->readByte())];
-			case 0x85:
-				return [1, 'i2l'];
-			case 0x86:
-				return [1, 'i2f'];
-			case 0x87:
-				return [1, 'i2d'];
-			case 0x88:
-				return [1, 'l2i'];
-			case 0x89:
-				return [1, 'l2f'];
-			case 0x8a:
-				return [1, 'l2d'];
-			case 0x8b:
-				return [1, 'f2i'];
-			case 0x8c:
-				return [1, 'f2l'];
-			case 0x8d:
-				return [1, 'f2d'];
-			case 0x8e:
-				return [1, 'd2i'];
-			case 0x8f:
-				return [1, 'd2l'];
-			case 0x90:
-				return [1, 'd2f'];
-			case 0x91:
-				return [1, 'i2b'];
-			case 0x92:
-				return [1, 'i2c'];
-			case 0x93:
-				return [1, 'i2s'];
-			case 0x94:
-				return [1, 'lcmp'];
-			case 0x95:
-				return [1, 'fcmpl'];
-			case 0x96:
-				return [1, 'fcmpg'];
-			case 0x97:
-				return [1, 'dcmpl'];
-			case 0x98:
-				return [1, 'dcmpg'];
-			case 0x99:
-				$i += 2;
-				return [3, 'ifeq', ($input->readShort())];
-			case 0x9a:
-				$i += 2;
-				return [3, 'ifne', ($input->readShort())];
-			case 0x9b:
-				$i += 2;
-				return [3, 'iflt', ($input->readShort())];
-			case 0x9c:
-				$i += 2;
-				return [3, 'ifge', ($input->readShort())];
-			case 0x9d:
-				$i += 2;
-				return [3, 'ifgt', ($input->readShort())];
-			case 0x9e:
-				$i += 2;
-				return [3, 'ifle', ($input->readShort())];
-			case 0x9f:
-				$i += 2;
-				return [3, 'if_icmpeq', ($input->readShort())];
-			case 0xa0:
-				$i += 2;
-				return [3, 'if_icmpne', ($input->readShort())];
-			case 0xa1:
-				$i += 2;
-				return [3, 'if_icmplt', ($input->readShort())];
-			case 0xa2:
-				$i += 2;
-				return [3, 'if_icmpge', ($input->readShort())];
-			case 0xa3:
-				$i += 2;
-				return [3, 'if_icmpgt', ($input->readShort())];
-			case 0xa4:
-				$i += 2;
-				return [3, 'if_icmple', ($input->readShort())];
-			case 0xa5:
-				$i += 2;
-				return [3, 'if_acmpeq', ($input->readShort())];
-			case 0xa6:
-				$i += 2;
-				return [3, 'if_acmpne', ($input->readShort())];
-			case 0xa8:
-				$i += 2;
-				return [3, 'jsr', ($input->readShort())];
-			case 0xa9:
-				$i++;
-				return [3, 'ret', ($input->readByte())];
-			case 0xaa:
-				$len = $i - 1;
-				while(($i + 1) % 4 != 0) {
-					$i++;
-					$hexOpcode = $input->readHex();
-				}
-				
-				$i += 4;
-				$defaut = $input->readInt();
-				
-				$i += 4;
-				$low = $input->readInt();
-				
-				$i += 4;
-				$high = $input->readInt();
-
-				$length = $high - $low + 1;
-				
-				$i += $length * 4;
-				$input->skipBytes($length * 4 );
-				return [$i - $len, 'tableswitch (not suported yet) '.($i+1)];
-				//exit;
-			case 0xa7:
-				$i += 2;
-				return [3, 'goto', ($input->readShort())];
-			case 0xac:
-				return [1, 'ireturn'];
-			case 0xad:
-				return [1, 'lreturn'];
-			case 0xae:
-				return [1, 'freturn'];
-			case 0xaf:
-				return [1, 'dreturn'];
-			case 0xb0:
-				return [1, 'areturn'];
-			case 0xb1:
-				return [1, 'return'];
-			case 0xb2:
-				$i += 2;
-				return [3, 'getstatic', $this->getStaticField($input->readShort())];
-			case 0xb3:
-				$i += 2;
-				return [3, 'putstatic', $this->getStaticField($input->readShort())];
-			case 0xb4:
-				$i += 2;
-				return [3, 'getfield', $this->getStaticField($input->readShort())];
-			case 0xb5:
-				$i += 2;
-				return [3, 'putfield', $this->getStaticField($input->readShort())];
-			case 0xb6:
-				$i += 2;
-				return [3, 'invokevirtual', $this->getMethod($input->readShort())];
-			case 0xb7:
-				$i += 2;
-				return [3, 'invokespecial', $this->getMethod($input->readShort())];
-			case 0xb8:
-				$i += 2;
-				return [3, 'invokestatic', $this->getMethod($input->readShort())];
-			case 0xb9:
-				$i += 4;
-				return [5, 'invokeinterface', $this->getInterfaceMethod($input->readShort()), $input->readShort()];
-			case 0xbb:
-				$i += 2;
-				return [3, 'new', $this->getClassName($input->readShort())];
-			case 0xbc:
-				$i++;
-				$types = [
-					 4 => 'boolean',
-					 5 => 'char',
-					 6 => 'float',
-					 7 => 'double',
-					 8 => 'byte',
-					 9 => 'short',
-					10 => 'int',
-					11 => 'long'
-				];
-				return [2, 'newarray', $types[$input->readByte()]];
-			case 0xbe:
-				return [1, 'arraylength'];
-			case 0xbd:
-				$i += 2;
-				return [3, 'anewarray', $this->getClassName($input->readShort())];
-			case 0xbf:
-				return [1, 'athrow'];
-			case 0xc0:
-				$i += 2;
-				return [3, 'checkcast', $this->getClassName($input->readShort())];
-			case 0xc1:
-				$i += 2;
-				//var_dump([3, 'instanceof', $this->getClassName($input->readShort())]);exit;
-				return [3, 'instanceof', $this->getClassName($input->readShort())];
-			case 0xc2:
-				return [1, 'monitorenter'];
-			case 0xc3:
-				return [1, 'monitorexit'];
-			case 0xc5:
-				$i += 3;
-				return [4, 'multianewarray', $this->getClassName($input->readShort()), $input->readByte()];
-			case 0xc6:
-				$i += 2;
-				return [3, 'ifnull', ($input->readShort())];
-			case 0xc7:
-				$i += 2;
-				return [3, 'ifnonnull', ($input->readShort())];
-			default:
-				var_dump(dechex($hexOpcode));
-				echo 'unknown opcode';
-				exit;
-				return $hexOpcode;
 		}
 	}
 	
@@ -1163,8 +872,7 @@ CODE
 	private function getDataFromRef($i) {
 		$const = $this->getConstant($i);
 		if ($const[0] == "String") {
-			$s = new \java\lang\String($this->getDataFromRef($const[1]));
-			return $s->intern();
+			return (new \java\lang\String($this->getDataFromRef($const[1])))->intern();
 		} else if ($const[0] == "Class") {
 			return \java\lang\Clazz::forName($this->getDataFromRef($const[1]));
 		}
@@ -1255,6 +963,8 @@ CODE
 	
 }
 
+class JavaMethodNotFoundException extends \Exception {}
+
 function println($str = "") {
 	echo $str . PHP_EOL;
 }
@@ -1271,11 +981,22 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 	while (count($_SERVER["argv"]) > 0) {
 		$arg = array_shift($_SERVER["argv"]);
 		
+		$thread = new \java\lang\Thread();
+		\java\lang\Thread::$currentThreadId = $thread->getId();
+		
 		if ($arg == '-jar') {
 			$jar_file = array_shift($_SERVER["argv"]);
 			\JavaLoader::addJarClasspath($jar_file);
 
 			$arg = \php_javaClass::readJarManifest($jar_file)['Main-Class'];
+		} else if ($arg == '-cp') {
+			$cp = explode(';', array_shift($_SERVER["argv"]));
+			//var_dump($_SERVER["argv"]);
+			$loader = \java\lang\ClassLoader::getSystemClassLoader();
+			for ($i = 1; $i < count($cp); $i++) {
+				$loader->addClasspath($cp[$i]);
+			}
+			$arg = array_shift($_SERVER["argv"]);
 		} else if (substr($arg, 0, 1) == '-' ) {
 			echo "arg $arg not exists!";
 			exit;
@@ -1283,19 +1004,21 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 		
 		$class = str_replace('.', '\\', $arg);
 		
-		$thread = new \java\lang\Thread();
-		\java\lang\Thread::$currentThreadId = $thread->getId();
-		
 		\java\lang\ClassLoader::getSystemClassLoader()->loadClass($class);
+		//var_dump($_SERVER["argv"]);readline();
 		$class::main($_SERVER["argv"]);
 		exit;
-	}
+	} 
+	`java`;
+	 
 	
+	/*
 	$class = $_SERVER["argv"][1]?$_SERVER["argv"][1]:'Teste';
 	$class = str_replace('.', '\\', $class);
 	
 	\java\lang\ClassLoader::getSystemClassLoader()->loadClass($class);
 	$class::main([]);
+	*/
 		
 	//$javaClass = new php_javaClass($class);
 	//$args = array_slice($_SERVER["argv"], 2);

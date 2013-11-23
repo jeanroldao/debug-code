@@ -2,11 +2,11 @@
 
 class A {
 
-	public function falar() {
-		echo $this->getMsg();
+	public function falar($outro) {
+		echo $this->getMsg() . ' + '. $outro->getMsg();
 	}
 	
-	private function getMsg() {
+	public function getMsg() {
 		return "from A";
 	}
 }
@@ -18,6 +18,6 @@ class B extends A {
 	}
 }
 
-$a = new B;
+$a = new B();
 
-$a->falar();
+$a->falar(new A());

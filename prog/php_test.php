@@ -7,6 +7,7 @@ include 'php_javaClass.php';
 use jeanroldao\web\Player;
 use java\lang\Integer;
 use java\lang\String;
+use java\lang\Thread;
 use java\util\HashMap;
 
 
@@ -14,7 +15,7 @@ use java\util\HashMap;
 //var_dump(new $clazz('java\lang\String'));
 
 //JavaLoader::addJarClasspath(realpath('jsgame.jar'));
-\JavaLoader::addClasspath(
+Thread::currentThread()->getContextClassLoader()->addClasspath(
 'C:\Users\jean_roldao\Documents\NetBeansProjects\JsGame\build\web\WEB-INF\classes'
 );
 

@@ -1,0 +1,132 @@
+Finding entry points
+Branch analysis from position: 0
+Return found
+filename:       C:\Users\jean_roldao\Downloads\debug-code-master\prog\php_test12.php
+function name:  (null)
+number of ops:  33
+compiled vars:  !0 = $file, !1 = $descriptorspec, !2 = $p, !3 = $pipes
+line     # *  op                           fetch          ext  return  operands
+---------------------------------------------------------------------------------
+   2     0  >   NOP                                                      
+  13     1      NOP                                                      
+         2      NOP                                                      
+  19     3      ASSIGN                                                   !0, 'php_test12'
+  21     4      ECHO                                                     'start...%0A'
+  23     5      INIT_ARRAY                                       ~4      'pipe'
+         6      ADD_ARRAY_ELEMENT                                ~4      'r'
+         7      INIT_ARRAY                                       ~5      ~4, 0
+  24     8      INIT_ARRAY                                       ~6      'pipe'
+         9      ADD_ARRAY_ELEMENT                                ~6      'w'
+        10      ADD_ARRAY_ELEMENT                                ~5      ~6, 1
+  25    11      INIT_ARRAY                                       ~7      'pipe'
+        12      ADD_ARRAY_ELEMENT                                ~7      'w'
+  26    13      ADD_ARRAY_ELEMENT                                ~5      ~7, 2
+        14      ASSIGN                                                   !1, ~5
+  27    15      ADD_STRING                                       ~9      'php+-d+vld.active%3D1+-d+vld.execute%3D0+-f+'
+        16      ADD_VAR                                          ~9      ~9, !0
+        17      ADD_STRING                                       ~9      ~9, '.php'
+        18      SEND_VAL                                                 ~9
+        19      SEND_VAR                                                 !1
+        20      SEND_REF                                                 !3
+        21      DO_FCALL                                      3  $10     'proc_open'
+        22      ASSIGN                                                   !2, $10
+  29    23      ADD_VAR                                          ~12     !0
+        24      ADD_STRING                                       ~12     ~12, '.txt'
+        25      SEND_VAL                                                 ~12
+        26      FETCH_DIM_R                                      $13     !3, 2
+        27      SEND_VAR                                                 $13
+        28      DO_FCALL                                      1  $14     'stream_get_contents'
+        29      SEND_VAR_NO_REF                               6          $14
+        30      DO_FCALL                                      2          'file_put_contents'
+  31    31      ECHO                                                     '...end%0A'
+        32    > RETURN                                                   1
+
+Class Test:
+Function test1:
+Finding entry points
+Branch analysis from position: 0
+Return found
+filename:       C:\Users\jean_roldao\Downloads\debug-code-master\prog\php_test12.php
+function name:  test1
+number of ops:  3
+compiled vars:  none
+line     # *  op                           fetch          ext  return  operands
+---------------------------------------------------------------------------------
+   6     0  >   FETCH_OBJ_R                                      $0      'flag'
+         1    > RETURN                                                   $0
+   7     2*   > RETURN                                                   null
+
+End of function test1.
+
+Function test2:
+Finding entry points
+Branch analysis from position: 0
+Return found
+filename:       C:\Users\jean_roldao\Downloads\debug-code-master\prog\php_test12.php
+function name:  test2
+number of ops:  4
+compiled vars:  none
+line     # *  op                           fetch          ext  return  operands
+---------------------------------------------------------------------------------
+   9     0  >   INIT_METHOD_CALL                                         'test1'
+         1      DO_FCALL_BY_NAME                              0  $1      
+         2    > RETURN                                                   $1
+  10     3*   > RETURN                                                   null
+
+End of function test2.
+
+End of class Test.
+
+Class Test_1:
+Function test3:
+Finding entry points
+Branch analysis from position: 0
+Return found
+filename:       C:\Users\jean_roldao\Downloads\debug-code-master\prog\php_test12.php
+function name:  test3
+number of ops:  4
+compiled vars:  none
+line     # *  op                           fetch          ext  return  operands
+---------------------------------------------------------------------------------
+  15     0  >   INIT_METHOD_CALL                                         'test2'
+         1      DO_FCALL_BY_NAME                              0  $1      
+         2    > RETURN                                                   $1
+  16     3*   > RETURN                                                   null
+
+End of function test3.
+
+Function test1:
+Finding entry points
+Branch analysis from position: 0
+Return found
+filename:       C:\Users\jean_roldao\Downloads\debug-code-master\prog\php_test12.php
+function name:  test1
+number of ops:  3
+compiled vars:  none
+line     # *  op                           fetch          ext  return  operands
+---------------------------------------------------------------------------------
+   6     0  >   FETCH_OBJ_R                                      $0      'flag'
+         1    > RETURN                                                   $0
+   7     2*   > RETURN                                                   null
+
+End of function test1.
+
+Function test2:
+Finding entry points
+Branch analysis from position: 0
+Return found
+filename:       C:\Users\jean_roldao\Downloads\debug-code-master\prog\php_test12.php
+function name:  test2
+number of ops:  4
+compiled vars:  none
+line     # *  op                           fetch          ext  return  operands
+---------------------------------------------------------------------------------
+   9     0  >   INIT_METHOD_CALL                                         'test1'
+         1      DO_FCALL_BY_NAME                              0  $1      
+         2    > RETURN                                                   $1
+  10     3*   > RETURN                                                   null
+
+End of function test2.
+
+End of class Test_1.
+

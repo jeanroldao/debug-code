@@ -1,0 +1,1102 @@
+Compiled from "ArrayList.java"
+public class java.util.ArrayList extends java.util.AbstractList implements java.util.List,java.util.RandomAccess,java.lang.Cloneable,java.io.Serializable
+  SourceFile: "ArrayList.java"
+  Signature: length = 0x2
+   00 6A 
+  minor version: 0
+  major version: 49
+  Constant pool:
+const #1 = String	#16;	//  , Size: 
+const #2 = String	#22;	//  Illegal Capacity: 
+const #3 = String	#23;	//  Index: 
+const #4 = Asciz	()I;
+const #5 = Asciz	()Ljava/lang/String;;
+const #6 = Asciz	()V;
+const #7 = Asciz	()Z;
+const #8 = Asciz	(I)TE;;
+const #9 = Asciz	(I)V;
+const #10 = Asciz	(II)V;
+const #11 = Asciz	(ITE;)TE;;
+const #12 = Asciz	(ITE;)V;
+const #13 = Asciz	(Ljava/lang/Object;)Z;
+const #14 = Asciz	(Ljava/lang/String;)V;
+const #15 = Asciz	(TE;)Z;
+const #16 = Asciz	, Size: ;
+const #17 = Asciz	<init>;
+const #18 = Asciz	Code;
+const #19 = Asciz	ConstantValue;
+const #20 = Asciz	Exceptions;
+const #21 = Asciz	I;
+const #22 = Asciz	Illegal Capacity: ;
+const #23 = Asciz	Index: ;
+const #24 = Asciz	J;
+const #25 = Asciz	LineNumberTable;
+const #26 = Asciz	RangeCheck;
+const #27 = Asciz	Signature;
+const #28 = Asciz	SourceFile;
+const #29 = Asciz	[Ljava/lang/Object;;
+const #30 = Asciz	add;
+const #31 = Asciz	addAll;
+const #32 = Asciz	append;
+const #33 = Asciz	arraycopy;
+const #34 = Asciz	clear;
+const #35 = Asciz	clone;
+const #36 = Asciz	contains;
+const #37 = Asciz	copyOf;
+const #38 = Asciz	defaultReadObject;
+const #39 = Asciz	defaultWriteObject;
+const #40 = Asciz	elementData;
+const #41 = Asciz	ensureCapacity;
+const #42 = Asciz	equals;
+const #43 = Asciz	fastRemove;
+const #44 = Asciz	get;
+const #45 = Asciz	getClass;
+const #46 = Asciz	indexOf;
+const #47 = Asciz	isEmpty;
+const #48 = Asciz	java/io/IOException;
+const #49 = Asciz	java/io/ObjectInputStream;
+const #50 = Asciz	java/io/ObjectOutputStream;
+const #51 = Asciz	java/io/Serializable;
+const #52 = Asciz	java/lang/ClassNotFoundException;
+const #53 = Asciz	java/lang/CloneNotSupportedException;
+const #54 = Asciz	java/lang/Cloneable;
+const #55 = Asciz	java/lang/IllegalArgumentException;
+const #56 = Asciz	java/lang/IndexOutOfBoundsException;
+const #57 = Asciz	java/lang/InternalError;
+const #58 = Asciz	java/lang/Object;
+const #59 = Asciz	java/lang/StringBuilder;
+const #60 = Asciz	java/lang/System;
+const #61 = Asciz	java/util/AbstractList;
+const #62 = Asciz	java/util/ArrayList;
+const #63 = Asciz	java/util/Arrays;
+const #64 = Asciz	java/util/Collection;
+const #65 = Asciz	java/util/ConcurrentModificationException;
+const #66 = Asciz	java/util/List;
+const #67 = Asciz	java/util/RandomAccess;
+const #68 = Asciz	lastIndexOf;
+const #69 = Asciz	modCount;
+const #70 = Asciz	readInt;
+const #71 = Asciz	readObject;
+const #72 = Asciz	remove;
+const #73 = Asciz	removeRange;
+const #74 = Asciz	serialVersionUID;
+const #75 = Asciz	set;
+const #76 = Asciz	size;
+const #77 = Asciz	toArray;
+const #78 = Asciz	toString;
+const #79 = Asciz	trimToSize;
+const #80 = Asciz	writeInt;
+const #81 = Asciz	writeObject;
+const #82 = long	8683452581122892189l;
+const #84 = class	#29;	//  "[Ljava/lang/Object;"
+const #85 = class	#48;	//  java/io/IOException
+const #86 = class	#49;	//  java/io/ObjectInputStream
+const #87 = class	#50;	//  java/io/ObjectOutputStream
+const #88 = class	#51;	//  java/io/Serializable
+const #89 = class	#52;	//  java/lang/ClassNotFoundException
+const #90 = class	#53;	//  java/lang/CloneNotSupportedException
+const #91 = class	#54;	//  java/lang/Cloneable
+const #92 = class	#55;	//  java/lang/IllegalArgumentException
+const #93 = class	#56;	//  java/lang/IndexOutOfBoundsException
+const #94 = class	#57;	//  java/lang/InternalError
+const #95 = class	#58;	//  java/lang/Object
+const #96 = class	#59;	//  java/lang/StringBuilder
+const #97 = class	#60;	//  java/lang/System
+const #98 = class	#61;	//  java/util/AbstractList
+const #99 = class	#62;	//  java/util/ArrayList
+const #100 = class	#63;	//  java/util/Arrays
+const #101 = class	#64;	//  java/util/Collection
+const #102 = class	#65;	//  java/util/ConcurrentModificationException
+const #103 = class	#66;	//  java/util/List
+const #104 = class	#67;	//  java/util/RandomAccess
+const #105 = Asciz	<T:Ljava/lang/Object;>([TT;)[TT;;
+const #106 = Asciz	<E:Ljava/lang/Object;>Ljava/util/AbstractList<TE;>;Ljava/util/List<TE;>;Ljava/util/RandomAccess;Ljava/lang/Cloneable;Ljava/io/Serializable;;
+const #107 = Asciz	(Ljava/io/ObjectInputStream;)V;
+const #108 = Asciz	(Ljava/io/ObjectOutputStream;)V;
+const #109 = Asciz	()Ljava/lang/Class;;
+const #110 = Asciz	()Ljava/lang/Object;;
+const #111 = Asciz	()[Ljava/lang/Object;;
+const #112 = Asciz	(I)Ljava/lang/Object;;
+const #113 = Asciz	(ILjava/lang/Object;)V;
+const #114 = Asciz	(Ljava/lang/Object;)I;
+const #115 = Asciz	(Ljava/lang/Object;)V;
+const #116 = Asciz	(I)Ljava/lang/StringBuilder;;
+const #117 = Asciz	(ILjava/util/Collection;)Z;
+const #118 = Asciz	(ILjava/util/Collection<+TE;>;)Z;
+const #119 = Asciz	(Ljava/util/Collection;)V;
+const #120 = Asciz	(Ljava/util/Collection;)Z;
+const #121 = Asciz	(Ljava/util/Collection<+TE;>;)V;
+const #122 = Asciz	(Ljava/util/Collection<+TE;>;)Z;
+const #123 = Asciz	(ILjava/lang/Object;)Ljava/lang/Object;;
+const #124 = Asciz	(Ljava/lang/Object;ILjava/lang/Object;II)V;
+const #125 = Asciz	([Ljava/lang/Object;)[Ljava/lang/Object;;
+const #126 = Asciz	([Ljava/lang/Object;I)[Ljava/lang/Object;;
+const #127 = Asciz	(Ljava/lang/String;)Ljava/lang/StringBuilder;;
+const #128 = Asciz	([Ljava/lang/Object;ILjava/lang/Class;)[Ljava/lang/Object;;
+const #129 = NameAndType	#69:#21;//  modCount:I
+const #130 = NameAndType	#76:#21;//  size:I
+const #131 = NameAndType	#40:#29;//  elementData:[Ljava/lang/Object;
+const #132 = NameAndType	#70:#4;//  readInt:()I
+const #133 = NameAndType	#17:#6;//  "<init>":()V
+const #134 = NameAndType	#38:#6;//  defaultReadObject:()V
+const #135 = NameAndType	#39:#6;//  defaultWriteObject:()V
+const #136 = NameAndType	#17:#9;//  "<init>":(I)V
+const #137 = NameAndType	#26:#9;//  RangeCheck:(I)V
+const #138 = NameAndType	#41:#9;//  ensureCapacity:(I)V
+const #139 = NameAndType	#43:#9;//  fastRemove:(I)V
+const #140 = NameAndType	#80:#9;//  writeInt:(I)V
+const #141 = NameAndType	#45:#109;//  getClass:()Ljava/lang/Class;
+const #142 = NameAndType	#35:#110;//  clone:()Ljava/lang/Object;
+const #143 = NameAndType	#71:#110;//  readObject:()Ljava/lang/Object;
+const #144 = NameAndType	#77:#111;//  toArray:()[Ljava/lang/Object;
+const #145 = NameAndType	#46:#114;//  indexOf:(Ljava/lang/Object;)I
+const #146 = NameAndType	#81:#115;//  writeObject:(Ljava/lang/Object;)V
+const #147 = NameAndType	#42:#13;//  equals:(Ljava/lang/Object;)Z
+const #148 = NameAndType	#78:#5;//  toString:()Ljava/lang/String;
+const #149 = NameAndType	#17:#14;//  "<init>":(Ljava/lang/String;)V
+const #150 = NameAndType	#32:#116;//  append:(I)Ljava/lang/StringBuilder;
+const #151 = NameAndType	#33:#124;//  arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+const #152 = NameAndType	#37:#126;//  copyOf:([Ljava/lang/Object;I)[Ljava/lang/Object;
+const #153 = NameAndType	#32:#127;//  append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+const #154 = NameAndType	#37:#128;//  copyOf:([Ljava/lang/Object;ILjava/lang/Class;)[Ljava/lang/Object;
+const #155 = Field	#99.#129;	//  java/util/ArrayList.modCount:I
+const #156 = Field	#99.#130;	//  java/util/ArrayList.size:I
+const #157 = Field	#99.#131;	//  java/util/ArrayList.elementData:[Ljava/lang/Object;
+const #158 = Method	#86.#132;	//  java/io/ObjectInputStream.readInt:()I
+const #159 = Method	#86.#134;	//  java/io/ObjectInputStream.defaultReadObject:()V
+const #160 = Method	#86.#143;	//  java/io/ObjectInputStream.readObject:()Ljava/lang/Object;
+const #161 = Method	#87.#135;	//  java/io/ObjectOutputStream.defaultWriteObject:()V
+const #162 = Method	#87.#140;	//  java/io/ObjectOutputStream.writeInt:(I)V
+const #163 = Method	#87.#146;	//  java/io/ObjectOutputStream.writeObject:(Ljava/lang/Object;)V
+const #164 = Method	#92.#149;	//  java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+const #165 = Method	#93.#149;	//  java/lang/IndexOutOfBoundsException."<init>":(Ljava/lang/String;)V
+const #166 = Method	#94.#133;	//  java/lang/InternalError."<init>":()V
+const #167 = Method	#95.#141;	//  java/lang/Object.getClass:()Ljava/lang/Class;
+const #168 = Method	#95.#142;	//  java/lang/Object.clone:()Ljava/lang/Object;
+const #169 = Method	#95.#147;	//  java/lang/Object.equals:(Ljava/lang/Object;)Z
+const #170 = Method	#96.#133;	//  java/lang/StringBuilder."<init>":()V
+const #171 = Method	#96.#148;	//  java/lang/StringBuilder.toString:()Ljava/lang/String;
+const #172 = Method	#96.#150;	//  java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+const #173 = Method	#96.#153;	//  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+const #174 = Method	#97.#151;	//  java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+const #175 = Method	#98.#133;	//  java/util/AbstractList."<init>":()V
+const #176 = Method	#99.#136;	//  java/util/ArrayList."<init>":(I)V
+const #177 = Method	#99.#137;	//  java/util/ArrayList.RangeCheck:(I)V
+const #178 = Method	#99.#138;	//  java/util/ArrayList.ensureCapacity:(I)V
+const #179 = Method	#99.#139;	//  java/util/ArrayList.fastRemove:(I)V
+const #180 = Method	#99.#145;	//  java/util/ArrayList.indexOf:(Ljava/lang/Object;)I
+const #181 = Method	#100.#152;	//  java/util/Arrays.copyOf:([Ljava/lang/Object;I)[Ljava/lang/Object;
+const #182 = Method	#100.#154;	//  java/util/Arrays.copyOf:([Ljava/lang/Object;ILjava/lang/Class;)[Ljava/lang/Object;
+const #183 = Method	#102.#133;	//  java/util/ConcurrentModificationException."<init>":()V
+const #184 = InterfaceMethod	#101.#144;	//  java/util/Collection.toArray:()[Ljava/lang/Object;
+const #185 = Asciz	ArrayList.java;
+
+{
+public java.util.ArrayList(int);
+  Code:
+   Stack=4, Locals=2, Args_size=2
+   0:	aload_0
+   1:	invokespecial	#175; //Method java/util/AbstractList."<init>":()V
+   4:	iload_1
+   5:	ifge	35
+   8:	new	#92; //class java/lang/IllegalArgumentException
+   11:	dup
+   12:	new	#96; //class java/lang/StringBuilder
+   15:	dup
+   16:	invokespecial	#170; //Method java/lang/StringBuilder."<init>":()V
+   19:	ldc	#2; //String Illegal Capacity: 
+   21:	invokevirtual	#173; //Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+   24:	iload_1
+   25:	invokevirtual	#172; //Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+   28:	invokevirtual	#171; //Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+   31:	invokespecial	#164; //Method java/lang/IllegalArgumentException."<init>":(Ljava/lang/String;)V
+   34:	athrow
+   35:	aload_0
+   36:	iload_1
+   37:	anewarray	#95; //class java/lang/Object
+   40:	putfield	#157; //Field elementData:[Ljava/lang/Object;
+   43:	return
+  LineNumberTable: 
+   line 108: 0
+   line 109: 4
+   line 110: 8
+   line 112: 35
+   line 113: 43
+
+
+public java.util.ArrayList();
+  Code:
+   Stack=2, Locals=1, Args_size=1
+   0:	aload_0
+   1:	bipush	10
+   3:	invokespecial	#176; //Method "<init>":(I)V
+   6:	return
+  LineNumberTable: 
+   line 119: 0
+   line 120: 6
+
+
+public java.util.ArrayList(java.util.Collection);
+  Code:
+   Stack=4, Locals=2, Args_size=2
+   0:	aload_0
+   1:	invokespecial	#175; //Method java/util/AbstractList."<init>":()V
+   4:	aload_0
+   5:	aload_1
+   6:	invokeinterface	#184,  1; //InterfaceMethod java/util/Collection.toArray:()[Ljava/lang/Object;
+   11:	putfield	#157; //Field elementData:[Ljava/lang/Object;
+   14:	aload_0
+   15:	aload_0
+   16:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   19:	arraylength
+   20:	putfield	#156; //Field size:I
+   23:	aload_0
+   24:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   27:	invokevirtual	#167; //Method java/lang/Object.getClass:()Ljava/lang/Class;
+   30:	ldc_w	#84; //class "[Ljava/lang/Object;"
+   33:	if_acmpeq	54
+   36:	aload_0
+   37:	aload_0
+   38:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   41:	aload_0
+   42:	getfield	#156; //Field size:I
+   45:	ldc_w	#84; //class "[Ljava/lang/Object;"
+   48:	invokestatic	#182; //Method java/util/Arrays.copyOf:([Ljava/lang/Object;ILjava/lang/Class;)[Ljava/lang/Object;
+   51:	putfield	#157; //Field elementData:[Ljava/lang/Object;
+   54:	return
+  LineNumberTable: 
+   line 130: 0
+   line 131: 4
+   line 132: 14
+   line 134: 23
+   line 135: 36
+   line 136: 54
+
+  Signature: length = 0x2
+   00 79 
+
+public void trimToSize();
+  Code:
+   Stack=3, Locals=2, Args_size=1
+   0:	aload_0
+   1:	dup
+   2:	getfield	#155; //Field modCount:I
+   5:	iconst_1
+   6:	iadd
+   7:	putfield	#155; //Field modCount:I
+   10:	aload_0
+   11:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   14:	arraylength
+   15:	istore_1
+   16:	aload_0
+   17:	getfield	#156; //Field size:I
+   20:	iload_1
+   21:	if_icmpge	39
+   24:	aload_0
+   25:	aload_0
+   26:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   29:	aload_0
+   30:	getfield	#156; //Field size:I
+   33:	invokestatic	#181; //Method java/util/Arrays.copyOf:([Ljava/lang/Object;I)[Ljava/lang/Object;
+   36:	putfield	#157; //Field elementData:[Ljava/lang/Object;
+   39:	return
+  LineNumberTable: 
+   line 144: 0
+   line 145: 10
+   line 146: 16
+   line 147: 24
+   line 149: 39
+
+
+public void ensureCapacity(int);
+  Code:
+   Stack=3, Locals=5, Args_size=2
+   0:	aload_0
+   1:	dup
+   2:	getfield	#155; //Field modCount:I
+   5:	iconst_1
+   6:	iadd
+   7:	putfield	#155; //Field modCount:I
+   10:	aload_0
+   11:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   14:	arraylength
+   15:	istore_2
+   16:	iload_1
+   17:	iload_2
+   18:	if_icmple	57
+   21:	aload_0
+   22:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   25:	astore_3
+   26:	iload_2
+   27:	iconst_3
+   28:	imul
+   29:	iconst_2
+   30:	idiv
+   31:	iconst_1
+   32:	iadd
+   33:	istore	4
+   35:	iload	4
+   37:	iload_1
+   38:	if_icmpge	44
+   41:	iload_1
+   42:	istore	4
+   44:	aload_0
+   45:	aload_0
+   46:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   49:	iload	4
+   51:	invokestatic	#181; //Method java/util/Arrays.copyOf:([Ljava/lang/Object;I)[Ljava/lang/Object;
+   54:	putfield	#157; //Field elementData:[Ljava/lang/Object;
+   57:	return
+  LineNumberTable: 
+   line 159: 0
+   line 160: 10
+   line 161: 16
+   line 162: 21
+   line 163: 26
+   line 164: 35
+   line 165: 41
+   line 167: 44
+   line 169: 57
+
+
+public int size();
+  Code:
+   Stack=1, Locals=1, Args_size=1
+   0:	aload_0
+   1:	getfield	#156; //Field size:I
+   4:	ireturn
+  LineNumberTable: 
+   line 177: 0
+
+
+public boolean isEmpty();
+  Code:
+   Stack=1, Locals=1, Args_size=1
+   0:	aload_0
+   1:	getfield	#156; //Field size:I
+   4:	ifne	11
+   7:	iconst_1
+   8:	goto	12
+   11:	iconst_0
+   12:	ireturn
+  LineNumberTable: 
+   line 186: 0
+
+
+public boolean contains(java.lang.Object);
+  Code:
+   Stack=2, Locals=2, Args_size=2
+   0:	aload_0
+   1:	aload_1
+   2:	invokevirtual	#180; //Method indexOf:(Ljava/lang/Object;)I
+   5:	iflt	12
+   8:	iconst_1
+   9:	goto	13
+   12:	iconst_0
+   13:	ireturn
+  LineNumberTable: 
+   line 199: 0
+
+
+public int indexOf(java.lang.Object);
+  Code:
+   Stack=3, Locals=3, Args_size=2
+   0:	aload_1
+   1:	ifnonnull	34
+   4:	iconst_0
+   5:	istore_2
+   6:	iload_2
+   7:	aload_0
+   8:	getfield	#156; //Field size:I
+   11:	if_icmpge	31
+   14:	aload_0
+   15:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   18:	iload_2
+   19:	aaload
+   20:	ifnonnull	25
+   23:	iload_2
+   24:	ireturn
+   25:	iinc	2, 1
+   28:	goto	6
+   31:	goto	65
+   34:	iconst_0
+   35:	istore_2
+   36:	iload_2
+   37:	aload_0
+   38:	getfield	#156; //Field size:I
+   41:	if_icmpge	65
+   44:	aload_1
+   45:	aload_0
+   46:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   49:	iload_2
+   50:	aaload
+   51:	invokevirtual	#169; //Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+   54:	ifeq	59
+   57:	iload_2
+   58:	ireturn
+   59:	iinc	2, 1
+   62:	goto	36
+   65:	iconst_m1
+   66:	ireturn
+  LineNumberTable: 
+   line 210: 0
+   line 211: 4
+   line 212: 14
+   line 213: 23
+   line 211: 25
+   line 215: 34
+   line 216: 44
+   line 217: 57
+   line 215: 59
+   line 219: 65
+
+
+public int lastIndexOf(java.lang.Object);
+  Code:
+   Stack=3, Locals=3, Args_size=2
+   0:	aload_1
+   1:	ifnonnull	35
+   4:	aload_0
+   5:	getfield	#156; //Field size:I
+   8:	iconst_1
+   9:	isub
+   10:	istore_2
+   11:	iload_2
+   12:	iflt	32
+   15:	aload_0
+   16:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   19:	iload_2
+   20:	aaload
+   21:	ifnonnull	26
+   24:	iload_2
+   25:	ireturn
+   26:	iinc	2, -1
+   29:	goto	11
+   32:	goto	67
+   35:	aload_0
+   36:	getfield	#156; //Field size:I
+   39:	iconst_1
+   40:	isub
+   41:	istore_2
+   42:	iload_2
+   43:	iflt	67
+   46:	aload_1
+   47:	aload_0
+   48:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   51:	iload_2
+   52:	aaload
+   53:	invokevirtual	#169; //Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+   56:	ifeq	61
+   59:	iload_2
+   60:	ireturn
+   61:	iinc	2, -1
+   64:	goto	42
+   67:	iconst_m1
+   68:	ireturn
+  LineNumberTable: 
+   line 230: 0
+   line 231: 4
+   line 232: 15
+   line 233: 24
+   line 231: 26
+   line 235: 35
+   line 236: 46
+   line 237: 59
+   line 235: 61
+   line 239: 67
+
+
+public java.lang.Object clone();
+  Code:
+   Stack=3, Locals=2, Args_size=1
+   0:	aload_0
+   1:	invokespecial	#168; //Method java/lang/Object.clone:()Ljava/lang/Object;
+   4:	checkcast	#99; //class java/util/ArrayList
+   7:	astore_1
+   8:	aload_1
+   9:	aload_0
+   10:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   13:	aload_0
+   14:	getfield	#156; //Field size:I
+   17:	invokestatic	#181; //Method java/util/Arrays.copyOf:([Ljava/lang/Object;I)[Ljava/lang/Object;
+   20:	putfield	#157; //Field elementData:[Ljava/lang/Object;
+   23:	aload_1
+   24:	iconst_0
+   25:	putfield	#155; //Field modCount:I
+   28:	aload_1
+   29:	areturn
+   30:	astore_1
+   31:	new	#94; //class java/lang/InternalError
+   34:	dup
+   35:	invokespecial	#166; //Method java/lang/InternalError."<init>":()V
+   38:	athrow
+  Exception table:
+   from   to  target type
+     0    29    30   Class java/lang/CloneNotSupportedException
+
+  LineNumberTable: 
+   line 250: 0
+   line 251: 8
+   line 252: 23
+   line 253: 28
+   line 254: 30
+   line 256: 31
+
+
+public java.lang.Object[] toArray();
+  Code:
+   Stack=2, Locals=1, Args_size=1
+   0:	aload_0
+   1:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   4:	aload_0
+   5:	getfield	#156; //Field size:I
+   8:	invokestatic	#181; //Method java/util/Arrays.copyOf:([Ljava/lang/Object;I)[Ljava/lang/Object;
+   11:	areturn
+  LineNumberTable: 
+   line 275: 0
+
+
+public java.lang.Object[] toArray(java.lang.Object[]);
+  Code:
+   Stack=5, Locals=2, Args_size=2
+   0:	aload_1
+   1:	arraylength
+   2:	aload_0
+   3:	getfield	#156; //Field size:I
+   6:	if_icmpge	28
+   9:	aload_0
+   10:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   13:	aload_0
+   14:	getfield	#156; //Field size:I
+   17:	aload_1
+   18:	invokevirtual	#167; //Method java/lang/Object.getClass:()Ljava/lang/Class;
+   21:	invokestatic	#182; //Method java/util/Arrays.copyOf:([Ljava/lang/Object;ILjava/lang/Class;)[Ljava/lang/Object;
+   24:	checkcast	#84; //class "[Ljava/lang/Object;"
+   27:	areturn
+   28:	aload_0
+   29:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   32:	iconst_0
+   33:	aload_1
+   34:	iconst_0
+   35:	aload_0
+   36:	getfield	#156; //Field size:I
+   39:	invokestatic	#174; //Method java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+   42:	aload_1
+   43:	arraylength
+   44:	aload_0
+   45:	getfield	#156; //Field size:I
+   48:	if_icmple	58
+   51:	aload_1
+   52:	aload_0
+   53:	getfield	#156; //Field size:I
+   56:	aconst_null
+   57:	aastore
+   58:	aload_1
+   59:	areturn
+  LineNumberTable: 
+   line 303: 0
+   line 305: 9
+   line 306: 28
+   line 307: 42
+   line 308: 51
+   line 309: 58
+
+  Signature: length = 0x2
+   00 69 
+
+public java.lang.Object get(int);
+  Code:
+   Stack=2, Locals=2, Args_size=2
+   0:	aload_0
+   1:	iload_1
+   2:	invokespecial	#177; //Method RangeCheck:(I)V
+   5:	aload_0
+   6:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   9:	iload_1
+   10:	aaload
+   11:	areturn
+  LineNumberTable: 
+   line 322: 0
+   line 324: 5
+
+  Signature: length = 0x2
+   00 08 
+
+public java.lang.Object set(int, java.lang.Object);
+  Code:
+   Stack=3, Locals=4, Args_size=3
+   0:	aload_0
+   1:	iload_1
+   2:	invokespecial	#177; //Method RangeCheck:(I)V
+   5:	aload_0
+   6:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   9:	iload_1
+   10:	aaload
+   11:	astore_3
+   12:	aload_0
+   13:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   16:	iload_1
+   17:	aload_2
+   18:	aastore
+   19:	aload_3
+   20:	areturn
+  LineNumberTable: 
+   line 337: 0
+   line 339: 5
+   line 340: 12
+   line 341: 19
+
+  Signature: length = 0x2
+   00 0B 
+
+public boolean add(java.lang.Object);
+  Code:
+   Stack=5, Locals=2, Args_size=2
+   0:	aload_0
+   1:	aload_0
+   2:	getfield	#156; //Field size:I
+   5:	iconst_1
+   6:	iadd
+   7:	invokevirtual	#178; //Method ensureCapacity:(I)V
+   10:	aload_0
+   11:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   14:	aload_0
+   15:	dup
+   16:	getfield	#156; //Field size:I
+   19:	dup_x1
+   20:	iconst_1
+   21:	iadd
+   22:	putfield	#156; //Field size:I
+   25:	aload_1
+   26:	aastore
+   27:	iconst_1
+   28:	ireturn
+  LineNumberTable: 
+   line 351: 0
+   line 352: 10
+   line 353: 27
+
+  Signature: length = 0x2
+   00 0F 
+
+public void add(int, java.lang.Object);
+  Code:
+   Stack=6, Locals=3, Args_size=3
+   0:	iload_1
+   1:	aload_0
+   2:	getfield	#156; //Field size:I
+   5:	if_icmpgt	12
+   8:	iload_1
+   9:	ifge	51
+   12:	new	#93; //class java/lang/IndexOutOfBoundsException
+   15:	dup
+   16:	new	#96; //class java/lang/StringBuilder
+   19:	dup
+   20:	invokespecial	#170; //Method java/lang/StringBuilder."<init>":()V
+   23:	ldc	#3; //String Index: 
+   25:	invokevirtual	#173; //Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+   28:	iload_1
+   29:	invokevirtual	#172; //Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+   32:	ldc	#1; //String , Size: 
+   34:	invokevirtual	#173; //Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+   37:	aload_0
+   38:	getfield	#156; //Field size:I
+   41:	invokevirtual	#172; //Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+   44:	invokevirtual	#171; //Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+   47:	invokespecial	#165; //Method java/lang/IndexOutOfBoundsException."<init>":(Ljava/lang/String;)V
+   50:	athrow
+   51:	aload_0
+   52:	aload_0
+   53:	getfield	#156; //Field size:I
+   56:	iconst_1
+   57:	iadd
+   58:	invokevirtual	#178; //Method ensureCapacity:(I)V
+   61:	aload_0
+   62:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   65:	iload_1
+   66:	aload_0
+   67:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   70:	iload_1
+   71:	iconst_1
+   72:	iadd
+   73:	aload_0
+   74:	getfield	#156; //Field size:I
+   77:	iload_1
+   78:	isub
+   79:	invokestatic	#174; //Method java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+   82:	aload_0
+   83:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   86:	iload_1
+   87:	aload_2
+   88:	aastore
+   89:	aload_0
+   90:	dup
+   91:	getfield	#156; //Field size:I
+   94:	iconst_1
+   95:	iadd
+   96:	putfield	#156; //Field size:I
+   99:	return
+  LineNumberTable: 
+   line 366: 0
+   line 367: 12
+   line 370: 51
+   line 371: 61
+   line 373: 82
+   line 374: 89
+   line 375: 99
+
+  Signature: length = 0x2
+   00 0C 
+
+public java.lang.Object remove(int);
+  Code:
+   Stack=5, Locals=4, Args_size=2
+   0:	aload_0
+   1:	iload_1
+   2:	invokespecial	#177; //Method RangeCheck:(I)V
+   5:	aload_0
+   6:	dup
+   7:	getfield	#155; //Field modCount:I
+   10:	iconst_1
+   11:	iadd
+   12:	putfield	#155; //Field modCount:I
+   15:	aload_0
+   16:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   19:	iload_1
+   20:	aaload
+   21:	astore_2
+   22:	aload_0
+   23:	getfield	#156; //Field size:I
+   26:	iload_1
+   27:	isub
+   28:	iconst_1
+   29:	isub
+   30:	istore_3
+   31:	iload_3
+   32:	ifle	51
+   35:	aload_0
+   36:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   39:	iload_1
+   40:	iconst_1
+   41:	iadd
+   42:	aload_0
+   43:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   46:	iload_1
+   47:	iload_3
+   48:	invokestatic	#174; //Method java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+   51:	aload_0
+   52:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   55:	aload_0
+   56:	dup
+   57:	getfield	#156; //Field size:I
+   60:	iconst_1
+   61:	isub
+   62:	dup_x1
+   63:	putfield	#156; //Field size:I
+   66:	aconst_null
+   67:	aastore
+   68:	aload_2
+   69:	areturn
+  LineNumberTable: 
+   line 387: 0
+   line 389: 5
+   line 390: 15
+   line 392: 22
+   line 393: 31
+   line 394: 35
+   line 396: 51
+   line 398: 68
+
+  Signature: length = 0x2
+   00 08 
+
+public boolean remove(java.lang.Object);
+  Code:
+   Stack=3, Locals=3, Args_size=2
+   0:	aload_1
+   1:	ifnonnull	39
+   4:	iconst_0
+   5:	istore_2
+   6:	iload_2
+   7:	aload_0
+   8:	getfield	#156; //Field size:I
+   11:	if_icmpge	36
+   14:	aload_0
+   15:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   18:	iload_2
+   19:	aaload
+   20:	ifnonnull	30
+   23:	aload_0
+   24:	iload_2
+   25:	invokespecial	#179; //Method fastRemove:(I)V
+   28:	iconst_1
+   29:	ireturn
+   30:	iinc	2, 1
+   33:	goto	6
+   36:	goto	75
+   39:	iconst_0
+   40:	istore_2
+   41:	iload_2
+   42:	aload_0
+   43:	getfield	#156; //Field size:I
+   46:	if_icmpge	75
+   49:	aload_1
+   50:	aload_0
+   51:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   54:	iload_2
+   55:	aaload
+   56:	invokevirtual	#169; //Method java/lang/Object.equals:(Ljava/lang/Object;)Z
+   59:	ifeq	69
+   62:	aload_0
+   63:	iload_2
+   64:	invokespecial	#179; //Method fastRemove:(I)V
+   67:	iconst_1
+   68:	ireturn
+   69:	iinc	2, 1
+   72:	goto	41
+   75:	iconst_0
+   76:	ireturn
+  LineNumberTable: 
+   line 415: 0
+   line 416: 4
+   line 417: 14
+   line 418: 23
+   line 419: 28
+   line 416: 30
+   line 422: 39
+   line 423: 49
+   line 424: 62
+   line 425: 67
+   line 422: 69
+   line 428: 75
+
+
+public void clear();
+  Code:
+   Stack=3, Locals=2, Args_size=1
+   0:	aload_0
+   1:	dup
+   2:	getfield	#155; //Field modCount:I
+   5:	iconst_1
+   6:	iadd
+   7:	putfield	#155; //Field modCount:I
+   10:	iconst_0
+   11:	istore_1
+   12:	iload_1
+   13:	aload_0
+   14:	getfield	#156; //Field size:I
+   17:	if_icmpge	33
+   20:	aload_0
+   21:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   24:	iload_1
+   25:	aconst_null
+   26:	aastore
+   27:	iinc	1, 1
+   30:	goto	12
+   33:	aload_0
+   34:	iconst_0
+   35:	putfield	#156; //Field size:I
+   38:	return
+  LineNumberTable: 
+   line 449: 0
+   line 452: 10
+   line 453: 20
+   line 452: 27
+   line 455: 33
+   line 456: 38
+
+
+public boolean addAll(java.util.Collection);
+  Code:
+   Stack=5, Locals=4, Args_size=2
+   0:	aload_1
+   1:	invokeinterface	#184,  1; //InterfaceMethod java/util/Collection.toArray:()[Ljava/lang/Object;
+   6:	astore_2
+   7:	aload_2
+   8:	arraylength
+   9:	istore_3
+   10:	aload_0
+   11:	aload_0
+   12:	getfield	#156; //Field size:I
+   15:	iload_3
+   16:	iadd
+   17:	invokevirtual	#178; //Method ensureCapacity:(I)V
+   20:	aload_2
+   21:	iconst_0
+   22:	aload_0
+   23:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   26:	aload_0
+   27:	getfield	#156; //Field size:I
+   30:	iload_3
+   31:	invokestatic	#174; //Method java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+   34:	aload_0
+   35:	dup
+   36:	getfield	#156; //Field size:I
+   39:	iload_3
+   40:	iadd
+   41:	putfield	#156; //Field size:I
+   44:	iload_3
+   45:	ifeq	52
+   48:	iconst_1
+   49:	goto	53
+   52:	iconst_0
+   53:	ireturn
+  LineNumberTable: 
+   line 472: 0
+   line 473: 7
+   line 474: 10
+   line 475: 20
+   line 476: 34
+   line 477: 44
+
+  Signature: length = 0x2
+   00 7A 
+
+public boolean addAll(int, java.util.Collection);
+  Code:
+   Stack=5, Locals=6, Args_size=3
+   0:	iload_1
+   1:	aload_0
+   2:	getfield	#156; //Field size:I
+   5:	if_icmpgt	12
+   8:	iload_1
+   9:	ifge	51
+   12:	new	#93; //class java/lang/IndexOutOfBoundsException
+   15:	dup
+   16:	new	#96; //class java/lang/StringBuilder
+   19:	dup
+   20:	invokespecial	#170; //Method java/lang/StringBuilder."<init>":()V
+   23:	ldc	#3; //String Index: 
+   25:	invokevirtual	#173; //Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+   28:	iload_1
+   29:	invokevirtual	#172; //Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+   32:	ldc	#1; //String , Size: 
+   34:	invokevirtual	#173; //Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+   37:	aload_0
+   38:	getfield	#156; //Field size:I
+   41:	invokevirtual	#172; //Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+   44:	invokevirtual	#171; //Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+   47:	invokespecial	#165; //Method java/lang/IndexOutOfBoundsException."<init>":(Ljava/lang/String;)V
+   50:	athrow
+   51:	aload_2
+   52:	invokeinterface	#184,  1; //InterfaceMethod java/util/Collection.toArray:()[Ljava/lang/Object;
+   57:	astore_3
+   58:	aload_3
+   59:	arraylength
+   60:	istore	4
+   62:	aload_0
+   63:	aload_0
+   64:	getfield	#156; //Field size:I
+   67:	iload	4
+   69:	iadd
+   70:	invokevirtual	#178; //Method ensureCapacity:(I)V
+   73:	aload_0
+   74:	getfield	#156; //Field size:I
+   77:	iload_1
+   78:	isub
+   79:	istore	5
+   81:	iload	5
+   83:	ifle	104
+   86:	aload_0
+   87:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   90:	iload_1
+   91:	aload_0
+   92:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   95:	iload_1
+   96:	iload	4
+   98:	iadd
+   99:	iload	5
+   101:	invokestatic	#174; //Method java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+   104:	aload_3
+   105:	iconst_0
+   106:	aload_0
+   107:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   110:	iload_1
+   111:	iload	4
+   113:	invokestatic	#174; //Method java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+   116:	aload_0
+   117:	dup
+   118:	getfield	#156; //Field size:I
+   121:	iload	4
+   123:	iadd
+   124:	putfield	#156; //Field size:I
+   127:	iload	4
+   129:	ifeq	136
+   132:	iconst_1
+   133:	goto	137
+   136:	iconst_0
+   137:	ireturn
+  LineNumberTable: 
+   line 496: 0
+   line 497: 12
+   line 500: 51
+   line 501: 58
+   line 502: 62
+   line 504: 73
+   line 505: 81
+   line 506: 86
+   line 509: 104
+   line 510: 116
+   line 511: 127
+
+  Signature: length = 0x2
+   00 76 
+
+protected void removeRange(int, int);
+  Code:
+   Stack=5, Locals=5, Args_size=3
+   0:	aload_0
+   1:	dup
+   2:	getfield	#155; //Field modCount:I
+   5:	iconst_1
+   6:	iadd
+   7:	putfield	#155; //Field modCount:I
+   10:	aload_0
+   11:	getfield	#156; //Field size:I
+   14:	iload_2
+   15:	isub
+   16:	istore_3
+   17:	aload_0
+   18:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   21:	iload_2
+   22:	aload_0
+   23:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   26:	iload_1
+   27:	iload_3
+   28:	invokestatic	#174; //Method java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+   31:	aload_0
+   32:	getfield	#156; //Field size:I
+   35:	iload_2
+   36:	iload_1
+   37:	isub
+   38:	isub
+   39:	istore	4
+   41:	aload_0
+   42:	getfield	#156; //Field size:I
+   45:	iload	4
+   47:	if_icmpeq	70
+   50:	aload_0
+   51:	getfield	#157; //Field elementData:[Ljava/lang/Object;
+   54:	aload_0
+   55:	dup
+   56:	getfield	#156; //Field size:I
+   59:	iconst_1
+   60:	isub
+   61:	dup_x1
+   62:	putfield	#156; //Field size:I
+   65:	aconst_null
+   66:	aastore
+   67:	goto	41
+   70:	return
+  LineNumberTable: 
+   line 528: 0
+   line 529: 10
+   line 530: 17
+   line 534: 31
+   line 535: 41
+   line 536: 50
+   line 537: 70
+
+
+}
+

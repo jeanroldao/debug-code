@@ -1,0 +1,86 @@
+<script>
+
+function loadPong() {
+	var field = document.createElement("div");
+	
+	field.style.width = "100px";
+	field.style.height = "50px";
+	field.style.border = "thin black solid";
+	field.style.position = "absolute";
+	field.style.left = "0px";
+	field.style.top = "0px";
+	
+	document.body.appendChild(field);
+	
+	var wall = document.createElement("div");
+	wall.style.width = "10px";
+	wall.style.height = "10px";
+	wall.style.border = "thin black solid";
+	wall.style.position = "absolute";
+	wall.style.left = "45px";
+	wall.style.top = "20px";
+	field.appendChild(wall);
+	
+	
+	var ball = document.createElement("div");
+	ball.style.position = "absolute";
+	ball.style.width = "10px";
+	ball.style.height = "10px";
+	ball.style.backgroundColor = "black";
+	ball.style.left = "10px";
+	ball.style.top = "0px";
+	
+	field.appendChild(ball);
+	
+	var goingLeft = false;
+	var goingTop = false;
+	
+	setInterval(function() {
+		var left = +(ball.style.left.substr(0, ball.style.left.length - 2));
+		var top = +(ball.style.top.substr(0, ball.style.top.length - 2));
+		
+		if (goingLeft) {
+			ball.style.left = (--left);
+		} else {
+			ball.style.left = (++left);
+		}
+		if (goingTop) {
+			ball.style.top = (--top);
+		} else {
+			ball.style.top = (++top);
+		}
+		
+		if ((left + 10) > +(field.style.width.substr(0, field.style.width.length - 2))) {
+			goingLeft = true;
+		}
+		if (left < 0) {
+			goingLeft = false;
+		}
+		
+		if ((top + 10) > +(field.style.height.substr(0, field.style.height.length - 2))) {
+			goingTop = true;
+		}
+		if (top < 0) {
+			goingTop = false;
+		}
+		
+		if (!goingLeft && top > 10 && top < 30 && left == 36 ) {
+			goingLeft = true;
+		}
+		
+		if (goingLeft && top > 10 && top < 30 && left == 54 ) {
+			goingLeft = false;
+		}
+		
+		if (!goingTop && left > 35 && left < 55 && top == 11 ) {
+			goingTop = true;
+		}
+		
+		if (goingTop && left > 35 && left < 55 && top == 29 ) {
+			goingTop = false;
+		}
+		
+	}, 1000 / 60);
+}
+</script>
+<body onload="loadPong();"></body>

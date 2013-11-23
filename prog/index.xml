@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk">
+<head>
+</head>
+<body>
+	<ui:composition template="resources/template.xhtml">
+		<ui:define name="styleAndScript">
+			<link
+				href="#{facesContext.externalContext.requestContextPath}/css/processVariablesList.css"
+				type="text/css" rel="stylesheet" />
+				
+		</ui:define>
+
+		<ui:define name="title">#{labels.processVariablesMaintenance}</ui:define>
+
+		<ui:define name="content">
+
+			<t:saveState value="#{processVariablesController.processVariablesListView}" />
+
+			<h:form id="table-form">
+
+				<div class="message-area">
+					<h:message id="processVariable-messages" />
+				</div>
+
+				<h:panelGroup id="processVariabletable" rendered="#{not empty processVariablesController.processVariablesListView.processVariablesList}">
+					<t:dataTable 
+						rowIndexVar="rowIndex"
+						columnClasses=",,centerColumn,centerColumn"
+						styleClass="returns-list-table"
+						value="#{processVariablesController.processVariablesListView.processVariablesList}"
+						var="processVariable">
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{labels.group}" />
+							</f:facet>
+							<h:outputText value="#{processVariable.group}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{labels.variable}" />
+							</f:facet>
+							<h:outputText value="#{processVariable.variable}" />
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{labels.value}" />
+							</f:facet>
+							<h:inputText id="rowIndex" value="#{processVariable.value}"
+								rendered="#{not (processVariable.value == 'true' or processVariable.value == 'false')}"
+								validatorMessage="#{labels.value} #{labels.invalidFormat}">
+								<f:validateRegex pattern="(?i)^(?!.*\btrue\b)(?!.*\bfalse\b).*$"/>
+							</h:inputText>
+							 <h:selectBooleanCheckbox 
+							 	value="#{processVariablesController.processVariablesListView.checked[processVariable.variable]}"
+							 	title="#{labels.value}" 
+							 	rendered="#{processVariable.value == 'true' or processVariable.value == 'false'}"
+							 	styleClass="checkbox" />
+							 	<div class="message-area"><h:message for="rowIndex" /></div>	
+						</h:column>
+
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{labels.actions}" />
+							</f:facet>
+
+							<t:commandButton 
+								id="editProcessVariable"
+								action="#{processVariablesController.updateProcessVariable(processVariable)}"
+								alt="#{labels.editProcessVariable}"
+								styleClass="save"
+								title="#{labels.saveProcessVariable}"
+								value="#{labels.saveProcessVariable}" />
+						</h:column>
+						
+					</t:dataTable>
+
+				</h:panelGroup>
+			</h:form>
+
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
