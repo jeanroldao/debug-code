@@ -1,0 +1,2856 @@
+Classfile jar:file:/C:/Program%20Files/Java/jdk1.7.0_21/jre/lib/rt.jar!/java/lang/Integer.class
+  Last modified 04/04/2013; size 8848 bytes
+  MD5 checksum 1afb878230a542b4b38d9beb55361883
+  Compiled from "Integer.java"
+public final class java.lang.Integer extends java.lang.Number implements java.lang.Comparable<java.lang.Integer>
+  SourceFile: "Integer.java"
+  Signature: #172                         // Ljava/lang/Number;Ljava/lang/Comparable<Ljava/lang/Integer;>;
+  minor version: 0
+  major version: 51
+  flags: ACC_PUBLIC, ACC_FINAL, ACC_SUPER
+Constant pool:
+    #1 = Integer            -2147483648
+    #2 = Integer            -2147483647
+    #3 = Integer            52429
+    #4 = Integer            65280
+    #5 = Integer            65536
+    #6 = Integer            99999
+    #7 = Integer            999999
+    #8 = Integer            9999999
+    #9 = Integer            16711680
+   #10 = Integer            99999999
+   #11 = Integer            252645135
+   #12 = Integer            858993459
+   #13 = Integer            999999999
+   #14 = Integer            1431655765
+   #15 = Integer            2147483647
+   #16 = String             #30           //   greater than Character.MAX_RADIX
+   #17 = String             #31           //   less than Character.MIN_RADIX
+   #18 = String             #32           //  #
+   #19 = String             #60           //  +
+   #20 = String             #61           //  -
+   #21 = String             #62           //  -2147483648
+   #22 = String             #63           //  0
+   #23 = String             #64           //  0X
+   #24 = String             #65           //  0x
+   #25 = String             #81           //  Sign character in wrong position
+   #26 = String             #87           //  Zero length string
+   #27 = String             #113          //  int
+   #28 = String             #131          //  null
+   #29 = String             #135          //  radix 
+   #30 = Utf8                greater than Character.MAX_RADIX
+   #31 = Utf8                less than Character.MIN_RADIX
+   #32 = Utf8               #
+   #33 = Utf8               $assertionsDisabled
+   #34 = Utf8               ()B
+   #35 = Utf8               ()D
+   #36 = Utf8               ()F
+   #37 = Utf8               ()I
+   #38 = Utf8               ()J
+   #39 = Utf8               ()Ljava/lang/String;
+   #40 = Utf8               ()S
+   #41 = Utf8               ()V
+   #42 = Utf8               ()Z
+   #43 = Utf8               (CI)I
+   #44 = Utf8               (I)C
+   #45 = Utf8               (I)I
+   #46 = Utf8               (I)Ljava/lang/Integer;
+   #47 = Utf8               (I)Ljava/lang/String;
+   #48 = Utf8               (I)V
+   #49 = Utf8               (II)I
+   #50 = Utf8               (II)Ljava/lang/String;
+   #51 = Utf8               (II[C)V
+   #52 = Utf8               (Ljava/lang/Object;)I
+   #53 = Utf8               (Ljava/lang/Object;)Z
+   #54 = Utf8               (Ljava/lang/String;)I
+   #55 = Utf8               (Ljava/lang/String;)Ljava/lang/Class;
+   #56 = Utf8               (Ljava/lang/String;)Ljava/lang/String;
+   #57 = Utf8               (Ljava/lang/String;)V
+   #58 = Utf8               ([CII)V
+   #59 = Utf8               ([CZ)V
+   #60 = Utf8               +
+   #61 = Utf8               -
+   #62 = Utf8               -2147483648
+   #63 = Utf8               0
+   #64 = Utf8               0X
+   #65 = Utf8               0x
+   #66 = Utf8               <clinit>
+   #67 = Utf8               <init>
+   #68 = Utf8               Code
+   #69 = Utf8               ConstantValue
+   #70 = Utf8               DigitOnes
+   #71 = Utf8               DigitTens
+   #72 = Utf8               Exceptions
+   #73 = Utf8               I
+   #74 = Utf8               InnerClasses
+   #75 = Utf8               J
+   #76 = Utf8               LineNumberTable
+   #77 = Utf8               Ljava/lang/Class;
+   #78 = Utf8               MAX_VALUE
+   #79 = Utf8               MIN_VALUE
+   #80 = Utf8               SIZE
+   #81 = Utf8               Sign character in wrong position
+   #82 = Utf8               Signature
+   #83 = Utf8               SourceFile
+   #84 = Utf8               StackMapTable
+   #85 = Utf8               TYPE
+   #86 = Utf8               Z
+   #87 = Utf8               Zero length string
+   #88 = Utf8               [C
+   #89 = Utf8               [I
+   #90 = Utf8               [Ljava/lang/Integer;
+   #91 = Utf8               append
+   #92 = Utf8               bitCount
+   #93 = Utf8               byteValue
+   #94 = Utf8               cache
+   #95 = Utf8               charAt
+   #96 = Utf8               compare
+   #97 = Utf8               compareTo
+   #98 = Utf8               decode
+   #99 = Utf8               desiredAssertionStatus
+  #100 = Utf8               digit
+  #101 = Utf8               digits
+  #102 = Utf8               doubleValue
+  #103 = Utf8               equals
+  #104 = Utf8               floatValue
+  #105 = Utf8               forInputString
+  #106 = Utf8               getChars
+  #107 = Utf8               getInteger
+  #108 = Utf8               getPrimitiveClass
+  #109 = Utf8               getProperty
+  #110 = Utf8               hashCode
+  #111 = Utf8               high
+  #112 = Utf8               highestOneBit
+  #113 = Utf8               int
+  #114 = Utf8               intValue
+  #115 = Utf8               java/lang/AssertionError
+  #116 = Utf8               java/lang/Character
+  #117 = Utf8               java/lang/Class
+  #118 = Utf8               java/lang/Comparable
+  #119 = Utf8               java/lang/IllegalArgumentException
+  #120 = Utf8               java/lang/Integer
+  #121 = Utf8               java/lang/Integer$IntegerCache
+  #122 = Utf8               java/lang/NullPointerException
+  #123 = Utf8               java/lang/Number
+  #124 = Utf8               java/lang/NumberFormatException
+  #125 = Utf8               java/lang/String
+  #126 = Utf8               java/lang/StringBuilder
+  #127 = Utf8               java/lang/System
+  #128 = Utf8               length
+  #129 = Utf8               longValue
+  #130 = Utf8               lowestOneBit
+  #131 = Utf8               null
+  #132 = Utf8               numberOfLeadingZeros
+  #133 = Utf8               numberOfTrailingZeros
+  #134 = Utf8               parseInt
+  #135 = Utf8               radix 
+  #136 = Utf8               reverse
+  #137 = Utf8               reverseBytes
+  #138 = Utf8               rotateLeft
+  #139 = Utf8               rotateRight
+  #140 = Utf8               serialVersionUID
+  #141 = Utf8               shortValue
+  #142 = Utf8               signum
+  #143 = Utf8               sizeTable
+  #144 = Utf8               startsWith
+  #145 = Utf8               stringSize
+  #146 = Utf8               substring
+  #147 = Utf8               toBinaryString
+  #148 = Utf8               toHexString
+  #149 = Utf8               toOctalString
+  #150 = Utf8               toString
+  #151 = Utf8               toUnsignedString
+  #152 = Utf8               value
+  #153 = Utf8               valueOf
+  #154 = Integer            32
+  #155 = Long               1360826667806852920l
+  #157 = Class              #88           //  "[C"
+  #158 = Class              #115          //  java/lang/AssertionError
+  #159 = Class              #116          //  java/lang/Character
+  #160 = Class              #117          //  java/lang/Class
+  #161 = Class              #118          //  java/lang/Comparable
+  #162 = Class              #119          //  java/lang/IllegalArgumentException
+  #163 = Class              #120          //  java/lang/Integer
+  #164 = Class              #121          //  java/lang/Integer$IntegerCache
+  #165 = Class              #122          //  java/lang/NullPointerException
+  #166 = Class              #123          //  java/lang/Number
+  #167 = Class              #124          //  java/lang/NumberFormatException
+  #168 = Class              #125          //  java/lang/String
+  #169 = Class              #126          //  java/lang/StringBuilder
+  #170 = Class              #127          //  java/lang/System
+  #171 = Utf8               Ljava/lang/Class<Ljava/lang/Integer;>;
+  #172 = Utf8               Ljava/lang/Number;Ljava/lang/Comparable<Ljava/lang/Integer;>;
+  #173 = Utf8               (Ljava/lang/Integer;)I
+  #174 = Utf8               (Ljava/lang/String;I)I
+  #175 = Utf8               (Ljava/lang/String;I)Z
+  #176 = Utf8               (I)Ljava/lang/StringBuilder;
+  #177 = Utf8               (Ljava/lang/String;)Ljava/lang/Integer;
+  #178 = Utf8               (Ljava/lang/String;I)Ljava/lang/Integer;
+  #179 = Utf8               (Ljava/lang/String;)Ljava/lang/NumberFormatException;
+  #180 = Utf8               (Ljava/lang/String;)Ljava/lang/StringBuilder;
+  #181 = Utf8               (Ljava/lang/String;Ljava/lang/Integer;)Ljava/lang/Integer;
+  #182 = NameAndType        #111:#73      //  high:I
+  #183 = NameAndType        #152:#73      //  value:I
+  #184 = NameAndType        #33:#86       //  $assertionsDisabled:Z
+  #185 = NameAndType        #70:#88       //  DigitOnes:[C
+  #186 = NameAndType        #71:#88       //  DigitTens:[C
+  #187 = NameAndType        #101:#88      //  digits:[C
+  #188 = NameAndType        #143:#89      //  sizeTable:[I
+  #189 = NameAndType        #85:#77       //  TYPE:Ljava/lang/Class;
+  #190 = NameAndType        #94:#90       //  cache:[Ljava/lang/Integer;
+  #191 = NameAndType        #114:#37      //  intValue:()I
+  #192 = NameAndType        #128:#37      //  length:()I
+  #193 = NameAndType        #67:#41       //  "<init>":()V
+  #194 = NameAndType        #99:#42       //  desiredAssertionStatus:()Z
+  #195 = NameAndType        #100:#43      //  digit:(CI)I
+  #196 = NameAndType        #95:#44       //  charAt:(I)C
+  #197 = NameAndType        #145:#45      //  stringSize:(I)I
+  #198 = NameAndType        #67:#48       //  "<init>":(I)V
+  #199 = NameAndType        #96:#49       //  compare:(II)I
+  #200 = NameAndType        #106:#51      //  getChars:(II[C)V
+  #201 = NameAndType        #67:#58       //  "<init>":([CII)V
+  #202 = NameAndType        #67:#59       //  "<init>":([CZ)V
+  #203 = NameAndType        #153:#46      //  valueOf:(I)Ljava/lang/Integer;
+  #204 = NameAndType        #97:#173      //  compareTo:(Ljava/lang/Integer;)I
+  #205 = NameAndType        #150:#39      //  toString:()Ljava/lang/String;
+  #206 = NameAndType        #146:#47      //  substring:(I)Ljava/lang/String;
+  #207 = NameAndType        #150:#47      //  toString:(I)Ljava/lang/String;
+  #208 = NameAndType        #151:#50      //  toUnsignedString:(II)Ljava/lang/String;
+  #209 = NameAndType        #67:#57       //  "<init>":(Ljava/lang/String;)V
+  #210 = NameAndType        #134:#174     //  parseInt:(Ljava/lang/String;I)I
+  #211 = NameAndType        #144:#175     //  startsWith:(Ljava/lang/String;I)Z
+  #212 = NameAndType        #91:#176      //  append:(I)Ljava/lang/StringBuilder;
+  #213 = NameAndType        #108:#55      //  getPrimitiveClass:(Ljava/lang/String;)Ljava/lang/Class;
+  #214 = NameAndType        #98:#177      //  decode:(Ljava/lang/String;)Ljava/lang/Integer;
+  #215 = NameAndType        #153:#178     //  valueOf:(Ljava/lang/String;I)Ljava/lang/Integer;
+  #216 = NameAndType        #105:#179     //  forInputString:(Ljava/lang/String;)Ljava/lang/NumberFormatException;
+  #217 = NameAndType        #109:#56      //  getProperty:(Ljava/lang/String;)Ljava/lang/String;
+  #218 = NameAndType        #91:#180      //  append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  #219 = NameAndType        #107:#181     //  getInteger:(Ljava/lang/String;Ljava/lang/Integer;)Ljava/lang/Integer;
+  #220 = Fieldref           #163.#183     //  java/lang/Integer.value:I
+  #221 = Fieldref           #163.#184     //  java/lang/Integer.$assertionsDisabled:Z
+  #222 = Fieldref           #163.#185     //  java/lang/Integer.DigitOnes:[C
+  #223 = Fieldref           #163.#186     //  java/lang/Integer.DigitTens:[C
+  #224 = Fieldref           #163.#187     //  java/lang/Integer.digits:[C
+  #225 = Fieldref           #163.#188     //  java/lang/Integer.sizeTable:[I
+  #226 = Fieldref           #163.#189     //  java/lang/Integer.TYPE:Ljava/lang/Class;
+  #227 = Fieldref           #164.#182     //  java/lang/Integer$IntegerCache.high:I
+  #228 = Fieldref           #164.#190     //  java/lang/Integer$IntegerCache.cache:[Ljava/lang/Integer;
+  #229 = Methodref          #158.#193     //  java/lang/AssertionError."<init>":()V
+  #230 = Methodref          #159.#195     //  java/lang/Character.digit:(CI)I
+  #231 = Methodref          #160.#194     //  java/lang/Class.desiredAssertionStatus:()Z
+  #232 = Methodref          #160.#213     //  java/lang/Class.getPrimitiveClass:(Ljava/lang/String;)Ljava/lang/Class;
+  #233 = Methodref          #163.#191     //  java/lang/Integer.intValue:()I
+  #234 = Methodref          #163.#197     //  java/lang/Integer.stringSize:(I)I
+  #235 = Methodref          #163.#198     //  java/lang/Integer."<init>":(I)V
+  #236 = Methodref          #163.#199     //  java/lang/Integer.compare:(II)I
+  #237 = Methodref          #163.#200     //  java/lang/Integer.getChars:(II[C)V
+  #238 = Methodref          #163.#203     //  java/lang/Integer.valueOf:(I)Ljava/lang/Integer;
+  #239 = Methodref          #163.#204     //  java/lang/Integer.compareTo:(Ljava/lang/Integer;)I
+  #240 = Methodref          #163.#207     //  java/lang/Integer.toString:(I)Ljava/lang/String;
+  #241 = Methodref          #163.#208     //  java/lang/Integer.toUnsignedString:(II)Ljava/lang/String;
+  #242 = Methodref          #163.#210     //  java/lang/Integer.parseInt:(Ljava/lang/String;I)I
+  #243 = Methodref          #163.#214     //  java/lang/Integer.decode:(Ljava/lang/String;)Ljava/lang/Integer;
+  #244 = Methodref          #163.#215     //  java/lang/Integer.valueOf:(Ljava/lang/String;I)Ljava/lang/Integer;
+  #245 = Methodref          #163.#219     //  java/lang/Integer.getInteger:(Ljava/lang/String;Ljava/lang/Integer;)Ljava/lang/Integer;
+  #246 = Methodref          #166.#193     //  java/lang/Number."<init>":()V
+  #247 = Methodref          #167.#209     //  java/lang/NumberFormatException."<init>":(Ljava/lang/String;)V
+  #248 = Methodref          #167.#216     //  java/lang/NumberFormatException.forInputString:(Ljava/lang/String;)Ljava/lang/NumberFormatException;
+  #249 = Methodref          #168.#192     //  java/lang/String.length:()I
+  #250 = Methodref          #168.#196     //  java/lang/String.charAt:(I)C
+  #251 = Methodref          #168.#201     //  java/lang/String."<init>":([CII)V
+  #252 = Methodref          #168.#202     //  java/lang/String."<init>":([CZ)V
+  #253 = Methodref          #168.#206     //  java/lang/String.substring:(I)Ljava/lang/String;
+  #254 = Methodref          #168.#211     //  java/lang/String.startsWith:(Ljava/lang/String;I)Z
+  #255 = Methodref          #169.#193     //  java/lang/StringBuilder."<init>":()V
+  #256 = Methodref          #169.#205     //  java/lang/StringBuilder.toString:()Ljava/lang/String;
+  #257 = Methodref          #169.#212     //  java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+  #258 = Methodref          #169.#218     //  java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+  #259 = Methodref          #170.#217     //  java/lang/System.getProperty:(Ljava/lang/String;)Ljava/lang/String;
+  #260 = Utf8               Integer.java
+  #261 = Utf8               IntegerCache
+{
+  public static final int MIN_VALUE;
+    flags: ACC_PUBLIC, ACC_STATIC, ACC_FINAL
+    ConstantValue: int -2147483648
+
+  public static final int MAX_VALUE;
+    flags: ACC_PUBLIC, ACC_STATIC, ACC_FINAL
+    ConstantValue: int 2147483647
+
+  public static final java.lang.Class<java.lang.Integer> TYPE;
+    flags: ACC_PUBLIC, ACC_STATIC, ACC_FINAL
+    Signature: #171                         // Ljava/lang/Class<Ljava/lang/Integer;>;
+
+  static final char[] digits;
+    flags: ACC_STATIC, ACC_FINAL
+
+  static final char[] DigitTens;
+    flags: ACC_STATIC, ACC_FINAL
+
+  static final char[] DigitOnes;
+    flags: ACC_STATIC, ACC_FINAL
+
+  static final int[] sizeTable;
+    flags: ACC_STATIC, ACC_FINAL
+
+  public static final int SIZE;
+    flags: ACC_PUBLIC, ACC_STATIC, ACC_FINAL
+    ConstantValue: int 32
+
+  static final boolean $assertionsDisabled;
+    flags: ACC_STATIC, ACC_FINAL, ACC_SYNTHETIC
+
+  public static java.lang.String toString(int, int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=6, locals=5, args_size=2
+         0: iload_1       
+         1: iconst_2      
+         2: if_icmplt     11
+         5: iload_1       
+         6: bipush        36
+         8: if_icmple     14
+        11: bipush        10
+        13: istore_1      
+        14: iload_1       
+        15: bipush        10
+        17: if_icmpne     25
+        20: iload_0       
+        21: invokestatic  #240                // Method toString:(I)Ljava/lang/String;
+        24: areturn       
+        25: bipush        33
+        27: newarray       char
+        29: astore_2      
+        30: iload_0       
+        31: ifge          38
+        34: iconst_1      
+        35: goto          39
+        38: iconst_0      
+        39: istore_3      
+        40: bipush        32
+        42: istore        4
+        44: iload_3       
+        45: ifne          51
+        48: iload_0       
+        49: ineg          
+        50: istore_0      
+        51: iload_0       
+        52: iload_1       
+        53: ineg          
+        54: if_icmpgt     79
+        57: aload_2       
+        58: iload         4
+        60: iinc          4, -1
+        63: getstatic     #224                // Field digits:[C
+        66: iload_0       
+        67: iload_1       
+        68: irem          
+        69: ineg          
+        70: caload        
+        71: castore       
+        72: iload_0       
+        73: iload_1       
+        74: idiv          
+        75: istore_0      
+        76: goto          51
+        79: aload_2       
+        80: iload         4
+        82: getstatic     #224                // Field digits:[C
+        85: iload_0       
+        86: ineg          
+        87: caload        
+        88: castore       
+        89: iload_3       
+        90: ifeq          102
+        93: aload_2       
+        94: iinc          4, -1
+        97: iload         4
+        99: bipush        45
+       101: castore       
+       102: new           #168                // class java/lang/String
+       105: dup           
+       106: aload_2       
+       107: iload         4
+       109: bipush        33
+       111: iload         4
+       113: isub          
+       114: invokespecial #251                // Method java/lang/String."<init>":([CII)V
+       117: areturn       
+      StackMapTable: number_of_entries = 8
+           frame_type = 11 /* same */
+           frame_type = 2 /* same */
+           frame_type = 10 /* same */
+           frame_type = 252 /* append */
+             offset_delta = 12
+        locals = [ class "[C" ]
+           frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+           frame_type = 253 /* append */
+             offset_delta = 11
+        locals = [ int, int ]
+           frame_type = 27 /* same */
+           frame_type = 22 /* same */
+
+      LineNumberTable:
+        line 131: 0
+        line 132: 11
+        line 135: 14
+        line 136: 20
+        line 139: 25
+        line 140: 30
+        line 141: 40
+        line 143: 44
+        line 144: 48
+        line 147: 51
+        line 148: 57
+        line 149: 72
+        line 151: 79
+        line 153: 89
+        line 154: 93
+        line 157: 102
+
+  public static java.lang.String toHexString(int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: iload_0       
+         1: iconst_4      
+         2: invokestatic  #241                // Method toUnsignedString:(II)Ljava/lang/String;
+         5: areturn       
+      LineNumberTable:
+        line 195: 0
+
+  public static java.lang.String toOctalString(int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: iload_0       
+         1: iconst_3      
+         2: invokestatic  #241                // Method toUnsignedString:(II)Ljava/lang/String;
+         5: areturn       
+      LineNumberTable:
+        line 227: 0
+
+  public static java.lang.String toBinaryString(int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: iload_0       
+         1: iconst_1      
+         2: invokestatic  #241                // Method toUnsignedString:(II)Ljava/lang/String;
+         5: areturn       
+      LineNumberTable:
+        line 252: 0
+
+  public static java.lang.String toString(int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=4, locals=3, args_size=1
+         0: iload_0       
+         1: ldc           #1                  // int -2147483648
+         3: if_icmpne     9
+         6: ldc           #21                 // String -2147483648
+         8: areturn       
+         9: iload_0       
+        10: ifge          23
+        13: iload_0       
+        14: ineg          
+        15: invokestatic  #234                // Method stringSize:(I)I
+        18: iconst_1      
+        19: iadd          
+        20: goto          27
+        23: iload_0       
+        24: invokestatic  #234                // Method stringSize:(I)I
+        27: istore_1      
+        28: iload_1       
+        29: newarray       char
+        31: astore_2      
+        32: iload_0       
+        33: iload_1       
+        34: aload_2       
+        35: invokestatic  #237                // Method getChars:(II[C)V
+        38: new           #168                // class java/lang/String
+        41: dup           
+        42: aload_2       
+        43: iconst_1      
+        44: invokespecial #252                // Method java/lang/String."<init>":([CZ)V
+        47: areturn       
+      StackMapTable: number_of_entries = 3
+           frame_type = 9 /* same */
+           frame_type = 13 /* same */
+           frame_type = 67 /* same_locals_1_stack_item */
+          stack = [ int ]
+
+      LineNumberTable:
+        line 328: 0
+        line 329: 6
+        line 330: 9
+        line 331: 28
+        line 332: 32
+        line 333: 38
+
+  static void getChars(int, int, char[]);
+    flags: ACC_STATIC
+    Code:
+      stack=4, locals=7, args_size=3
+         0: iload_1       
+         1: istore        5
+         3: iconst_0      
+         4: istore        6
+         6: iload_0       
+         7: ifge          17
+        10: bipush        45
+        12: istore        6
+        14: iload_0       
+        15: ineg          
+        16: istore_0      
+        17: iload_0       
+        18: ldc           #5                  // int 65536
+        20: if_icmplt     75
+        23: iload_0       
+        24: bipush        100
+        26: idiv          
+        27: istore_3      
+        28: iload_0       
+        29: iload_3       
+        30: bipush        6
+        32: ishl          
+        33: iload_3       
+        34: iconst_5      
+        35: ishl          
+        36: iadd          
+        37: iload_3       
+        38: iconst_2      
+        39: ishl          
+        40: iadd          
+        41: isub          
+        42: istore        4
+        44: iload_3       
+        45: istore_0      
+        46: aload_2       
+        47: iinc          5, -1
+        50: iload         5
+        52: getstatic     #222                // Field DigitOnes:[C
+        55: iload         4
+        57: caload        
+        58: castore       
+        59: aload_2       
+        60: iinc          5, -1
+        63: iload         5
+        65: getstatic     #223                // Field DigitTens:[C
+        68: iload         4
+        70: caload        
+        71: castore       
+        72: goto          17
+        75: iload_0       
+        76: ldc           #3                  // int 52429
+        78: imul          
+        79: bipush        19
+        81: iushr         
+        82: istore_3      
+        83: iload_0       
+        84: iload_3       
+        85: iconst_3      
+        86: ishl          
+        87: iload_3       
+        88: iconst_1      
+        89: ishl          
+        90: iadd          
+        91: isub          
+        92: istore        4
+        94: aload_2       
+        95: iinc          5, -1
+        98: iload         5
+       100: getstatic     #224                // Field digits:[C
+       103: iload         4
+       105: caload        
+       106: castore       
+       107: iload_3       
+       108: istore_0      
+       109: iload_0       
+       110: ifne          75
+       113: goto          116
+       116: iload         6
+       118: ifeq          130
+       121: aload_2       
+       122: iinc          5, -1
+       125: iload         5
+       127: iload         6
+       129: castore       
+       130: return        
+      StackMapTable: number_of_entries = 4
+           frame_type = 255 /* full_frame */
+          offset_delta = 17
+          locals = [ int, int, class "[C", top, top, int, int ]
+          stack = []
+           frame_type = 57 /* same */
+           frame_type = 255 /* full_frame */
+          offset_delta = 40
+          locals = [ int, int, class "[C", int, int, int, int ]
+          stack = []
+           frame_type = 13 /* same */
+
+      LineNumberTable:
+        line 347: 0
+        line 348: 3
+        line 350: 6
+        line 351: 10
+        line 352: 14
+        line 356: 17
+        line 357: 23
+        line 359: 28
+        line 360: 44
+        line 361: 46
+        line 362: 59
+        line 368: 75
+        line 369: 83
+        line 370: 94
+        line 371: 107
+        line 372: 109
+        line 374: 116
+        line 375: 121
+        line 377: 130
+
+  static int stringSize(int);
+    flags: ACC_STATIC
+    Code:
+      stack=3, locals=2, args_size=1
+         0: iconst_0      
+         1: istore_1      
+         2: iload_0       
+         3: getstatic     #225                // Field sizeTable:[I
+         6: iload_1       
+         7: iaload        
+         8: if_icmpgt     15
+        11: iload_1       
+        12: iconst_1      
+        13: iadd          
+        14: ireturn       
+        15: iinc          1, 1
+        18: goto          2
+      StackMapTable: number_of_entries = 2
+           frame_type = 252 /* append */
+             offset_delta = 2
+        locals = [ int ]
+           frame_type = 12 /* same */
+
+      LineNumberTable:
+        line 384: 0
+        line 385: 2
+        line 386: 11
+        line 384: 15
+
+  public static int parseInt(java.lang.String, int) throws java.lang.NumberFormatException;
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=4, locals=10, args_size=2
+         0: aload_0       
+         1: ifnonnull     14
+         4: new           #167                // class java/lang/NumberFormatException
+         7: dup           
+         8: ldc           #28                 // String null
+        10: invokespecial #247                // Method java/lang/NumberFormatException."<init>":(Ljava/lang/String;)V
+        13: athrow        
+        14: iload_1       
+        15: iconst_2      
+        16: if_icmpge     51
+        19: new           #167                // class java/lang/NumberFormatException
+        22: dup           
+        23: new           #169                // class java/lang/StringBuilder
+        26: dup           
+        27: invokespecial #255                // Method java/lang/StringBuilder."<init>":()V
+        30: ldc           #29                 // String radix 
+        32: invokevirtual #258                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        35: iload_1       
+        36: invokevirtual #257                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+        39: ldc           #17                 // String  less than Character.MIN_RADIX
+        41: invokevirtual #258                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        44: invokevirtual #256                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+        47: invokespecial #247                // Method java/lang/NumberFormatException."<init>":(Ljava/lang/String;)V
+        50: athrow        
+        51: iload_1       
+        52: bipush        36
+        54: if_icmple     89
+        57: new           #167                // class java/lang/NumberFormatException
+        60: dup           
+        61: new           #169                // class java/lang/StringBuilder
+        64: dup           
+        65: invokespecial #255                // Method java/lang/StringBuilder."<init>":()V
+        68: ldc           #29                 // String radix 
+        70: invokevirtual #258                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        73: iload_1       
+        74: invokevirtual #257                // Method java/lang/StringBuilder.append:(I)Ljava/lang/StringBuilder;
+        77: ldc           #16                 // String  greater than Character.MAX_RADIX
+        79: invokevirtual #258                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+        82: invokevirtual #256                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+        85: invokespecial #247                // Method java/lang/NumberFormatException."<init>":(Ljava/lang/String;)V
+        88: athrow        
+        89: iconst_0      
+        90: istore_2      
+        91: iconst_0      
+        92: istore_3      
+        93: iconst_0      
+        94: istore        4
+        96: aload_0       
+        97: invokevirtual #249                // Method java/lang/String.length:()I
+       100: istore        5
+       102: ldc           #2                  // int -2147483647
+       104: istore        6
+       106: iload         5
+       108: ifle          245
+       111: aload_0       
+       112: iconst_0      
+       113: invokevirtual #250                // Method java/lang/String.charAt:(I)C
+       116: istore        9
+       118: iload         9
+       120: bipush        48
+       122: if_icmpge     167
+       125: iload         9
+       127: bipush        45
+       129: if_icmpne     141
+       132: iconst_1      
+       133: istore_3      
+       134: ldc           #1                  // int -2147483648
+       136: istore        6
+       138: goto          153
+       141: iload         9
+       143: bipush        43
+       145: if_icmpeq     153
+       148: aload_0       
+       149: invokestatic  #248                // Method java/lang/NumberFormatException.forInputString:(Ljava/lang/String;)Ljava/lang/NumberFormatException;
+       152: athrow        
+       153: iload         5
+       155: iconst_1      
+       156: if_icmpne     164
+       159: aload_0       
+       160: invokestatic  #248                // Method java/lang/NumberFormatException.forInputString:(Ljava/lang/String;)Ljava/lang/NumberFormatException;
+       163: athrow        
+       164: iinc          4, 1
+       167: iload         6
+       169: iload_1       
+       170: idiv          
+       171: istore        7
+       173: iload         4
+       175: iload         5
+       177: if_icmpge     242
+       180: aload_0       
+       181: iload         4
+       183: iinc          4, 1
+       186: invokevirtual #250                // Method java/lang/String.charAt:(I)C
+       189: iload_1       
+       190: invokestatic  #230                // Method java/lang/Character.digit:(CI)I
+       193: istore        8
+       195: iload         8
+       197: ifge          205
+       200: aload_0       
+       201: invokestatic  #248                // Method java/lang/NumberFormatException.forInputString:(Ljava/lang/String;)Ljava/lang/NumberFormatException;
+       204: athrow        
+       205: iload_2       
+       206: iload         7
+       208: if_icmpge     216
+       211: aload_0       
+       212: invokestatic  #248                // Method java/lang/NumberFormatException.forInputString:(Ljava/lang/String;)Ljava/lang/NumberFormatException;
+       215: athrow        
+       216: iload_2       
+       217: iload_1       
+       218: imul          
+       219: istore_2      
+       220: iload_2       
+       221: iload         6
+       223: iload         8
+       225: iadd          
+       226: if_icmpge     234
+       229: aload_0       
+       230: invokestatic  #248                // Method java/lang/NumberFormatException.forInputString:(Ljava/lang/String;)Ljava/lang/NumberFormatException;
+       233: athrow        
+       234: iload_2       
+       235: iload         8
+       237: isub          
+       238: istore_2      
+       239: goto          173
+       242: goto          250
+       245: aload_0       
+       246: invokestatic  #248                // Method java/lang/NumberFormatException.forInputString:(Ljava/lang/String;)Ljava/lang/NumberFormatException;
+       249: athrow        
+       250: iload_3       
+       251: ifeq          258
+       254: iload_2       
+       255: goto          260
+       258: iload_2       
+       259: ineg          
+       260: ireturn       
+      StackMapTable: number_of_entries = 16
+           frame_type = 14 /* same */
+           frame_type = 36 /* same */
+           frame_type = 37 /* same */
+           frame_type = 255 /* full_frame */
+          offset_delta = 51
+          locals = [ class java/lang/String, int, int, int, int, int, int, top, top, int ]
+          stack = []
+           frame_type = 11 /* same */
+           frame_type = 10 /* same */
+           frame_type = 2 /* same */
+           frame_type = 255 /* full_frame */
+          offset_delta = 5
+          locals = [ class java/lang/String, int, int, int, int, int, int, int, top, int ]
+          stack = []
+           frame_type = 255 /* full_frame */
+          offset_delta = 31
+          locals = [ class java/lang/String, int, int, int, int, int, int, int, int, int ]
+          stack = []
+           frame_type = 10 /* same */
+           frame_type = 17 /* same */
+           frame_type = 249 /* chop */
+          offset_delta = 7
+           frame_type = 250 /* chop */
+          offset_delta = 2
+           frame_type = 252 /* append */
+             offset_delta = 4
+        locals = [ int ]
+           frame_type = 7 /* same */
+           frame_type = 65 /* same_locals_1_stack_item */
+          stack = [ int ]
+
+      LineNumberTable:
+        line 453: 0
+        line 454: 4
+        line 457: 14
+        line 458: 19
+        line 462: 51
+        line 463: 57
+        line 467: 89
+        line 468: 91
+        line 469: 93
+        line 470: 102
+        line 474: 106
+        line 475: 111
+        line 476: 118
+        line 477: 125
+        line 478: 132
+        line 479: 134
+        line 480: 141
+        line 481: 148
+        line 483: 153
+        line 484: 159
+        line 485: 164
+        line 487: 167
+        line 488: 173
+        line 490: 180
+        line 491: 195
+        line 492: 200
+        line 494: 205
+        line 495: 211
+        line 497: 216
+        line 498: 220
+        line 499: 229
+        line 501: 234
+        line 503: 242
+        line 504: 245
+        line 506: 250
+    Exceptions:
+      throws java.lang.NumberFormatException
+
+  public static int parseInt(java.lang.String) throws java.lang.NumberFormatException;
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: aload_0       
+         1: bipush        10
+         3: invokestatic  #242                // Method parseInt:(Ljava/lang/String;I)I
+         6: ireturn       
+      LineNumberTable:
+        line 527: 0
+    Exceptions:
+      throws java.lang.NumberFormatException
+
+  public static java.lang.Integer valueOf(java.lang.String, int) throws java.lang.NumberFormatException;
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0       
+         1: iload_1       
+         2: invokestatic  #242                // Method parseInt:(Ljava/lang/String;I)I
+         5: invokestatic  #238                // Method valueOf:(I)Ljava/lang/Integer;
+         8: areturn       
+      LineNumberTable:
+        line 556: 0
+    Exceptions:
+      throws java.lang.NumberFormatException
+
+  public static java.lang.Integer valueOf(java.lang.String) throws java.lang.NumberFormatException;
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: aload_0       
+         1: bipush        10
+         3: invokestatic  #242                // Method parseInt:(Ljava/lang/String;I)I
+         6: invokestatic  #238                // Method valueOf:(I)Ljava/lang/Integer;
+         9: areturn       
+      LineNumberTable:
+        line 582: 0
+    Exceptions:
+      throws java.lang.NumberFormatException
+
+  public static java.lang.Integer valueOf(int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=3, locals=1, args_size=1
+         0: getstatic     #221                // Field $assertionsDisabled:Z
+         3: ifne          22
+         6: getstatic     #227                // Field java/lang/Integer$IntegerCache.high:I
+         9: bipush        127
+        11: if_icmpge     22
+        14: new           #158                // class java/lang/AssertionError
+        17: dup           
+        18: invokespecial #229                // Method java/lang/AssertionError."<init>":()V
+        21: athrow        
+        22: iload_0       
+        23: bipush        -128
+        25: if_icmplt     45
+        28: iload_0       
+        29: getstatic     #227                // Field java/lang/Integer$IntegerCache.high:I
+        32: if_icmpgt     45
+        35: getstatic     #228                // Field java/lang/Integer$IntegerCache.cache:[Ljava/lang/Integer;
+        38: iload_0       
+        39: sipush        128
+        42: iadd          
+        43: aaload        
+        44: areturn       
+        45: new           #163                // class java/lang/Integer
+        48: dup           
+        49: iload_0       
+        50: invokespecial #235                // Method "<init>":(I)V
+        53: areturn       
+      StackMapTable: number_of_entries = 2
+           frame_type = 22 /* same */
+           frame_type = 22 /* same */
+
+      LineNumberTable:
+        line 639: 0
+        line 640: 22
+        line 641: 35
+        line 642: 45
+
+  public java.lang.Integer(int);
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0       
+         1: invokespecial #246                // Method java/lang/Number."<init>":()V
+         4: aload_0       
+         5: iload_1       
+         6: putfield      #220                // Field value:I
+         9: return        
+      LineNumberTable:
+        line 659: 0
+        line 660: 4
+        line 661: 9
+
+  public java.lang.Integer(java.lang.String) throws java.lang.NumberFormatException;
+    flags: ACC_PUBLIC
+    Code:
+      stack=3, locals=2, args_size=2
+         0: aload_0       
+         1: invokespecial #246                // Method java/lang/Number."<init>":()V
+         4: aload_0       
+         5: aload_1       
+         6: bipush        10
+         8: invokestatic  #242                // Method parseInt:(Ljava/lang/String;I)I
+        11: putfield      #220                // Field value:I
+        14: return        
+      LineNumberTable:
+        line 676: 0
+        line 677: 4
+        line 678: 14
+    Exceptions:
+      throws java.lang.NumberFormatException
+
+  public byte byteValue();
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0       
+         1: getfield      #220                // Field value:I
+         4: i2b           
+         5: ireturn       
+      LineNumberTable:
+        line 685: 0
+
+  public short shortValue();
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0       
+         1: getfield      #220                // Field value:I
+         4: i2s           
+         5: ireturn       
+      LineNumberTable:
+        line 693: 0
+
+  public int intValue();
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0       
+         1: getfield      #220                // Field value:I
+         4: ireturn       
+      LineNumberTable:
+        line 701: 0
+
+  public long longValue();
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: aload_0       
+         1: getfield      #220                // Field value:I
+         4: i2l           
+         5: lreturn       
+      LineNumberTable:
+        line 709: 0
+
+  public float floatValue();
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0       
+         1: getfield      #220                // Field value:I
+         4: i2f           
+         5: freturn       
+      LineNumberTable:
+        line 717: 0
+
+  public double doubleValue();
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: aload_0       
+         1: getfield      #220                // Field value:I
+         4: i2d           
+         5: dreturn       
+      LineNumberTable:
+        line 725: 0
+
+  public java.lang.String toString();
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0       
+         1: getfield      #220                // Field value:I
+         4: invokestatic  #240                // Method toString:(I)Ljava/lang/String;
+         7: areturn       
+      LineNumberTable:
+        line 739: 0
+
+  public int hashCode();
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0       
+         1: getfield      #220                // Field value:I
+         4: ireturn       
+      LineNumberTable:
+        line 750: 0
+
+  public boolean equals(java.lang.Object);
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_1       
+         1: instanceof    #163                // class java/lang/Integer
+         4: ifeq          27
+         7: aload_0       
+         8: getfield      #220                // Field value:I
+        11: aload_1       
+        12: checkcast     #163                // class java/lang/Integer
+        15: invokevirtual #233                // Method intValue:()I
+        18: if_icmpne     25
+        21: iconst_1      
+        22: goto          26
+        25: iconst_0      
+        26: ireturn       
+        27: iconst_0      
+        28: ireturn       
+      StackMapTable: number_of_entries = 3
+           frame_type = 25 /* same */
+           frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+           frame_type = 0 /* same */
+
+      LineNumberTable:
+        line 764: 0
+        line 765: 7
+        line 767: 27
+
+  public static java.lang.Integer getInteger(java.lang.String);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: aload_0       
+         1: aconst_null   
+         2: invokestatic  #245                // Method getInteger:(Ljava/lang/String;Ljava/lang/Integer;)Ljava/lang/Integer;
+         5: areturn       
+      LineNumberTable:
+        line 799: 0
+
+  public static java.lang.Integer getInteger(java.lang.String, int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=3, args_size=2
+         0: aload_0       
+         1: aconst_null   
+         2: invokestatic  #245                // Method getInteger:(Ljava/lang/String;Ljava/lang/Integer;)Ljava/lang/Integer;
+         5: astore_2      
+         6: aload_2       
+         7: ifnonnull     17
+        10: iload_1       
+        11: invokestatic  #238                // Method valueOf:(I)Ljava/lang/Integer;
+        14: goto          18
+        17: aload_2       
+        18: areturn       
+      StackMapTable: number_of_entries = 2
+           frame_type = 252 /* append */
+             offset_delta = 17
+        locals = [ class java/lang/Integer ]
+           frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ class java/lang/Integer ]
+
+      LineNumberTable:
+        line 844: 0
+        line 845: 6
+
+  public static java.lang.Integer getInteger(java.lang.String, java.lang.Integer);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=1, locals=4, args_size=2
+         0: aconst_null   
+         1: astore_2      
+         2: aload_0       
+         3: invokestatic  #259                // Method java/lang/System.getProperty:(Ljava/lang/String;)Ljava/lang/String;
+         6: astore_2      
+         7: goto          15
+        10: astore_3      
+        11: goto          15
+        14: astore_3      
+        15: aload_2       
+        16: ifnull        25
+        19: aload_2       
+        20: invokestatic  #243                // Method decode:(Ljava/lang/String;)Ljava/lang/Integer;
+        23: areturn       
+        24: astore_3      
+        25: aload_1       
+        26: areturn       
+      Exception table:
+         from    to  target type
+             2     7    10   Class java/lang/IllegalArgumentException
+             2     7    14   Class java/lang/NullPointerException
+            19    23    24   Class java/lang/NumberFormatException
+      StackMapTable: number_of_entries = 5
+           frame_type = 255 /* full_frame */
+          offset_delta = 10
+          locals = [ class java/lang/String, class java/lang/Integer, class java/lang/String ]
+          stack = [ class java/lang/IllegalArgumentException ]
+           frame_type = 67 /* same_locals_1_stack_item */
+          stack = [ class java/lang/NullPointerException ]
+           frame_type = 0 /* same */
+           frame_type = 72 /* same_locals_1_stack_item */
+          stack = [ class java/lang/NumberFormatException ]
+           frame_type = 0 /* same */
+
+      LineNumberTable:
+        line 885: 0
+        line 887: 2
+        line 890: 7
+        line 888: 10
+        line 890: 11
+        line 889: 14
+        line 891: 15
+        line 893: 19
+        line 894: 24
+        line 897: 25
+
+  public static java.lang.Integer decode(java.lang.String) throws java.lang.NumberFormatException;
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=3, locals=8, args_size=1
+         0: bipush        10
+         2: istore_1      
+         3: iconst_0      
+         4: istore_2      
+         5: iconst_0      
+         6: istore_3      
+         7: aload_0       
+         8: invokevirtual #249                // Method java/lang/String.length:()I
+        11: ifne          24
+        14: new           #167                // class java/lang/NumberFormatException
+        17: dup           
+        18: ldc           #26                 // String Zero length string
+        20: invokespecial #247                // Method java/lang/NumberFormatException."<init>":(Ljava/lang/String;)V
+        23: athrow        
+        24: aload_0       
+        25: iconst_0      
+        26: invokevirtual #250                // Method java/lang/String.charAt:(I)C
+        29: istore        5
+        31: iload         5
+        33: bipush        45
+        35: if_icmpne     46
+        38: iconst_1      
+        39: istore_3      
+        40: iinc          2, 1
+        43: goto          56
+        46: iload         5
+        48: bipush        43
+        50: if_icmpne     56
+        53: iinc          2, 1
+        56: aload_0       
+        57: ldc           #24                 // String 0x
+        59: iload_2       
+        60: invokevirtual #254                // Method java/lang/String.startsWith:(Ljava/lang/String;I)Z
+        63: ifne          76
+        66: aload_0       
+        67: ldc           #23                 // String 0X
+        69: iload_2       
+        70: invokevirtual #254                // Method java/lang/String.startsWith:(Ljava/lang/String;I)Z
+        73: ifeq          85
+        76: iinc          2, 2
+        79: bipush        16
+        81: istore_1      
+        82: goto          130
+        85: aload_0       
+        86: ldc           #18                 // String #
+        88: iload_2       
+        89: invokevirtual #254                // Method java/lang/String.startsWith:(Ljava/lang/String;I)Z
+        92: ifeq          104
+        95: iinc          2, 1
+        98: bipush        16
+       100: istore_1      
+       101: goto          130
+       104: aload_0       
+       105: ldc           #22                 // String 0
+       107: iload_2       
+       108: invokevirtual #254                // Method java/lang/String.startsWith:(Ljava/lang/String;I)Z
+       111: ifeq          130
+       114: aload_0       
+       115: invokevirtual #249                // Method java/lang/String.length:()I
+       118: iconst_1      
+       119: iload_2       
+       120: iadd          
+       121: if_icmple     130
+       124: iinc          2, 1
+       127: bipush        8
+       129: istore_1      
+       130: aload_0       
+       131: ldc           #20                 // String -
+       133: iload_2       
+       134: invokevirtual #254                // Method java/lang/String.startsWith:(Ljava/lang/String;I)Z
+       137: ifne          150
+       140: aload_0       
+       141: ldc           #19                 // String +
+       143: iload_2       
+       144: invokevirtual #254                // Method java/lang/String.startsWith:(Ljava/lang/String;I)Z
+       147: ifeq          160
+       150: new           #167                // class java/lang/NumberFormatException
+       153: dup           
+       154: ldc           #25                 // String Sign character in wrong position
+       156: invokespecial #247                // Method java/lang/NumberFormatException."<init>":(Ljava/lang/String;)V
+       159: athrow        
+       160: aload_0       
+       161: iload_2       
+       162: invokevirtual #253                // Method java/lang/String.substring:(I)Ljava/lang/String;
+       165: iload_1       
+       166: invokestatic  #244                // Method valueOf:(Ljava/lang/String;I)Ljava/lang/Integer;
+       169: astore        4
+       171: iload_3       
+       172: ifeq          187
+       175: aload         4
+       177: invokevirtual #233                // Method intValue:()I
+       180: ineg          
+       181: invokestatic  #238                // Method valueOf:(I)Ljava/lang/Integer;
+       184: goto          189
+       187: aload         4
+       189: astore        4
+       191: goto          241
+       194: astore        6
+       196: iload_3       
+       197: ifeq          226
+       200: new           #169                // class java/lang/StringBuilder
+       203: dup           
+       204: invokespecial #255                // Method java/lang/StringBuilder."<init>":()V
+       207: ldc           #20                 // String -
+       209: invokevirtual #258                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       212: aload_0       
+       213: iload_2       
+       214: invokevirtual #253                // Method java/lang/String.substring:(I)Ljava/lang/String;
+       217: invokevirtual #258                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+       220: invokevirtual #256                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+       223: goto          231
+       226: aload_0       
+       227: iload_2       
+       228: invokevirtual #253                // Method java/lang/String.substring:(I)Ljava/lang/String;
+       231: astore        7
+       233: aload         7
+       235: iload_1       
+       236: invokestatic  #244                // Method valueOf:(Ljava/lang/String;I)Ljava/lang/Integer;
+       239: astore        4
+       241: aload         4
+       243: areturn       
+      Exception table:
+         from    to  target type
+           160   191   194   Class java/lang/NumberFormatException
+      StackMapTable: number_of_entries = 15
+           frame_type = 254 /* append */
+             offset_delta = 24
+        locals = [ int, int, int ]
+           frame_type = 253 /* append */
+             offset_delta = 21
+        locals = [ top, int ]
+           frame_type = 9 /* same */
+           frame_type = 19 /* same */
+           frame_type = 8 /* same */
+           frame_type = 18 /* same */
+           frame_type = 25 /* same */
+           frame_type = 19 /* same */
+           frame_type = 9 /* same */
+           frame_type = 255 /* full_frame */
+          offset_delta = 26
+          locals = [ class java/lang/String, int, int, int, class java/lang/Integer, int ]
+          stack = []
+           frame_type = 65 /* same_locals_1_stack_item */
+          stack = [ class java/lang/Integer ]
+           frame_type = 255 /* full_frame */
+          offset_delta = 4
+          locals = [ class java/lang/String, int, int, int, top, int ]
+          stack = [ class java/lang/NumberFormatException ]
+           frame_type = 252 /* append */
+             offset_delta = 31
+        locals = [ class java/lang/NumberFormatException ]
+           frame_type = 68 /* same_locals_1_stack_item */
+          stack = [ class java/lang/String ]
+           frame_type = 255 /* full_frame */
+          offset_delta = 9
+          locals = [ class java/lang/String, int, int, int, class java/lang/Integer, int ]
+          stack = []
+
+      LineNumberTable:
+        line 943: 0
+        line 944: 3
+        line 945: 5
+        line 948: 7
+        line 949: 14
+        line 950: 24
+        line 952: 31
+        line 953: 38
+        line 954: 40
+        line 955: 46
+        line 956: 53
+        line 959: 56
+        line 960: 76
+        line 961: 79
+        line 963: 85
+        line 964: 95
+        line 965: 98
+        line 967: 104
+        line 968: 124
+        line 969: 127
+        line 972: 130
+        line 973: 150
+        line 976: 160
+        line 977: 171
+        line 985: 191
+        line 978: 194
+        line 982: 196
+        line 984: 233
+        line 986: 241
+    Exceptions:
+      throws java.lang.NumberFormatException
+
+  public int compareTo(java.lang.Integer);
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0       
+         1: getfield      #220                // Field value:I
+         4: aload_1       
+         5: getfield      #220                // Field value:I
+         8: invokestatic  #236                // Method compare:(II)I
+        11: ireturn       
+      LineNumberTable:
+        line 1003: 0
+
+  public static int compare(int, int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: iload_0       
+         1: iload_1       
+         2: if_icmpge     9
+         5: iconst_m1     
+         6: goto          19
+         9: iload_0       
+        10: iload_1       
+        11: if_icmpne     18
+        14: iconst_0      
+        15: goto          19
+        18: iconst_1      
+        19: ireturn       
+      StackMapTable: number_of_entries = 3
+           frame_type = 9 /* same */
+           frame_type = 8 /* same */
+           frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+
+      LineNumberTable:
+        line 1021: 0
+
+  public static int highestOneBit(int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=3, locals=1, args_size=1
+         0: iload_0       
+         1: iload_0       
+         2: iconst_1      
+         3: ishr          
+         4: ior           
+         5: istore_0      
+         6: iload_0       
+         7: iload_0       
+         8: iconst_2      
+         9: ishr          
+        10: ior           
+        11: istore_0      
+        12: iload_0       
+        13: iload_0       
+        14: iconst_4      
+        15: ishr          
+        16: ior           
+        17: istore_0      
+        18: iload_0       
+        19: iload_0       
+        20: bipush        8
+        22: ishr          
+        23: ior           
+        24: istore_0      
+        25: iload_0       
+        26: iload_0       
+        27: bipush        16
+        29: ishr          
+        30: ior           
+        31: istore_0      
+        32: iload_0       
+        33: iload_0       
+        34: iconst_1      
+        35: iushr         
+        36: isub          
+        37: ireturn       
+      LineNumberTable:
+        line 1049: 0
+        line 1050: 6
+        line 1051: 12
+        line 1052: 18
+        line 1053: 25
+        line 1054: 32
+
+  public static int lowestOneBit(int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=1, args_size=1
+         0: iload_0       
+         1: iload_0       
+         2: ineg          
+         3: iand          
+         4: ireturn       
+      LineNumberTable:
+        line 1071: 0
+
+  public static int numberOfLeadingZeros(int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=3, locals=2, args_size=1
+         0: iload_0       
+         1: ifne          7
+         4: bipush        32
+         6: ireturn       
+         7: iconst_1      
+         8: istore_1      
+         9: iload_0       
+        10: bipush        16
+        12: iushr         
+        13: ifne          24
+        16: iinc          1, 16
+        19: iload_0       
+        20: bipush        16
+        22: ishl          
+        23: istore_0      
+        24: iload_0       
+        25: bipush        24
+        27: iushr         
+        28: ifne          39
+        31: iinc          1, 8
+        34: iload_0       
+        35: bipush        8
+        37: ishl          
+        38: istore_0      
+        39: iload_0       
+        40: bipush        28
+        42: iushr         
+        43: ifne          53
+        46: iinc          1, 4
+        49: iload_0       
+        50: iconst_4      
+        51: ishl          
+        52: istore_0      
+        53: iload_0       
+        54: bipush        30
+        56: iushr         
+        57: ifne          67
+        60: iinc          1, 2
+        63: iload_0       
+        64: iconst_2      
+        65: ishl          
+        66: istore_0      
+        67: iload_1       
+        68: iload_0       
+        69: bipush        31
+        71: iushr         
+        72: isub          
+        73: istore_1      
+        74: iload_1       
+        75: ireturn       
+      StackMapTable: number_of_entries = 5
+           frame_type = 7 /* same */
+           frame_type = 252 /* append */
+             offset_delta = 16
+        locals = [ int ]
+           frame_type = 14 /* same */
+           frame_type = 13 /* same */
+           frame_type = 13 /* same */
+
+      LineNumberTable:
+        line 1096: 0
+        line 1097: 4
+        line 1098: 7
+        line 1099: 9
+        line 1100: 24
+        line 1101: 39
+        line 1102: 53
+        line 1103: 67
+        line 1104: 74
+
+  public static int numberOfTrailingZeros(int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=3, locals=3, args_size=1
+         0: iload_0       
+         1: ifne          7
+         4: bipush        32
+         6: ireturn       
+         7: bipush        31
+         9: istore_2      
+        10: iload_0       
+        11: bipush        16
+        13: ishl          
+        14: istore_1      
+        15: iload_1       
+        16: ifeq          26
+        19: iload_2       
+        20: bipush        16
+        22: isub          
+        23: istore_2      
+        24: iload_1       
+        25: istore_0      
+        26: iload_0       
+        27: bipush        8
+        29: ishl          
+        30: istore_1      
+        31: iload_1       
+        32: ifeq          42
+        35: iload_2       
+        36: bipush        8
+        38: isub          
+        39: istore_2      
+        40: iload_1       
+        41: istore_0      
+        42: iload_0       
+        43: iconst_4      
+        44: ishl          
+        45: istore_1      
+        46: iload_1       
+        47: ifeq          56
+        50: iload_2       
+        51: iconst_4      
+        52: isub          
+        53: istore_2      
+        54: iload_1       
+        55: istore_0      
+        56: iload_0       
+        57: iconst_2      
+        58: ishl          
+        59: istore_1      
+        60: iload_1       
+        61: ifeq          70
+        64: iload_2       
+        65: iconst_2      
+        66: isub          
+        67: istore_2      
+        68: iload_1       
+        69: istore_0      
+        70: iload_2       
+        71: iload_0       
+        72: iconst_1      
+        73: ishl          
+        74: bipush        31
+        76: iushr         
+        77: isub          
+        78: ireturn       
+      StackMapTable: number_of_entries = 5
+           frame_type = 7 /* same */
+           frame_type = 253 /* append */
+             offset_delta = 18
+        locals = [ int, int ]
+           frame_type = 15 /* same */
+           frame_type = 13 /* same */
+           frame_type = 13 /* same */
+
+      LineNumberTable:
+        line 1123: 0
+        line 1124: 7
+        line 1125: 10
+        line 1126: 26
+        line 1127: 42
+        line 1128: 56
+        line 1129: 70
+
+  public static int bitCount(int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=3, locals=1, args_size=1
+         0: iload_0       
+         1: iload_0       
+         2: iconst_1      
+         3: iushr         
+         4: ldc           #14                 // int 1431655765
+         6: iand          
+         7: isub          
+         8: istore_0      
+         9: iload_0       
+        10: ldc           #12                 // int 858993459
+        12: iand          
+        13: iload_0       
+        14: iconst_2      
+        15: iushr         
+        16: ldc           #12                 // int 858993459
+        18: iand          
+        19: iadd          
+        20: istore_0      
+        21: iload_0       
+        22: iload_0       
+        23: iconst_4      
+        24: iushr         
+        25: iadd          
+        26: ldc           #11                 // int 252645135
+        28: iand          
+        29: istore_0      
+        30: iload_0       
+        31: iload_0       
+        32: bipush        8
+        34: iushr         
+        35: iadd          
+        36: istore_0      
+        37: iload_0       
+        38: iload_0       
+        39: bipush        16
+        41: iushr         
+        42: iadd          
+        43: istore_0      
+        44: iload_0       
+        45: bipush        63
+        47: iand          
+        48: ireturn       
+      LineNumberTable:
+        line 1143: 0
+        line 1144: 9
+        line 1145: 21
+        line 1146: 30
+        line 1147: 37
+        line 1148: 44
+
+  public static int rotateLeft(int, int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=3, locals=2, args_size=2
+         0: iload_0       
+         1: iload_1       
+         2: ishl          
+         3: iload_0       
+         4: iload_1       
+         5: ineg          
+         6: iushr         
+         7: ior           
+         8: ireturn       
+      LineNumberTable:
+        line 1170: 0
+
+  public static int rotateRight(int, int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=3, locals=2, args_size=2
+         0: iload_0       
+         1: iload_1       
+         2: iushr         
+         3: iload_0       
+         4: iload_1       
+         5: ineg          
+         6: ishl          
+         7: ior           
+         8: ireturn       
+      LineNumberTable:
+        line 1192: 0
+
+  public static int reverse(int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=3, locals=1, args_size=1
+         0: iload_0       
+         1: ldc           #14                 // int 1431655765
+         3: iand          
+         4: iconst_1      
+         5: ishl          
+         6: iload_0       
+         7: iconst_1      
+         8: iushr         
+         9: ldc           #14                 // int 1431655765
+        11: iand          
+        12: ior           
+        13: istore_0      
+        14: iload_0       
+        15: ldc           #12                 // int 858993459
+        17: iand          
+        18: iconst_2      
+        19: ishl          
+        20: iload_0       
+        21: iconst_2      
+        22: iushr         
+        23: ldc           #12                 // int 858993459
+        25: iand          
+        26: ior           
+        27: istore_0      
+        28: iload_0       
+        29: ldc           #11                 // int 252645135
+        31: iand          
+        32: iconst_4      
+        33: ishl          
+        34: iload_0       
+        35: iconst_4      
+        36: iushr         
+        37: ldc           #11                 // int 252645135
+        39: iand          
+        40: ior           
+        41: istore_0      
+        42: iload_0       
+        43: bipush        24
+        45: ishl          
+        46: iload_0       
+        47: ldc           #4                  // int 65280
+        49: iand          
+        50: bipush        8
+        52: ishl          
+        53: ior           
+        54: iload_0       
+        55: bipush        8
+        57: iushr         
+        58: ldc           #4                  // int 65280
+        60: iand          
+        61: ior           
+        62: iload_0       
+        63: bipush        24
+        65: iushr         
+        66: ior           
+        67: istore_0      
+        68: iload_0       
+        69: ireturn       
+      LineNumberTable:
+        line 1206: 0
+        line 1207: 14
+        line 1208: 28
+        line 1209: 42
+        line 1211: 68
+
+  public static int signum(int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=3, locals=1, args_size=1
+         0: iload_0       
+         1: bipush        31
+         3: ishr          
+         4: iload_0       
+         5: ineg          
+         6: bipush        31
+         8: iushr         
+         9: ior           
+        10: ireturn       
+      LineNumberTable:
+        line 1224: 0
+
+  public static int reverseBytes(int);
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=3, locals=1, args_size=1
+         0: iload_0       
+         1: bipush        24
+         3: iushr         
+         4: iload_0       
+         5: bipush        8
+         7: ishr          
+         8: ldc           #4                  // int 65280
+        10: iand          
+        11: ior           
+        12: iload_0       
+        13: bipush        8
+        15: ishl          
+        16: ldc           #9                  // int 16711680
+        18: iand          
+        19: ior           
+        20: iload_0       
+        21: bipush        24
+        23: ishl          
+        24: ior           
+        25: ireturn       
+      LineNumberTable:
+        line 1236: 0
+
+  public int compareTo(java.lang.Object);
+    flags: ACC_PUBLIC, ACC_BRIDGE, ACC_SYNTHETIC
+    Code:
+      stack=2, locals=2, args_size=2
+         0: aload_0       
+         1: aload_1       
+         2: checkcast     #163                // class java/lang/Integer
+         5: invokevirtual #239                // Method compareTo:(Ljava/lang/Integer;)I
+         8: ireturn       
+      LineNumberTable:
+        line 52: 0
+
+  static {};
+    flags: ACC_STATIC
+    Code:
+      stack=4, locals=0, args_size=0
+         0: ldc_w         #163                // class java/lang/Integer
+         3: invokevirtual #231                // Method java/lang/Class.desiredAssertionStatus:()Z
+         6: ifne          13
+         9: iconst_1      
+        10: goto          14
+        13: iconst_0      
+        14: putstatic     #221                // Field $assertionsDisabled:Z
+        17: ldc           #27                 // String int
+        19: invokestatic  #232                // Method java/lang/Class.getPrimitiveClass:(Ljava/lang/String;)Ljava/lang/Class;
+        22: putstatic     #226                // Field TYPE:Ljava/lang/Class;
+        25: bipush        36
+        27: newarray       char
+        29: dup           
+        30: iconst_0      
+        31: bipush        48
+        33: castore       
+        34: dup           
+        35: iconst_1      
+        36: bipush        49
+        38: castore       
+        39: dup           
+        40: iconst_2      
+        41: bipush        50
+        43: castore       
+        44: dup           
+        45: iconst_3      
+        46: bipush        51
+        48: castore       
+        49: dup           
+        50: iconst_4      
+        51: bipush        52
+        53: castore       
+        54: dup           
+        55: iconst_5      
+        56: bipush        53
+        58: castore       
+        59: dup           
+        60: bipush        6
+        62: bipush        54
+        64: castore       
+        65: dup           
+        66: bipush        7
+        68: bipush        55
+        70: castore       
+        71: dup           
+        72: bipush        8
+        74: bipush        56
+        76: castore       
+        77: dup           
+        78: bipush        9
+        80: bipush        57
+        82: castore       
+        83: dup           
+        84: bipush        10
+        86: bipush        97
+        88: castore       
+        89: dup           
+        90: bipush        11
+        92: bipush        98
+        94: castore       
+        95: dup           
+        96: bipush        12
+        98: bipush        99
+       100: castore       
+       101: dup           
+       102: bipush        13
+       104: bipush        100
+       106: castore       
+       107: dup           
+       108: bipush        14
+       110: bipush        101
+       112: castore       
+       113: dup           
+       114: bipush        15
+       116: bipush        102
+       118: castore       
+       119: dup           
+       120: bipush        16
+       122: bipush        103
+       124: castore       
+       125: dup           
+       126: bipush        17
+       128: bipush        104
+       130: castore       
+       131: dup           
+       132: bipush        18
+       134: bipush        105
+       136: castore       
+       137: dup           
+       138: bipush        19
+       140: bipush        106
+       142: castore       
+       143: dup           
+       144: bipush        20
+       146: bipush        107
+       148: castore       
+       149: dup           
+       150: bipush        21
+       152: bipush        108
+       154: castore       
+       155: dup           
+       156: bipush        22
+       158: bipush        109
+       160: castore       
+       161: dup           
+       162: bipush        23
+       164: bipush        110
+       166: castore       
+       167: dup           
+       168: bipush        24
+       170: bipush        111
+       172: castore       
+       173: dup           
+       174: bipush        25
+       176: bipush        112
+       178: castore       
+       179: dup           
+       180: bipush        26
+       182: bipush        113
+       184: castore       
+       185: dup           
+       186: bipush        27
+       188: bipush        114
+       190: castore       
+       191: dup           
+       192: bipush        28
+       194: bipush        115
+       196: castore       
+       197: dup           
+       198: bipush        29
+       200: bipush        116
+       202: castore       
+       203: dup           
+       204: bipush        30
+       206: bipush        117
+       208: castore       
+       209: dup           
+       210: bipush        31
+       212: bipush        118
+       214: castore       
+       215: dup           
+       216: bipush        32
+       218: bipush        119
+       220: castore       
+       221: dup           
+       222: bipush        33
+       224: bipush        120
+       226: castore       
+       227: dup           
+       228: bipush        34
+       230: bipush        121
+       232: castore       
+       233: dup           
+       234: bipush        35
+       236: bipush        122
+       238: castore       
+       239: putstatic     #224                // Field digits:[C
+       242: bipush        100
+       244: newarray       char
+       246: dup           
+       247: iconst_0      
+       248: bipush        48
+       250: castore       
+       251: dup           
+       252: iconst_1      
+       253: bipush        48
+       255: castore       
+       256: dup           
+       257: iconst_2      
+       258: bipush        48
+       260: castore       
+       261: dup           
+       262: iconst_3      
+       263: bipush        48
+       265: castore       
+       266: dup           
+       267: iconst_4      
+       268: bipush        48
+       270: castore       
+       271: dup           
+       272: iconst_5      
+       273: bipush        48
+       275: castore       
+       276: dup           
+       277: bipush        6
+       279: bipush        48
+       281: castore       
+       282: dup           
+       283: bipush        7
+       285: bipush        48
+       287: castore       
+       288: dup           
+       289: bipush        8
+       291: bipush        48
+       293: castore       
+       294: dup           
+       295: bipush        9
+       297: bipush        48
+       299: castore       
+       300: dup           
+       301: bipush        10
+       303: bipush        49
+       305: castore       
+       306: dup           
+       307: bipush        11
+       309: bipush        49
+       311: castore       
+       312: dup           
+       313: bipush        12
+       315: bipush        49
+       317: castore       
+       318: dup           
+       319: bipush        13
+       321: bipush        49
+       323: castore       
+       324: dup           
+       325: bipush        14
+       327: bipush        49
+       329: castore       
+       330: dup           
+       331: bipush        15
+       333: bipush        49
+       335: castore       
+       336: dup           
+       337: bipush        16
+       339: bipush        49
+       341: castore       
+       342: dup           
+       343: bipush        17
+       345: bipush        49
+       347: castore       
+       348: dup           
+       349: bipush        18
+       351: bipush        49
+       353: castore       
+       354: dup           
+       355: bipush        19
+       357: bipush        49
+       359: castore       
+       360: dup           
+       361: bipush        20
+       363: bipush        50
+       365: castore       
+       366: dup           
+       367: bipush        21
+       369: bipush        50
+       371: castore       
+       372: dup           
+       373: bipush        22
+       375: bipush        50
+       377: castore       
+       378: dup           
+       379: bipush        23
+       381: bipush        50
+       383: castore       
+       384: dup           
+       385: bipush        24
+       387: bipush        50
+       389: castore       
+       390: dup           
+       391: bipush        25
+       393: bipush        50
+       395: castore       
+       396: dup           
+       397: bipush        26
+       399: bipush        50
+       401: castore       
+       402: dup           
+       403: bipush        27
+       405: bipush        50
+       407: castore       
+       408: dup           
+       409: bipush        28
+       411: bipush        50
+       413: castore       
+       414: dup           
+       415: bipush        29
+       417: bipush        50
+       419: castore       
+       420: dup           
+       421: bipush        30
+       423: bipush        51
+       425: castore       
+       426: dup           
+       427: bipush        31
+       429: bipush        51
+       431: castore       
+       432: dup           
+       433: bipush        32
+       435: bipush        51
+       437: castore       
+       438: dup           
+       439: bipush        33
+       441: bipush        51
+       443: castore       
+       444: dup           
+       445: bipush        34
+       447: bipush        51
+       449: castore       
+       450: dup           
+       451: bipush        35
+       453: bipush        51
+       455: castore       
+       456: dup           
+       457: bipush        36
+       459: bipush        51
+       461: castore       
+       462: dup           
+       463: bipush        37
+       465: bipush        51
+       467: castore       
+       468: dup           
+       469: bipush        38
+       471: bipush        51
+       473: castore       
+       474: dup           
+       475: bipush        39
+       477: bipush        51
+       479: castore       
+       480: dup           
+       481: bipush        40
+       483: bipush        52
+       485: castore       
+       486: dup           
+       487: bipush        41
+       489: bipush        52
+       491: castore       
+       492: dup           
+       493: bipush        42
+       495: bipush        52
+       497: castore       
+       498: dup           
+       499: bipush        43
+       501: bipush        52
+       503: castore       
+       504: dup           
+       505: bipush        44
+       507: bipush        52
+       509: castore       
+       510: dup           
+       511: bipush        45
+       513: bipush        52
+       515: castore       
+       516: dup           
+       517: bipush        46
+       519: bipush        52
+       521: castore       
+       522: dup           
+       523: bipush        47
+       525: bipush        52
+       527: castore       
+       528: dup           
+       529: bipush        48
+       531: bipush        52
+       533: castore       
+       534: dup           
+       535: bipush        49
+       537: bipush        52
+       539: castore       
+       540: dup           
+       541: bipush        50
+       543: bipush        53
+       545: castore       
+       546: dup           
+       547: bipush        51
+       549: bipush        53
+       551: castore       
+       552: dup           
+       553: bipush        52
+       555: bipush        53
+       557: castore       
+       558: dup           
+       559: bipush        53
+       561: bipush        53
+       563: castore       
+       564: dup           
+       565: bipush        54
+       567: bipush        53
+       569: castore       
+       570: dup           
+       571: bipush        55
+       573: bipush        53
+       575: castore       
+       576: dup           
+       577: bipush        56
+       579: bipush        53
+       581: castore       
+       582: dup           
+       583: bipush        57
+       585: bipush        53
+       587: castore       
+       588: dup           
+       589: bipush        58
+       591: bipush        53
+       593: castore       
+       594: dup           
+       595: bipush        59
+       597: bipush        53
+       599: castore       
+       600: dup           
+       601: bipush        60
+       603: bipush        54
+       605: castore       
+       606: dup           
+       607: bipush        61
+       609: bipush        54
+       611: castore       
+       612: dup           
+       613: bipush        62
+       615: bipush        54
+       617: castore       
+       618: dup           
+       619: bipush        63
+       621: bipush        54
+       623: castore       
+       624: dup           
+       625: bipush        64
+       627: bipush        54
+       629: castore       
+       630: dup           
+       631: bipush        65
+       633: bipush        54
+       635: castore       
+       636: dup           
+       637: bipush        66
+       639: bipush        54
+       641: castore       
+       642: dup           
+       643: bipush        67
+       645: bipush        54
+       647: castore       
+       648: dup           
+       649: bipush        68
+       651: bipush        54
+       653: castore       
+       654: dup           
+       655: bipush        69
+       657: bipush        54
+       659: castore       
+       660: dup           
+       661: bipush        70
+       663: bipush        55
+       665: castore       
+       666: dup           
+       667: bipush        71
+       669: bipush        55
+       671: castore       
+       672: dup           
+       673: bipush        72
+       675: bipush        55
+       677: castore       
+       678: dup           
+       679: bipush        73
+       681: bipush        55
+       683: castore       
+       684: dup           
+       685: bipush        74
+       687: bipush        55
+       689: castore       
+       690: dup           
+       691: bipush        75
+       693: bipush        55
+       695: castore       
+       696: dup           
+       697: bipush        76
+       699: bipush        55
+       701: castore       
+       702: dup           
+       703: bipush        77
+       705: bipush        55
+       707: castore       
+       708: dup           
+       709: bipush        78
+       711: bipush        55
+       713: castore       
+       714: dup           
+       715: bipush        79
+       717: bipush        55
+       719: castore       
+       720: dup           
+       721: bipush        80
+       723: bipush        56
+       725: castore       
+       726: dup           
+       727: bipush        81
+       729: bipush        56
+       731: castore       
+       732: dup           
+       733: bipush        82
+       735: bipush        56
+       737: castore       
+       738: dup           
+       739: bipush        83
+       741: bipush        56
+       743: castore       
+       744: dup           
+       745: bipush        84
+       747: bipush        56
+       749: castore       
+       750: dup           
+       751: bipush        85
+       753: bipush        56
+       755: castore       
+       756: dup           
+       757: bipush        86
+       759: bipush        56
+       761: castore       
+       762: dup           
+       763: bipush        87
+       765: bipush        56
+       767: castore       
+       768: dup           
+       769: bipush        88
+       771: bipush        56
+       773: castore       
+       774: dup           
+       775: bipush        89
+       777: bipush        56
+       779: castore       
+       780: dup           
+       781: bipush        90
+       783: bipush        57
+       785: castore       
+       786: dup           
+       787: bipush        91
+       789: bipush        57
+       791: castore       
+       792: dup           
+       793: bipush        92
+       795: bipush        57
+       797: castore       
+       798: dup           
+       799: bipush        93
+       801: bipush        57
+       803: castore       
+       804: dup           
+       805: bipush        94
+       807: bipush        57
+       809: castore       
+       810: dup           
+       811: bipush        95
+       813: bipush        57
+       815: castore       
+       816: dup           
+       817: bipush        96
+       819: bipush        57
+       821: castore       
+       822: dup           
+       823: bipush        97
+       825: bipush        57
+       827: castore       
+       828: dup           
+       829: bipush        98
+       831: bipush        57
+       833: castore       
+       834: dup           
+       835: bipush        99
+       837: bipush        57
+       839: castore       
+       840: putstatic     #223                // Field DigitTens:[C
+       843: bipush        100
+       845: newarray       char
+       847: dup           
+       848: iconst_0      
+       849: bipush        48
+       851: castore       
+       852: dup           
+       853: iconst_1      
+       854: bipush        49
+       856: castore       
+       857: dup           
+       858: iconst_2      
+       859: bipush        50
+       861: castore       
+       862: dup           
+       863: iconst_3      
+       864: bipush        51
+       866: castore       
+       867: dup           
+       868: iconst_4      
+       869: bipush        52
+       871: castore       
+       872: dup           
+       873: iconst_5      
+       874: bipush        53
+       876: castore       
+       877: dup           
+       878: bipush        6
+       880: bipush        54
+       882: castore       
+       883: dup           
+       884: bipush        7
+       886: bipush        55
+       888: castore       
+       889: dup           
+       890: bipush        8
+       892: bipush        56
+       894: castore       
+       895: dup           
+       896: bipush        9
+       898: bipush        57
+       900: castore       
+       901: dup           
+       902: bipush        10
+       904: bipush        48
+       906: castore       
+       907: dup           
+       908: bipush        11
+       910: bipush        49
+       912: castore       
+       913: dup           
+       914: bipush        12
+       916: bipush        50
+       918: castore       
+       919: dup           
+       920: bipush        13
+       922: bipush        51
+       924: castore       
+       925: dup           
+       926: bipush        14
+       928: bipush        52
+       930: castore       
+       931: dup           
+       932: bipush        15
+       934: bipush        53
+       936: castore       
+       937: dup           
+       938: bipush        16
+       940: bipush        54
+       942: castore       
+       943: dup           
+       944: bipush        17
+       946: bipush        55
+       948: castore       
+       949: dup           
+       950: bipush        18
+       952: bipush        56
+       954: castore       
+       955: dup           
+       956: bipush        19
+       958: bipush        57
+       960: castore       
+       961: dup           
+       962: bipush        20
+       964: bipush        48
+       966: castore       
+       967: dup           
+       968: bipush        21
+       970: bipush        49
+       972: castore       
+       973: dup           
+       974: bipush        22
+       976: bipush        50
+       978: castore       
+       979: dup           
+       980: bipush        23
+       982: bipush        51
+       984: castore       
+       985: dup           
+       986: bipush        24
+       988: bipush        52
+       990: castore       
+       991: dup           
+       992: bipush        25
+       994: bipush        53
+       996: castore       
+       997: dup           
+       998: bipush        26
+      1000: bipush        54
+      1002: castore       
+      1003: dup           
+      1004: bipush        27
+      1006: bipush        55
+      1008: castore       
+      1009: dup           
+      1010: bipush        28
+      1012: bipush        56
+      1014: castore       
+      1015: dup           
+      1016: bipush        29
+      1018: bipush        57
+      1020: castore       
+      1021: dup           
+      1022: bipush        30
+      1024: bipush        48
+      1026: castore       
+      1027: dup           
+      1028: bipush        31
+      1030: bipush        49
+      1032: castore       
+      1033: dup           
+      1034: bipush        32
+      1036: bipush        50
+      1038: castore       
+      1039: dup           
+      1040: bipush        33
+      1042: bipush        51
+      1044: castore       
+      1045: dup           
+      1046: bipush        34
+      1048: bipush        52
+      1050: castore       
+      1051: dup           
+      1052: bipush        35
+      1054: bipush        53
+      1056: castore       
+      1057: dup           
+      1058: bipush        36
+      1060: bipush        54
+      1062: castore       
+      1063: dup           
+      1064: bipush        37
+      1066: bipush        55
+      1068: castore       
+      1069: dup           
+      1070: bipush        38
+      1072: bipush        56
+      1074: castore       
+      1075: dup           
+      1076: bipush        39
+      1078: bipush        57
+      1080: castore       
+      1081: dup           
+      1082: bipush        40
+      1084: bipush        48
+      1086: castore       
+      1087: dup           
+      1088: bipush        41
+      1090: bipush        49
+      1092: castore       
+      1093: dup           
+      1094: bipush        42
+      1096: bipush        50
+      1098: castore       
+      1099: dup           
+      1100: bipush        43
+      1102: bipush        51
+      1104: castore       
+      1105: dup           
+      1106: bipush        44
+      1108: bipush        52
+      1110: castore       
+      1111: dup           
+      1112: bipush        45
+      1114: bipush        53
+      1116: castore       
+      1117: dup           
+      1118: bipush        46
+      1120: bipush        54
+      1122: castore       
+      1123: dup           
+      1124: bipush        47
+      1126: bipush        55
+      1128: castore       
+      1129: dup           
+      1130: bipush        48
+      1132: bipush        56
+      1134: castore       
+      1135: dup           
+      1136: bipush        49
+      1138: bipush        57
+      1140: castore       
+      1141: dup           
+      1142: bipush        50
+      1144: bipush        48
+      1146: castore       
+      1147: dup           
+      1148: bipush        51
+      1150: bipush        49
+      1152: castore       
+      1153: dup           
+      1154: bipush        52
+      1156: bipush        50
+      1158: castore       
+      1159: dup           
+      1160: bipush        53
+      1162: bipush        51
+      1164: castore       
+      1165: dup           
+      1166: bipush        54
+      1168: bipush        52
+      1170: castore       
+      1171: dup           
+      1172: bipush        55
+      1174: bipush        53
+      1176: castore       
+      1177: dup           
+      1178: bipush        56
+      1180: bipush        54
+      1182: castore       
+      1183: dup           
+      1184: bipush        57
+      1186: bipush        55
+      1188: castore       
+      1189: dup           
+      1190: bipush        58
+      1192: bipush        56
+      1194: castore       
+      1195: dup           
+      1196: bipush        59
+      1198: bipush        57
+      1200: castore       
+      1201: dup           
+      1202: bipush        60
+      1204: bipush        48
+      1206: castore       
+      1207: dup           
+      1208: bipush        61
+      1210: bipush        49
+      1212: castore       
+      1213: dup           
+      1214: bipush        62
+      1216: bipush        50
+      1218: castore       
+      1219: dup           
+      1220: bipush        63
+      1222: bipush        51
+      1224: castore       
+      1225: dup           
+      1226: bipush        64
+      1228: bipush        52
+      1230: castore       
+      1231: dup           
+      1232: bipush        65
+      1234: bipush        53
+      1236: castore       
+      1237: dup           
+      1238: bipush        66
+      1240: bipush        54
+      1242: castore       
+      1243: dup           
+      1244: bipush        67
+      1246: bipush        55
+      1248: castore       
+      1249: dup           
+      1250: bipush        68
+      1252: bipush        56
+      1254: castore       
+      1255: dup           
+      1256: bipush        69
+      1258: bipush        57
+      1260: castore       
+      1261: dup           
+      1262: bipush        70
+      1264: bipush        48
+      1266: castore       
+      1267: dup           
+      1268: bipush        71
+      1270: bipush        49
+      1272: castore       
+      1273: dup           
+      1274: bipush        72
+      1276: bipush        50
+      1278: castore       
+      1279: dup           
+      1280: bipush        73
+      1282: bipush        51
+      1284: castore       
+      1285: dup           
+      1286: bipush        74
+      1288: bipush        52
+      1290: castore       
+      1291: dup           
+      1292: bipush        75
+      1294: bipush        53
+      1296: castore       
+      1297: dup           
+      1298: bipush        76
+      1300: bipush        54
+      1302: castore       
+      1303: dup           
+      1304: bipush        77
+      1306: bipush        55
+      1308: castore       
+      1309: dup           
+      1310: bipush        78
+      1312: bipush        56
+      1314: castore       
+      1315: dup           
+      1316: bipush        79
+      1318: bipush        57
+      1320: castore       
+      1321: dup           
+      1322: bipush        80
+      1324: bipush        48
+      1326: castore       
+      1327: dup           
+      1328: bipush        81
+      1330: bipush        49
+      1332: castore       
+      1333: dup           
+      1334: bipush        82
+      1336: bipush        50
+      1338: castore       
+      1339: dup           
+      1340: bipush        83
+      1342: bipush        51
+      1344: castore       
+      1345: dup           
+      1346: bipush        84
+      1348: bipush        52
+      1350: castore       
+      1351: dup           
+      1352: bipush        85
+      1354: bipush        53
+      1356: castore       
+      1357: dup           
+      1358: bipush        86
+      1360: bipush        54
+      1362: castore       
+      1363: dup           
+      1364: bipush        87
+      1366: bipush        55
+      1368: castore       
+      1369: dup           
+      1370: bipush        88
+      1372: bipush        56
+      1374: castore       
+      1375: dup           
+      1376: bipush        89
+      1378: bipush        57
+      1380: castore       
+      1381: dup           
+      1382: bipush        90
+      1384: bipush        48
+      1386: castore       
+      1387: dup           
+      1388: bipush        91
+      1390: bipush        49
+      1392: castore       
+      1393: dup           
+      1394: bipush        92
+      1396: bipush        50
+      1398: castore       
+      1399: dup           
+      1400: bipush        93
+      1402: bipush        51
+      1404: castore       
+      1405: dup           
+      1406: bipush        94
+      1408: bipush        52
+      1410: castore       
+      1411: dup           
+      1412: bipush        95
+      1414: bipush        53
+      1416: castore       
+      1417: dup           
+      1418: bipush        96
+      1420: bipush        54
+      1422: castore       
+      1423: dup           
+      1424: bipush        97
+      1426: bipush        55
+      1428: castore       
+      1429: dup           
+      1430: bipush        98
+      1432: bipush        56
+      1434: castore       
+      1435: dup           
+      1436: bipush        99
+      1438: bipush        57
+      1440: castore       
+      1441: putstatic     #222                // Field DigitOnes:[C
+      1444: bipush        10
+      1446: newarray       int
+      1448: dup           
+      1449: iconst_0      
+      1450: bipush        9
+      1452: iastore       
+      1453: dup           
+      1454: iconst_1      
+      1455: bipush        99
+      1457: iastore       
+      1458: dup           
+      1459: iconst_2      
+      1460: sipush        999
+      1463: iastore       
+      1464: dup           
+      1465: iconst_3      
+      1466: sipush        9999
+      1469: iastore       
+      1470: dup           
+      1471: iconst_4      
+      1472: ldc           #6                  // int 99999
+      1474: iastore       
+      1475: dup           
+      1476: iconst_5      
+      1477: ldc           #7                  // int 999999
+      1479: iastore       
+      1480: dup           
+      1481: bipush        6
+      1483: ldc           #8                  // int 9999999
+      1485: iastore       
+      1486: dup           
+      1487: bipush        7
+      1489: ldc           #10                 // int 99999999
+      1491: iastore       
+      1492: dup           
+      1493: bipush        8
+      1495: ldc           #13                 // int 999999999
+      1497: iastore       
+      1498: dup           
+      1499: bipush        9
+      1501: ldc           #15                 // int 2147483647
+      1503: iastore       
+      1504: putstatic     #225                // Field sizeTable:[I
+      1507: return        
+      StackMapTable: number_of_entries = 2
+           frame_type = 13 /* same */
+           frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+
+      LineNumberTable:
+        line 52: 0
+        line 71: 17
+        line 76: 25
+        line 272: 242
+        line 285: 843
+        line 379: 1444
+}

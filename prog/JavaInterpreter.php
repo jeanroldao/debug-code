@@ -522,16 +522,16 @@ trait JavaInterpreter {
 				//var_dump($i, $stack);readline();
 				//var_dump($opcode[2]);readline();
 				$args = $this->stackArrayPop($stack, 1);
-				$stack[] = $this->newArray(null, [$args[0]], $opcode[2]);
+				$stack[] = $this->newArray([$args[0]], $opcode[2]);
 				break;
 			case 'newarray':
+				//var_dump($opcode[2]);readline();
 				$args = $this->stackArrayPop($stack, 1);
-				$stack[] = $this->newArray(0, [$args[0]]);
+				$stack[] = $this->newArray([$args[0]], $opcode[2]);
 				break;
 			case 'multianewarray':
-				$val = substr($opcode[2], -1, 1) == ';'? null : 0;
 				$args = $this->stackArrayPop($stack, $opcode[3]);
-				$stack[] = $this->newArray($val, $args);
+				$stack[] = $this->newArray($args, $opcode[2]);
 				//var_dump($stack);exit;
 				break;
 			case 'new':
@@ -632,7 +632,10 @@ trait JavaInterpreter {
 		return array_reverse($args);
 	}
 	
-	public function newArray($valueIni, array $dimentions, $type = null) {
+	public function newArray(array $dimentions, $type = null) {
+		
+		$valueIni = strlen($type) == 1 ? 0 : null;
+		
 		if (count($dimentions) == 0) {
 			return $valueIni;
 		}
@@ -650,16 +653,19 @@ trait JavaInterpreter {
 		}
 		
 		$size = array_shift($dimentions);
-		if ($size == 0) {
-			return [];
-		}
+		
 		if ($size < 0) {
 			//echo '$size < 0: '.$size.PHP_EOL;
 			//debug_print_backtrace();
 			throw new \java\lang\NegativeArraySizeException();
 		}
-		
-		return array_fill(0, $size, $this->newArray($valueIni, $dimentions));
+		$type = substr($type, 1);
+		$javaArray = new JavaArray($size, $type);
+		$type = substr($type, 1);
+		for ($i = 0; $i < $size; $i++) {
+			$javaArray[$i] = $this->newArray($dimentions, $type);
+		}
+		return $javaArray;
 	}
 }
 
@@ -707,7 +713,8 @@ class JavaArray extends SplFixedArray {
 	public function getClass() {
 		//var_dump($this->type);
 		//return $this->getClassTrait();
-		$name = '[L'.str_replace('/', '.', str_replace('_S_', '$', $this->type)).';';
+		$name = '['.str_replace('/', '.', str_replace('_S_', '$', $this->type));
+		
 		return \java\lang\Clazz::forName($name);
 	}
 	

@@ -43,11 +43,12 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 	
 	private $classpath = [];
 	
-	private $debug_log = true;
+	private $debug_log = false;
 	
 	public function __construct() {
 		$this->addClasspath(dirname(__FILE__));
-		$this->addJarClasspath('./rt.jar');
+		//$this->addJarClasspath('./rt.jar');
+		$this->addJarClasspath('C:/Program Files/Java/jre7/lib/rt.jar');
 	}
 	
 	public function setDefaultAssertionStatus($debug) {
@@ -56,6 +57,25 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 	
 	public function getDefaultAssertionStatus() {
 		return $this->debug_log;
+	}
+	
+	//java.net.URL
+	public function getResource($name) {
+		foreach ($this->classpath as $path) {
+			$filename = $path.$name;
+			//var_dump($filename);
+			@$fp = fopen($filename, 'rb');
+			if ($fp) {
+				fclose($fp);
+				if (substr($filename, 0, 6) == 'zip://') {
+					$filename = 'jar:file:/'.substr($filename, 6);
+				} else {
+					$filename = 'file:/'.$filename;
+				}
+				return /*new \java\net\URL*/(jstring(str_replace(['\\', '#', ' '], ['/', '!/', '%20'], $filename)));
+			}
+		}
+		return null;
 	}
 	
 	public function addClasspath($path) {
@@ -112,7 +132,7 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 			}*/
 			
 			$filename = ($path.str_replace('.', '/', $className).'.class');
-			if ($this->debug_log) { echo "<loading $className ...>".PHP_EOL; }
+			//if ($this->debug_log) { echo "<loading $className ...>".PHP_EOL; }
 			if ($this->readClassFile($filename)) {
 				if ($this->debug_log) { echo "<$className ok>".PHP_EOL; }
 				$classNamePhp = str_replace('.', '\\', str_replace('$', '_S_', $className));
@@ -128,7 +148,7 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 				//\java\lang\Clazz::setClassLoader($className, $this);
 				return \java\lang\Clazz::forName($className);
 			}
-			if ($this->debug_log) { echo "<$className not found>".PHP_EOL; }
+			//if ($this->debug_log) { echo "<$className not found>".PHP_EOL; }
 		}
 	}
 }

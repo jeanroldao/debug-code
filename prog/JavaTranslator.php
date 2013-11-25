@@ -418,15 +418,15 @@ trait JavaTranslator {
 				return [3, 'new', $this->getClassName($input->readShort())];
 			case 0xbc:
 				$i++;
-				$types = [
-					 4 => 'boolean',
-					 5 => 'char',
-					 6 => 'float',
-					 7 => 'double',
-					 8 => 'byte',
-					 9 => 'short',
-					10 => 'int',
-					11 => 'long'
+				static $types = [
+					 4 => 'Z',//boolean
+					 5 => 'C',//char
+					 6 => 'F',//float
+					 7 => 'D',//double
+					 8 => 'B',//byte
+					 9 => 'S',//short
+					10 => 'I',//int
+					11 => 'J' //long
 				];
 				return [2, 'newarray', $types[$input->readByte()]];
 			case 0xbe:

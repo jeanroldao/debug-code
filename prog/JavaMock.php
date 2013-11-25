@@ -148,7 +148,7 @@ class Clazz extends Object {
 	}
 	
 	public function getName() {
-		return new String($this->name);
+		return jstring($this->name)->replace("\\", ".");
 	}
 	
 	public static function forName($name) {
@@ -162,6 +162,10 @@ class Clazz extends Object {
 	
 	public function intern() {
 		return $this;
+	}
+	
+	public function desiredAssertionStatus() {
+		return false;
 	}
 	
 	private $enumConstantDirectory = null;
@@ -183,12 +187,49 @@ class Clazz extends Object {
 		return $this->enumConstantDirectory;
 	}
 	
+	private static $primitive_types = [
+		'Z' => 'boolean',
+		'C' => 'char',
+		'F' => 'float',
+		'D' => 'double',
+		'B' => 'byte',
+		'S' => 'short',
+		'I' => 'int',
+		'J' => 'long'
+	];
+	
+	private static function isPrimitiveType($type) {
+		return isset(self::$primitive_types["$type"]);
+	}
+	
 	public static function getPrimitiveClass($type) {
+		
+		$type = "$type";
+		
+		if (strlen($type) == 1 && self::isPrimitiveType($type)) {
+			$type = self::$primitive_types[$type];
+		}
+		
 		return Clazz::forName($type);
 	}
 	
 	public function toString() {
-		return new String("class " . $this->getName()->replace("\\", "."));
+		//return new String("class " . $this->getName());
+		$toString = 'class ';
+		if ($this->isInterface()) {
+			$toString = 'interface ';
+		} else if ($this->isPrimitive()) {
+			$toString = '';
+		}
+		return jstring($toString)->concat($this->getName());
+	}
+	
+	public function isInterface() {
+		return false;
+	}
+	
+	public function isPrimitive() {
+		return in_array($this->name, self::$primitive_types);
 	}
 	
 	public function getClassLoader() {
@@ -271,14 +312,15 @@ class Clazz extends Object {
 	}
 	
 	public function getComponentType() {
-		//var_dump(substr($this->name, 2, -1));exit;
-		//return self::forName(substr($this->name, 1, -1));
 		if (substr($this->name, 0, 1) != '[') {
 			return null;
 		}
 		$name = substr($this->name, 1);
-		if (substr($name, 0, 1) != '[') {
+		//var_dump(self::isPrimitiveType($name));
+		if (substr($name, 0, 1) == 'L') {
 			$name = substr($name, 1, -1);
+		} else if (self::isPrimitiveType($name)) {
+			return self::getPrimitiveClass($name);
 		}
 		return self::forName($name);
 	}
@@ -508,7 +550,23 @@ eval(<<<'CODE'
 namespace java\lang;
 	
 class Character extends \java\lang\Object {
+	private $char;
 	
+	public function __construct($char) {
+		$this->char = "$char";
+	}
+	
+	public function charValue() {
+		return $this->char;
+	}
+	
+	public static function valueOf($char) {
+		return new Character("$char");
+	}
+	
+	public function toString() {
+		return jstring(chr($this->char));
+	}
 }
 
 CODE
@@ -527,7 +585,11 @@ class String extends \java\lang\Object {
 	private $hash = 0;
 	
 	public function __construct($string = '') {
-		if (is_array($string) || $string instanceof \SplFixedArray) {
+		if (is_array($string) 
+			|| (   $string instanceof \JavaArray 
+				&& (in_array($string->getClass()
+						  ->getComponentType()
+						  ->getName().'', ['char', 'byte'])))) {
 			$this->string = '';
 			foreach ($string as $c) {
 				$this->string .= chr($c);
@@ -609,6 +671,10 @@ class String extends \java\lang\Object {
 	public function startsWith($str) {
 		$str = "$str";
 		return substr($this->string, 0, strlen($str)) == $str;
+	}
+	
+	public function concat(String $o) {
+		return new String($this->string . $o->string);
 	}
 	
 	public function equals($o) {
