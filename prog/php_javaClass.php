@@ -874,7 +874,7 @@ CODE
 		if ($const[0] == "String") {
 			return (new \java\lang\String($this->getDataFromRef($const[1])))->intern();
 		} else if ($const[0] == "Class") {
-			return \java\lang\Clazz::forName($this->getDataFromRef($const[1]));
+			return \java\lang\Clazz::forName(str_replace('/', '.', $this->getDataFromRef($const[1])));
 		}
 		return $const[1];
 	}

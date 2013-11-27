@@ -592,6 +592,12 @@ trait JavaInterpreter {
 				if ($obj !== null && !checkcast($obj, $class)) {
 					$class = str_replace('/', '.', $opcode[2]);
 					$msg = $obj->getClass()->getName() . ' cannot be cast to ' . $class;
+					var_dump($obj);
+					/*
+					foreach (debug_backtrace() as $b) {
+						var_dump($b['class']);
+						var_dump($b['function']);
+					}*/
 					throw new \java\lang\ClassCastException($msg);
 				}
 				break;
@@ -634,6 +640,7 @@ trait JavaInterpreter {
 	
 	public function newArray(array $dimentions, $type = null) {
 		
+		//var_dump($type);
 		$valueIni = strlen($type) == 1 ? 0 : null;
 		
 		if (count($dimentions) == 0) {
@@ -642,6 +649,9 @@ trait JavaInterpreter {
 		if (count($dimentions) == 1) {
 			if ($dimentions[0] < 0) {
 				throw new \java\lang\NegativeArraySizeException();
+			}
+			if (strlen($type) > 1) {
+				$type = "L$type;";
 			}
 			$arr = new JavaArray($dimentions[0], $type);
 			if ($valueIni !== null) {
@@ -713,6 +723,10 @@ class JavaArray extends SplFixedArray {
 	public function getClass() {
 		//var_dump($this->type);
 		//return $this->getClassTrait();
+		
+		if (strlen($this->type) > 1 && substr($this->type, -1, 1) != ';') {
+			$this->type = "L{$this->type};";
+		}
 		$name = '['.str_replace('/', '.', str_replace('_S_', '$', $this->type));
 		
 		return \java\lang\Clazz::forName($name);
