@@ -109,7 +109,9 @@ class DataInputStream implements DataInput {
 	 * @return string
 	 */
     function readLine() {
-		return fgets($this->file);
+		$line = fgets($this->file);
+		//var_dump($line);sleep(1);
+		return $line;
 	}
           
 	/**

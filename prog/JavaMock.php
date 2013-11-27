@@ -352,8 +352,6 @@ class System extends Object {
 	public static $out;
 	public static $in;
 	
-	public static $native_classes = [];
-	
 	public static function currentTimeMillis() {
 		return intval(microtime(true) * 1000);
 	}
@@ -378,6 +376,14 @@ class System extends Object {
 		} catch (\RuntimeException $e) {
 			throw new \java\lang\Exception('out of bounds');
 		}
+	}
+	
+	public static function gc() {
+		Runtime::getRuntime()->gc();
+	}
+	
+	public static function getSecurityManager() {
+		return null;
 	}
 	
 	public static function loadLibrary($lib) {
@@ -434,25 +440,6 @@ class PrintStream extends \java\lang\Object {
 CODE
 ) !== false or exit;
 
-//java/io/PrintStream
-eval(<<<'CODE'
-
-namespace java\io;
-	
-class InputStream extends \java\lang\Object {
-	public function nextLine() {
-		return new \java\lang\String(trim(fgets(STDIN)));
-	}
-	
-	public function hasNextLine() {
-		return true;
-	}
-}
-\java\lang\System::$in = new \java\io\InputStream();
-
-CODE
-) !== false or exit;
-
 //java/util/Scanner
 eval(<<<'CODE'
 
@@ -462,14 +449,21 @@ class Scanner extends \java\lang\Object {
 	
 	private $stream;
 	
+	private $line;
+	
 	public function __construct($stream) {
-		if ($stream === null) {throw new \Exeption('null pointer');}
+		if ($stream === null) {throw new \Exception('null stream');}
 		//var_dump($stream);exit;
 		$this->stream = $stream;
 	}
 	
 	public function nextLine() {
-		return $this->stream->nextLine();
+		if (!$this->hasNextLine()) {
+			var_dump('no more lines!');exit;
+		}
+		$line = $this->line;
+		$this->line = null;
+		return $line;
 	}
 	
 	public function nextInt() {
@@ -477,7 +471,19 @@ class Scanner extends \java\lang\Object {
 	}
 	
 	public function hasNextLine() {
-		return $this->stream->hasNextLine();
+		//var_dump($this->line);exit;
+		if ($this->line) {
+			return true;
+		} else {
+			$line = $this->stream->readLine();
+			//var_dump($line);exit;
+			if ($line) {
+				$this->line = $line;
+				return true;
+			}
+		}
+		//return $this->stream->hasNextLine();
+		return false;
 	}
 }
 
@@ -741,7 +747,7 @@ class StringBuilder extends \java\lang\Object {
 	private $string;
 	
 	public function __construct($string = '') {
-		$this->string = $string;
+		$this->string = "$string";
 	}
 	public function append($s, $offset = null, $length = null) {
 		//var_dump($s);
@@ -759,6 +765,10 @@ class StringBuilder extends \java\lang\Object {
 	
 	public function length() {
 		return strlen($this->string);
+	}
+	
+	public function charAt($i) {
+		return ord(substr($this->string, $i, 1));
 	}
 
 	public function reverse() {
@@ -1468,7 +1478,11 @@ class FileInputStream extends \java\lang\Object {
 	private $stream;
 	
 	public function __construct($file) {
-		$this->file = fopen($file, 'rb');
+		if (is_resource($file)) {
+			$this->file = $file;
+		} else {
+			$this->file = fopen($file, 'rb');
+		}
 		$this->stream = new \DataInputStream($this->file);
 	}
 	
@@ -1532,6 +1546,16 @@ class FileInputStream extends \java\lang\Object {
 		return utf8_decode($this->stream->readChar($len));
 	}
 	
+	public function readLine() {
+		$line = $this->stream->readLine();
+		//var_dump('??', $line);exit;
+		if ($line === false) {
+			return null;
+		} else {
+			return jstring($line)->trim();
+		}
+	}
+	
 	public function readFully(\SplFixedArray $ar, $offset, $length) {
 		for ($i = 0; $i < $length; $i++) {
 			$ar[$offset + $i] = $this->readByte();
@@ -1543,6 +1567,7 @@ class FileInputStream extends \java\lang\Object {
 	}
 }
 
+\java\lang\System::$in = new \java\io\FileInputStream(STDIN);
 CODE
 ) !== false or exit;
 

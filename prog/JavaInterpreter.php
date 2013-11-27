@@ -141,15 +141,7 @@ trait JavaInterpreter {
 			case 'getfield':
 				$var = $opcode[2]['field'];
 				//$args = $this->stackArrayPop($stack, 1);
-				//$stack[] = array_pop($stack)->$var;
-				$obj = array_pop($stack);
-				if (!is_object($obj)) {
-					var_dump($obj);
-					var_dump($var);
-					var_dump(['$method' => $method, '$opcode' => $opcode, '$i' =>$i]);
-					readline();
-				}
-				$stack[] = $obj->$var;
+				$stack[] = array_pop($stack)->$var;
 				break;
 			case 'putfield':
 				//$class = str_replace('/', '\\', $opcode[2]['class']);

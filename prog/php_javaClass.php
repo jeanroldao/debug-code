@@ -523,12 +523,19 @@ CODE
 		$method = $this->findMethod($method_name, $args);
 		
 		if (strpos($method['flags'], 'native') !== false) {
-			$php_function = 'Java_'.str_replace('\\', '_', $this->getPhpClassName()).'_'.$method_name;
-			//echo "$php_function()";
-			if ($thisObj !== null) {
-				$args = array_merge([$thisObj], $args);
+			
+			$php_function_name = 'Java_'.str_replace('\\', '_', $this->getPhpClassName()).'_'.$method_name;
+			if (!function_exists($php_function_name)) {
+				echo("$php_function_name native method missing!");
+				exit;
 			}
-			return call_user_func_array($php_function, $args);
+			if ($thisObj !== null) {
+				$php_function = new ReflectionFunction($php_function_name);
+				return call_user_func_array($php_function->getClosure()->bindTo($thisObj), $args);
+			} else {
+				return call_user_func_array($php_function_name, $args);
+			}
+			
 		}
 		
 		
