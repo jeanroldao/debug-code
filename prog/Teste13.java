@@ -4,7 +4,15 @@ import java.io.*;
 public class Teste13 {
 	
 	static {
-		System.loadLibrary("Teste13native");
+		String path = "";
+		try {
+			path = new File("Teste13native.dll").getCanonicalPath().toString();
+			System.out.println(path);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		//System.loadLibrary("Teste13native");
+		System.load(path);
 	}
 	
 	private String nome;

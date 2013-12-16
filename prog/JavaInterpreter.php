@@ -2,20 +2,28 @@
 
 trait JavaInterpreter {
 	private function interpret(&$i, $opcode, &$stack, &$locals, $method) {
+		//var_dump([$method, $i]);
 		//var_dump([$i, $opcode, $stack]);
 		//var_dump($stack);readline();
 		//var_dump([$locals, $stack, $opcode, $method, $i]);readline();
 		//var_dump([$locals, $stack, $opcode, $i]);
 		//var_dump($method);
-		if ('Teste22$1::<clinit>' == $method) {
+		//if ('Teste22$1::<clinit>' == $method) {
 			//var_dump(['$locals' => $locals, '$stack' =>$stack, '$opcode' => $opcode, '$i' =>$i]);
 			//readline();
 			//var_dump([$opcode, $stack, $i]);readline();
-		}
+		//}
 		$stack = array_values($stack);
 		switch ($opcode[1]) {
 			case 'aaload':
+			case 'iaload':
+			case 'laload':
+			case 'daload':
+			case 'faload':
+			case 'caload':
+			case 'baload':
 				$args = $this->stackArrayPop($stack, 2);
+				//var_dump($args[1], count($args[0]), $method, $i);
 				if (!array_key_exists($args[1], $args[0])) {
 					//var_dump($args[1], $args[0], $method, $i);readline();
 					throw new \java\lang\Exception('out of bounds');
@@ -23,15 +31,21 @@ trait JavaInterpreter {
 				$stack[] = $args[0][$args[1]];
 				break;
 			case 'aastore':
+			case 'iastore':
+			case 'dastore':
+			case 'lastore':
+			case 'castore':
+			case 'bastore':
 				$args = $this->stackArrayPop($stack, 3);
-				if (!array_key_exists($args[1], $args[0])) {
-					var_dump($args[1], $args[0]);readline();
+				//var_dump($args[1].'', $args[0]->getSize());
+				if (!array_key_exists($args[1].'', $args[0])) {
 					throw new \java\lang\Exception('out of bounds');
 				}
 				$args[0][$args[1]] = $args[2];
 				break;
 			case 'arraylength':
-				$stack[] = array_pop($stack)->getSize();
+				$ar = array_pop($stack);
+				$stack[] = $ar->getSize();
 				break;
 			case 'bipush':
 				$stack[] = $opcode[2];
@@ -43,40 +57,6 @@ trait JavaInterpreter {
 			case 'aload_2':
 			case 'aload_3':
 				$stack[] = $locals[explode('_', $opcode[1])[1]];
-				break;
-			case 'iaload':
-			case 'laload':
-			case 'daload':
-			case 'faload':
-			case 'caload':
-				$args = $this->stackArrayPop($stack, 2);
-				$stack[] = $args[0][$args[1]];
-				break;
-			case 'baload':
-				$args = $this->stackArrayPop($stack, 2);
-				if (!array_key_exists($args[1], $args[0])) {
-					throw new \java\lang\Exception('out of bounds');
-				}
-				$stack[] = $args[0][$args[1]];
-				//var_dump($stack);exit;
-				break;
-			case 'iastore':
-			case 'dastore':
-			case 'lastore':
-			case 'castore':
-				$args = $this->stackArrayPop($stack, 3);
-				//if ($args[2] != '0') {var_dump($args[2]);exit;}
-				if (!array_key_exists($args[1], $args[0])) {
-					throw new \java\lang\Exception('out of bounds');
-				}
-				$args[0][$args[1]] = $args[2];
-				break;
-			case 'bastore':
-				$args = $this->stackArrayPop($stack, 3);
-				if (!array_key_exists($args[1], $args[0])) {
-					throw new \java\lang\Exception('out of bounds');
-				}
-				$args[0][$args[1]] = $args[2];
 				break;
 			case 'iload':
 			case 'lload':
@@ -109,6 +89,13 @@ trait JavaInterpreter {
 				list($value1, $value2) = [array_pop($stack), array_pop($stack)];
 				list($stack[], $stack[], $stack[]) = [$value1, $value2, $value1];
 				break;
+			case 'dup_x2':
+				list($value1, $value2, $value3) = [array_pop($stack), array_pop($stack), array_pop($stack)];
+				list($stack[], $stack[], $stack[], $stack[]) = [$value1, $value2, $value3, $value1];
+				break;
+			//case 'swap':
+				
+				break;
 			case 'getstatic':
 				/*
 				$class = str_replace('$', '_S_', str_replace('/', '\\', $opcode[2]['class']));
@@ -119,6 +106,7 @@ trait JavaInterpreter {
 				$class = str_replace('$', '_S_', str_replace('/', '\\', $opcode[2]['class']));
 				$refClass = new ReflectionClass($class);
 				$var = str_replace('$', '_S_', $opcode[2]['field']);
+				//var_dump($class);
 				$property = $refClass->getProperty($var);
 				$stack[] = $property->getValue();
 				break;
@@ -127,6 +115,9 @@ trait JavaInterpreter {
 				$class = str_replace('$', '_S_', str_replace('/', '\\', $opcode[2]['class']));
 				$var = '$'.str_replace('$', '_S_', $opcode[2]['field']);
 				$args = $this->stackArrayPop($stack, 1);
+				if (interface_exists($class)) {
+					$class .= '_interface';
+				}
 				eval("$class::$var = \$args[0];");
 				break;
 				
@@ -218,13 +209,20 @@ trait JavaInterpreter {
 				}
 				break;
 			case 'iflt':
-				if (array_pop($stack) < 0) {
+				$v = array_pop($stack);
+				//var_dump(['$v' => $v]);
+				if ($v < 0) {
 					$i += $opcode[2];
 					return;
 				}
 				break;
 			case 'ifge':
-				if (array_pop($stack) >= 0) {
+				$v = array_pop($stack);
+				if (is_object($v)) {
+					var_dump(['method' => $method, '$i' => $i, '$v' => $v]);
+					exit;
+				}
+				if ($v >= 0) {
 					$i += $opcode[2];
 					return;
 				}
@@ -329,6 +327,7 @@ trait JavaInterpreter {
 				$stack[] = array_pop($stack) + array_pop($stack);
 				break;
 			case 'iinc':
+				//var_dump(['local' => $locals[$opcode[2]], 'iinc' => $opcode[3]]);
 				if ($opcode[3] == 1) {
 					$locals[$opcode[2]]++;
 				} else {
@@ -376,6 +375,7 @@ trait JavaInterpreter {
 				break;
 			case 'lneg':
 			case 'ineg':
+			case 'dneg':
 				$stack[] = -array_pop($stack);
 				break;
 			case 'ishl':
@@ -391,13 +391,24 @@ trait JavaInterpreter {
 			case 'lushr':
 			case 'iushr':
 				list($n1, $n2) = $this->stackArrayPop($stack, 2);
+				if (is_object($n1)) {
+					var_dump([$method, $i]);
+					var_dump('not a number!');
+					var_dump($n1, $n2);
+					exit;
+				}
 				$stack[] = $n1 >> $n2;
 				break;
 			case 'invokestatic':
 				$numArgs = count($opcode[2]['args']);
 				$class = '\\'.str_replace('/', '\\', $opcode[2]['class']);
+				//var_dump(interface_exists($class));
 				$args = $this->stackArrayPop($stack, $numArgs);
-				$ret = call_user_func_array([$class, $opcode[2]['method']], $args);
+				$m = $opcode[2]['method'];
+				if ($m == 'toString') {
+					$m = 'staticToString';
+				}
+				$ret = call_user_func_array([$class, $m], $args);
 				if ($opcode[2]['return'] != 'V') {
 					$stack[] = $ret;
 				}
@@ -446,8 +457,8 @@ trait JavaInterpreter {
 				$args = $this->stackArrayPop($stack, $numArgs);
 				$obj = array_shift($args);
 				if ($obj == null) {
+					var_dump([$method, $i, $obj, $args, $stack, $opcode[2]['method'], 'need object']);
 					throw new \java\lang\NullPointerException();
-					//var_dump([$method, $i, $obj, $args, $stack, $opcode[2]['method'], 'need object']);
 					//exit;
 				}
 				//if ($args[0] == 35) {var_dump($i, $opcode, $args);exit;}
@@ -457,7 +468,7 @@ trait JavaInterpreter {
 						$args[$iArg] = chr($args[$iArg]);
 					}
 				}
-				//var_dump([$obj, $opcode[2]], $args);exit;
+				//var_dump([get_class($obj), $opcode[2]['method']], $args);
 				$ret = call_user_func_array([$obj, $opcode[2]['method']], $args);
 				if ($opcode[2]['return'] != 'V') {
 					//var_dump('ret', $opcode[2]['method'], $ret);
@@ -571,8 +582,9 @@ trait JavaInterpreter {
 			case 'i2c':
 				//$stack[] = chr(array_pop($stack));
 				break;
-			//case 'monitorenter':
-			//case 'monitorexit':
+			case 'monitorenter':
+			case 'monitorexit':
+				array_pop($stack);
 				break;
 			case 'instanceof':
 				$class = str_replace('/', '\\', $opcode[2]);
@@ -584,7 +596,7 @@ trait JavaInterpreter {
 				if ($obj !== null && !checkcast($obj, $class)) {
 					$class = str_replace('/', '.', $opcode[2]);
 					$msg = $obj->getClass()->getName() . ' cannot be cast to ' . $class;
-					var_dump($obj);
+					//var_dump($obj);
 					/*
 					foreach (debug_backtrace() as $b) {
 						var_dump($b['class']);
@@ -672,6 +684,7 @@ trait JavaInterpreter {
 }
 
 function checkcast($obj, $class) {
+	//return true;
 	if ($obj === null) {
 		return true;
 	} else if ($obj instanceof JavaArray) {

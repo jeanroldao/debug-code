@@ -164,10 +164,14 @@ trait JavaTranslator {
 				return [1, 'dup'];
 			case 0x5a:
 				return [1, 'dup_x1'];
+			case 0x5b:
+				return [1, 'dup_x2'];
 			case 0x5c:
 				return [1, 'dup2'];
 			case 0x5e:
 				return [1, 'dup2_x2'];
+			case 0x5f:
+				return [1, 'swap'];
 			case 0x60:
 				return [1, 'iadd'];
 			case 0x61:
@@ -210,6 +214,8 @@ trait JavaTranslator {
 				return [1, 'lneg'];
 			case 0x76:
 				return [1, 'lshl'];
+			case 0x77:
+				return [1, 'dneg'];
 			case 0x78:
 				return [1, 'ishl'];
 			case 0x79:
@@ -236,7 +242,12 @@ trait JavaTranslator {
 				return [1, 'lxor'];
 			case 0x84:
 				$i += 2;
-				return [3, 'iinc', ($input->readByte()), ($input->readByte())];
+				$var = $input->readByte();
+				$inc = $input->readByte();
+				if ($inc > 127) {
+					$inc -= 256;
+				}
+				return [3, 'iinc', $var, $inc];
 			case 0x85:
 				return [1, 'i2l'];
 			case 0x86:

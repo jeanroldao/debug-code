@@ -37,7 +37,8 @@ class DataInputStream implements DataInput {
 	 * @return byte
 	 */
 	public function readByte() {
-		return ord(fread($this->file, 1));
+		//return ord(fread($this->file, 1));
+		return hexdec($this->readHex(1));
 	}
 	
 	/**
@@ -53,19 +54,7 @@ class DataInputStream implements DataInput {
 	 * @return short
 	 */
 	function readShort() {
-		//return hexdec($this->readHex(2));
 		$binarydata = fread($this->file, 2);;
-		/*
-		if (unpack("s", strrev($binarydata))[1] == 1622) {
-			//var_dump(dechex(1622));
-			//var_dump(dechex(145));
-			//var_dump(dechex(unpack("s", ($binarydata))[1]));
-			//var_dump(hexdec(unpack("H4hex", strrev($binarydata))['hex']));
-			return 145; // dafuq??
-		}
-		if (unpack("s", strrev($binarydata))[1] == 24940) {
-			return 144;
-		}*/
 		return (unpack("s", strrev($binarydata))[1]);
 	}
 	
@@ -136,9 +125,13 @@ class DataInputStream implements DataInput {
 	 * @return int
 	 */
 	function readUnsignedShort() {
-		//$a = unpack('Ca/Cb', fread($this->file, 2));
-		//return($a['a'] << 8 | $a['b']);
-		return $this->readShort();
+		$a = unpack('Ca/Cb', fread($this->file, 2));
+		return $a['a'] << 8 | $a['b'];
+		//$n = $this->readShort();
+		//if ($n < 0) {
+		//	$n += 65536;
+		//}
+		//return $n;
 	}
           
 	/**
@@ -146,7 +139,8 @@ class DataInputStream implements DataInput {
 	 * @return string
 	 */
 	function readUTF() {
-		$len = $this->readShort();
+		//$len = $this->readShort();
+		$len = $this->readUnsignedShort();
 		//println("($len)");
 		if ($len == 0) {return '';}
 		return utf8_decode($this->readChar($len));

@@ -47,8 +47,8 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 	
 	public function __construct() {
 		$this->addClasspath(dirname(__FILE__));
-		//$this->addJarClasspath('./rt.jar');
-		$this->addJarClasspath('C:/Program Files/Java/jre7/lib/rt.jar');
+		$this->addJarClasspath('./rt.jar');
+		//$this->addJarClasspath('C:/Program Files/Java/jre7/lib/rt.jar');
 	}
 	
 	public function setDefaultAssertionStatus($debug) {
@@ -82,8 +82,10 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 		if (!$path || !realpath($path)) {
 			throw new \Exception('Path not found');
 		}
-		if (is_file($path) && substr($path, -4) == '.jar') {
+		if (is_file($path) && in_array(substr($path, -4), ['.jar', '.zip'])) {
 			$this->addJarClassPath(realpath($path));
+		} else if (is_file($path) && in_array(substr($path, -4), ['.war', '.ear'])) {
+			$this->classpath[] = 'zip://'.realpath($path).'#WEB-INF/classes/';
 		} else {
 			$this->classpath[] = realpath($path).'/';
 		}
@@ -91,7 +93,7 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 	
 	public function addJarClasspath($jarPath) {
 		if (!$jarPath || !realpath($jarPath)) {
-			throw new \Exception('Jar not found');
+			throw new \Exception("Jar not found ($jarPath)");
 		}
 		$this->classpath[] = 'zip://'.realpath($jarPath).'#';
 	}
@@ -117,8 +119,9 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 
 	public function loadClass($className) {
 		$className = "$className";
-		//var_dump(['autoload', $className]);
-		if (class_exists(str_replace('.', '\\', str_replace('$', '_S_', $className)), false)) {
+		//var_dump(['autoload', $className, class_exists(\php_javaClass::convertNameJavaToPhp($className), false), interface_exists(\php_javaClass::convertNameJavaToPhp($className), false)]);
+		if (class_exists(\php_javaClass::convertNameJavaToPhp($className), false) 
+			|| interface_exists(\php_javaClass::convertNameJavaToPhp($className), false)) {
 			return \java\lang\Clazz::forName($className);
 		}
 		//debug_print_backtrace();
@@ -132,10 +135,10 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 			}*/
 			
 			$filename = ($path.str_replace('.', '/', $className).'.class');
-			//if ($this->debug_log) { echo "<loading $className ...>".PHP_EOL; }
+			if ($this->debug_log) { echo "<loading $filename ...>".PHP_EOL; }
 			if ($this->readClassFile($filename)) {
 				if ($this->debug_log) { echo "<$className ok>".PHP_EOL; }
-				$classNamePhp = str_replace('.', '\\', str_replace('$', '_S_', $className));
+				$classNamePhp = \php_javaClass::convertNameJavaToPhp($className);
 				if (!class_exists($classNamePhp) && !interface_exists($classNamePhp)) {
 					echo 'class loader error! (class not loaded? "'.$classNamePhp.'")'.PHP_EOL;
 					exit;
@@ -148,7 +151,7 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 				//\java\lang\Clazz::setClassLoader($className, $this);
 				return \java\lang\Clazz::forName($className);
 			}
-			//if ($this->debug_log) { echo "<$className not found>".PHP_EOL; }
+			if ($this->debug_log) { echo "<$className not found>".PHP_EOL; }
 		}
 	}
 }

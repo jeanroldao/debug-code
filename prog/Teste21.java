@@ -20,12 +20,12 @@ public class Teste21 {
 		//Map<String, Pessoa> p = new HashMap<String, Pessoa>((int) (15000 / 0.75) + 1);
 		Map<String, Pessoa> p = new HashMap<String, Pessoa>();
 		
-		for (int i = 0; i < 12; i++) {
-			System.out.println(i);
+		for (int i = 0; i < 1234567; i++) {
+			//System.out.println(i);
 			p.put("id_"+i, new Pessoa("("+i+")"));
 		}
 		System.out.println("searching...");
-		System.out.println("done: " + p.get("id_3").getNome());
+		System.out.println("done: " + p.get("id_321098").getNome());
 		new Scanner(System.in).nextLine();
 	}
 	

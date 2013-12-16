@@ -21,7 +21,7 @@ spl_autoload_register(function($className){
 	}
 	
 	//$classLoader->setDefaultAssertionStatus(true);
-	$className = str_replace('\\', '.', str_replace('_S_', '$', $className));
+	$className = str_replace(['\\', '_S_', '_interface', '__'], ['.', '$', '', ''], $className);
 	$classLoader->loadClass($className);
 });
 
@@ -195,7 +195,9 @@ class php_javaClass extends \java\lang\Object {
 		
 		$flag = $input->readShort();
 		print("flag " . $flag);
+		
 		$this->class_attr['flags'] = $this->flags($flag);
+		$this->class_attr['flags_num'] = $flag;
 		println($this->class_attr['flags']);
 		
 		$this->class_attr['name'] = $this->getClassName($input->readShort());
@@ -220,7 +222,10 @@ class php_javaClass extends \java\lang\Object {
 		$this->class_attr['fields'] = [];
 		for ($i = 0; $i < $number_of_fields; $i++) {
 			$field = [];
-			$field['flags'] = $this->flags($input->readShort());
+			
+			$flags_num = $input->readShort();
+			$field['flags'] = $this->flags($flags_num);
+			$field['flags_num'] = $flags_num;
 			println($field['flags']);
 			
 			$field['name'] = $this->getString($input->readShort());
@@ -242,7 +247,9 @@ class php_javaClass extends \java\lang\Object {
 		for ($i = 0; $i < $methods; $i++) {
 			$method = [];
 			
-			$method['flags'] = $this->flags($input->readShort());
+			$flags_num = $input->readShort();
+			$method['flags'] = $this->flags($flags_num);
+			$method['flags_num'] = $flags_num;
 			println($method['flags']);
 			
 			$method['name'] = $this->getString($input->readShort());
@@ -327,21 +334,47 @@ class php_javaClass extends \java\lang\Object {
 	}
 	
 	public function getPhpClassName() {
-		return str_replace('/', '\\', str_replace('$', '_S_', $this->class_attr['name']));
+		$name = $this->convertNameJavaToPhp($this->class_attr['name']);
+		//var_dump($name);readline();
+		return $name;
+	}
+	
+	public static function convertNameJavaToPhp($name) {
+		//var_dump($name);
+		$name1 = fixPhpClassName(str_replace(['/', '.', '$'], ['\\', '\\', '_S_'], $name));
+		//var_dump($name1);readline();
+		return $name1;
+	}
+	
+	public static function getShortClassNameFromClass($fullClassName) {
+		$name = explode('\\', $className);
+		return array_pop($name);
+	}
+	
+	public static function getNamespaceFromClass($className) {
+		$name = explode('\\', $className);
+		array_pop($name);
+		return implode('\\', $name);
 	}
 	
 	public function createPhpClass() {
 	
-		$className = str_replace('$', '_S_', $this->class_attr['name']);
+		$className = $this->getPhpClassName();
+		//var_dump($className);readline();
 		
-		$super = '\\'.str_replace('/', '\\', str_replace('$', '_S_', $this->class_attr['super']));
+		$super = '\\'.$this->convertNameJavaToPhp($this->class_attr['super']);
 		
-		//$isInterface = strpos($this->class_attr['flags'], 'interface') !== false;
-		$isInterface = false;
+		$isInterface = strpos($this->class_attr['flags'], 'interface') !== false;
+		//$isInterface = false;
 		
 		$implements = '';
 		if (!empty($this->class_attr['interfaces'])) {
 			//$implements = str_replace('/', '\\', 'implements /'.implode(', /', $this->class_attr['interfaces']));
+			$implements = [];
+			foreach ($this->class_attr['interfaces'] as $interfaceName) {
+				$implements[] = '\\'.$this->convertNameJavaToPhp($interfaceName);
+			}
+			$implements = 'implements '.implode(', ', $implements);
 		}
 		
 		$fields = '';
@@ -375,23 +408,7 @@ class php_javaClass extends \java\lang\Object {
 			
 			$arfnums[strtolower($fname)] = true;
 			
-			if ($fname == '<init>') {
-				$fname = '__construct';
-			} else if ($fname == 'clone') {
-				$fname = '_clone';
-			} else if ($fname == 'empty') {
-				$fname = '__empty';
-			} else if ($fname == 'echo') {
-				$fname = '__echo';
-			} else if ($fname == 'print') {
-				$fname = '__print';
-			} else if ($fname == 'exit') {
-				$fname = '__exit';
-			} else if ($fname == 'list') {
-				$fname = '__list';
-			} else {
-				$fname = str_replace('$', '_S_', $fname);
-			}
+			$fname = fixPhpFuncName($fname);
 			//var_dump($className, $fname, $m['flags']);
 			if (strpos($m['flags'], 'static') !== false) {
 				if ($fname == 'toString') {
@@ -415,22 +432,30 @@ class php_javaClass extends \java\lang\Object {
 				}'.PHP_EOL;
 			}
 		}
+		//var_dump($className);
 		$namespace = str_replace('/', '\\', dirname($className));
 		$namespace = $namespace != '.' ? "namespace $namespace;" : '';
-		$className = fixPhpClassName(basename($className));
+		$className = basename($className);
+		//var_dump($className);readline();
 		$clinit = '';
 		try {
-			$this->findMethod('<clinit>');
-			$clinit = "$className::__callstatic('<clinit>', []);";
-		} catch (\Exception $e) {
-			//
+			$mmm = $this->findMethod('<clinit>');
+			$clinitClassName = $isInterface ? $className.'_interface' : $className;
+			$clinit = "try{ $clinitClassName::__callstatic('<clinit>', []); } catch (\\JavaMethodNotFoundException \$e) { /*var_dump(\"$className\");ob_end_clean();readline();*/ } ";
+			/*
+			if ($className == 'C2JRTBase') {
+				var_dump($clinit);exit;
+			}*/
+			$mmm = null;
+		} catch (\JavaMethodNotFoundException $e) {
+			//var_dump($className);
 		}
 		//$classDeclaration = $isInterface ? 'interface': 'class';
 		
 		//var_dump($namespace, $className, class_exists($className, false));
 		
 		if (!$isInterface) {
-			$eval = eval($s=<<<CODE
+			$eval = eval2($this, $s=<<<CODE
 			$namespace
 			class $className extends $super $implements {
 				public static \$javaClass;
@@ -438,6 +463,13 @@ class php_javaClass extends \java\lang\Object {
 					try {
 						return self::\$javaClass->run(\$method, \$args);
 					} catch(\\JavaMethodNotFoundException \$e) {
+						if (!property_exists(get_parent_class(__CLASS__), 'javaClass')) {
+							//ob_end_clean();
+							echo __CLASS__  . '::' . \$e->getMessage();
+							readline();
+							var_dump((get_class_methods(__CLASS__)));
+							readline();
+						}
 						return parent::\$javaClass->run(\$method, \$args);
 					}
 				}
@@ -453,15 +485,15 @@ class php_javaClass extends \java\lang\Object {
 				
 				$methods
 			}
-			$className::\$javaClass = \$this;
+			$className::\$javaClass = \$thisObj;
 			
 			$clinit
 CODE
 );
 		} else {
-			
+			//var_dump('interface?', $className);readline();
 			$implements = str_replace('implements', 'extends', $implements);
-			$eval = eval($s=<<<CODE
+			$eval = eval2($this, $s=<<<CODE
 			$namespace
 			
 			interface $className $implements {}
@@ -487,7 +519,7 @@ CODE
 				
 				$methods
 			}
-			{$className}_interface::\$javaClass = \$this;
+			{$className}_interface::\$javaClass = \$thisObj;
 			
 			$clinit
 CODE
@@ -526,7 +558,31 @@ CODE
 			
 			$php_function_name = 'Java_'.str_replace('\\', '_', $this->getPhpClassName()).'_'.$method_name;
 			if (!function_exists($php_function_name)) {
-				echo("$php_function_name native method missing!");
+				$className = str_replace('/', '.', $this->class_attr['name']);
+				
+				$argsType = $this->getArgsType($method['type']);
+				$returnType = strlen($argsType['return']) == 1 ? \java\lang\Clazz::getPrimitiveClass($argsType['return']): \java\lang\Clazz::forName($argsType['return']);
+				
+				$parameterTypes = new \JavaArray(count($argsType['args']), 'java.lang.reflect.Class');
+				foreach ($argsType['args'] as $iArg => $argType) {
+					$parameterTypes[$iArg] = strlen($argType) == 1 ? \java\lang\Clazz::getPrimitiveClass($argType): \java\lang\Clazz::forName($argType);
+				}
+				$javaMethod = new \java\lang\reflect\Method(
+					/*Class declaringClass*/        \java\lang\Clazz::forName($className),
+					/*String name*/                 jstring($method['name']),
+					/*Class[] parameterTypes*/      $parameterTypes,
+					/*Class returnType*/            $returnType,
+					/*Class[] checkedExceptions*/   new \JavaArray(0, 'java.lang.reflect.Class'),
+					/*int modifiers*/               $method['flags_num'],
+					/*int slot*/                    0,
+					/*String signature*/            jstring(''),
+					/*byte[] annotations*/          new \JavaArray(0, 'B'),
+					/*byte[] parameterAnnotations*/ new \JavaArray(0, 'B'),
+					/*byte[] annotationDefault*/    new \JavaArray(0, 'B')
+				);
+				println($javaMethod);
+				println($php_function_name);
+				println("native method missing!");
 				exit;
 			}
 			if ($thisObj !== null) {
@@ -643,11 +699,16 @@ CODE
 	
 	
 	private function findMethod($name, &$args = []) {
+		//var_dump(['class' => $this->class_attr['name'], 'name' => $name]);
+		
 		if ($name == '__construct') {
 			$name = '<init>';
 		}
 		$countArgs = count($args);
 		foreach ($this->class_attr['methods'] as $method) {
+			//if ($this->class_attr['name'] == 'C2JRTBase') {
+			//	var_dump("$name ($countArgs) <1>(".count($this->class_attr['methods']).") " . $method['name'] . " (".count($this->getArgsType($method['type'])['args']).")");
+			//}
 			//echo $method['name'] . PHP_EOL;
 			if ($method['name'] == $name 
 			
@@ -656,16 +717,23 @@ CODE
 				//var_dump($this->getArgsType($method['type']));exit;
 				foreach ($this->getArgsType($method['type'])['args'] as $i => $arg) {
 					//var_dump($arg);exit;
-					if ($arg == 'java/lang/String' && !($args[$i] instanceof \java\lang\String)) {
+					if (is_string($args[$i])
+					/*$arg == 'java/lang/String' && !($args[$i] instanceof \java\lang\String)*/) {
 						$args[$i] = new \java\lang\String($args[$i]);
 						$args[$i] = $args[$i]->intern();
 					}
 				}
 				return $method;
 			}
+			//if ($this->class_attr['name'] == 'C2JRTBase') {
+			//	var_dump("$name ($countArgs) <2>(".count($this->class_attr['methods']).") " . $method['name'] . " (".count($this->getArgsType($method['type'])['args']).")");
+			//}
 		}
-		throw new \JavaMethodNotFoundException('method ' . $name . ' not found!');
-		
+		if ($this->class_attr['name'] == 'C2JRTBase') {
+			var_dump("$name ($countArgs) <not found>(".count($this->class_attr['methods']).") " . $method['name'] . " (".count($this->getArgsType($method['type'])['args']).")");
+		}
+		throw new \JavaMethodNotFoundException('method ' . $name . ' for class ' . $this->class_attr['name'] . ' not found!');
+		/*
 		foreach ($this->class_attr['methods'] as $method) {
 			var_dump($method['name']);
 			if ($method['name'] == $name) {
@@ -674,7 +742,7 @@ CODE
 		}
 		if ($name != '<clinit>') {
 			var_dump([$name, $countArgs]);exit;
-		}
+		}*/
 	}
 	
 	private function getCodeAttr($attr_length) {
@@ -826,7 +894,7 @@ CODE
 		];
 	}
 	
-	private function getArgsType($argsType) {
+	public function getArgsType($argsType) {
 		list($argsStr, $return) = explode(')', substr($argsType, 1));
 		$args = [];
 		$argsLen = strlen($argsStr);
@@ -883,6 +951,7 @@ CODE
 		} else if ($const[0] == "Class") {
 			return \java\lang\Clazz::forName(str_replace('/', '.', $this->getDataFromRef($const[1])));
 		}
+		var_dump($const[1]);
 		return $const[1];
 	}
 	
@@ -962,7 +1031,9 @@ CODE
 		$fp = fopen('zip://'.realpath($jar_file).'#META-INF/MANIFEST.MF', 'rb');
 		foreach(explode("\n", stream_get_contents($fp)) as $linha) {
 			$ar = explode(':', $linha);
-			$manifest[trim($ar[0])] = trim($ar[1]);
+			if (count($ar) == 2) {
+				$manifest[trim($ar[0])] = trim($ar[1]);
+			}
 		};
 		fclose($fp);
 		return $manifest;
@@ -993,7 +1064,7 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 		
 		if ($arg == '-jar') {
 			$jar_file = array_shift($_SERVER["argv"]);
-			\JavaLoader::addJarClasspath($jar_file);
+			\java\lang\ClassLoader::getSystemClassLoader()->addJarClasspath($jar_file);
 
 			$arg = \php_javaClass::readJarManifest($jar_file)['Main-Class'];
 		} else if ($arg == '-cp') {
@@ -1013,7 +1084,7 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 		
 		\java\lang\ClassLoader::getSystemClassLoader()->loadClass($class);
 		//var_dump($_SERVER["argv"]);readline();
-		$class::main($_SERVER["argv"]);
+		$class::main(\JavaArray::fromArray($_SERVER["argv"], 'Ljava/lang/String;'));
 		exit;
 	} 
 	`java`;

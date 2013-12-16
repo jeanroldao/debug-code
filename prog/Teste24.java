@@ -9,7 +9,8 @@ public class Teste24 implements Serializable {
 	
 	public static void main(String[] args) throws Exception {
 		
-		Scanner scan = new Scanner(new FileInputStream(args[0]));
+		String path = args.length > 0 ? args[0] : "Teste24_data.csv";
+		Scanner scan = new Scanner(new FileInputStream(path));
 		//Scanner scan = new Scanner(System.in);
 		//System.out.println(new File(args[0]).length());
 		StringBuilder sb = new StringBuilder();
@@ -67,7 +68,7 @@ public class Teste24 implements Serializable {
         StringBuilder curVal = new StringBuilder();
         boolean inquotes = false;
         for (int i = 0; i < csv.length(); i++) {
-			System.gc();
+			//System.gc();
             char ch = csv.charAt(i);
             if (inquotes) {
                 if (ch == '"') {

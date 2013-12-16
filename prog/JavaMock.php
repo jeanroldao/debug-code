@@ -5,21 +5,45 @@ function jstring($str) {
 }
 
 function fixPhpClassName($className) {
-	$replace_ar = [
-		'Class' => '__Class',
+	static $replace_ar = [
+		'Class' => 'Clazz',
 		'Array' => '__Array',
 		'List' => '__List',
 	];
-	foreach ($replace_ar as $oldName => $newName) {
-		if ($className == $oldName) {
-			return $newName;
+	
+	$className_ns = explode('\\', $className);
+	
+	foreach ($className_ns as $i => $name) {
+		foreach ($replace_ar as $oldName => $newName) {
+			if ($name == $oldName) {
+				//return $newName;
+				$className_ns[$i] = $newName;
+			}
 		}
 	}
-	return $className;
+	//var_dump($className_ns);readline();
+	
+	return implode('\\', $className_ns);
 	//return str_replace(array_keys($replace_ar), array_values($replace_ar), $className);
 }
 
 function fixPhpFuncName($method) {
+	$replace_ar = [
+		'<init>' => '__construct',
+		'clone' => '_clone',
+		'empty' => '__empty',
+		'echo' => '__echo',
+		'print' => '__print',
+		'exit' => '__exit',
+		'list' => '__list',
+	];
+	foreach ($replace_ar as $oldName => $newName) {
+		if ($method == $oldName) {
+			return $newName;
+		}
+	}
+	return str_replace('$', '_S_', $method);
+	/*
 	if ($method == '<init>') {
 		return '__construct';
 	} else if ($method == 'clone') {
@@ -36,11 +60,28 @@ function fixPhpFuncName($method) {
 		return '__list';
 	} else {
 		return $method;
+	}*/
+}
+
+function eval2($thisObj, $php) {
+	static $dir = null;
+	if ($dir === null) {
+		$dir = __DIR__ . '/temp/';
+		foreach (scandir($dir) as $file) {
+			if (!in_array($file, ['.', '..'])) {
+				unlink($dir.$file);
+			}
+		}
 	}
+	
+	$className = is_object($thisObj) ? $thisObj->getPhpClassName() : $thisObj;
+	$file = $dir.str_replace(['\\', '/'], ['_', '_'], $className).'.php';
+	file_put_contents($file, "<?php $php");
+	include($file);
 }
 
 //java/lang/Object
-eval(<<<'CODE'
+eval2('java/lang/Object', <<<'CODE'
 
 namespace java\lang;
 	
@@ -65,16 +106,16 @@ trait ObjectTrait {
 		if ($fname != $method) {
 			return call_user_func_array([$this, $fname], $args);
 		} else {
-			throw new \Exception($method.' method does not exists');
+			throw new \JavaMethodNotFoundException($method.' method does not exists');
 		}
 	}
 
 	public static function __callstatic($method, $args) {
 		$fname = fixPhpFuncName($method);
 		if ($fname != $method) {
-			return call_user_func_array([get_class($this), $fname], $args);
+			return call_user_func_array([get_called_class(), $fname], $args);
 		} else {
-			throw new \Exception($method.' static method do not exists');
+			throw new \JavaMethodNotFoundException($method.' static method for '.get_called_class().' do not exists');
 		}
 	}
 	
@@ -97,7 +138,7 @@ CODE
 ) !== false or exit;
 
 //java/lang/Class
-eval(<<<'CODE'
+eval2('java/lang/Class', <<<'CODE'
 
 namespace java\lang;
 	
@@ -112,17 +153,24 @@ class Clazz extends Object {
 	private static $loadedClasses = [];
 	
 	public function __construct($name) {
-		$this->name = "$name";
+		$name = "$name";
+		if (substr($name, 0, 1) == 'L') {
+			$name = str_replace('/', '.', substr($name, 1, -1));
+		}
+		//var_dump($name);
+		$this->name = $name;
+		return;
 		
+		/*
 		//ob_end_flush();
 		//var_dump("$name", isset(self::$loadedClasses["$name"]), class_exists("$name", false));readline();
-		return;
 		
 		//teste para tipos primitivos?
 		if ($name !== strtolower($name) && !isset(self::$loadedClasses["$name"])) {
 			self::$loadedClasses["$name"] = true;
 			$this->getRefClass();
 		}
+		*/
 	}
 	
 	private function getRefClass() {
@@ -130,9 +178,11 @@ class Clazz extends Object {
 		//var_dump($this->name);
 		//var_dump($this->refClass);
 		if ($this->refClass === null) {
-			$name = str_replace('.', '\\', str_replace('$', '_S_', $this->name));
-			if (substr($name, 0, 1) == '[') {
+			$name = \php_javaClass::convertNameJavaToPhp($this->name);
+			if ($this->isArray()) {
 				$this->refClass = new \ReflectionClass('JavaArray');
+			} else if ($this->isInterface()) {
+				$this->refClass = new \ReflectionClass("{$name}_interface");
 			} else {
 				$this->refClass = new \ReflectionClass($name);
 				/*
@@ -148,6 +198,7 @@ class Clazz extends Object {
 	}
 	
 	public function getName() {
+		//var_dump($this->name);
 		return jstring($this->name)->replace("\\", ".");
 	}
 	
@@ -195,7 +246,8 @@ class Clazz extends Object {
 		'B' => 'byte',
 		'S' => 'short',
 		'I' => 'int',
-		'J' => 'long'
+		'J' => 'long',
+		'V' => 'void'
 	];
 	
 	private static function isPrimitiveType($type) {
@@ -224,12 +276,23 @@ class Clazz extends Object {
 		return jstring($toString)->concat($this->getName());
 	}
 	
+	public function isArray() {
+		return $this->getName()->charAt(0) === ord('[');
+	}
+	
 	public function isInterface() {
-		return false;
+		return interface_exists(\php_javaClass::convertNameJavaToPhp($this->name));
 	}
 	
 	public function isPrimitive() {
 		return in_array($this->name, self::$primitive_types);
+	}
+	
+	public function getModifiers() {
+		$javaClass = $this->getRefClass()
+						  ->getProperty('javaClass')
+						  ->getValue();
+		return $javaClass->class_attr['flags_num'];
 	}
 	
 	public function getClassLoader() {
@@ -242,10 +305,70 @@ class Clazz extends Object {
 						;
 			//var_dump($cl);
 			return $cl;
-		} catch(\Exception $e) {
+		} catch(\ReflectionException $e) {
 			//println($e->getMessage());exit;
 			return null;
 		}
+	}
+	
+	public function getMethods() {
+		//var_dump($this->getRefClass()->getMethods());
+		$javaClass = $this->getRefClass()
+						  ->getProperty('javaClass')
+						  ->getValue();
+		$methods = $javaClass->class_attr['methods'];
+		foreach ($methods as $i => $method) {
+			$argsType = $javaClass->getArgsType($method['type']);
+			$returnType = strlen($argsType['return']) == 1 ? self::getPrimitiveClass($argsType['return']): self::forName($argsType['return']);
+			
+			$parameterTypes = new \JavaArray(count($argsType['args']), 'java.lang.reflect.Class');
+			foreach ($argsType['args'] as $iArg => $argType) {
+				$parameterTypes[$iArg] = strlen($argType) == 1 ? self::getPrimitiveClass($argType): self::forName($argType);
+			}
+			$javaMethod = new \java\lang\reflect\Method(
+				/*Class declaringClass*/        $this,
+				/*String name*/                 jstring($method['name']),
+				/*Class[] parameterTypes*/      $parameterTypes,
+				/*Class returnType*/            $returnType,
+				/*Class[] checkedExceptions*/   new \JavaArray(0, 'java.lang.reflect.Class'),
+				/*int modifiers*/               $method['flags_num'],
+				/*int slot*/                    0,
+				/*String signature*/            jstring(''),
+				/*byte[] annotations*/          new \JavaArray(0, 'B'),
+				/*byte[] parameterAnnotations*/ new \JavaArray(0, 'B'),
+				/*byte[] annotationDefault*/    new \JavaArray(0, 'B')
+			);
+			//var_dump($method);
+			//var_dump($javaMethod->toString().'');
+			//exit;
+			$methods[$i] = $javaMethod;
+		}
+		
+		return \JavaArray::fromArray($methods, 'java.lang.reflect.Method');
+	}
+	
+	public function getFields() {
+		
+		//var_dump($this->getRefClass());
+		$javaClass = $this->getRefClass()
+						  ->getProperty('javaClass')
+						  ->getValue();
+		$fields = $javaClass->class_attr['fields'];
+		//var_dump($fields);
+		foreach ($fields as $i => $field) {
+			$type = strlen($field['type']) == 1 ? self::getPrimitiveClass($field['type']): self::forName($field['type']);
+			$javaField = new \java\lang\reflect\Field(
+				/*Class declaringClass*/ $this,
+				/*String name*/          $field['name'],
+				/*Class type*/           $type,
+				/*int modifiers*/        $field['flags_num'],
+				/*int slot*/             0,
+				/*String signature*/     jstring(''),
+				/*byte[] annotations*/   new \JavaArray(0, 'B')
+			);
+			$fields[$i] = $javaField;
+		}
+		return \JavaArray::fromArray($fields, 'java.lang.reflect.Field');
 	}
 	
 	public function getEnclosingClass() {
@@ -344,13 +467,14 @@ CODE
 class_alias('java\lang\Clazz', 'java\lang\Class');
 
 //java/lang/System
-eval(<<<'CODE'
+eval2('java/lang/System', <<<'CODE'
 
 namespace java\lang;
 	
 class System extends Object {
-	public static $out;
 	public static $in;
+	public static $out;
+	public static $err;
 	
 	public static function currentTimeMillis() {
 		return intval(microtime(true) * 1000);
@@ -389,6 +513,19 @@ class System extends Object {
 	public static function loadLibrary($lib) {
 		include_once "$lib.php";
 	}
+	
+	public static function getProperty($propName) {
+		@$ini_array = parse_ini_file("SystemProperties.ini", false, INI_SCANNER_RAW);
+		if (isset($ini_array["$propName"])) {
+			return jstring($ini_array["$propName"]);
+		} else {
+			return null;
+		}
+	}
+	
+	public static function __exit($code = 0) {
+		exit($code);
+	}
 }
 
 
@@ -396,7 +533,7 @@ CODE
 ) !== false or exit;
 
 //java/io/PrintStream
-eval(<<<'CODE'
+eval2('java/io/PrintStream', <<<'CODE'
 
 namespace java\io;
 	
@@ -436,6 +573,7 @@ class PrintStream extends \java\lang\Object {
 	public function close() {}
 }
 \java\lang\System::$out = new \java\io\PrintStream();
+\java\lang\System::$err = new \java\io\PrintStream();
 
 CODE
 ) !== false or exit;
@@ -556,7 +694,10 @@ eval(<<<'CODE'
 namespace java\lang;
 	
 class Character extends \java\lang\Object {
+	
 	private $char;
+	
+	public static $TYPE;
 	
 	public function __construct($char) {
 		$this->char = "$char";
@@ -574,7 +715,7 @@ class Character extends \java\lang\Object {
 		return jstring(chr($this->char));
 	}
 }
-
+Character::$TYPE = Clazz::getPrimitiveClass('char');
 CODE
 ) !== false or exit;
 
@@ -1145,6 +1286,28 @@ class Integer extends Number {
 	public static function valueOf($v) {
 		return new self($v);
 	}
+	
+	public static function highestOneBit($i) {
+		$i |= ($i >>  1);
+		$i |= ($i >>  2);
+		$i |= ($i >>  4);
+		$i |= ($i >>  8);
+		$i |= ($i >> 16);
+		return $i - ($i >> 1);
+    }
+	
+	public static function lowestOneBit($i) {
+		return $i & -$i;
+    }
+	
+	public static function bitCount($i) {
+		$i = $i - (($i >> 1) & 0x55555555);
+		$i = ($i & 0x33333333) + (($i >> 2) & 0x33333333);
+		$i = ($i + ($i >> 4)) & 0x0f0f0f0f;
+		$i = $i + ($i >> 8);
+		$i = $i + ($i >> 16);
+		return $i & 0x3f;
+    }
 }
 Integer::$TYPE = Clazz::getPrimitiveClass('int');
 
@@ -1302,6 +1465,8 @@ class Boolean extends \java\lang\Object {
 	
 	private $v;
 	
+	public static $TYPE;
+	
 	public function __construct($v) {
 		//var_dump($v);
 		parent::__construct();
@@ -1331,7 +1496,7 @@ class Boolean extends \java\lang\Object {
 		return new String($this->v ? "true" : "false");
 	}
 }
-
+Boolean::$TYPE = Clazz::getPrimitiveClass('boolean');
 CODE
 ) !== false or exit;
 

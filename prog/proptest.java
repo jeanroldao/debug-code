@@ -5,8 +5,8 @@ import java.util.Properties;
 public class proptest {
     public static void main(String[] args) 
 		throws Exception {
-		//FileOutputStream propFile = new FileOutputStream( "myProperties.txt");
-		System.getProperties().storeToXML(System.out, "nao sei comentar");
+		FileOutputStream propFile = new FileOutputStream( "myProperties.txt");
+		System.getProperties().store(propFile, "nao sei comentar");
 	}
 	public static void main1(String[] args)
         throws Exception {
