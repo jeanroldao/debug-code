@@ -52,3 +52,18 @@ function Java_sun_reflect_Reflection_getCallerClass($realFramesToSkip) {
 
 //public native void sun.misc.Unsafe.ensureClassInitialized(java/lang/Class)
 function Java_sun_misc_Unsafe_ensureClassInitialized($class) {}
+
+
+$GLOBALS['Java_sun_misc_Unsafe_staticFieldOffset_offsets'] = [];
+$GLOBALS['Java_sun_misc_Unsafe_staticFieldOffset_offset_num'] = 0;
+//public native long sun.misc.Unsafe.staticFieldOffset(java/lang/reflect/Field)
+function Java_sun_misc_Unsafe_staticFieldOffset($field) {
+	$name = $field->hashCode();
+	if (isset($GLOBALS['Java_sun_misc_Unsafe_staticFieldOffset_offsets'][$name])) {
+		return $GLOBALS['Java_sun_misc_Unsafe_staticFieldOffset_offsets'][$name];
+	} else {
+		$offset = $GLOBALS['Java_sun_misc_Unsafe_staticFieldOffset_offset_num']++;
+		$GLOBALS['Java_sun_misc_Unsafe_staticFieldOffset_offsets'][$name] = $offset;
+		return $offset;
+	}
+}

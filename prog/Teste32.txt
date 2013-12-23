@@ -1,0 +1,101 @@
+Classfile /C:/Program Files/EasyPHP-12.1/www/debug/prog/Teste32.class
+  Last modified 21/12/2013; size 588 bytes
+  MD5 checksum c32d1e8a7eedd3038f812bfc89e73c96
+  Compiled from "Teste32.java"
+public class Teste32
+  SourceFile: "Teste32.java"
+  minor version: 0
+  major version: 51
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #7.#20         //  java/lang/Object."<init>":()V
+   #2 = String             #21            //  qualquer|nome|nada
+   #3 = Methodref          #22.#23        //  java/lang/String.toCharArray:()[C
+   #4 = Fieldref           #24.#25        //  java/lang/System.out:Ljava/io/PrintStream;
+   #5 = Methodref          #26.#27        //  java/io/PrintStream.println:(C)V
+   #6 = Class              #28            //  Teste32
+   #7 = Class              #29            //  java/lang/Object
+   #8 = Utf8               <init>
+   #9 = Utf8               ()V
+  #10 = Utf8               Code
+  #11 = Utf8               LineNumberTable
+  #12 = Utf8               main
+  #13 = Utf8               ([Ljava/lang/String;)V
+  #14 = Utf8               StackMapTable
+  #15 = Class              #30            //  "[C"
+  #16 = Utf8               Exceptions
+  #17 = Class              #31            //  java/lang/Exception
+  #18 = Utf8               SourceFile
+  #19 = Utf8               Teste32.java
+  #20 = NameAndType        #8:#9          //  "<init>":()V
+  #21 = Utf8               qualquer|nome|nada
+  #22 = Class              #32            //  java/lang/String
+  #23 = NameAndType        #33:#34        //  toCharArray:()[C
+  #24 = Class              #35            //  java/lang/System
+  #25 = NameAndType        #36:#37        //  out:Ljava/io/PrintStream;
+  #26 = Class              #38            //  java/io/PrintStream
+  #27 = NameAndType        #39:#40        //  println:(C)V
+  #28 = Utf8               Teste32
+  #29 = Utf8               java/lang/Object
+  #30 = Utf8               [C
+  #31 = Utf8               java/lang/Exception
+  #32 = Utf8               java/lang/String
+  #33 = Utf8               toCharArray
+  #34 = Utf8               ()[C
+  #35 = Utf8               java/lang/System
+  #36 = Utf8               out
+  #37 = Utf8               Ljava/io/PrintStream;
+  #38 = Utf8               java/io/PrintStream
+  #39 = Utf8               println
+  #40 = Utf8               (C)V
+{
+  public Teste32();
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0       
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return        
+      LineNumberTable:
+        line 5: 0
+
+  public static void main(java.lang.String[]) throws java.lang.Exception;
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=2, locals=5, args_size=1
+         0: ldc           #2                  // String qualquer|nome|nada
+         2: invokevirtual #3                  // Method java/lang/String.toCharArray:()[C
+         5: astore_1      
+         6: aload_1       
+         7: arraylength   
+         8: istore_2      
+         9: iconst_0      
+        10: istore_3      
+        11: iload_3       
+        12: iload_2       
+        13: if_icmpge     35
+        16: aload_1       
+        17: iload_3       
+        18: caload        
+        19: istore        4
+        21: getstatic     #4                  // Field java/lang/System.out:Ljava/io/PrintStream;
+        24: iload         4
+        26: invokevirtual #5                  // Method java/io/PrintStream.println:(C)V
+        29: iinc          3, 1
+        32: goto          11
+        35: return        
+      LineNumberTable:
+        line 11: 0
+        line 12: 21
+        line 11: 29
+        line 14: 35
+      StackMapTable: number_of_entries = 2
+           frame_type = 254 /* append */
+             offset_delta = 11
+        locals = [ class "[C", int, int ]
+           frame_type = 248 /* chop */
+          offset_delta = 23
+
+    Exceptions:
+      throws java.lang.Exception
+}

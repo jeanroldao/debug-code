@@ -12,9 +12,6 @@ public class Teste28 {
 	public static void main(final String[] args) {
 		
 		System.out.println("Enter Text >");
-		
-		String text = "";
-		System.out.println(text.length());
  
 		// create an event source - reads from stdin
 		EventSource eventSource = new EventSource(args);
@@ -23,7 +20,7 @@ public class Teste28 {
 		ResponseHandler responseHandler = new ResponseHandler();
  
 		// subscribe the observer to the event source
-		//eventSource.addObserver(responseHandler);
+		eventSource.addObserver(responseHandler);
 		
 		eventSource.addObserver(new Observer() {
 			public void update(Observable obj, Object arg) {
@@ -52,7 +49,7 @@ public class Teste28 {
 		public void run() {
 			Scanner scan = new Scanner(System.in);
 			
-			System.out.println(args.length);
+			//System.out.println(args.length);
 			for (String arg : args) {
 				notifyObservers(arg);
 			}
@@ -78,8 +75,9 @@ public class Teste28 {
 	}
 	 
 	static class ResponseHandler implements Observer {
+		private int cont = 0;
 		public void update(Observable obj, Object arg) {
-			System.out.println("Received Response: " + arg );
+			System.out.println("Received Response("+(++cont)+"): " + arg );
 		}
 	}
 	 

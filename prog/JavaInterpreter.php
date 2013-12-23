@@ -365,6 +365,10 @@ trait JavaInterpreter {
 				}
 				$stack[] = $n1 % $n2;
 				break;
+			case 'ior':
+				list($n1, $n2) = $this->stackArrayPop($stack, 2);
+				$stack[] = $n1 | $n2;
+				break;
 			case 'iand':
 				list($n1, $n2) = $this->stackArrayPop($stack, 2);
 				$stack[] = $n1 & $n2;
@@ -392,9 +396,17 @@ trait JavaInterpreter {
 			case 'iushr':
 				list($n1, $n2) = $this->stackArrayPop($stack, 2);
 				if (is_object($n1)) {
+					var_dump($locals);
 					var_dump([$method, $i]);
 					var_dump('not a number!');
 					var_dump($n1, $n2);
+					
+					$c = \sun\reflect\Reflection::getCallerClass(0);
+					$cont = 0;
+					while ($c != null) {
+						\java\lang\System::$out->println($c);
+						$c = \sun\reflect\Reflection::getCallerClass(++$cont);
+					}
 					exit;
 				}
 				$stack[] = $n1 >> $n2;
@@ -408,12 +420,32 @@ trait JavaInterpreter {
 				if ($m == 'toString') {
 					$m = 'staticToString';
 				}
-				$ret = call_user_func_array([$class, $m], $args);
+				
+				/*
+				if ($m == 'forOutputStreamWriter') {
+					var_dump([$locals, $opcode, $method, $i]);
+					readline();
+				}
+				//*/
+				
+				if (property_exists($class, 'javaClass')) {
+					$ret = call_user_func_array([$class, '__callstatic'], [$opcode[2]['method'], $args, $opcode]);
+				} else {
+					$ret = call_user_func_array([$class, $opcode[2]['method']], $args);
+				}
 				if ($opcode[2]['return'] != 'V') {
 					$stack[] = $ret;
 				}
 				break;
 			case 'invokespecial':
+				/*
+				//if ($opcode[2]['type'] == '(Ljava/io/OutputStream;)V') {
+				//if ($this->class_attr['name'] == 'java/io/PrintWriter') {
+				if ($opcode[2]['method'] == 'forOutputStreamWriter') {
+					var_dump([$locals, $opcode, $method, $i]);
+					readline();
+				}
+				//*/
 				//var_dump([$stack, $opcode, $i]);
 				//ReflectionMethod
 				$opcode[2]['method'] = fixPhpFuncName($opcode[2]['method']);
@@ -422,13 +454,14 @@ trait JavaInterpreter {
 				$obj = array_shift($args);
 				
 				$class = '\\'.str_replace('/', '\\', $opcode[2]['class']);
-				$reflectMethod = new ReflectionMethod($class, $opcode[2]['method']);
-				if (!is_a($obj, $class)) {
-					var_dump([$obj, $reflectMethod]);
-					exit;
-					
+				
+				if (property_exists($class, 'javaClass')) {
+					$reflectMethod = new ReflectionMethod($class, '__call');
+					$ret = $reflectMethod->invokeArgs($obj, [$opcode[2]['method'], $args, $opcode]);
+				} else {
+					$reflectMethod = new ReflectionMethod($class, $opcode[2]['method']);
+					$ret = $reflectMethod->invokeArgs($obj, $args);
 				}
-				$ret = $reflectMethod->invokeArgs($obj, $args);
 				if ($opcode[2]['return'] != 'V') {
 					$stack[] = $ret;
 				}
@@ -457,7 +490,9 @@ trait JavaInterpreter {
 				$args = $this->stackArrayPop($stack, $numArgs);
 				$obj = array_shift($args);
 				if ($obj == null) {
-					var_dump([$method, $i, $obj, $args, $stack, $opcode[2]['method'], 'need object']);
+					//var_dump(explode('::', $method)[0]);
+					//var_dump(\java\lang\ClassLoader::getSystemClassLoader()->getResource(explode('::', $method)[0].'.class'));
+					//var_dump([$method, $i, $obj, $args, $stack, $opcode[2]['method'], 'need object']);
 					throw new \java\lang\NullPointerException();
 					//exit;
 				}
@@ -469,7 +504,21 @@ trait JavaInterpreter {
 					}
 				}
 				//var_dump([get_class($obj), $opcode[2]['method']], $args);
-				$ret = call_user_func_array([$obj, $opcode[2]['method']], $args);
+				
+				/*
+				if ($opcode[2]['method'] == 'forOutputStreamWriter') {
+					var_dump($opcode);
+					var_dump([$method, $i, $opcode[2]['method']]);
+					var_dump(property_exists(get_class($obj), 'javaClass'));
+					exit;
+				}
+				//*/
+				
+				if (property_exists(get_class($obj), 'javaClass')) {
+					$ret = call_user_func_array([$obj, '__call'], [$opcode[2]['method'], $args, $opcode]);
+				} else {
+					$ret = call_user_func_array([$obj, $opcode[2]['method']], $args);
+				}
 				if ($opcode[2]['return'] != 'V') {
 					//var_dump('ret', $opcode[2]['method'], $ret);
 					$stack[] = $ret;

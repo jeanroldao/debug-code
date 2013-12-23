@@ -17,7 +17,7 @@ spl_autoload_register(function($className){
 	$classLoader = \java\lang\Thread::currentThread()->getContextClassLoader();
 	
 	if ($classLoader === null) {
-		var_dump($className);
+		var_dump([$className, '$classLoader === null']);
 	}
 	
 	//$classLoader->setDefaultAssertionStatus(true);
@@ -460,25 +460,57 @@ class php_javaClass extends \java\lang\Object {
 			class $className extends $super $implements {
 				public static \$javaClass;
 				public static function __callstatic(\$method, \$args) {
+					\$func_args = func_get_args();
+					if(count(\$func_args) > 2) {
+						\$opcode = \$func_args[2];
+					} else {
+						\$opcode = null;
+					}
 					try {
-						return self::\$javaClass->run(\$method, \$args);
+						return self::\$javaClass->run(\$method, \$args, null, \$opcode);
 					} catch(\\JavaMethodNotFoundException \$e) {
+						
+						/*
 						if (!property_exists(get_parent_class(__CLASS__), 'javaClass')) {
 							//ob_end_clean();
+							var_dump(get_parent_class(__CLASS__));
+							var_dump(['$className::'.\$method, get_called_class(), __CLASS__]);
 							echo __CLASS__  . '::' . \$e->getMessage();
 							readline();
 							var_dump((get_class_methods(__CLASS__)));
 							readline();
 						}
-						return parent::\$javaClass->run(\$method, \$args);
+						//*/
+						return parent::\$javaClass->run(\$method, \$args, null, \$opcode);
 					}
 				}
 				
-				public function __call(\$method, \$args) {
+				public function __call(\$method, \$args /*, \$opcode = null*/) {
+					\$func_args = func_get_args();
+					if(count(\$func_args) > 2) {
+						\$opcode = \$func_args[2];
+					} else {
+						\$opcode = null;
+					}
 					try {
-						return self::\$javaClass->run(\$method, \$args, \$this);
+						//var_dump(__CLASS__, \$method, \$opcode[2]['type']);readline();
+						return self::\$javaClass->run(\$method, \$args, \$this, \$opcode);
 					} catch(\\JavaMethodNotFoundException \$e) {
-						return parent::\$javaClass->run(\$method, \$args, \$this);
+						try {
+							return parent::__call(\$method, \$args, \$opcode);
+							/*
+							if (property_exists(get_parent_class(__CLASS__), 'javaClass')) {
+								return parent::\$javaClass->run(\$method, \$args, \$this, \$opcode);
+							} else {
+								var_dump(get_parent_class(__CLASS__));readline();
+								call_user_func_array([\$this, \$method], \$args);
+							}
+							*/
+						} catch(\\JavaMethodNotFoundException \$e) {
+							throw new \Exception(\$e);
+							//echo(\$e->getMessage());
+							//exit;
+						}
 					}
 				}
 				$fields
@@ -551,12 +583,12 @@ CODE
 		}
 	}
 	
-	public function run($method_name, $args = [], $thisObj = null) {
-		$method = $this->findMethod($method_name, $args);
+	public function run($method_name, $args = [], $thisObj = null, $opcode = null) {
+		$method = $this->findMethod($method_name, $args, $thisObj, $opcode);
 		
 		if (strpos($method['flags'], 'native') !== false) {
 			
-			$php_function_name = 'Java_'.str_replace('\\', '_', $this->getPhpClassName()).'_'.$method_name;
+			$php_function_name = 'Java_'.str_replace(['/', '$'], ['_', '_S_'], $this->class_attr['name']).'_'.$method_name;
 			if (!function_exists($php_function_name)) {
 				$className = str_replace('/', '.', $this->class_attr['name']);
 				
@@ -698,29 +730,38 @@ CODE
 	}
 	
 	
-	private function findMethod($name, &$args = []) {
-		//var_dump(['class' => $this->class_attr['name'], 'name' => $name]);
+	private function findMethod($name, &$args = [], $thisObj = null, $opcode = null) {
+		//var_dump(['class' => $this->class_attr['name'], 'name' => $name]);		
+		/*
+		if ($opcode !== null) {
+			var_dump($opcode, $this->class_attr['name']);
+		}
+		//*/
 		
 		if ($name == '__construct') {
 			$name = '<init>';
 		}
+		
 		$countArgs = count($args);
 		foreach ($this->class_attr['methods'] as $method) {
 			//if ($this->class_attr['name'] == 'C2JRTBase') {
 			//	var_dump("$name ($countArgs) <1>(".count($this->class_attr['methods']).") " . $method['name'] . " (".count($this->getArgsType($method['type'])['args']).")");
 			//}
 			//echo $method['name'] . PHP_EOL;
-			if ($method['name'] == $name 
-			
-			//dynamic dispach emulation by args count
-			&& count($this->getArgsType($method['type'])['args']) == $countArgs) {
+			if ($method['name'] == $name) {
+				//var_dump([$this->class_attr['name'], $opcode[2]['type'], $method['type']]);
+			}
+			if (   $method['name'] == $name 
+				&& (  ($opcode !== null && $opcode[2]['type'] == $method['type']) 
+					|| ($opcode === null && count($this->getArgsType($method['type'])['args']) == $countArgs))) {
 				//var_dump($this->getArgsType($method['type']));exit;
 				foreach ($this->getArgsType($method['type'])['args'] as $i => $arg) {
 					//var_dump($arg);exit;
-					if (is_string($args[$i])
+					if (is_string($args[$i]) && strlen($arg) > 1
 					/*$arg == 'java/lang/String' && !($args[$i] instanceof \java\lang\String)*/) {
-						$args[$i] = new \java\lang\String($args[$i]);
-						$args[$i] = $args[$i]->intern();
+						//debug_print_backtrace();
+						//var_dump($args[$i]);
+						$args[$i] = jstring($args[$i]);
 					}
 				}
 				return $method;
@@ -729,10 +770,21 @@ CODE
 			//	var_dump("$name ($countArgs) <2>(".count($this->class_attr['methods']).") " . $method['name'] . " (".count($this->getArgsType($method['type'])['args']).")");
 			//}
 		}
-		if ($this->class_attr['name'] == 'C2JRTBase') {
-			var_dump("$name ($countArgs) <not found>(".count($this->class_attr['methods']).") " . $method['name'] . " (".count($this->getArgsType($method['type'])['args']).")");
+		/*
+		//if ($this->class_attr['name'] == 'java/util/concurrent/atomic/AtomicReferenceFieldUpdater$AtomicReferenceFieldUpdaterImpl') {
+		if ($name == 'forOutputStreamWriter') {
+			//var_dump($opcode);
+			foreach ($this->class_attr['methods'] as $method) {
+				if ($method['name'] == $name) {
+					println($this->class_attr['name'].'::'.$method['name'] . ' *'.$method['type'].'* != ' . $name . ' *'.$opcode[2]['type'].'*');
+				}
+			}
+			println($this->class_attr['name'].'::'.$name);
+			var_dump($opcode);
+			//readline();
 		}
-		throw new \JavaMethodNotFoundException('method ' . $name . ' for class ' . $this->class_attr['name'] . ' not found!');
+		//*/
+		throw new \JavaMethodNotFoundException('method ' . $name .(!empty($opcode[2]['type'])?$opcode[2]['type']:'') . ' for class ' . $this->class_attr['name'] . ' not found!');
 		/*
 		foreach ($this->class_attr['methods'] as $method) {
 			var_dump($method['name']);
@@ -870,6 +922,7 @@ CODE
 		return [
 			'class' => $className, 
 			'method' => $methodName, 
+			'type' => $this->getString($method[1][1]), 
 			'args' => $methodType['args'], 
 			'return' => $methodType['return']
 		];
@@ -889,6 +942,7 @@ CODE
 		return [
 			'class' => $className, 
 			'method' => $methodName, 
+			'type' => $this->getString($method[1][1]), 
 			'args' => $methodType['args'], 
 			'return' => $methodType['return']
 		];
@@ -944,6 +998,14 @@ CODE
 		return $this->getString($const[1]);
 	}
 	
+	private function getDataFromRef0($i) {
+		//12766859
+		ob_end_clean();
+		$r = $this->getDataFromRef0($i);
+		var_dump($r);
+		ob_start();
+		return $r;
+	}
 	private function getDataFromRef($i) {
 		$const = $this->getConstant($i);
 		if ($const[0] == "String") {
@@ -951,7 +1013,7 @@ CODE
 		} else if ($const[0] == "Class") {
 			return \java\lang\Clazz::forName(str_replace('/', '.', $this->getDataFromRef($const[1])));
 		}
-		var_dump($const[1]);
+		//var_dump($const[0]);
 		return $const[1];
 	}
 	
@@ -1056,17 +1118,18 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 	
 	$self_php = array_shift($_SERVER["argv"]);
 	
+	$thread = new \java\lang\Thread();
+	\java\lang\Thread::$currentThreadId = $thread->getId();
+	
 	while (count($_SERVER["argv"]) > 0) {
 		$arg = array_shift($_SERVER["argv"]);
-		
-		$thread = new \java\lang\Thread();
-		\java\lang\Thread::$currentThreadId = $thread->getId();
 		
 		if ($arg == '-jar') {
 			$jar_file = array_shift($_SERVER["argv"]);
 			\java\lang\ClassLoader::getSystemClassLoader()->addJarClasspath($jar_file);
 
-			$arg = \php_javaClass::readJarManifest($jar_file)['Main-Class'];
+			array_unshift($_SERVER["argv"], \php_javaClass::readJarManifest($jar_file)['Main-Class']);
+			continue;
 		} else if ($arg == '-cp') {
 			$cp = explode(';', array_shift($_SERVER["argv"]));
 			//var_dump($_SERVER["argv"]);
@@ -1074,9 +1137,17 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 			for ($i = 1; $i < count($cp); $i++) {
 				$loader->addClasspath($cp[$i]);
 			}
-			$arg = array_shift($_SERVER["argv"]);
+			continue;
+		} else if (substr($arg, 0, 2) == '-D' ) {
+			//var_dump(substr($arg, 2));exit;
+			$prop = explode('=', substr($arg, 2), 2);
+			if (!isset($prop[1])) {
+				$prop[1] = '';
+			}
+			\java\lang\System::setProperty(jstring($prop[0]), jstring($prop[1]));
+			continue;
 		} else if (substr($arg, 0, 1) == '-' ) {
-			echo "arg $arg not exists!";
+			echo "arg $arg not reconized!";
 			exit;
 		}
 		
@@ -1084,7 +1155,13 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 		
 		\java\lang\ClassLoader::getSystemClassLoader()->loadClass($class);
 		//var_dump($_SERVER["argv"]);readline();
-		$class::main(\JavaArray::fromArray($_SERVER["argv"], 'Ljava/lang/String;'));
+		try {
+			$class::main(\JavaArray::fromArray($_SERVER["argv"], 'Ljava/lang/String;'));
+		} catch (\java\lang\Exception $e) {
+			echo $e;
+			var_dump($e->getStackTrace());
+			var_dump($e->printStackTrace());
+		}
 		exit;
 	} 
 	`java`;

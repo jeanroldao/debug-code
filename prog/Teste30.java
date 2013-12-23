@@ -32,6 +32,7 @@ public class Teste30 {
 		System.out.println(sun.reflect.Reflection.getCallerClass(1));
 		System.out.println(sun.reflect.Reflection.getCallerClass(2));
 		System.out.println(sun.reflect.Reflection.getCallerClass(3));
+		System.out.println(sun.reflect.Reflection.getCallerClass(4));
 		
 	}
 }

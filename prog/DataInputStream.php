@@ -55,7 +55,7 @@ class DataInputStream implements DataInput {
 	 */
 	function readShort() {
 		$binarydata = fread($this->file, 2);;
-		return (unpack("s", strrev($binarydata))[1]);
+		return +(unpack("s", strrev($binarydata))[1]);
 	}
 	
 	/**
@@ -65,7 +65,7 @@ class DataInputStream implements DataInput {
 	public function readInt() {
 		//$binarydata = fread($this->file, 4);;
 		//return hexdec(unpack("H8", $binarydata)[1]);
-		return hexdec($this->readHex(4));
+		return +hexdec($this->readHex(4));
 	}
           
 	/**
@@ -73,7 +73,7 @@ class DataInputStream implements DataInput {
 	 * @return double
 	 */
 	function readDouble() {
-		return unpack('dd', strrev(fread($this->file, 8)))['d'];
+		return +unpack('dd', strrev(fread($this->file, 8)))['d'];
 	}
           
 	/**
@@ -81,7 +81,7 @@ class DataInputStream implements DataInput {
 	 * @return float
 	 */
 	function readFloat() {
-		return unpack('ff', strrev(fread($this->file, 4)))['f'];
+		return +unpack('ff', strrev(fread($this->file, 4)))['f'];
 	}
           
 	/**
@@ -108,7 +108,7 @@ class DataInputStream implements DataInput {
 	 * @return long
 	 */
 	function readLong() {
-		return hexdec($this->readHex(8));
+		return +hexdec($this->readHex(8));
 	}
           
 	/**
@@ -117,7 +117,7 @@ class DataInputStream implements DataInput {
 	 * @return int
 	 */
 	function readUnsignedByte() {
-		return $this->readByte();
+		return +$this->readByte();
 	}
           
 	/**
@@ -126,7 +126,7 @@ class DataInputStream implements DataInput {
 	 */
 	function readUnsignedShort() {
 		$a = unpack('Ca/Cb', fread($this->file, 2));
-		return $a['a'] << 8 | $a['b'];
+		return +$a['a'] << 8 | $a['b'];
 		//$n = $this->readShort();
 		//if ($n < 0) {
 		//	$n += 65536;

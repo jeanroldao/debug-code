@@ -1,7 +1,7 @@
 <?php
-
+define('JAVA_RT_DIR', __DIR__);
 function jstring($str) {
-	return new \java\lang\String($str);
+	return (new \java\lang\String($str))->intern();
 }
 
 function fixPhpClassName($className) {
@@ -36,6 +36,7 @@ function fixPhpFuncName($method) {
 		'print' => '__print',
 		'exit' => '__exit',
 		'list' => '__list',
+		'array' => '__array',
 	];
 	foreach ($replace_ar as $oldName => $newName) {
 		if ($method == $oldName) {
@@ -63,6 +64,7 @@ function fixPhpFuncName($method) {
 	}*/
 }
 
+
 function eval2($thisObj, $php) {
 	static $dir = null;
 	if ($dir === null) {
@@ -80,8 +82,28 @@ function eval2($thisObj, $php) {
 	include($file);
 }
 
+$GLOBALS['evalLazy_classes'] = [];
+function evalLazy($className, $code) {
+	//var_dump($className);
+	if (is_array($className)) {
+		foreach ($className as $class) {
+			$GLOBALS['evalLazy_classes'][$class] = $code;
+		}
+	} else {
+		$GLOBALS['evalLazy_classes'][$className] = $code;
+	}
+}
+
+spl_autoload_register(function($phpClass){
+	$phpClass = str_replace('\\', '/', $phpClass);
+	//var_dump([$phpClass, isset($GLOBALS['evalLazy_classes'][$phpClass])]);
+	if (isset($GLOBALS['evalLazy_classes'][$phpClass])) {
+		eval2($phpClass, $GLOBALS['evalLazy_classes'][$phpClass]);
+	}
+});
+
 //java/lang/Object
-eval2('java/lang/Object', <<<'CODE'
+evalLazy('java/lang/Object', <<<'CODE'
 
 namespace java\lang;
 	
@@ -103,10 +125,11 @@ trait ObjectTrait {
 	
 	public function __call($method, $args) {
 		$fname = fixPhpFuncName($method);
-		if ($fname != $method) {
+		//var_dump(method_exists($this, $fname));
+		if (method_exists($this, $fname)) {
 			return call_user_func_array([$this, $fname], $args);
 		} else {
-			throw new \JavaMethodNotFoundException($method.' method does not exists');
+			throw new \Exception(get_called_class() . '::' . $method.' method does not exists');
 		}
 	}
 
@@ -115,7 +138,7 @@ trait ObjectTrait {
 		if ($fname != $method) {
 			return call_user_func_array([get_called_class(), $fname], $args);
 		} else {
-			throw new \JavaMethodNotFoundException($method.' static method for '.get_called_class().' do not exists');
+			throw new \Exception($method.' static method for '.get_called_class().' do not exists');
 		}
 	}
 	
@@ -138,7 +161,7 @@ CODE
 ) !== false or exit;
 
 //java/lang/Class
-eval2('java/lang/Class', <<<'CODE'
+evalLazy(['java/lang/Clazz', 'java/lang/Class'], <<<'CODE'
 
 namespace java\lang;
 	
@@ -177,24 +200,28 @@ class Clazz extends Object {
 		//Thread::currentThread()->getContextClassLoader()->loadClass($this->name);
 		//var_dump($this->name);
 		//var_dump($this->refClass);
-		if ($this->refClass === null) {
-			$name = \php_javaClass::convertNameJavaToPhp($this->name);
-			if ($this->isArray()) {
-				$this->refClass = new \ReflectionClass('JavaArray');
-			} else if ($this->isInterface()) {
-				$this->refClass = new \ReflectionClass("{$name}_interface");
-			} else {
-				$this->refClass = new \ReflectionClass($name);
-				/*
-				try {
-				} catch (Exception $er) {
-					//println($this->name);
-					//var_dump(file_exists($this->name.'.class'));
-					//exit;
-				}*/
+		try {
+			if ($this->refClass === null) {
+				$name = \php_javaClass::convertNameJavaToPhp($this->name);
+				if ($this->isArray()) {
+					$this->refClass = new \ReflectionClass('JavaArray');
+				} else if ($this->isInterface()) {
+					$this->refClass = new \ReflectionClass("{$name}_interface");
+				} else {
+					$this->refClass = new \ReflectionClass($name);
+					/*
+					try {
+					} catch (Exception $er) {
+						//println($this->name);
+						//var_dump(file_exists($this->name.'.class'));
+						//exit;
+					}*/
+				}
 			}
+			return $this->refClass;
+		} catch (\ReflectionException $e) {
+			throw new ClassNotFoundException($this->name);
 		}
-		return $this->refClass;
 	}
 	
 	public function getName() {
@@ -347,7 +374,16 @@ class Clazz extends Object {
 		return \JavaArray::fromArray($methods, 'java.lang.reflect.Method');
 	}
 	
+	public function getField($fieldName) {
+		var_dump($fieldName);
+		var_dump('getDeclaredField');
+		exit;
+	}
+	
 	public function getFields() {
+		return $this->getAllFields();
+	}
+	private function getAllFields() {
 		
 		//var_dump($this->getRefClass());
 		$javaClass = $this->getRefClass()
@@ -369,6 +405,20 @@ class Clazz extends Object {
 			$fields[$i] = $javaField;
 		}
 		return \JavaArray::fromArray($fields, 'java.lang.reflect.Field');
+	}
+	
+	public function getDeclaredField($fieldName) {
+		$fields = $this->getAllFields();
+		foreach ($fields as $f) {
+			if ($f->getName()->equals($fieldName)) {
+				return $f;
+			}
+		}
+		throw new \java\lang\NoSuchFieldException($fieldName);
+	}
+	public function getDeclaredFields() {
+		var_dump('getDeclaredFields');
+		exit;
 	}
 	
 	public function getEnclosingClass() {
@@ -462,12 +512,12 @@ class Clazz extends Object {
 	private function initAnnotationsIfNecessary() {}
 	
 }
+class_alias('java\lang\Clazz', 'java\lang\Class');
 CODE
 ) !== false or exit;
-class_alias('java\lang\Clazz', 'java\lang\Class');
 
 //java/lang/System
-eval2('java/lang/System', <<<'CODE'
+evalLazy('java/lang/System', <<<'CODE'
 
 namespace java\lang;
 	
@@ -475,6 +525,8 @@ class System extends Object {
 	public static $in;
 	public static $out;
 	public static $err;
+	
+	private static $props;
 	
 	public static function currentTimeMillis() {
 		return intval(microtime(true) * 1000);
@@ -511,16 +563,56 @@ class System extends Object {
 	}
 	
 	public static function loadLibrary($lib) {
-		include_once "$lib.php";
+		//java.lang.Class sun.reflect.Reflection.getCallerClass(int)
+		$file = "$lib.php";
+		if (file_exists($file)) {
+			require_once $file;
+		} else {
+			var_dump("no $file in java.library.path");
+			//throw new UnsatisfiedLinkError(jstring("no $file in java.library.path"));
+		}
 	}
 	
-	public static function getProperty($propName) {
-		@$ini_array = parse_ini_file("SystemProperties.ini", false, INI_SCANNER_RAW);
-		if (isset($ini_array["$propName"])) {
-			return jstring($ini_array["$propName"]);
-		} else {
-			return null;
+	public static function getProperties() {
+		if (self::$props === null) {
+			self::$props = new \java\util\Properties();
+			self::initProperties(self::$props);
 		}
+		return self::$props;
+	}
+	
+	public static function getProperty($propName, $default = null) {
+		$prop = self::getProperties()->get($propName);
+		if ($prop !== null) {
+			return $prop;
+		} else {
+			return $default;
+		}
+	}	
+	
+	public static function setProperty($propName, $value) {
+		return self::getProperties()->setProperty($propName, $value);
+	}
+	
+	private static function initProperties($props) {
+		$ini_array = parse_ini_string(stripslashes(file_get_contents("SystemProperties.ini")), false, INI_SCANNER_RAW);
+		if (is_array($ini_array)) {
+			foreach ($ini_array as $k => $v) {
+				$props->put(jstring($k), jstring($v));
+			}
+		}
+		$env_data = [
+			'sun.boot.library.path' => JAVA_RT_DIR,
+			'java.home' 			=> JAVA_RT_DIR,
+			'line.separator'        => PHP_EOL,
+			'user.dir' 				=> JAVA_RT_DIR,
+			'user.home' 			=> getenv("HOME") ?: getenv("HOMEDRIVE").getenv("HOMEPATH"),
+			'java.io.tmpdir' 		=> realpath(JAVA_RT_DIR.'/temp'),
+		];
+		foreach ($env_data as $k => $v) {
+			$props->put(jstring($k), jstring($v));
+		}
+
 	}
 	
 	public static function __exit($code = 0) {
@@ -528,12 +620,15 @@ class System extends Object {
 	}
 }
 
+\java\lang\System::$out = new \java\io\PrintStream();
+\java\lang\System::$err = new \java\io\PrintStream();
+\java\lang\System::$in = new \java\io\BufferedInputStream(new \java\io\FileInputStream(STDIN));
 
 CODE
 ) !== false or exit;
 
 //java/io/PrintStream
-eval2('java/io/PrintStream', <<<'CODE'
+evalLazy('java/io/PrintStream', <<<'CODE'
 
 namespace java\io;
 	
@@ -549,22 +644,29 @@ class PrintStream extends \java\lang\Object {
 	
 	public function __call($func, $args) {
 		//var_dump($args);readline();
-		$writer = $this->writer;
 		if ($func == 'print') {
-			foreach ($args as $arg) {
-				if ($arg === null) {
-					$arg = 'null';
-				}
-				if ($writer !== null) {
-					$writer->write((string)new \java\lang\String($arg));
-				} else {
-					echo new \java\lang\String($arg);
-				}
-			}
+			//$this->__call('__print', $args);
+			call_user_func_array([$this, '__print'], $args);
 		} else {
 			parent::__call($func, $args);
 		}
 	}
+	
+	public function __print($args) {
+		$writer = $this->writer;
+		$args = func_get_args();
+		foreach ($args as $arg) {
+			if ($arg === null) {
+				$arg = 'null';
+			}
+			if ($writer !== null) {
+				$writer->write((string)new \java\lang\String($arg));
+			} else {
+				echo new \java\lang\String($arg);
+			}
+		}
+	}
+	
 	public function println($s = '') {
 		//var_dump($s);
 		$this->print($s, PHP_EOL);
@@ -572,14 +674,12 @@ class PrintStream extends \java\lang\Object {
 	
 	public function close() {}
 }
-\java\lang\System::$out = new \java\io\PrintStream();
-\java\lang\System::$err = new \java\io\PrintStream();
 
 CODE
 ) !== false or exit;
 
 //java/util/Scanner
-eval(<<<'CODE'
+evalLazy('java/util/Scanner', <<<'CODE'
 
 namespace java\util;
 	
@@ -629,8 +729,8 @@ CODE
 ) !== false or exit;
 
 
-//java/lang/Character
-eval(<<<'CODE'
+//java/lang/File
+evalLazy('java/lang/File', <<<'CODE'
 
 namespace java\io;
 	
@@ -689,7 +789,7 @@ CODE
 
 
 //java/lang/Character
-eval(<<<'CODE'
+evalLazy('java/lang/Character', <<<'CODE'
 
 namespace java\lang;
 	
@@ -721,7 +821,7 @@ CODE
 
 
 //java/lang/String
-eval(<<<'CODE'
+evalLazy('java/lang/String', <<<'CODE'
 
 namespace java\lang;
 	
@@ -732,11 +832,7 @@ class String extends \java\lang\Object {
 	private $hash = 0;
 	
 	public function __construct($string = '') {
-		if (is_array($string) 
-			|| (   $string instanceof \JavaArray 
-				&& (in_array($string->getClass()
-						  ->getComponentType()
-						  ->getName().'', ['char', 'byte'])))) {
+		if (self::isCharArray($string)) {
 			$this->string = '';
 			foreach ($string as $c) {
 				$this->string .= chr($c);
@@ -744,6 +840,16 @@ class String extends \java\lang\Object {
 		} else {
 			$this->string = "$string";
 		}
+	}
+	
+	private static function isCharArray($array) {
+		if (!$array instanceof \JavaArray) {
+			return false;
+		}
+		$component_type = $array->getClass()
+								->getComponentType()
+								->getName();
+		return in_array("$component_type", ['char', 'byte']);
 	}
 	
 	public function indexOf($str, $fromIndex = 0) {
@@ -756,19 +862,19 @@ class String extends \java\lang\Object {
 	
 	public function split($delimiter, $limit = 0) {
 		if ($limit > 0) {
-			$ar = explode("$delimiter", $this->string, $limit);
+			$ar = preg_split("/$delimiter/", $this->string, $limit);
 		} else {
-			$ar = explode("$delimiter", $this->string);
+			$ar = preg_split("/$delimiter/", $this->string);
 		}
 		if ($limit == 0) {
-			while (end($ar) == '') {
+			while (end($ar) === '') {
 				array_pop($ar);
 			}
 		}
 		foreach ($ar as $i => $item) {
 			$ar[$i] = new String($ar[$i]);
 		}
-		return $ar;
+		return \JavaArray::fromArray($ar, 'java.lang.String');
 	}
 	
 	public function substring($start, $end = null) {
@@ -808,7 +914,7 @@ class String extends \java\lang\Object {
 		foreach (str_split($this->string) as $c) {
 			$ar_chr[] = ord($c);
 		}
-		return \SplFixedArray::fromArray($ar_chr);
+		return \JavaArray::fromArray($ar_chr, 'C');
 	}
 	
 	public function charAt($i) {
@@ -825,7 +931,7 @@ class String extends \java\lang\Object {
 	}
 	
 	public function equals($o) {
-		if ($o instanceof self) {
+		if ($o instanceof String) {
 			return $this->string == $o->string;
 		} else {
 			return false;
@@ -879,7 +985,7 @@ CODE
 ) !== false or exit;
 
 //java/lang/StringBuilder
-eval(<<<'CODE'
+evalLazy('java/lang/StringBuilder', <<<'CODE'
 
 namespace java\lang;
 	
@@ -922,13 +1028,20 @@ class StringBuilder extends \java\lang\Object {
 	}
 }
 
-class StringBuffer extends StringBuilder {}
 CODE
 ) !== false or exit;
 
+evalLazy('java/lang/StringBuffer', <<<'CODE'
+
+namespace java\lang;
+
+class StringBuffer extends StringBuilder {}
+
+CODE
+) !== false or exit;
 
 //java/util/StringTokenizer
-eval(<<<'CODE'
+evalLazy('java/util/StringTokenizer', <<<'CODE'
 
 namespace java\util;
 	
@@ -965,7 +1078,7 @@ CODE
 
 
 //java/util/ArrayList
-eval(<<<'CODE'
+evalLazy('java/util/ArrayList1', <<<'CODE'
 
 namespace java\util;
 	
@@ -1034,7 +1147,7 @@ CODE
 ) !== false or exit;
 
 //java/util/Vector
-eval(<<<'CODE'
+evalLazy('java/util/Vector1', <<<'CODE'
 
 namespace java\util;
 	
@@ -1045,7 +1158,7 @@ CODE
 ) !== false or exit;
 
 //java/lang/Random
-eval(<<<'CODE'
+evalLazy('java/lang/Random', <<<'CODE'
 
 namespace java\util;
 	
@@ -1066,7 +1179,7 @@ CODE
 ) !== false or exit;
 
 //java/util/HashMap
-eval(<<<'CODE'
+evalLazy('java/util/HashMap', <<<'CODE'
 
 namespace java\util;
 	
@@ -1095,7 +1208,7 @@ CODE
 ) !== false or exit;
 
 //java/util/HashSet
-eval(<<<'CODE'
+evalLazy('java/util/HashSet1', <<<'CODE'
 
 namespace java\util;
 	
@@ -1116,7 +1229,7 @@ CODE
 
 
 //java/util/HashIterator
-eval(<<<'CODE'
+evalLazy('java/util/HashIterator1', <<<'CODE'
 
 namespace java\util;
 	
@@ -1138,7 +1251,7 @@ CODE
 
 
 //java/util/Hashtable
-eval(<<<'CODE'
+evalLazy('java/util/Hashtable1', <<<'CODE'
 
 namespace java\util;
 	
@@ -1149,7 +1262,7 @@ CODE
 ) !== false or exit;
 
 //java/util/WeakHashMap
-eval(<<<'CODE'
+evalLazy('java/util/WeakHashMap1', <<<'CODE'
 
 namespace java\util;
 	
@@ -1159,8 +1272,8 @@ class WeakHashMap1 extends HashMap1 {
 CODE
 ) !== false or exit;
 
-//java\util\Properties
-eval(<<<'CODE'
+//java/util/Properties
+evalLazy('java/util/Properties1', <<<'CODE'
 
 namespace java\util;
 	
@@ -1179,7 +1292,7 @@ CODE
 
 
 //java/lang/StrictMath
-eval(<<<'CODE'
+evalLazy('java/lang/StrictMath', <<<'CODE'
 
 namespace java\lang;
 	
@@ -1208,7 +1321,7 @@ CODE
 
 
 //java/lang/Number
-eval(<<<'CODE'
+evalLazy('java/lang/Number', <<<'CODE'
 
 namespace java\lang;
 	
@@ -1269,7 +1382,7 @@ CODE
 ) !== false or exit;
 
 //java/lang/Integer
-eval(<<<'CODE'
+evalLazy('java/lang/Integer', <<<'CODE'
 
 namespace java\lang;
 	
@@ -1315,7 +1428,7 @@ CODE
 ) !== false or exit;
 
 //java/util/concurrent/atomic/AtomicInteger
-eval(<<<'CODE'
+evalLazy('java/util/concurrent/atomic/AtomicInteger', <<<'CODE'
 
 namespace java\util\concurrent\atomic;
 	
@@ -1349,7 +1462,7 @@ CODE
 ) !== false or exit;
 
 //java/lang/Byte
-eval(<<<'CODE'
+evalLazy('java/lang/Byte', <<<'CODE'
 
 namespace java\lang;
 	
@@ -1371,7 +1484,7 @@ CODE
 ) !== false or exit;
 
 //java/lang/Double
-eval(<<<'CODE'
+evalLazy('java/lang/Double', <<<'CODE'
 
 namespace java\lang;
 	
@@ -1393,7 +1506,7 @@ CODE
 ) !== false or exit;
 
 //java/lang/Float
-eval(<<<'CODE'
+evalLazy('java/lang/Float', <<<'CODE'
 
 namespace java\lang;
 	
@@ -1420,7 +1533,7 @@ CODE
 
 
 //java/lang/Long
-eval(<<<'CODE'
+evalLazy('java/lang/Long', <<<'CODE'
 
 namespace java\lang;
 	
@@ -1438,7 +1551,7 @@ CODE
 ) !== false or exit;
 
 //java/math/BigInteger
-eval(<<<'CODE'
+evalLazy('java/math/BigInteger', <<<'CODE'
 
 namespace java\math;
 	
@@ -1457,7 +1570,7 @@ CODE
 ) !== false or exit;
 
 //java/lang/Boolean
-eval(<<<'CODE'
+evalLazy('java/lang/Boolean', <<<'CODE'
 
 namespace java\lang;
 	
@@ -1500,8 +1613,42 @@ Boolean::$TYPE = Clazz::getPrimitiveClass('boolean');
 CODE
 ) !== false or exit;
 
-//java/lang/Exception
-eval(<<<'CODE'
+//sun/reflect/misc/ReflectUtil
+evalLazy('sun/reflect/misc/ReflectUtil', <<<'CODE'
+	
+namespace sun\reflect\misc;
+
+class ReflectUtil extends \java\lang\Object {
+
+	public function __construct() {
+		
+	}
+	
+	public static function checkPackageAccess($string) {}
+	
+	public static function ensureMemberAccess($currentClass, $memberClass, $target, $modifiers) {}
+	
+	public static function forName($className) {
+		return \java\lang\Clazz::forName($className);
+	}
+	
+	public static function isPackageAccessible($class) {
+		return true;
+	}
+	
+	private static function isSubclassOf($queryClass, $ofClass) {
+		return is_a($queryClass->getName().'', $ofClass->getName().'', true);
+	}
+	
+	public static function newInstance($class) {
+		return $class->newInstance();
+	}
+}
+CODE
+) !== false or exit;
+
+//java/lang/Throwable
+evalLazy('java/lang/Throwable', <<<'CODE'
 
 namespace java\lang;
 	
@@ -1509,9 +1656,14 @@ namespace java\lang;
 class Throwable extends \Exception {
 	use ObjectTrait;
 	
+	private $constructed = false;
+	
 	public function __construct($message = '', $code = 0, $previous = NULL) {
-		parent::__construct($message, $code, $previous);
-		$this->message = new \java\lang\String($message);
+		if ($this->constructed === false) {
+			parent::__construct($message, $code, $previous);
+			$this->message = new \java\lang\String($message);
+			$this->constructed = true;
+		}
 	}
 	
 	public function printStackTrace($outstream = null) {
@@ -1525,6 +1677,10 @@ class Throwable extends \Exception {
 		return $this->getMessage();
 	}
 	
+	public function getStackTrace() {
+		return new \JavaArray(0, 'java.lang.StackTraceElement');
+	}
+	
 	public function toString() {
 		$s = $this->getClass()->getName();
 		$message = $this->getLocalizedMessage();
@@ -1536,7 +1692,7 @@ CODE
 ) !== false or exit;
 
 //java/lang/Thread
-eval(<<<'CODE'
+evalLazy('java/lang/Thread', <<<'CODE'
 
 namespace java\lang;
 	
@@ -1612,7 +1768,7 @@ CODE
 ) !== false or exit;
 
 //java/lang/ThreadLocal
-eval(<<<'CODE'
+evalLazy('java/lang/ThreadLocal', <<<'CODE'
 
 namespace java\lang;
 	
@@ -1631,9 +1787,26 @@ class ThreadLocal extends \java\lang\Object {
 CODE
 ) !== false or exit;
 
+//java/io/BufferedInputStream
+evalLazy('java/io/BufferedInputStream', <<<'CODE'
+
+namespace java\io;
+
+class BufferedInputStream extends FilterInputStream {
+	
+	public function __construct($in) {
+		parent::__construct($in);
+	}
+	
+	public function readLine() {
+		return $this->in->readLine();
+	}
+}
+CODE
+) !== false or exit;
 
 //java/io/FileInputStream
-eval(<<<'CODE'
+evalLazy('java/io/FileInputStream', <<<'CODE'
 
 namespace java\io;
 	
@@ -1732,12 +1905,11 @@ class FileInputStream extends \java\lang\Object {
 	}
 }
 
-\java\lang\System::$in = new \java\io\FileInputStream(STDIN);
 CODE
 ) !== false or exit;
 
 //java/io/DataInputStream
-eval(<<<'CODE'
+evalLazy('java/io/DataInputStream', <<<'CODE'
 
 namespace java\io;
 	
@@ -1768,7 +1940,7 @@ CODE
 ) !== false or exit;
 
 //java/io/ObjectInputStream
-eval(<<<'CODE'
+evalLazy('java/io/ObjectInputStream', <<<'CODE'
 
 namespace java\io;
 	
@@ -1918,7 +2090,7 @@ CODE
 ) !== false or exit;
 
 //java/io/ObjectInputStream$BlockInputStream
-eval(<<<'CODE'
+evalLazy('java/io/ObjectInputStream_S_BlockInputStream', <<<'CODE'
 
 namespace java\io;
 	
@@ -2210,7 +2382,7 @@ CODE
 ) !== false or exit;
 
 //java/io/Bits
-eval(<<<'CODE'
+evalLazy('java/io/Bits', <<<'CODE'
 
 namespace java\io;
 	
@@ -2233,7 +2405,7 @@ CODE
 ) !== false or exit;
 
 //java/sql/DriverManager
-eval(<<<'CODE'
+evalLazy('java/sql/DriverManager', <<<'CODE'
 
 namespace java\sql;
 	
@@ -2310,8 +2482,8 @@ EVAL
 CODE
 ) !== false or exit;
 
-//java.net.URLEncoder
-eval(<<<'CODE'
+//java/net/URLEncoder
+evalLazy('java/net/URLEncoder', <<<'CODE'
 namespace java\net;
 
 class URLEncoder extends \java\lang\Object {
@@ -2323,24 +2495,47 @@ class URLEncoder extends \java\lang\Object {
 CODE
 ) !== false or exit;
 
-//java.nio.charset.Charset
-eval(<<<'CODE'
+//java/nio/charset/Charset
+evalLazy('java/nio/charset/Charset1', <<<'CODE'
 namespace java\nio\charset;
 
-class Charset extends \java\lang\Object {
+class Charset1 extends \java\lang\Object {
 	
 	private $name;
+	
+	private static $defaultCharset;
 	
 	public function __construct($name) {
 		$this->name = $name;
 	}
 	
 	public static function defaultCharset() {
-		return new Charset(new \java\lang\String("utf8"));
+		if (self::$defaultCharset === null) {
+			self::$defaultCharset = Charset::forName(jstring("UTF-8"));
+		}
+		return self::$defaultCharset;
 	}
 	
 	public function displayName() {
 		return $this->name;
+	}
+	
+	public static function isSupported($name) {
+		return "UTF-8" == "$name";
+	}
+	
+	public function name() {
+		return $this->name;
+	}
+	
+	public static function forName($name) {
+		//class sun.nio.cs.UTF_8
+		//$charset = new Charset(new \java\lang\String($name));
+		$name = 'sun.nio.cs.'.str_replace('-', '_', "$name");
+		//var_dump($name);exit;
+		$charset = \java\lang\Clazz::forName($name)->newInstance();
+		var_dump($charset);exit;
+		return $charset;
 	}
 }
 
@@ -2348,7 +2543,7 @@ CODE
 ) !== false or exit;
 
 //javax/swing/JFrame
-eval(<<<'CODE'
+evalLazy('javax/swing/JFrame1', <<<'CODE'
 
 namespace javax\swing;
 	
