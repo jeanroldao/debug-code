@@ -1,4 +1,4 @@
 <?php
 function getTime() {
-	return '(time='.time().')';
+	return '(time='.time().');';
 }
