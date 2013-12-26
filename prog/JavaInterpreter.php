@@ -323,8 +323,19 @@ trait JavaInterpreter {
 			case 'fadd':
 			case 'dadd':
 			case 'iadd':
-			case 'ladd':
 				$stack[] = array_pop($stack) + array_pop($stack);
+				break;
+			case 'ladd':
+				$result = bcadd(array_pop($stack), array_pop($stack));
+				while (bccomp($result, '9223372036854775807') === 1) {
+					$result = bcsub($result, '18446744073709551616');
+				}
+				/*
+				while (bccomp($result, '-9223372036854775808') === -1) {
+					$result = bcadd($result, '18446744073709551616');
+				}
+				//*/
+				$stack[] = $result;
 				break;
 			case 'iinc':
 				//var_dump(['local' => $locals[$opcode[2]], 'iinc' => $opcode[3]]);
@@ -335,13 +346,19 @@ trait JavaInterpreter {
 				}
 				break;
 			case 'isub':
-			case 'lsub':
 			case 'dsub':
 			case 'fsub':
 				$stack[] = - array_pop($stack) + array_pop($stack);
 				break;
+			case 'lsub':
+				list($n1, $n2) = $this->stackArrayPop($stack, 2);
+				$result = bcmod(bcsub($n1, $n2), '9223372036854775807');
+				while (bccomp($result, '9223372036854775807') === 1) {
+					$result = bcsub($result, '18446744073709551616');
+				}
+				$stack[] = $result;
+				break;
 			case 'idiv':
-			case 'ldiv':
 			case 'ddiv':
 			case 'fdiv':
 				//var_dump($stack);exit;
@@ -351,11 +368,28 @@ trait JavaInterpreter {
 				}
 				$stack[] = $n1 / $n2;
 				break;
+			case 'ldiv':
+				list($n1, $n2) = $this->stackArrayPop($stack, 2);
+				if ($n2 == 0) {
+					throw new \java\lang\ArithmeticException("/ by zero");
+				}
+				$result = bcdiv($n1, $n2);
+				while (bccomp($result, '9223372036854775807') === 1) {
+					$result = bcsub($result, '18446744073709551616');
+				}
+				$stack[] = $result;
+				break;
 			case 'fmul':
 			case 'dmul':
 			case 'imul':
-			case 'lmul':
 				$stack[] = array_pop($stack) * array_pop($stack);
+				break;
+			case 'lmul':
+				$result = bcmul(array_pop($stack), array_pop($stack));
+				while (bccomp($result, '9223372036854775807') === 1) {
+					$result = bcsub($result, '18446744073709551616');
+				}
+				$stack[] = $result;
 				break;
 			case 'irem':
 			case 'lrem':
@@ -428,11 +462,14 @@ trait JavaInterpreter {
 				}
 				//*/
 				
+				$ret = call_user_func_array([$class, '__callstatic'], [$opcode[2]['method'], $args, $opcode]);
+				/*
 				if (property_exists($class, 'javaClass')) {
 					$ret = call_user_func_array([$class, '__callstatic'], [$opcode[2]['method'], $args, $opcode]);
 				} else {
 					$ret = call_user_func_array([$class, $opcode[2]['method']], $args);
 				}
+				*/
 				if ($opcode[2]['return'] != 'V') {
 					$stack[] = $ret;
 				}
@@ -514,11 +551,14 @@ trait JavaInterpreter {
 				}
 				//*/
 				
+				$ret = call_user_func_array([$obj, '__call'], [$opcode[2]['method'], $args, $opcode]);
+				/*
 				if (property_exists(get_class($obj), 'javaClass')) {
 					$ret = call_user_func_array([$obj, '__call'], [$opcode[2]['method'], $args, $opcode]);
 				} else {
 					$ret = call_user_func_array([$obj, $opcode[2]['method']], $args);
 				}
+				*/
 				if ($opcode[2]['return'] != 'V') {
 					//var_dump('ret', $opcode[2]['method'], $ret);
 					$stack[] = $ret;

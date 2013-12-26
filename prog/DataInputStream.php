@@ -108,7 +108,31 @@ class DataInputStream implements DataInput {
 	 * @return long
 	 */
 	function readLong() {
-		return +hexdec($this->readHex(8));
+		//echo bcmul('9223372036854775808', 2);exit;
+		/*
+		static $cont = 0;
+		if (++$cont == 4) {
+			ob_end_clean();
+			var_dump('readLong()');
+			$l1 = $this->readHex(4);
+			var_dump($l1);
+			var_dump(sprintf('%0.0f', hexdec($l1)));
+			$l2 = $this->readHex(4);
+			var_dump($l2);
+			var_dump(sprintf('%0.0f', hexdec($l2)));
+			var_dump(bcadd(bcmul(hexdec($l1), 0x100000000), hexdec($l2)));
+			exit;
+		}
+		//*/
+		
+		$l1 = $this->readHex(4);
+		$l2 = $this->readHex(4);
+		$result = bcadd(bcmul(hexdec($l1), 0x100000000), hexdec($l2));
+		while (bccomp($result, '9223372036854775807') === 1) {
+			$result = bcsub($result, '18446744073709551616');
+		}
+		return $result;
+		//return sprintf('%0.0f', hexdec($this->readHex(8)));
 	}
           
 	/**

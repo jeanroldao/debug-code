@@ -135,7 +135,7 @@ trait ObjectTrait {
 
 	public static function __callstatic($method, $args) {
 		$fname = fixPhpFuncName($method);
-		if ($fname != $method) {
+		if (method_exists(get_called_class(), $fname)) {
 			return call_user_func_array([get_called_class(), $fname], $args);
 		} else {
 			throw new \Exception($method.' static method for '.get_called_class().' do not exists');
@@ -293,6 +293,8 @@ class Clazz extends Object {
 	}
 	
 	public function toString() {
+		//$d = debug_backtrace()[1];
+		//var_dump([$d['file'], $d['line']]);exit;
 		//return new String("class " . $this->getName());
 		$toString = 'class ';
 		if ($this->isInterface()) {
@@ -588,17 +590,21 @@ class System extends Object {
 		} else {
 			return $default;
 		}
-	}	
+	}
+	
+	public static function setProperties(\java\util\Properties $props) {
+		self::$props = $props;
+	}
 	
 	public static function setProperty($propName, $value) {
 		return self::getProperties()->setProperty($propName, $value);
 	}
 	
 	private static function initProperties($props) {
-		$ini_array = parse_ini_string(stripslashes(file_get_contents("SystemProperties.ini")), false, INI_SCANNER_RAW);
+		$ini_array = parse_ini_file("SystemProperties.ini", false, INI_SCANNER_RAW);
 		if (is_array($ini_array)) {
 			foreach ($ini_array as $k => $v) {
-				$props->put(jstring($k), jstring($v));
+				$props->put(jstring($k), jstring(stripslashes($v)));
 			}
 		}
 		$env_data = [
@@ -643,7 +649,15 @@ class PrintStream extends \java\lang\Object {
 	}
 	
 	public function __call($func, $args) {
-		//var_dump($args);readline();
+		//var_dump(func_get_args());//readline();
+		/*
+		$func_args = func_get_args();
+		if(count($func_args) > 2) {
+			var_dump($func_args[2][2]);
+			exit;
+		}
+		*/
+		
 		if ($func == 'print') {
 			//$this->__call('__print', $args);
 			call_user_func_array([$this, '__print'], $args);
@@ -1541,6 +1555,9 @@ class Long extends Number {
 	
 	public static $TYPE;
 	
+	public static $MAX_VALUE = '9223372036854775807';
+	public static $MIN_VALUE = '-9223372036854775808';
+	
 	public static function valueOf($v) {
 		return new self($v);
 	}
@@ -1647,6 +1664,44 @@ class ReflectUtil extends \java\lang\Object {
 CODE
 ) !== false or exit;
 
+//sun/misc/Unsafe
+evalLazy('sun/misc/Unsafe1', <<<'CODE'
+namespace sun\misc;
+
+class Unsafe1 extends \java\lang\Object {
+	private static $theUnsafe;
+	
+	public static function getUnsafe() {
+		if (self::$theUnsafe === null) {
+			self::$theUnsafe = new Unsafe();
+		}
+		return self::$theUnsafe;
+	}
+}
+
+CODE
+) !== false or exit;
+
+//sun/misc/SharedSecrets
+evalLazy('sun/misc/SharedSecrets', <<<'CODE'
+namespace sun\misc;
+
+class SharedSecrets extends \java\lang\Object {
+	private static $javaIOAccess;
+	private static $javaNioAccess;
+	
+	public static function setJavaIOAccess($jio) {
+		self::$javaIOAccess = $jio;
+	}
+	
+	public static function setJavaNioAccess($jnio) {
+		self::$javaNioAccess = $jnio;
+	}
+}
+
+CODE
+) !== false or exit;
+
 //java/lang/Throwable
 evalLazy('java/lang/Throwable', <<<'CODE'
 
@@ -1670,7 +1725,20 @@ class Throwable extends \Exception {
 		if ($outstream === null) {
 			$outstream = System::$out;
 		}
-		$outstream->println($this->getTraceAsString());
+		
+		$trace = $this->getTrace();
+		//var_dump(count($trace));exit;
+		foreach ($trace as $t) {
+			if (	!empty($t['class']) 
+				 && !in_array($t['class'], ['php_javaClass', 'ReflectionMethod'])) {
+				if (in_array($t['function'], ['__call', '__callstatic'])) {
+					$t['function'] = $t['args'][0];
+				}
+				$outstream->println($t['class'].$t['type'].$t['function']);
+			}
+		}
+		
+		//$outstream->println($str_trace);
 	}
 	
 	public function getLocalizedMessage() {
@@ -1678,7 +1746,7 @@ class Throwable extends \Exception {
 	}
 	
 	public function getStackTrace() {
-		return new \JavaArray(0, 'java.lang.StackTraceElement');
+		return new \JavaArray(0, 'Ljava.lang.StackTraceElement;');
 	}
 	
 	public function toString() {

@@ -863,7 +863,7 @@ CODE
 			}
 			return implode(' ', $s);
 		} else {
-			return (string) $a;
+			return $a instanceof \java\lang\Object ? $a->toString().'': "$a";
 		}
 	}
 	
@@ -1115,7 +1115,6 @@ function readLine() {
 
 if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 
-	
 	$self_php = array_shift($_SERVER["argv"]);
 	
 	$thread = new \java\lang\Thread();
@@ -1155,10 +1154,16 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 		
 		\java\lang\ClassLoader::getSystemClassLoader()->loadClass($class);
 		//var_dump($_SERVER["argv"]);readline();
+		$args = \JavaArray::fromArray($_SERVER["argv"], 'Ljava/lang/String;');
+		foreach ($args as $argi => $argv) {
+			$args[$argi] = jstring($argv);
+		}
 		try {
-			$class::main(\JavaArray::fromArray($_SERVER["argv"], 'Ljava/lang/String;'));
+			//$class::main($args);
+			$opcode = [2 => ['type' => '([Ljava/lang/String;)V']];
+			$class::__callstatic('main', [$args], $opcode);
 		} catch (\java\lang\Exception $e) {
-			echo $e;
+			echo $e->toString();
 			var_dump($e->getStackTrace());
 			var_dump($e->printStackTrace());
 		}
