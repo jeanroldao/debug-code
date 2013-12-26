@@ -28,7 +28,7 @@ public class Teste32 {
 		try {
 			php(l);
 		} catch (UnsatisfiedLinkError e) {
-			System.out.println(l);
+			System.out.println("string("+String.valueOf(l).length()+") \""+l+"\"");
 		}
 	}
 	
@@ -37,7 +37,7 @@ public class Teste32 {
 		//System.loadLbrary("Test");
 		long l = 100000000000000L;
 		System.out.println(l);
-		php(l);
+		print(l);
 		System.out.println(System.getProperty("java.runtime.version"));
 		System.out.println(System.getProperty("ENV", "?"));
 		System.out.println(System.getProperty("LOG", "?"));
