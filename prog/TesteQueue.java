@@ -15,6 +15,7 @@ public class TesteQueue {
 	static class Consumer extends Thread {
 		
 		static int increment = 0;
+		public static int producers = 0;
 		
 		int id;
 		
@@ -29,7 +30,7 @@ public class TesteQueue {
 			while (!stop) {
 				try {
 					String msg = fila.take();
-					System.out.println(id + ": " + msg + " (" + fila.size() + ") (" + (++records) + ")");
+					System.out.println(id + ": " + msg + " (" + fila.size() + ") (" + (++records) + ") (producers="+producers+")");
 					Thread.sleep(100);
 				} catch (Exception e) {
 					System.out.println("erro na fila: " + e.getMessage());
@@ -60,7 +61,7 @@ public class TesteQueue {
 			} else if ("re".equals(msg)) {
 				Consumer t = ts.get(0);
 				t.stop = true;
-				t.interrupt();
+				//t.interrupt();
 				ts.remove(t);
 			} else {
 				process(msg);
@@ -76,6 +77,7 @@ public class TesteQueue {
 	static void process(final String msg) {
 		Consumer t = new Consumer() {
 			public void run() {
+				Consumer.producers++;
 				try {
 					for (int i = 0; i < 100 && !stop; i++) {
 						Thread.sleep(500);
@@ -84,6 +86,7 @@ public class TesteQueue {
 				} catch (Exception e) {
 					System.out.println("erro na fila: " + e.getMessage());
 				}
+				Consumer.producers--;
 			}
 		};
 		t.start();

@@ -3,16 +3,29 @@
 trait JavaInterpreter {
 	private function interpret(&$i, $opcode, &$stack, &$locals, $method) {
 		//var_dump([$method, $i]);
+		
+		/*
+		if ($i === 0) {
+			echo "$method($i)\n";
+		}
+		//*/
+		
 		//var_dump([$i, $opcode, $stack]);
 		//var_dump($stack);readline();
 		//var_dump([$locals, $stack, $opcode, $method, $i]);readline();
 		//var_dump([$locals, $stack, $opcode, $i]);
 		//var_dump($method);
-		//if ('Teste22$1::<clinit>' == $method) {
-			//var_dump(['$locals' => $locals, '$stack' =>$stack, '$opcode' => $opcode, '$i' =>$i]);
-			//readline();
+		/*
+		if ($i === 0 && 'java/sql/DriverManager::getConnection' == substr($method, 0)) {
+		//if ('java/net/URL::__construct' == $method) {
+			//var_dump([$method, $i]);
+			//var_dump([$method, $i, $locals[1]]);
+			var_dump(['$locals' => $locals, '$stack' => $stack, '$opcode' => $opcode, '$i' =>$i]);
+			var_dump($locals[0]);
+			readline();
 			//var_dump([$opcode, $stack, $i]);readline();
-		//}
+		}
+		//*/
 		$stack = array_values($stack);
 		switch ($opcode[1]) {
 			case 'aaload':
@@ -24,6 +37,9 @@ trait JavaInterpreter {
 			case 'baload':
 				$args = $this->stackArrayPop($stack, 2);
 				//var_dump($args[1], count($args[0]), $method, $i);
+				if ($args[0] === null) {
+					throw new \java\lang\NullPointerException();
+				}
 				if (!array_key_exists($args[1], $args[0])) {
 					//var_dump($args[1], $args[0], $method, $i);readline();
 					throw new \java\lang\Exception('out of bounds');
@@ -38,6 +54,9 @@ trait JavaInterpreter {
 			case 'bastore':
 				$args = $this->stackArrayPop($stack, 3);
 				//var_dump($args[1].'', $args[0]->getSize());
+				if ($args[0] === null) {
+					throw new \java\lang\NullPointerException();
+				}
 				if (!array_key_exists($args[1].'', $args[0])) {
 					throw new \java\lang\Exception('out of bounds');
 				}
@@ -93,6 +112,10 @@ trait JavaInterpreter {
 				list($value1, $value2, $value3) = [array_pop($stack), array_pop($stack), array_pop($stack)];
 				list($stack[], $stack[], $stack[], $stack[]) = [$value1, $value2, $value3, $value1];
 				break;
+			case 'dup2':
+				list($value1, $value2) = [array_pop($stack), array_pop($stack)];
+				list($stack[], $stack[], $stack[]) = [$value1, $value2, $value1, $value2];
+				break;
 			//case 'swap':
 				
 				break;
@@ -141,6 +164,13 @@ trait JavaInterpreter {
 				//var_dump($args, $var, $method);readline();
 				$args[0]->$var = $args[1];
 				break;
+			case 'jsr':
+				$i += $opcode[2];
+				$stack[] = $i;
+				return;
+			case 'ret':
+				$i = $locals[$opcode[2]];
+				return;
 			case 'goto':
 				$i += $opcode[2];
 				return;
@@ -250,6 +280,8 @@ trait JavaInterpreter {
 			case 'if_icmpne':
 			case 'if_acmpne':
 				list($v1, $v2) = $this->stackArrayPop($stack, 2);
+				//var_dump([$v1, $v2]);
+				//readline();
 				if ($v1 !== $v2) {
 					$i += $opcode[2];
 					return;
@@ -391,8 +423,13 @@ trait JavaInterpreter {
 				}
 				$stack[] = $result;
 				break;
-			case 'irem':
+			case 'drem':
+			case 'frem':
 			case 'lrem':
+				var_dump($opcode[1]);
+				var_dump($stack);
+				readline();
+			case 'irem':
 				list($n1, $n2) = $this->stackArrayPop($stack, 2);
 				if ($n2 == 0) {
 					throw new \java\lang\ArithmeticException("/ by zero");
@@ -403,30 +440,46 @@ trait JavaInterpreter {
 				list($n1, $n2) = $this->stackArrayPop($stack, 2);
 				$stack[] = $n1 | $n2;
 				break;
+			case 'lor':
+				list($n1, $n2) = $this->stackArrayPop($stack, 2);
+				$stack[] = bin2longdec(str_or(longdec2bin($n1), longdec2bin($n2)));
+				break;
 			case 'iand':
 				list($n1, $n2) = $this->stackArrayPop($stack, 2);
 				$stack[] = $n1 & $n2;
 				break;
 			case 'ixor':
 				list($n1, $n2) = $this->stackArrayPop($stack, 2);
-				$stack[] = $n1 xor $n2;
+				$stack[] = $n1 ^ $n2;
 				break;
+			case 'lxor':
+				list($n1, $n2) = $this->stackArrayPop($stack, 2);
+				$stack[] = bin2longdec(str_xor(longdec2bin($n1), longdec2bin($n2)));				break;
 			case 'lneg':
+				$stack[] = bcmul(array_pop($stack), '-1');
+				break;
 			case 'ineg':
 			case 'dneg':
 				$stack[] = -array_pop($stack);
 				break;
 			case 'ishl':
-			//case 'lshl':
 				list($n1, $n2) = $this->stackArrayPop($stack, 2);
 				$stack[] = $n1 << $n2;
 				break;
+			case 'lshl':
+			case 'lushl':
+				list($n1, $n2) = $this->stackArrayPop($stack, 2);
+				$stack[] = bcmul($n1, bcpow('2', $n2));
+				break;
 			case 'ishr':
-			case 'lshr':
 				list($n1, $n2) = $this->stackArrayPop($stack, 2);
 				$stack[] = $n1 >> $n2;
 				break;
+			case 'lshr':
 			case 'lushr':
+				list($n1, $n2) = $this->stackArrayPop($stack, 2);
+				$stack[] = bcdiv($n1, bcpow('2', $n2));
+				break;
 			case 'iushr':
 				list($n1, $n2) = $this->stackArrayPop($stack, 2);
 				if (is_object($n1)) {
@@ -462,6 +515,7 @@ trait JavaInterpreter {
 				}
 				//*/
 				
+				//var_dump(['call_user_func_array', $method, $class.'::'.$opcode[2]['method']]);
 				$ret = call_user_func_array([$class, '__callstatic'], [$opcode[2]['method'], $args, $opcode]);
 				/*
 				if (property_exists($class, 'javaClass')) {
@@ -478,7 +532,7 @@ trait JavaInterpreter {
 				/*
 				//if ($opcode[2]['type'] == '(Ljava/io/OutputStream;)V') {
 				//if ($this->class_attr['name'] == 'java/io/PrintWriter') {
-				if ($opcode[2]['method'] == 'forOutputStreamWriter') {
+				if ($opcode[2]['method'] == 'wait') {
 					var_dump([$locals, $opcode, $method, $i]);
 					readline();
 				}
@@ -522,14 +576,16 @@ trait JavaInterpreter {
 				$numArgs = 1 + count($opcode[2]['args']);
 				//$args = array_slice($stack, -$num_args, $num_args);
 				//array_splice($stack, -$num_args, $num_args);
-				//var_dump($stack);
+				//var_dump($stack);readline();
 				//var_dump($locals);
 				$args = $this->stackArrayPop($stack, $numArgs);
 				$obj = array_shift($args);
-				if ($obj == null) {
+				if (!is_object($obj)) {
 					//var_dump(explode('::', $method)[0]);
 					//var_dump(\java\lang\ClassLoader::getSystemClassLoader()->getResource(explode('::', $method)[0].'.class'));
-					//var_dump([$method, $i, $obj, $args, $stack, $opcode[2]['method'], 'need object']);
+					if ($obj) {
+						var_dump([$method, $i, $obj, $args, $stack, $opcode[2]['class'].'::'.$opcode[2]['method'], 'need object']);
+					}
 					throw new \java\lang\NullPointerException();
 					//exit;
 				}
@@ -603,12 +659,7 @@ trait JavaInterpreter {
 			case 'ldc':
 			case 'ldc_w':
 			case 'ldc2_w':
-				$stack[] = $opcode[2];
-				/*
-				if (is_string($opcode[2])) {
-					$stack[] = new \java\lang\String($opcode[2]);
-				} else {
-				}*/
+				$stack[] = $this->getDataFromRef($opcode[2]);
 				break;
 			case 'anewarray':
 				//var_dump($i, $stack);readline();
@@ -629,11 +680,23 @@ trait JavaInterpreter {
 			case 'new':
 				//$class = str_replace('$', '_S_', str_replace('/', '\\', $opcode[2]));
 				$class = str_replace('/', '\\', $opcode[2]);
-				
-				$reflect = new ReflectionClass($class);
+				//var_dump($opcode[2]);
+				try {
+					$reflect = new ReflectionClass($class);
+				} catch (\ReflectionException $e) {
+					println("'new'");
+					println($e->getMessage());
+					exit;
+				}
+				//var_dump($reflect);
 				
 				if (is_a($class, 'Exception', true)) {
-					$stack[] = $reflect->newInstance();
+					try {
+						$stack[] = $reflect->newInstance('__EXCEPTION_DONT_INIT__');
+					} catch (\Exception $e) {
+						var_dump($e.'');
+						exit;
+					}
 				} else {
 					$stack[] = $reflect->newInstanceWithoutConstructor();
 				}
@@ -706,7 +769,9 @@ trait JavaInterpreter {
 				//var_dump($i);
 				return;
 			case 'athrow':
-				throw array_pop($stack);
+				$t = array_pop($stack);
+				//print_r(['athrow', $method, $i, get_class($t)]);
+				throw $t;
 			default:
 				var_dump($opcode);
 				var_dump('not implemented ('.$opcode[1].')');
@@ -770,6 +835,52 @@ trait JavaInterpreter {
 		}
 		return $javaArray;
 	}
+}
+
+function bin2longdec($bin) {
+	$len = strlen($bin);
+	$mult = 1;
+	$total = 0;
+	for ($i = 1; $i <= $len; $i++) {
+		$total = bcadd($total, bcmul($bin[$len - $i], $mult));
+		$mult = bcmul($mult, 2);
+	}
+	return $total;
+}
+
+function longdec2bin($dec) {
+    // Better function for dec to bin. Support much bigger values, but doesn’t support signs
+    for ($b = '', $r = $dec; $r >1;) {
+        $n = floor($r / 2);
+        $b = ($r - $n * 2) . $b;
+        $r = $n; // $r%2 is inaccurate when using bigger values (like 11.435.168.214)!
+    }
+    return ($r % 2) . $b;
+}
+
+function str_or($v1, $v2) {
+	while (strlen($v1) < strlen($v2)) {
+		$v1 = '0'.$v1;
+	}
+	while (strlen($v1) > strlen($v2)) {
+		$v2 = '0'.$v2;
+	}
+	return $v1 | $v2;
+}
+
+function str_xor($v1, $v2) {
+	while (strlen($v1) < strlen($v2)) {
+		$v1 = '0'.$v1;
+	}
+	while (strlen($v1) > strlen($v2)) {
+		$v2 = '0'.$v2;
+	}
+	$len = strlen($v1);
+	$new_str = '';
+	for ($i = 0; $i < $len; $i++) {
+		$new_str .= intval(+$v1[$i] ^ +$v2[$i]);
+	}
+	return $new_str;
 }
 
 function checkcast($obj, $class) {

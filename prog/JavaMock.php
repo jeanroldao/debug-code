@@ -34,9 +34,14 @@ function fixPhpFuncName($method) {
 		'empty' => '__empty',
 		'echo' => '__echo',
 		'print' => '__print',
+		'function' => '__function',
 		'exit' => '__exit',
 		'list' => '__list',
 		'array' => '__array',
+		'and' => '__and',
+		'or' => '__or',
+		'xor' => '__xor',
+		'xand' => '__xand',
 	];
 	foreach ($replace_ar as $oldName => $newName) {
 		if ($method == $oldName) {
@@ -112,7 +117,7 @@ trait ObjectTrait {
 	
 	public function toString() {
 		$str = new String($this->getClass()->getName() . '@'.\dechex(System::identityHashCode($this)));
-		return $str->replace('\\', '.');
+		return $str;
 	}
 	
 	public function hashCode() {
@@ -154,6 +159,10 @@ trait ObjectTrait {
 	public function equals($o) {
 		return $this == $o;
 	}
+	
+	public function wait() {
+		//var_dump('wait'); readline();
+	}
 }
 class Object {use ObjectTrait;}
 
@@ -182,9 +191,9 @@ class Clazz extends Object {
 		}
 		//var_dump($name);
 		$this->name = $name;
-		return;
+		//return;
 		
-		/*
+		///*
 		//ob_end_flush();
 		//var_dump("$name", isset(self::$loadedClasses["$name"]), class_exists("$name", false));readline();
 		
@@ -193,7 +202,7 @@ class Clazz extends Object {
 			self::$loadedClasses["$name"] = true;
 			$this->getRefClass();
 		}
-		*/
+		//*/
 	}
 	
 	private function getRefClass() {
@@ -226,7 +235,7 @@ class Clazz extends Object {
 	
 	public function getName() {
 		//var_dump($this->name);
-		return jstring($this->name)->replace("\\", ".");
+		return jstring(str_replace(['\\', '/'], ['.', '.'], $this->name));
 	}
 	
 	public static function forName($name) {
@@ -238,8 +247,13 @@ class Clazz extends Object {
 		return $this->getRefClass()->newInstance();
 	}
 	
+	private static $interned_classes = [];
 	public function intern() {
-		return $this;
+		if (isset(self::$interned_classes[$this->name])) {
+			return self::$interned_classes[$this->name];
+		} else {
+			return self::$interned_classes[$this->name] = $this;
+		}
 	}
 	
 	public function desiredAssertionStatus() {
@@ -410,9 +424,11 @@ class Clazz extends Object {
 	}
 	
 	public function getDeclaredField($fieldName) {
+		//var_dump(['looking', $fieldName]);
 		$fields = $this->getAllFields();
 		foreach ($fields as $f) {
 			if ($f->getName()->equals($fieldName)) {
+				//var_dump(['found', $fieldName]);
 				return $f;
 			}
 		}
@@ -552,7 +568,7 @@ class System extends Object {
 				$dest[$destPos + $i] = $src[$srcPos + $i];
 			}
 		} catch (\RuntimeException $e) {
-			throw new \java\lang\Exception('out of bounds');
+			throw new ArrayIndexOutOfBoundsException($i);
 		}
 	}
 	
@@ -565,7 +581,12 @@ class System extends Object {
 	}
 	
 	public static function loadLibrary($lib) {
-		//java.lang.Class sun.reflect.Reflection.getCallerClass(int)
+		
+		//built-in libs
+		if (in_array("$lib", ['net', 'nio'])) {
+			return;
+		}
+		
 		$file = "$lib.php";
 		if (file_exists($file)) {
 			require_once $file;
@@ -601,9 +622,15 @@ class System extends Object {
 	}
 	
 	private static function initProperties($props) {
-		$ini_array = parse_ini_file("SystemProperties.ini", false, INI_SCANNER_RAW);
+		$ini_array = file("SystemProperties.ini");
 		if (is_array($ini_array)) {
-			foreach ($ini_array as $k => $v) {
+			foreach ($ini_array as $line) {
+				$values = explode('=', trim($line), 2);
+				if (count($values) < 2) {
+					continue;
+				}
+				list($k, $v) = explode('=', trim($line), 2);
+				//var_dump($v);
 				$props->put(jstring($k), jstring(stripslashes($v)));
 			}
 		}
@@ -626,9 +653,12 @@ class System extends Object {
 	}
 }
 
-\java\lang\System::$out = new \java\io\PrintStream();
-\java\lang\System::$err = new \java\io\PrintStream();
-\java\lang\System::$in = new \java\io\BufferedInputStream(new \java\io\FileInputStream(STDIN));
+System::$out = new \java\io\PrintStream();
+System::$err = new \java\io\PrintStream();
+System::$in = new \java\io\BufferedInputStream(new \java\io\FileInputStream(STDIN));
+
+//\java\sql\DriverManager::setLogStream(System::$out);
+
 
 CODE
 ) !== false or exit;
@@ -656,7 +686,7 @@ class PrintStream extends \java\lang\Object {
 			var_dump($func_args[2][2]);
 			exit;
 		}
-		*/
+		//*/
 		
 		if ($func == 'print') {
 			//$this->__call('__print', $args);
@@ -743,12 +773,12 @@ CODE
 ) !== false or exit;
 
 
-//java/lang/File
-evalLazy('java/lang/File', <<<'CODE'
+//java/io/File
+evalLazy('java/io/File1', <<<'CODE'
 
 namespace java\io;
 	
-class File extends \java\lang\Object {
+class File1 extends \java\lang\Object {
 	
 	private $path;
 	
@@ -796,6 +826,9 @@ class File extends \java\lang\Object {
 		return new File($realpath);
 	}
 	
+	public function toString() {
+		return jstring($this->path);
+	}
 }
 
 CODE
@@ -828,6 +861,14 @@ class Character extends \java\lang\Object {
 	public function toString() {
 		return jstring(chr($this->char));
 	}
+	
+	public static function isLetter($char) {
+		return ctype_alpha(chr($char));
+	}
+	
+	public static function isLetterOrDigit($char) {
+		return ctype_alnum(chr($char));
+	}
 }
 Character::$TYPE = Clazz::getPrimitiveClass('char');
 CODE
@@ -839,10 +880,9 @@ evalLazy('java/lang/String', <<<'CODE'
 
 namespace java\lang;
 	
-class String extends \java\lang\Object {
+class String extends Object implements \java\io\Serializable, Comparable, CharSequence {
 	
 	private $string;
-	
 	private $hash = 0;
 	
 	public function __construct($string = '') {
@@ -874,6 +914,23 @@ class String extends \java\lang\Object {
 		return $pos !== false ? $pos : -1;
 	}
 	
+	public function lastIndexOf($str, $fromIndex = null) {
+		if (is_int($str)) {
+			$str = chr($str);
+		}
+		$len = $this->length();
+		if ($fromIndex === null) {
+			$fromIndex = $len;
+		}
+		$fromIndex = min($fromIndex, $this->length());
+		//var_dump($fromIndex);
+		$fromIndex = $len - $fromIndex;
+		$thisString = strrev($this->string);
+		//var_dump([$thisString, strrev("$str"), +"$fromIndex"]);readline();
+		$pos =  strpos($thisString, strrev("$str"), +"$fromIndex");
+		return $pos !== false ? $len - ($pos + 1) : -1;
+	}
+	
 	public function split($delimiter, $limit = 0) {
 		if ($limit > 0) {
 			$ar = preg_split("/$delimiter/", $this->string, $limit);
@@ -893,29 +950,29 @@ class String extends \java\lang\Object {
 	
 	public function substring($start, $end = null) {
 		if ($end === null) {
-			$end = strlen($this->string) - $start;
+			$end = strlen($this->string);
 		}
-		return new self(substr($this->string, $start, $end - $start));
+		return new String(substr($this->string, $start, $end - $start));
 	}
 	
 	public function replace($from, $to) {
-		return new self(str_replace("$from", "$to", $this->string));
+		return new String(str_replace("$from", "$to", $this->string));
 	}
 	
 	public function replaceAll($from, $to) {
-		return new self(str_replace("$from", "$to", $this->string));
+		return new String(str_replace("$from", "$to", $this->string));
 	}
 	
 	public function trim() {
-		return new self(trim($this->string));
+		return new String(trim($this->string));
 	}
 	
 	public function toLowerCase() {
-		return new self(strtolower($this->string));
+		return new String(strtolower($this->string));
 	}
 	
 	public function toUpperCase() {
-		return new self(strtoupper($this->string));
+		return new String(strtoupper($this->string));
 	}
 	
 	public function length() {
@@ -931,7 +988,31 @@ class String extends \java\lang\Object {
 		return \JavaArray::fromArray($ar_chr, 'C');
 	}
 	
+	public function getChars($srcBegin, $srcEnd, $dst, $dstBegin) {
+		if (is_object($srcBegin)) {
+			var_dump('String.getChars() error');
+			exit;
+		}
+        if ($srcBegin < 0) {
+            throw new StringIndexOutOfBoundsException($srcBegin);
+        }
+        if ($srcEnd > $this->length()) {
+            throw new StringIndexOutOfBoundsException($srcEnd);
+        }
+        if ($srcBegin > $srcEnd) {
+            throw new StringIndexOutOfBoundsException($srcEnd - $srcBegin);
+        }
+        System::arraycopy($this->toCharArray(), $srcBegin, $dst, $dstBegin, $srcEnd - $srcBegin);
+		//var_dump($dst);exit;
+	}
+	
 	public function charAt($i) {
+		if ($i < 0 || $i >= $this->length()) {
+			//var_dump([$this->string, $i]);
+			//debug_print_backtrace(0, 10);
+			//exit;
+			throw new StringIndexOutOfBoundsException($i);
+		}
 		return ord($this->string[$i]);
 	}
 	
@@ -944,9 +1025,28 @@ class String extends \java\lang\Object {
 		return new String($this->string . $o->string);
 	}
 	
+	public function regionMatches($ignoreCase, $toffset, $otherString, $ooffset, $len) {
+		$str1 = substr($this->string, $toffset, $len);
+		$str2 = substr($otherString->string, $toffset, $len);
+		if ($ignoreCase) {
+			$str1 = strtolower($str1);
+			$str2 = strtolower($str2);
+		}
+		return $str1 === $str2;
+	}
+	
 	public function equals($o) {
 		if ($o instanceof String) {
+			//var_dump($this->string, $o->string, $this->string == $o->string);
 			return $this->string == $o->string;
+		} else {
+			return false;
+		}
+	}
+	
+	public function equalsIgnoreCase($o) {
+		if ($o instanceof String && $o !== null) {
+			return $this->toLowerCase()->equals($o->toLowerCase());
 		} else {
 			return false;
 		}
@@ -991,6 +1091,7 @@ class String extends \java\lang\Object {
 		return $this;
 	}
 	public function __toString() {
+		//var_dump($this->string);
 		return (string) $this->string;
 	}
 }
@@ -1003,13 +1104,17 @@ evalLazy('java/lang/StringBuilder', <<<'CODE'
 
 namespace java\lang;
 	
-class StringBuilder extends \java\lang\Object {
+class StringBuilder extends Object implements \java\io\Serializable, Comparable, CharSequence  {
 	
 	private $string;
 	
-	public function __construct($string = '') {
-		$this->string = "$string";
+	public function __construct($ini = null) {
+		$this->string = '';
+		if ($ini !== null && $ini instanceof CharSequence) {
+			$this->string .= "$ini";
+		}
 	}
+	
 	public function append($s, $offset = null, $length = null) {
 		//var_dump($s);
 		
@@ -1022,6 +1127,24 @@ class StringBuilder extends \java\lang\Object {
 		
 		$this->string .= jstring($s);
 		return $this;
+	}
+	
+	public function setLength($newLength) {
+		 //var_dump($newLength);
+		
+		if ($newLength < 0) {
+			throw new StringIndexOutOfBoundsException($newLength);
+		}
+		
+		$length = $this->length();
+		
+		if ($newLength < $length) {
+			$this->string = substr($this->string, 0, $newLength);
+		}
+		
+		if ($newLength > $length) {
+			$this->string .= str_repeat("\0", $newLength - $length);
+		}
 	}
 	
 	public function length() {
@@ -1192,8 +1315,28 @@ class Random extends \java\lang\Object {
 CODE
 ) !== false or exit;
 
+//java/util/concurrent/ConcurrentHashMap
+evalLazy('java/util/concurrent/ConcurrentHashMap', <<<'CODE'
+
+namespace java\util\concurrent;
+class ConcurrentHashMap extends \java\util\HashMap {
+
+	public function putIfAbsent($key, $value) {
+		if ($value === null) {
+			throw new \java\lang\NullPointerException();
+		}
+		$oldValue = $this->get($key);
+		if ($oldValue === null) {
+			$this->put($key, $value);
+		}
+		return $oldValue;
+	}
+}
+CODE
+) !== false or exit;
+
 //java/util/HashMap
-evalLazy('java/util/HashMap', <<<'CODE'
+evalLazy('java/util/HashMap1', <<<'CODE'
 
 namespace java\util;
 	
@@ -1462,6 +1605,10 @@ class AtomicInteger extends \java\lang\Number {
 		}
 		$this->v = +"$v";
 	}
+	
+	public function incrementAndGet() {
+		return ++$this->v;
+	}
 
 	public static function parseInt($in) {
 		return intval($in.'');
@@ -1537,6 +1684,7 @@ class Float extends Number {
 	}
 	
 	public static function isNaN($f) {
+		//var_dump($f);
 		return false;//WTF?
 	}
 }
@@ -1545,6 +1693,26 @@ Float::$TYPE = Clazz::getPrimitiveClass('float');
 CODE
 ) !== false or exit;
 
+//java/lang/Short
+evalLazy('java/lang/Short', <<<'CODE'
+
+namespace java\lang;
+	
+class Short extends Number {
+	
+	public static $TYPE;
+	
+	public static $MAX_VALUE = '32767';
+	public static $MIN_VALUE = '-32768';
+	
+	public static function valueOf($v) {
+		return new self($v);
+	}
+}
+Long::$TYPE = Clazz::getPrimitiveClass('short');
+
+CODE
+) !== false or exit;
 
 //java/lang/Long
 evalLazy('java/lang/Long', <<<'CODE'
@@ -1689,6 +1857,7 @@ namespace sun\misc;
 class SharedSecrets extends \java\lang\Object {
 	private static $javaIOAccess;
 	private static $javaNioAccess;
+	private static $javaIOFileAccess;
 	
 	public static function setJavaIOAccess($jio) {
 		self::$javaIOAccess = $jio;
@@ -1696,6 +1865,10 @@ class SharedSecrets extends \java\lang\Object {
 	
 	public static function setJavaNioAccess($jnio) {
 		self::$javaNioAccess = $jnio;
+	}
+	
+	public static function setJavaIOFileAccess($iofile) {
+		self::$javaIOFileAccess = $iofile;
 	}
 }
 
@@ -1711,13 +1884,22 @@ namespace java\lang;
 class Throwable extends \Exception {
 	use ObjectTrait;
 	
-	private $constructed = false;
+	private $cause;
 	
-	public function __construct($message = '', $code = 0, $previous = NULL) {
-		if ($this->constructed === false) {
-			parent::__construct($message, $code, $previous);
-			$this->message = new \java\lang\String($message);
-			$this->constructed = true;
+	public function __construct($message = '', $cause = null) {
+		if ($message !== '__EXCEPTION_DONT_INIT__') {
+			//var_dump([get_class($this), $message]);
+			if ($message instanceof Throwable) {
+				$cause = $message;
+				$message = null;
+			}
+			parent::__construct($message, 0, $cause);
+			$this->message = $message ? jstring($message) : null;
+			if ($cause !== null) {
+				$this->cause = $cause;
+			} else {
+				$this->cause = $this;
+			}
 		}
 	}
 	
@@ -1743,6 +1925,21 @@ class Throwable extends \Exception {
 	
 	public function getLocalizedMessage() {
 		return $this->getMessage();
+	}
+	
+	public function initCause(Throwable $cause) {
+		if ($this->cause != $this) {
+			throw new IllegalStateException("Can't overwrite cause");
+		}
+		if ($cause == $this) {
+			throw new IllegalArgumentException("Self-causation not permitted");
+		}
+		$this->cause = $cause;
+		return $this;
+	}
+	
+	public function getCause() {
+		return $this->cause === $this ? null : $this->cause;
 	}
 	
 	public function getStackTrace() {
@@ -1773,36 +1970,138 @@ class Thread extends Object {
 	public static $currentThreadId = 0;
 	
 	/* long */
-	private static $incrementThreadId = 0; 
+	public $tid = 0;
 	
-	/* long */
-	public $tid;
+	/* String */
+	private $name;
+	
+	/* ThreadGroup */
+	private $group;
 	
 	/* java\lang\ClassLoader */ 
 	private $contextClassLoader;
 	
 	private $nativeThread;
 	
-	private $runnable;
+	private $target;
+	
+	// boolean
+	private $daemon;
+	
+	// int
+	private $priority = 0;
+	
+	// int
+	private $threadStatus = 0;
 
-	public function __construct($runnable = null) {
-		$this->runnable = $runnable;
-		$this->tid = self::$incrementThreadId++;
-		
+	public function __construct($target = null, $name = null) {
+	
+		$this->tid = self::nextThreadID();
 		self::$threads[$this->tid] = $this;
+		
+		$args = func_get_args();
+		foreach ($args as $arg) {
+			if (!$arg) {
+				continue;
+			} else if ($arg instanceof String) {
+				$this->name = $arg;
+			} else if ($arg instanceof Runnable) {
+				$this->target = $arg;
+			} else if ($arg instanceof ThreadGroup) {
+				$this->group = $arg;
+			}
+		}
+		
+		if ($this->name === null) {
+			$this->name = jstring('Thread-'. self::nextThreadNum());
+		}
+		
+		$parent = self::currentThread();
+		
+		if ($parent !== null) {
+			
+			if ($this->group === null) {
+				$this->group = $parent->getThreadGroup();
+			}
+			
+			$this->group->addUnstarted();
+			
+			$this->daemon = $parent->isDaemon();
+			$this->priority = $parent->getPriority();
+			$this->contextClassLoader = $parent->getContextClassLoader();
+		}
+	}
+	
+	/* long */
+	private static $threadSeqNumber = 0; 
+	
+	private static function nextThreadID() {
+		return self::$threadSeqNumber++;
+	}
+	
+	/* long */
+	private static $threadInitNumber = 0; 
+	
+	private static function nextThreadNum() {
+		return self::$threadInitNumber++;
 	}
 	
 	public function start() {
-		//var_dump($this->runnable); exit;
-		//$this->nativeThread = new \PhpThread([$this->runnable, 'run'], [], $this);		
+	
+		if ($this->name->equals(jstring('Reference Handler'))) {
+			return;
+		}
+		
+		//var_dump($this->target); exit;
+		//$this->nativeThread = new \PhpThread([$this->target, 'run'], [], $this);		
 		//$this->nativeThread->start();
-		$this->runnable->run();
+		
+		if ($this->threadStatus !== 0) {
+			throw new IllegalThreadStateException();
+		}
+
+		$opcode = [2 => ['type' => '([Ljava/lang/Thread;)V']];
+		$this->group->__call('add', [$this], $opcode);
+
+		$this->run();
+	}
+	
+	public function run() {
+		if ($this->target !== null) {
+			$this->target->run();
+		}
 	}
 	
 	/* long */
 	public function getId() {
 		return $this->tid;
 	}
+	
+	public function isDaemon() {
+		return $this->daemon;
+	}
+	
+	public function setDaemon($daemon) {
+		$this->daemon = !!$daemon;
+	}
+	
+	public function getPriority() {
+		return $this->priority;
+	}
+	
+	public function setPriority($priority) {
+		$this->priority = $priority;
+	}
+	
+	/* ThreadGroup */
+	public function getThreadGroup() {
+		return $this->group;
+	}
+	
+	/* int */
+	public static function activeCount() {
+        return self::currentThread()->getThreadGroup()->activeCount();
+    }
 	
 	/* long */
 	public static function sleep($milisecs) {
@@ -1811,9 +2110,10 @@ class Thread extends Object {
 	
 	/* java\lang\Thread */
 	public static function currentThread() {
-		if (self::$threads[self::$currentThreadId] === null) {
-			$thread = new Thread();
-			self::$currentThreadId = $thread->tid;
+		if (!isset(self::$threads[self::$currentThreadId])) {
+			//$thread = new Thread();
+			//self::$currentThreadId = $thread->tid;
+			return null;
 		}
 		return self::$threads[self::$currentThreadId];
 	}
@@ -1825,9 +2125,6 @@ class Thread extends Object {
 	
 	/* java\lang\ClassLoader */
 	public function getContextClassLoader() {
-		if ($this->contextClassLoader === null) {
-			$this->contextClassLoader = ClassLoader::getSystemClassLoader();
-		}
 		return $this->contextClassLoader;
 	}
 }
@@ -2473,11 +2770,11 @@ CODE
 ) !== false or exit;
 
 //java/sql/DriverManager
-evalLazy('java/sql/DriverManager', <<<'CODE'
+evalLazy('java/sql/DriverManager1', <<<'CODE'
 
 namespace java\sql;
 	
-class DriverManager extends \java\lang\Object {
+class DriverManager1 extends \java\lang\Object {
 	
 	private static $logWriter;
 	private static $drivers = [];

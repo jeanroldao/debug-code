@@ -1,7 +1,7 @@
 <?php
 namespace sun\misc;
 
-eval(<<<'CODE'
+evalLazy('java/lang/ClassLoader', <<<'CODE'
 namespace java\lang;
 
 class ClassLoader extends Object {
@@ -25,12 +25,12 @@ class Launcher extends \java\lang\Object {
 	
 	public function __construct() {
 		$this->loader = new Launcher_S_AppClassLoader();
-		\java\lang\Thread::currentThread()->setContextClassLoader($this->loader);
+		//\java\lang\Thread::currentThread()->setContextClassLoader($this->loader);
 	}
 	
 	public static function getLauncher() {
 		if (self::$launcher === null) {
-			self::$launcher = new self();
+			return self::$launcher = new Launcher();
 		}
 		return self::$launcher;
 	}
@@ -48,6 +48,8 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 	public function __construct() {
 		$this->addClasspath(dirname(__FILE__));
 		$this->addJarClasspath('./rt.jar');
+		$this->addJarClasspath('./resources.jar');
+		//$this->addJarClasspath('./smallsql.jar');
 		//$this->addJarClasspath('C:/Program Files/Java/jre7/lib/rt.jar');
 	}
 	
@@ -72,10 +74,23 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 				} else {
 					$filename = 'file:/'.$filename;
 				}
-				return /*new \java\net\URL*/(jstring(str_replace(['\\', '#', ' '], ['/', '!/', '%20'], $filename)));
+				$url = new \java\net\URL(jstring(str_replace(['\\', '#', ' '], ['/', '!/', '%20'], $filename)));
+				return $url;
 			}
 		}
 		return null;
+	}
+	
+	public function getResources($name) {
+		
+		$vector = new \java\util\Vector();
+		$vector->add($this->getResource($name));
+		
+		$enum = new \JavaArray(1, 'java.util.Enumeration');
+		$enum[0] = $vector->elements();
+		
+		$compEnum = new CompoundEnumeration($enum);
+		return $compEnum;
 	}
 	
 	public function addClasspath($path) {
@@ -106,15 +121,20 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 	}
 	
 	public function readClassFile($filename) {
+		if ($this->debug_log) { echo "<read \n$filename\n...>\n"; }
 		@$fp = fopen($filename, 'rb');
 		if ($fp) {
 			$javaClass = new \php_javaClass();
+			if ($this->debug_log) { echo "<read done \n$filename\n...>\n"; }
 			$javaClass->readClass($fp);
+			if ($this->debug_log) { echo "<parse done \n$filename\n...>\n"; var_dump(end(get_declared_classes()));}
 			//fclose($fp);
-			//echo $javaClass->getPhpClassName();
+			//println($javaClass->getPhpClassName());
 			return true;
+		} else {
+			if ($this->debug_log) { echo "<read error \n$filename\n...>\n"; }
+			return false;
 		}
-		return false;
 	}
 
 	public function loadClass($className) {
@@ -135,7 +155,7 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 			}*/
 			
 			$filename = ($path.str_replace('.', '/', $className).'.class');
-			if ($this->debug_log) { echo "<loading $filename ...>".PHP_EOL; }
+			if ($this->debug_log) { echo "<loading \n$filename\n ...>".PHP_EOL; }
 			if ($this->readClassFile($filename)) {
 				if ($this->debug_log) { echo "<$className ok>".PHP_EOL; }
 				$classNamePhp = \php_javaClass::convertNameJavaToPhp($className);

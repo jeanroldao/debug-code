@@ -1,59 +1,4 @@
 <?php
-function encode_int($in, $pad_to_bits=64, $little_endian=true) {
-	$in = decbin($in);
-	$in = str_pad($in, $pad_to_bits, '0', STR_PAD_LEFT);
-	$out = '';
-	for ($i = 0, $len = strlen($in); $i < $len; $i += 8) {
-		$out .= chr(bindec(substr($in,$i,8)));
-	}
-	if($little_endian) {
-		$out = strrev($out);
-	}
-	return $out;
-}
-
-function decode_int($data, $bits=false) {
-	if ($bits === false) {
-		$bits = strlen($data) * 8;
-	}
-	
-	if($bits <= 0 ) {
-		return false;
-	}
-	switch($bits) {
-		case 8:
-			$return = unpack('C',$data);
-			$return = $return[1];
-			break;
-
-		case 16:
-			$return = unpack('v',$data);
-			$return = $return[1];
-			break;
-
-		case 24:
-			$return = unpack('ca/ab/cc', $data);
-			$return = $return['a'] + ($return['b'] << 8) + ($return['c'] << 16);
-			break;
-
-		case 32:
-			$return = unpack('V', $data);
-			$return = $return[1];
-			break;
-
-		case 48:
-			$return = unpack('va/vb/vc', $data);
-			$return = $return['a'] + ($return['b'] << 16) + ($return['c'] << 32);
-			break;
-
-		case 64:
-			$return = unpack('Va/Vb', $data);
-			$return = $return['a'] + ($return['b'] << 32);
-			break;
-
-	}
-	return $return;
-}
 
 //static int java.lang.reflect.Array.getLength(Object array)
 function Java_java_lang_reflect_Array_getLength($array) {
@@ -84,9 +29,6 @@ function Java_sun_reflect_Reflection_getClassAccessFlags($c) {
 //private static native void sun.misc.VM.initialize()
 function Java_sun_misc_VM_initialize() {}
 
-//private static native void sun.misc.Unsafe.registerNatives()
-function Java_sun_misc_Unsafe_registerNatives() {}
-
 //public static native java.lang.Class sun.reflect.Reflection.getCallerClass(int)
 function Java_sun_reflect_Reflection_getCallerClass($realFramesToSkip) {
 	//var_dump("getCallerClass($realFramesToSkip)");
@@ -106,21 +48,55 @@ function Java_sun_reflect_Reflection_getCallerClass($realFramesToSkip) {
 	}
 }
 
-//public native void sun.misc.Unsafe.ensureClassInitialized(java/lang/Class)
+//private static native void sun.misc.Unsafe.registerNatives()
+function Java_sun_misc_Unsafe_registerNatives() {}
+
+//public native void sun.misc.Unsafe.ensureClassInitialized(java.lang.Class)
 function Java_sun_misc_Unsafe_ensureClassInitialized($class) {}
 
+//public native java.lang.Object sun.misc.Unsafe.staticFieldBase(java.lang.reflect.Field)
+function Java_sun_misc_Unsafe_staticFieldBase($field) {
+	//return jstring("opa");
+	//var_dump($this);
+	//var_dump($field->getDeclaringClass()->toString());
+	//exit;
+	return $field->getDeclaringClass();
+}
 
-$GLOBALS['Java_sun_misc_Unsafe_staticFieldOffset_offsets'] = [];
-$GLOBALS['Java_sun_misc_Unsafe_staticFieldOffset_offset_num'] = 0;
-//public native long sun.misc.Unsafe.staticFieldOffset(java/lang/reflect/Field)
+//public native java.lang.Object sun.misc.Unsafe.getObject(java.lang.Object,long)
+function Java_sun_misc_Unsafe_getObject($obj, $offset) {
+	if ($obj instanceof \java\lang\Clazz) {
+		$className = $obj->getName()->replace('.', '\\')->toString() . '';
+		$field = array_keys(get_class_vars($className))[$offset];
+		return $className::$$field;
+	}
+	var_dump('Java_sun_misc_Unsafe_getObject', $obj, $offset);
+	exit;
+}
+
+//public native long sun.misc.Unsafe.staticFieldOffset(java.lang.reflect.Field)
 function Java_sun_misc_Unsafe_staticFieldOffset($field) {
-	$name = $field->toString()->hashCode();
-	if (isset($GLOBALS['Java_sun_misc_Unsafe_staticFieldOffset_offsets'][$name])) {
-		return $GLOBALS['Java_sun_misc_Unsafe_staticFieldOffset_offsets'][$name];
+	$className = $field->getDeclaringClass()->getName()->replace('.', '\\')->toString() . '';
+	$fieldName = $field->getName()->toString().'';
+	return array_search($fieldName, array_keys(get_class_vars($className)));
+}
+
+//public native long sun.misc.Unsafe.objectFieldOffset(java.lang.reflect.Field)
+function Java_sun_misc_Unsafe_objectFieldOffset($field) {
+	return Java_sun_misc_Unsafe_staticFieldOffset($field);
+}
+
+//public final native boolean sun.misc.Unsafe.compareAndSwapInt(java.lang.Object,long,int,int)
+function Java_sun_misc_Unsafe_compareAndSwapInt($obj, $offset, $expected, $value) {
+	//var_dump($o, $offset, $expect, $value);
+	
+	$className = get_class($obj);
+	$field = array_keys(get_class_vars($className))[$offset];
+	if ($obj->$field === $expected) {
+		$obj->$field = $value;
+		return true;
 	} else {
-		$offset = $GLOBALS['Java_sun_misc_Unsafe_staticFieldOffset_offset_num']++;
-		$GLOBALS['Java_sun_misc_Unsafe_staticFieldOffset_offsets'][$name] = $offset;
-		return $offset;
+		return false;
 	}
 }
 
@@ -132,10 +108,6 @@ function Java_sun_misc_Unsafe_allocateMemory($bytes) {
 	$GLOBALS['Java_sun_misc_Unsafe_nextpointer'] += $bytes;
 	$GLOBALS['Java_sun_misc_Unsafe_memory'] .= str_repeat("\0", $bytes);
 	return $pointer;
-}
-
-function Java_Teste32_php(/* long */$l) {
-	var_dump($l);
 }
 
 //public native void sun.misc.Unsafe.putLong(long,long)
@@ -150,3 +122,156 @@ function Java_sun_misc_Unsafe_putLong($addr, $value) {
 
 //private static native void java.util.zip.ZipFile.initIDs()
 function Java_java_util_zip_ZipFile_initIDs() {}
+
+//public static native java.io.FileSystem java.io.FileSystem.getFileSystem()
+function Java_java_io_FileSystem_getFileSystem() {
+	return new \java\io\WinNTFileSystem();
+}
+
+//private static native void java.io.Win32FileSystem.initIDs()
+function Java_java_io_Win32FileSystem_initIDs() {}
+
+//private static native void java.io.WinNTFileSystem.initIDs()
+function Java_java_io_WinNTFileSystem_initIDs() {}
+
+//public native int java.io.WinNTFileSystem.getBooleanAttributes(java.io.File)
+function Java_java_io_WinNTFileSystem_getBooleanAttributes($file) {
+	//java/io/FileSystem::$BA_DIRECTORY;
+	/*
+	BA_EXISTS    = 0x01;
+    BA_REGULAR   = 0x02;
+    BA_DIRECTORY = 0x04;
+    BA_HIDDEN    = 0x08;
+	
+	//reminder
+	ACCESS_READ    = 0x04;
+    ACCESS_WRITE   = 0x02;
+    ACCESS_EXECUTE = 0x01;	
+	*/
+	$file = "$file";
+	//$file .= '\smallsql.master';
+	$mode = 0;
+	if (file_exists($file)) {
+		$mode |= 0x01;
+	}
+	if (is_file($file)) {
+		$mode |= 0x02;
+	}
+	if (is_dir($file)) {
+		$mode |= 0x04;
+	}
+	
+	/*
+	var_dump($mode);
+	var_dump($mode & 1 ? 'BA_EXISTS' : 0);
+	var_dump($mode & 2 ? 'BA_REGULAR' : 0);
+	var_dump($mode & 4 ? 'BA_DIRECTORY' : 0);
+	var_dump($mode & 8 ? 'BA_HIDDEN' : 0);
+	*/
+	return $mode;
+}
+
+//protected native java.lang.String java.io.WinNTFileSystem.canonicalize0(java.lang.String)
+function Java_java_io_WinNTFileSystem_canonicalize0($relative_path) {
+	$real_path = realpath($relative_path);
+	if ($real_path === false) {
+		var_dump('Java_java_io_WinNTFileSystem_canonicalize0', $relative_path);
+		exit;
+	} else {
+		return jstring($real_path);
+	}
+}
+
+//private static native void java.io.RandomAccessFile.initIDs()
+function Java_java_io_RandomAccessFile_initIDs() {}
+
+//private native void java.io.RandomAccessFile.open(java.lang.String,int)
+function Java_java_io_RandomAccessFile_open($file, $mode) {
+	//O_RDONLY = 1; 'r'
+	//O_RDWR =   2; 'rw'
+	//O_SYNC =   4; 'rws'
+	//O_DSYNC =  8; 'rwd'
+	switch ($mode) {
+		case 1:
+			$mode = 'r';
+			break;
+		case 2:
+			$mode = 'rw';
+			break;
+		case 3:
+		case 4:
+		default:
+			var_dump('unknown mode: ' . $mode);
+			var_dump('Java_java_io_RandomAccessFile_open');
+			exit;
+	}
+	$handle = fopen("$file", $mode);
+	if ($handle === false) {
+		var_dump("$file");
+		var_dump("error fopen");
+		exit;
+	}
+	$this->fd->handle = $handle;
+	//var_dump($file, $mode);
+	//var_dump($this);
+}
+
+//private static native void java.io.FileDescriptor.initIDs()
+function Java_java_io_FileDescriptor_initIDs() {}
+
+//private static native long java.io.FileDescriptor.set(int)
+function Java_java_io_FileDescriptor_set($fd) {
+
+	switch ($fd) {
+		case 0: return STDIN;
+		case 1: return STDERR;
+		case 2: return STDOUT;
+		
+		default:
+			var_dump($int);
+			var_dump('Java_java_io_FileDescriptor_set');
+			exit;
+	}
+}
+
+//private static native java.lang.ClassLoader java.sql.DriverManager.getCallerClassLoader()
+function Java_java_sql_DriverManager_getCallerClassLoader() {
+	//return \java\lang\Thread::currentThread()->getContextClassLoader();
+	return \java\lang\ClassLoader::getSystemClassLoader();
+}
+
+//private static native void java.io.ObjectStreamClass.initNative()
+function Java_java_io_ObjectStreamClass_initNative() {}
+
+//static native void sun.nio.ch.IOUtil.initIDs()
+function Java_sun_nio_ch_IOUtil_initIDs() {}
+
+//private static native long sun.nio.ch.FileChannelImpl.initIDs()
+function Java_sun_nio_ch_FileChannelImpl_initIDs() {}
+
+//native int sun.nio.ch.FileChannelImpl.lock0(java.io.FileDescriptor,boolean,long,long,boolean)
+function Java_sun_nio_ch_FileChannelImpl_lock0($fd, $blocking, $pos, $size, $shared) {
+	//var_dump($fd, $blocking, $pos, $size, $shared);
+	//return \sun\nio\ch\FileChannelImpl::$RET_EX_LOCK;
+	return 1; //\sun\nio\ch\FileChannelImpl::$RET_EX_LOCK
+}
+
+//private static native void sun.nio.ch.FileKey.initIDs()
+function Java_sun_nio_ch_FileKey_initIDs() {}
+
+//private native void sun.nio.ch.FileKey.init(java.io.FileDescriptor)
+function Java_sun_nio_ch_FileKey_init($fd) {
+	//var_dump($fd->handle);
+	//var_dump($this);
+	$this->st_dev = 0;    // ID of device
+	$this->st_ino = 0;    // Inode number
+	$this->handle = $fd->handle;
+}
+
+function Java_Teste32_php(/* long */$l) {
+	var_dump($l);
+}
+
+function Java_TesteSmallSql_var_dump0($var) {
+	var_dump($var);
+}

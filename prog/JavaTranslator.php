@@ -37,13 +37,13 @@ trait JavaTranslator {
 				return [3, 'sipush', $input->readShort()];
 			case 0x12:
 				$i++;
-				return [2, 'ldc', $this->getDataFromRef($input->readByte())];
+				return [2, 'ldc', $input->readByte()];
 			case 0x13:
 				$i += 2;
-				return [3, 'ldc_w', $this->getDataFromRef($input->readShort())];
+				return [3, 'ldc_w', $input->readShort()];
 			case 0x14:
 				$i += 2;
-				return [3, 'ldc2_w', $this->getDataFromRef($input->readShort())];
+				return [3, 'ldc2_w', $input->readShort()];
 			case 0x15:
 				$i++;
 				return [2, 'iload', $input->readByte()];
@@ -208,6 +208,10 @@ trait JavaTranslator {
 				return [1, 'irem'];
 			case 0x71:
 				return [1, 'lrem'];
+			case 0x72:
+				return [1, 'frem'];
+			case 0x73:
+				return [1, 'drem'];
 			case 0x74:
 				return [1, 'ineg'];
 			case 0x75:

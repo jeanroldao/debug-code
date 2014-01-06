@@ -32,10 +32,18 @@ public class Teste32 {
 		}
 	}
 	
+	static class L {
+		private long l;
+		public L(long l) {
+			this.l = l;
+		}
+	}
+	
 	public static void main(String[] args) throws Exception {
 		//System.out.println(System.getProperties());
 		//System.loadLbrary("Test");
 		long l = 100000000000000L;
+		System.out.println(System.out);
 		System.out.println(l);
 		print(l);
 		System.out.println(System.getProperty("java.runtime.version"));
