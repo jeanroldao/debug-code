@@ -16,7 +16,7 @@ class DataInputStream implements DataInput {
 	}
 	
 	public function __destruct() {
-		fclose($this->file);
+		//fclose($this->file);
 	}
 	
 	public function readHex($bytes = 1) {

@@ -42,10 +42,13 @@ function Java_sun_reflect_Reflection_getCallerClass($realFramesToSkip) {
 		$i++;
 	}
 	if (!empty($backtrace[$i]['class'])) {
-		return \java\lang\Clazz::forName(str_replace('\\', '.', $backtrace[$i]['class']));
+		$class = \java\lang\Clazz::forName(str_replace('\\', '.', $backtrace[$i]['class']));
 	} else {
-		return null;
+		$class = null;
 	}
+	//println($class);
+	//println($class->getClassLoader());
+	return $class;
 }
 
 //private static native void sun.misc.Unsafe.registerNatives()
@@ -123,6 +126,76 @@ function Java_sun_misc_Unsafe_putLong($addr, $value) {
 //private static native void java.util.zip.ZipFile.initIDs()
 function Java_java_util_zip_ZipFile_initIDs() {}
 
+$Java_java_util_zip_ZipFile_openID = 1; //start at 1
+$Java_java_util_zip_ZipFile_openFiles = [null];
+
+//private static native long java.util.zip.ZipFile.open(java.lang.String,int,long,boolean)
+function Java_java_util_zip_ZipFile_open($name, $mode, $lastModified, $usemmap) {
+	global $Java_java_util_zip_ZipFile_openID, $Java_java_util_zip_ZipFile_openFiles;
+	//var_dump($name, $mode, $lastModified, $usemmap);
+	//return openJavaFile($name, $mode);
+	$zip = new ZipArchive();
+	$filename = "$name";
+
+	if ($zip->open($filename /*, ZipArchive::CREATE*/) !== TRUE) {
+		exit("cannot open <$filename>\n");
+	}
+	$jzfile = $Java_java_util_zip_ZipFile_openID++;
+	$Java_java_util_zip_ZipFile_openFiles[$jzfile] = $zip;
+	
+	return $jzfile;
+}
+
+//private static native int java.util.zip.ZipFile.getTotal(long)
+function Java_java_util_zip_ZipFile_getTotal($jzfile) {
+	global $Java_java_util_zip_ZipFile_openFiles;
+	if (isset($Java_java_util_zip_ZipFile_openFiles[$jzfile])) {
+		return $Java_java_util_zip_ZipFile_openFiles[$jzfile]->numFiles;
+	} else {
+		var_dump('zipfile not open?');
+		var_dump($Java_java_util_zip_ZipFile_openFiles, $jzfile);
+		exit;
+	}
+	//return fstat($jzfile)['size'];
+}
+
+//private static native long java.util.zip.ZipFile.getEntry(long,java.lang.String,boolean)
+function Java_java_util_zip_ZipFile_getEntry($jzfile, $name, $addSlash) {
+	global $Java_java_util_zip_ZipFile_openID, $Java_java_util_zip_ZipFile_openFiles;
+
+	$entry = $Java_java_util_zip_ZipFile_openFiles[$jzfile]->getFromName("$name");
+	
+	$jzentry = $Java_java_util_zip_ZipFile_openID++;
+	$Java_java_util_zip_ZipFile_openFiles[$jzentry] = $entry;
+	return $jzentry;
+}
+
+//private static native void java.util.zip.ZipEntry.initIDs()
+function Java_java_util_zip_ZipEntry_initIDs() {}
+
+//private native void java.util.zip.ZipEntry.initFields(long)
+function Java_java_util_zip_ZipEntry_initFields($jzentry) {
+	//var_dump($jzentry);
+}
+
+//private static native void java.util.zip.ZipFile.freeEntry(long,long)
+function Java_java_util_zip_ZipFile_freeEntry($l1, $l2) {
+	global $Java_java_util_zip_ZipFile_openFiles;
+	unset($Java_java_util_zip_ZipFile_openFiles[$l2]);
+}
+
+//private native java.lang.String[] java.util.jar.JarFile.getMetaInfEntryNames()
+function Java_java_util_jar_JarFile_getMetaInfEntryNames() {
+	$manifest = php_javaClass::readJarManifest($this->name.'');
+	//$lines = new \JavaArray(count($manifest), 'java.lang.String');
+	$lines = [];
+	foreach ($manifest as $name => $value) {
+		$lines[] = jstring("$name: $value");
+	}
+	$lines = \JavaArray::fromArray($lines, 'java.lang.String');
+	return $lines;
+}
+
 //public static native java.io.FileSystem java.io.FileSystem.getFileSystem()
 function Java_java_io_FileSystem_getFileSystem() {
 	return new \java\io\WinNTFileSystem();
@@ -173,6 +246,7 @@ function Java_java_io_WinNTFileSystem_getBooleanAttributes($file) {
 
 //protected native java.lang.String java.io.WinNTFileSystem.canonicalize0(java.lang.String)
 function Java_java_io_WinNTFileSystem_canonicalize0($relative_path) {
+	//var_dump($relative_path);exit;
 	$real_path = realpath($relative_path);
 	if ($real_path === false) {
 		var_dump('Java_java_io_WinNTFileSystem_canonicalize0', $relative_path);
@@ -182,11 +256,15 @@ function Java_java_io_WinNTFileSystem_canonicalize0($relative_path) {
 	}
 }
 
+//public native long java.io.WinNTFileSystem.getLastModifiedTime(java.io.File)
+function Java_java_io_WinNTFileSystem_getLastModifiedTime($file) {
+	return filemtime("$file");
+}
+
 //private static native void java.io.RandomAccessFile.initIDs()
 function Java_java_io_RandomAccessFile_initIDs() {}
 
-//private native void java.io.RandomAccessFile.open(java.lang.String,int)
-function Java_java_io_RandomAccessFile_open($file, $mode) {
+function openJavaFile($file, $mode) {
 	//O_RDONLY = 1; 'r'
 	//O_RDWR =   2; 'rw'
 	//O_SYNC =   4; 'rws'
@@ -211,7 +289,12 @@ function Java_java_io_RandomAccessFile_open($file, $mode) {
 		var_dump("error fopen");
 		exit;
 	}
-	$this->fd->handle = $handle;
+	return $handle;
+}
+
+//private native void java.io.RandomAccessFile.open(java.lang.String,int)
+function Java_java_io_RandomAccessFile_open($file, $mode) {
+	$this->fd->handle = openJavaFile($file, $mode);
 	//var_dump($file, $mode);
 	//var_dump($this);
 }
@@ -252,7 +335,7 @@ function Java_sun_nio_ch_FileChannelImpl_initIDs() {}
 //native int sun.nio.ch.FileChannelImpl.lock0(java.io.FileDescriptor,boolean,long,long,boolean)
 function Java_sun_nio_ch_FileChannelImpl_lock0($fd, $blocking, $pos, $size, $shared) {
 	//var_dump($fd, $blocking, $pos, $size, $shared);
-	//return \sun\nio\ch\FileChannelImpl::$RET_EX_LOCK;
+	//var_dump(\sun\nio\ch\FileChannelImpl::$RET_EX_LOCK);exit;
 	return 1; //\sun\nio\ch\FileChannelImpl::$RET_EX_LOCK
 }
 
@@ -273,5 +356,13 @@ function Java_Teste32_php(/* long */$l) {
 }
 
 function Java_TesteSmallSql_var_dump0($var) {
-	var_dump($var);
+	println($var->getCmd());
+	//var_dump($var->getCmd()->findColumn(jstring('message')));
+	//var_dump($var->getCmd()->columnExpressions);
+	/*
+	var_dump(array_keys((array)$var));
+	var_dump($var->values);
+	var_dump($var->metaData);
+	var_dump($var->cmd);
+	//*/
 }

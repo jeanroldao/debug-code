@@ -99,14 +99,6 @@ function evalLazy($className, $code) {
 	}
 }
 
-spl_autoload_register(function($phpClass){
-	$phpClass = str_replace('\\', '/', $phpClass);
-	//var_dump([$phpClass, isset($GLOBALS['evalLazy_classes'][$phpClass])]);
-	if (isset($GLOBALS['evalLazy_classes'][$phpClass])) {
-		eval2($phpClass, $GLOBALS['evalLazy_classes'][$phpClass]);
-	}
-});
-
 //java/lang/Object
 evalLazy('java/lang/Object', <<<'CODE'
 
@@ -338,8 +330,25 @@ class Clazz extends Object {
 		return $javaClass->class_attr['flags_num'];
 	}
 	
+	public function getResource($name) {
+		if ($this->getClassLoader() !== null) {
+			return $this->getClassLoader()->getResource($name);
+		} else {
+			return null;
+		}
+	}
+	
 	public function getClassLoader() {
 		try {
+			
+			//emulates native libs
+			$name = $this->getName();
+			if ($name->startsWith(jstring('java'))
+			 || $name->startsWith(jstring('sun.misc'))
+			 || $name->startsWith(jstring('sun.nio'))) {
+				return null;
+			}
+			//println($name);
 			$cl = $this->getRefClass()
 						->getProperty('javaClass')
 						->getValue()
@@ -653,11 +662,13 @@ class System extends Object {
 	}
 }
 
-System::$out = new \java\io\PrintStream();
-System::$err = new \java\io\PrintStream();
-System::$in = new \java\io\BufferedInputStream(new \java\io\FileInputStream(STDIN));
+afterClassLoad('java\lang\System', function(){
+	System::$out = new \java\io\PrintStream();
+	System::$err = new \java\io\PrintStream();
+	System::$in = new \java\io\BufferedInputStream(new \java\io\FileInputStream(STDIN));
 
-//\java\sql\DriverManager::setLogStream(System::$out);
+	//\java\sql\DriverManager::setLogStream(System::$out);
+});
 
 
 CODE
@@ -870,7 +881,10 @@ class Character extends \java\lang\Object {
 		return ctype_alnum(chr($char));
 	}
 }
-Character::$TYPE = Clazz::getPrimitiveClass('char');
+
+afterClassLoad('java\lang\Character', function(){
+	Character::$TYPE = Clazz::getPrimitiveClass('char');
+});
 CODE
 ) !== false or exit;
 
@@ -885,12 +899,21 @@ class String extends Object implements \java\io\Serializable, Comparable, CharSe
 	private $string;
 	private $hash = 0;
 	
-	public function __construct($string = '') {
+	public function __construct($string = '', $offset = null, $length = null) {
+		//String( sql, offset, length );
 		if (self::isCharArray($string)) {
 			$this->string = '';
-			foreach ($string as $c) {
-				$this->string .= chr($c);
+			if ($offset === null) {
+				$offset = 0;
 			}
+			if ($length === null) {
+				$length = count($string);
+			}
+			$length += $offset;
+			for ($i = $offset; $i < $length; $i++) {
+				$this->string .= chr($string[$i]);
+			}
+			//var_dump($this->string);
 		} else {
 			$this->string = "$string";
 		}
@@ -1074,7 +1097,7 @@ class String extends Object implements \java\io\Serializable, Comparable, CharSe
 	}
 	
 	public static function valueOf($o) {
-		return (new String("$o"))->intern();
+		return jstring($o);
 	}
 	
 	private static $interned_strings = [];
@@ -1115,7 +1138,26 @@ class StringBuilder extends Object implements \java\io\Serializable, Comparable,
 		}
 	}
 	
-	public function append($s, $offset = null, $length = null) {
+	public function __call($method, $args) {
+		$func_args = func_get_args();
+		if(count($func_args) > 2) {
+			$opcode = $func_args[2];
+		} else {
+			$opcode = null;
+		}
+		if ($method == 'append') {
+			if ($opcode[2]['args'][0] == 'C') {
+				$args[0] = chr($args[0]);
+			}
+			//return $this->__call('_append', $args);
+			return call_user_func_array([$this, '_append'], $args);
+		} else {
+			return parent::__call($method, $args, $opcode);
+		}
+		//var_dump($method, $args, $opcode);exit;
+	}
+	
+	private function _append($s, $offset = null, $length = null) {
 		//var_dump($s);
 		
 		if ($offset !== null && $length !== null) {
@@ -1125,6 +1167,9 @@ class StringBuilder extends Object implements \java\io\Serializable, Comparable,
 			return $this;
 		}
 		
+		if ($s === null) {
+			$s = 'null';
+		}
 		$this->string .= jstring($s);
 		return $this;
 	}
@@ -1161,6 +1206,7 @@ class StringBuilder extends Object implements \java\io\Serializable, Comparable,
 	}
 	
 	public function toString() {
+		//var_dump($this->string);
 		return new String($this->string);
 	}
 }
@@ -1579,7 +1625,10 @@ class Integer extends Number {
 		return $i & 0x3f;
     }
 }
-Integer::$TYPE = Clazz::getPrimitiveClass('int');
+
+afterClassLoad('java\lang\Integer', function(){
+	Integer::$TYPE = Clazz::getPrimitiveClass('int');
+});
 
 CODE
 ) !== false or exit;
@@ -1639,7 +1688,10 @@ class Byte extends Number {
 		return new self($v);
 	}
 }
-Byte::$TYPE = Clazz::getPrimitiveClass('byte');
+
+afterClassLoad('java\lang\Byte', function(){
+	Byte::$TYPE = Clazz::getPrimitiveClass('byte');
+});
 
 CODE
 ) !== false or exit;
@@ -1661,7 +1713,10 @@ class Double extends Number {
 		return new self($v);
 	}
 }
-Double::$TYPE = Clazz::getPrimitiveClass('double');
+
+afterClassLoad('java\lang\Double', function(){
+	Double::$TYPE = Clazz::getPrimitiveClass('double');
+});
 
 CODE
 ) !== false or exit;
@@ -1688,7 +1743,10 @@ class Float extends Number {
 		return false;//WTF?
 	}
 }
-Float::$TYPE = Clazz::getPrimitiveClass('float');
+
+afterClassLoad('java\lang\Float', function(){
+	Float::$TYPE = Clazz::getPrimitiveClass('float');
+});
 
 CODE
 ) !== false or exit;
@@ -1709,7 +1767,10 @@ class Short extends Number {
 		return new self($v);
 	}
 }
-Long::$TYPE = Clazz::getPrimitiveClass('short');
+
+afterClassLoad('java\lang\Short', function(){
+	Short::$TYPE = Clazz::getPrimitiveClass('short');
+});
 
 CODE
 ) !== false or exit;
@@ -1730,7 +1791,10 @@ class Long extends Number {
 		return new self($v);
 	}
 }
-Long::$TYPE = Clazz::getPrimitiveClass('long');
+
+afterClassLoad('java\lang\Long', function(){
+	Long::$TYPE = Clazz::getPrimitiveClass('long');
+});
 
 CODE
 ) !== false or exit;
@@ -1794,7 +1858,10 @@ class Boolean extends \java\lang\Object {
 		return new String($this->v ? "true" : "false");
 	}
 }
-Boolean::$TYPE = Clazz::getPrimitiveClass('boolean');
+
+afterClassLoad('java\lang\Boolean', function(){
+	Boolean::$TYPE = Clazz::getPrimitiveClass('boolean');
+});
 CODE
 ) !== false or exit;
 
@@ -1858,6 +1925,7 @@ class SharedSecrets extends \java\lang\Object {
 	private static $javaIOAccess;
 	private static $javaNioAccess;
 	private static $javaIOFileAccess;
+	private static $javaUtilJarAccess;
 	
 	public static function setJavaIOAccess($jio) {
 		self::$javaIOAccess = $jio;
@@ -1870,8 +1938,11 @@ class SharedSecrets extends \java\lang\Object {
 	public static function setJavaIOFileAccess($iofile) {
 		self::$javaIOFileAccess = $iofile;
 	}
+	
+	public static function setJavaUtilJarAccess($jarAccess) {
+		self::$javaUtilJarAccess = $jarAccess;
+	}
 }
-
 CODE
 ) !== false or exit;
 
@@ -1904,6 +1975,9 @@ class Throwable extends \Exception {
 	}
 	
 	public function printStackTrace($outstream = null) {
+		//var_dump(get_called_class(), $outstream);return;
+		var_dump("$this");
+		debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 20);exit;
 		if ($outstream === null) {
 			$outstream = System::$out;
 		}
@@ -1912,7 +1986,7 @@ class Throwable extends \Exception {
 		//var_dump(count($trace));exit;
 		foreach ($trace as $t) {
 			if (	!empty($t['class']) 
-				 && !in_array($t['class'], ['php_javaClass', 'ReflectionMethod'])) {
+				 && !in_array($t['class'], ['php_javaClass', 'ReflectionClass', 'ReflectionMethod'])) {
 				if (in_array($t['function'], ['__call', '__callstatic'])) {
 					$t['function'] = $t['args'][0];
 				}
@@ -2181,6 +2255,7 @@ class FileInputStream extends \java\lang\Object {
 	private $stream;
 	
 	public function __construct($file) {
+		//var_dump($file, is_resource($file), get_resource_type($file));
 		if (is_resource($file)) {
 			$this->file = $file;
 		} else {

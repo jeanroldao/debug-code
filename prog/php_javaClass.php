@@ -1,4 +1,88 @@
 <?php
+
+error_reporting(E_ALL ^ E_STRICT);
+
+//spl_autoload_register([\java\lang\ClassLoader::getSystemClassLoader(), 'loadClass']);
+spl_autoload_register(function($className){
+	global $afterClassLoad_events;
+	static $loadingClassesCount = 0, $runningEvents = false;
+
+	$loadingClassesCount++;
+	
+	$phpClass = str_replace('\\', '/', $className);
+	if (isset($GLOBALS['evalLazy_classes'][$phpClass])) {
+		$afterClassLoad_events[$className] = '';
+		eval2($phpClass, $GLOBALS['evalLazy_classes'][$phpClass]);
+	} else {
+
+		$thread = \java\lang\Thread::currentThread();
+		
+		/* java\lang\ClassLoader */
+		$classLoader = $thread !== null ? $thread->getContextClassLoader() : \java\lang\ClassLoader::getSystemClassLoader();
+		
+		if ($classLoader === null) {
+			var_dump([$className, '$classLoader === null']);
+		}
+		
+		//$classLoader->setDefaultAssertionStatus(true);
+		$phpClassName = str_replace(['\\', '_S_', '_interface', '__'], ['.', '$', '', ''], $className);
+		$afterClassLoad_events[$className] = '';
+		$classLoader->loadClass($phpClassName);
+		
+	}
+	
+	//order fix
+	///*
+	$code = $afterClassLoad_events[$className];
+	unset($afterClassLoad_events[$className]);
+	$afterClassLoad_events[$className] = $code;
+	//*/
+	$loadingClassesCount--;
+	
+	if ($loadingClassesCount == 0 && $runningEvents == false) {
+		$runningEvents = true;
+		while (count($afterClassLoad_events) > 0) {
+			$class = key($afterClassLoad_events);
+			//println("static init $class: ".count($afterClassLoad_events));
+			$code = array_shift($afterClassLoad_events);
+			if (is_string($code)) {
+				eval($code);
+			} else {
+				$code();
+			}
+		}
+		$runningEvents = false;
+	}
+});
+
+$afterClassLoad_events = [];
+function afterClassLoad($class, $code) {
+	global $afterClassLoad_events;
+	
+	if (isset($afterClassLoad_events[$class])) {
+		$afterClassLoad_events[$class] = $code;
+	} else if (is_string($code)) {
+		eval($code);
+	} else {
+		$code();
+	}
+}
+
+function ensureClassInitialized($class) {
+	global $afterClassLoad_events;
+	//var_dump($afterClassLoad_events, php_javaClass::convertNameJavaToPhp($class));readline();
+	$phpClass = \php_javaClass::convertNameJavaToPhp($class);
+	if (isset($afterClassLoad_events[$phpClass])) {
+		$code = $afterClassLoad_events[$phpClass];
+		unset($afterClassLoad_events[$phpClass]);
+		if (is_string($code)) {
+			eval($code);
+		} else {
+			$code();
+		}
+	}
+}
+
 include 'DataInputStream.php';
 include 'JavaMock.php';
 include 'JavaNative.php';
@@ -7,24 +91,6 @@ include 'JavaTranslator.php';
 include 'JavaInterpreter.php';
 include 'JavaPhpCompiler.php';
 include 'PhpThread.php';
-
-error_reporting(E_ALL ^ E_STRICT);
-
-//spl_autoload_register([\java\lang\ClassLoader::getSystemClassLoader(), 'loadClass']);
-spl_autoload_register(function($className){
-
-	/* java\lang\ClassLoader */
-	$thread = \java\lang\Thread::currentThread();
-	$classLoader = $thread !== null ? $thread->getContextClassLoader() : \java\lang\ClassLoader::getSystemClassLoader();
-	
-	if ($classLoader === null) {
-		var_dump([$className, '$classLoader === null']);
-	}
-	
-	//$classLoader->setDefaultAssertionStatus(true);
-	$className = str_replace(['\\', '_S_', '_interface', '__'], ['.', '$', '', ''], $className);
-	$classLoader->loadClass($className);
-});
 
 class php_javaClass extends \java\lang\Object {
 	use \JavaTranslator;
@@ -585,16 +651,19 @@ CODE
 			class_alias($this->getPhpClassName(), $className);
 		}
 		
-		$clinit = '';
-		try {
-			$staticInit = $this->findMethod('<clinit>');
-			$clinitClassName = $isInterface ? $className.'_interface' : $className;
-			//$clinit = "try{ $clinitClassName::__callstatic('<clinit>', []); } catch (\\JavaMethodNotFoundException \$e) { /*var_dump(\"$className\");ob_end_clean();readline();*/ } ";
-			//$clinit = "$clinitClassName::__callstatic('<clinit>', []); ";
-			$clinitClassName::__callstatic('<clinit>', []);
-		} catch (\JavaMethodNotFoundException $e) {
-			//var_dump($className);
-		}
+		$thisObj = $this;
+		afterClassLoad($this->getPhpClassName(), function() use ($thisObj, $isInterface, $className) {
+			//$clinit = '';
+			try {
+				$staticInit = $thisObj->findMethod('<clinit>');
+				$clinitClassName = $isInterface ? $className.'_interface' : $className;
+				//$clinit = "try{ $clinitClassName::__callstatic('<clinit>', []); } catch (\\JavaMethodNotFoundException \$e) { /*var_dump(\"$className\");ob_end_clean();readline();*/ } ";
+				//$clinit = "$clinitClassName::__callstatic('<clinit>', []); ";
+				$clinitClassName::__callstatic('<clinit>', []);
+			} catch (\JavaMethodNotFoundException $e) {
+				//var_dump($className);
+			}
+		});
 	}
 	
 	public function run($method_name, $args = [], $thisObj = null, $opcode = null) {

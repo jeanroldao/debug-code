@@ -40,13 +40,13 @@ public class TesteSmallSql {
 		//*/
 		
 		///*
-		//Class<?> cls = Class.forName("smallsql.database.SSDriver");
+		Class<?> cls = Class.forName("smallsql.database.SSDriver");
 		//Class<?> cls = Class.forName("java.util.concurrent.locks.AbstractQueuedSynchronizer$Node");
-		Class<?> cls = Class.forName("smallsql.database.ExpressionValue");
+		//Class<?> cls = Class.forName("smallsql.database.ExpressionValue");
 		System.out.println(cls);
 		//cls.newInstance();
 		
-		/*
+		///*
 		Enumeration<Driver> drivers = DriverManager.getDrivers();
 		System.out.println("-DRIVERS-START-");
 		while (drivers.hasMoreElements()) {
@@ -59,22 +59,47 @@ public class TesteSmallSql {
 		//field.setAccessible(true);
 		//System.out.println(field.get(file));
 		
+		///*
 		//C:\Program Files\EasyPHP-12.1\www\debug\prog\emp1
 		String db = "emp1";
 		Connection con = DriverManager.getConnection( "jdbc:smallsql:"+db );
 		
 		System.out.println(con);
 		
+		for (int i = 0; i < 100; i++) {
+		
 		Statement statement = con.createStatement();
 		//ResultSet result = statement.executeQuery("SELECT * FROM MESSAGES");  
-		ResultSet result = statement.executeQuery("select 'jean' as user, 'oi' as message");  
+		String sql = "select 'jean' as user, 'oi' as message";
+		String[][] messages = new String[][]{
+			{"zeze", "bye"},
+			{"z1", "wait!"},
+			{"z2", "why?"},
+			{"z1", "never mind..."},
+			{"z2", "common"},
+			{"z1", "it's just..."},
+			{"z2", "what?"},
+			{"z1", "..."}
+		};
+		for (String[] msg : messages) {
+			sql += " UNION ALL select '"+msg[0]+"' as user, '"+msg[1].replace("'", "''")+"' as message";
+		}
+		ResultSet result = statement.executeQuery(sql);  
 		System.out.println("-MESSAGES-START-");
+		//System.out.println(result);
+		//var_dump(result);
 		while (result.next()) {  
 			System.out.print(result.getString("user"));  
-			System.out.print(": ");  
-			System.out.println(result.getString("message"));  
+			//System.out.print(result.getString(1));  
+			//System.out.print("user");  
+			System.out.print(": ");
+			//System.out.println(result.getString(2));
+			System.out.println(result.getString("message"));
+			//System.out.println("message");
 		}  
-		System.out.println("-MESSAGES-END-");
+		System.out.println("-MESSAGES-END- " + i);
+		//new Scanner(System.in).nextLine();
+		}
 		//*/
 	}
 	

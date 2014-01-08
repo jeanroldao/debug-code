@@ -16,12 +16,17 @@ trait JavaInterpreter {
 		//var_dump([$locals, $stack, $opcode, $i]);
 		//var_dump($method);
 		/*
-		if ($i === 0 && 'java/sql/DriverManager::getConnection' == substr($method, 0)) {
+		if (//$i === 0 && 
+			'smallsql/database/SQLTokenizer::parseSQL' == substr($method, 0)) {
 		//if ('java/net/URL::__construct' == $method) {
 			//var_dump([$method, $i]);
 			//var_dump([$method, $i, $locals[1]]);
-			var_dump(['$locals' => $locals, '$stack' => $stack, '$opcode' => $opcode, '$i' =>$i]);
-			var_dump($locals[0]);
+			var_dump(['$locals' => $locals, '$stack' => $stack, '$opcode' => $opcode, '$i' =>$i, '$method' => $method]);
+			
+			//var_dump(jstring($locals[0]));
+			//if (substr($method, -7) == 'println') {
+			//	var_dump($locals[0]);
+			//}
 			readline();
 			//var_dump([$opcode, $stack, $i]);readline();
 		}
@@ -38,6 +43,7 @@ trait JavaInterpreter {
 				$args = $this->stackArrayPop($stack, 2);
 				//var_dump($args[1], count($args[0]), $method, $i);
 				if ($args[0] === null) {
+					//var_dump('here', $method);
 					throw new \java\lang\NullPointerException();
 				}
 				if (!array_key_exists($args[1], $args[0])) {
@@ -55,6 +61,7 @@ trait JavaInterpreter {
 				$args = $this->stackArrayPop($stack, 3);
 				//var_dump($args[1].'', $args[0]->getSize());
 				if ($args[0] === null) {
+					//var_dump('here?', $method);
 					throw new \java\lang\NullPointerException();
 				}
 				if (!array_key_exists($args[1].'', $args[0])) {
@@ -114,7 +121,7 @@ trait JavaInterpreter {
 				break;
 			case 'dup2':
 				list($value1, $value2) = [array_pop($stack), array_pop($stack)];
-				list($stack[], $stack[], $stack[]) = [$value1, $value2, $value1, $value2];
+				list($stack[], $stack[], $stack[], $stack[]) = [$value1, $value2, $value1, $value2];
 				break;
 			//case 'swap':
 				
@@ -130,6 +137,7 @@ trait JavaInterpreter {
 				$refClass = new ReflectionClass($class);
 				$var = str_replace('$', '_S_', $opcode[2]['field']);
 				//var_dump($class);
+				ensureClassInitialized($class);
 				$property = $refClass->getProperty($var);
 				$stack[] = $property->getValue();
 				break;
@@ -344,6 +352,7 @@ trait JavaInterpreter {
 			case 'dcmp':
 			case 'lcmp':
 				list($v1, $v2) = $this->stackArrayPop($stack, 2);
+				//println("$method($i)");
 				if ($v1 === $v2) {
 					$stack[] = 0;
 				} else if ($v1 < $v2) {
@@ -586,16 +595,22 @@ trait JavaInterpreter {
 					if ($obj) {
 						var_dump([$method, $i, $obj, $args, $stack, $opcode[2]['class'].'::'.$opcode[2]['method'], 'need object']);
 					}
+					//var_dump('here? 3', $method, $i, $obj);
+					//var_dump($GLOBALS['afterClassLoad_events']);
+					//var_dump(\java\util\concurrent\atomic\AtomicReferenceFieldUpdater_S_AtomicReferenceFieldUpdaterImpl::$unsafe);
+					//var_dump(\sun\misc\Unsafe::$theUnsafe);
 					throw new \java\lang\NullPointerException();
 					//exit;
 				}
 				//if ($args[0] == 35) {var_dump($i, $opcode, $args);exit;}
+				/*
 				foreach ($opcode[2]['args'] as $iArg => $arg) {
 					//var_dump([$arg, $args[$iArg]]);
 					if ($arg == 'C' && is_int($args[$iArg])) {
 						$args[$iArg] = chr($args[$iArg]);
 					}
 				}
+				//*/
 				//var_dump([get_class($obj), $opcode[2]['method']], $args);
 				
 				/*

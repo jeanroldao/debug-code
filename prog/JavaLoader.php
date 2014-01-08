@@ -74,7 +74,7 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 				} else {
 					$filename = 'file:/'.$filename;
 				}
-				$url = new \java\net\URL(jstring(str_replace(['\\', '#', ' '], ['/', '!/', '%20'], $filename)));
+				$url = new \java\net\URL(jstring(str_replace(['\\', '#', ' '], ['/', '!/', ' '], $filename)));
 				return $url;
 			}
 		}
@@ -121,18 +121,18 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 	}
 	
 	public function readClassFile($filename) {
-		if ($this->debug_log) { echo "<read \n$filename\n...>\n"; }
+		//if ($this->debug_log) { echo "<read \n$filename\n...>\n"; }
 		@$fp = fopen($filename, 'rb');
 		if ($fp) {
 			$javaClass = new \php_javaClass();
-			if ($this->debug_log) { echo "<read done \n$filename\n...>\n"; }
+			//if ($this->debug_log) { echo "<read done \n$filename\n...>\n"; }
 			$javaClass->readClass($fp);
-			if ($this->debug_log) { echo "<parse done \n$filename\n...>\n"; var_dump(end(get_declared_classes()));}
+			//if ($this->debug_log) { echo "<parse done \n$filename\n...>\n"; var_dump(end(get_declared_classes()));}
 			//fclose($fp);
 			//println($javaClass->getPhpClassName());
 			return true;
 		} else {
-			if ($this->debug_log) { echo "<read error \n$filename\n...>\n"; }
+			//if ($this->debug_log) { echo "<read error \n$filename\n...>\n"; }
 			return false;
 		}
 	}
@@ -155,7 +155,7 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 			}*/
 			
 			$filename = ($path.str_replace('.', '/', $className).'.class');
-			if ($this->debug_log) { echo "<loading \n$filename\n ...>".PHP_EOL; }
+			//if ($this->debug_log) { echo "<loading \n$filename\n ...>".PHP_EOL; }
 			if ($this->readClassFile($filename)) {
 				if ($this->debug_log) { echo "<$className ok>".PHP_EOL; }
 				$classNamePhp = \php_javaClass::convertNameJavaToPhp($className);
