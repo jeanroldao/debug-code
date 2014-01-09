@@ -11,7 +11,8 @@ spl_autoload_register(function($className){
 	
 	$phpClass = str_replace('\\', '/', $className);
 	if (isset($GLOBALS['evalLazy_classes'][$phpClass])) {
-		$afterClassLoad_events[$className] = '';
+		if (isset($afterClassLoad_events[$className])) {var_dump("renew event for $className?");exit;}
+		$afterClassLoad_events[$className] = [];
 		eval2($phpClass, $GLOBALS['evalLazy_classes'][$phpClass]);
 	} else {
 
@@ -26,7 +27,8 @@ spl_autoload_register(function($className){
 		
 		//$classLoader->setDefaultAssertionStatus(true);
 		$phpClassName = str_replace(['\\', '_S_', '_interface', '__'], ['.', '$', '', ''], $className);
-		$afterClassLoad_events[$className] = '';
+		if (isset($afterClassLoad_events[$className])) {var_dump("renew event for $className?");exit;}
+		$afterClassLoad_events[$className] = [];
 		$classLoader->loadClass($phpClassName);
 		
 	}
@@ -44,12 +46,17 @@ spl_autoload_register(function($className){
 		while (count($afterClassLoad_events) > 0) {
 			$class = key($afterClassLoad_events);
 			//println("static init $class: ".count($afterClassLoad_events));
-			$code = array_shift($afterClassLoad_events);
-			if (is_string($code)) {
-				eval($code);
-			} else {
-				$code();
+			//ensureClassInitialized($class);
+			///*
+			$callbacks = array_shift($afterClassLoad_events);
+			foreach ($callbacks as $code) {
+				if (is_string($code)) {
+					eval($code);
+				} else {
+					$code();
+				}
 			}
+			//*/
 		}
 		$runningEvents = false;
 	}
@@ -60,10 +67,11 @@ function afterClassLoad($class, $code) {
 	global $afterClassLoad_events;
 	
 	if (isset($afterClassLoad_events[$class])) {
-		$afterClassLoad_events[$class] = $code;
+		$afterClassLoad_events[$class][] = $code;
 	} else if (is_string($code)) {
 		eval($code);
 	} else {
+		var_dump($afterClassLoad_events);
 		$code();
 	}
 }
@@ -73,12 +81,14 @@ function ensureClassInitialized($class) {
 	//var_dump($afterClassLoad_events, php_javaClass::convertNameJavaToPhp($class));readline();
 	$phpClass = \php_javaClass::convertNameJavaToPhp($class);
 	if (isset($afterClassLoad_events[$phpClass])) {
-		$code = $afterClassLoad_events[$phpClass];
+		$callbacks = $afterClassLoad_events[$phpClass];
 		unset($afterClassLoad_events[$phpClass]);
-		if (is_string($code)) {
-			eval($code);
-		} else {
-			$code();
+		foreach ($callbacks as $code) {
+			if (is_string($code)) {
+				eval($code);
+			} else {
+				$code();
+			}
 		}
 	}
 }
@@ -461,9 +471,23 @@ class php_javaClass extends \java\lang\Object {
 				$iniValue = '0';
 			}
 			if (strpos($field['flags'], 'static') !== false) {
-				$fields .= 'public static $'.str_replace('$', '_S_', $field['name'])." = $iniValue;".PHP_EOL;
+				if (isset($field['attr']['ConstantValue'])) {
+					if (is_object($field['attr']['ConstantValue'])) {
+						
+						// php doesn't allow objects declared inline for class attributes, 
+						// so set value after class loaded
+						afterClassLoad($className, function() use ($className, $field) {
+							$fieldName = self::convertNameJavaToPhp($field['name']);
+							$className::$$fieldName = $field['attr']['ConstantValue'];
+							//var_dump($className, $fieldName, $field['attr']['ConstantValue']);exit;
+						});
+					} else {
+						$iniValue = var_export($field['attr']['ConstantValue'], true);
+					}
+				}
+				$fields .= 'public static $'.self::convertNameJavaToPhp($field['name'])." = $iniValue;".PHP_EOL;
 			} else {
-				$fields .= 'public $'.str_replace('$', '_S_', $field['name'])." = $iniValue;".PHP_EOL;
+				$fields .= 'public $'.self::convertNameJavaToPhp($field['name'])." = $iniValue;".PHP_EOL;
 			}
 			//$dump .= '"'.$field['name'].'",';
 			//$dump .= $className.'::$'.$field['name'].',';

@@ -9,11 +9,14 @@ class ClassLoader extends Object {
 	private static $systemClassLoader;
 	
 	public static function getSystemClassLoader() {
+		/*
 		if (self::$systemClassLoader === null) {
 			self::$systemClassLoader = \sun\misc\Launcher::getLauncher()->getClassLoader();
 		}
 		return self::$systemClassLoader;
-	}
+		//*/
+		return self::$systemClassLoader ?: 
+			   self::$systemClassLoader = \sun\misc\Launcher::getLauncher()->getClassLoader();	}
 }
 CODE
 ) !== false or exit;
@@ -144,6 +147,13 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 			|| interface_exists(\php_javaClass::convertNameJavaToPhp($className), false)) {
 			return \java\lang\Clazz::forName($className);
 		}
+		
+		//gambiarra temporaria, ou nao :P 
+		//(serve para registrar e ativar os eventos do autoload, talvez deveria ser movido para dentro do classloader)
+		if (!isset($GLOBALS['afterClassLoad_events'][\php_javaClass::convertNameJavaToPhp($className)])) {
+			return \java\lang\Clazz::forName($className);
+		}
+		
 		//debug_print_backtrace();
 		
 		//var_dump(self::$classpath);exit;

@@ -65,7 +65,16 @@ class DataInputStream implements DataInput {
 	public function readInt() {
 		//$binarydata = fread($this->file, 4);;
 		//return hexdec(unpack("H8", $binarydata)[1]);
-		return +hexdec($this->readHex(4));
+		$value = hexdec($this->readHex(4));
+		//var_dump($value);
+		while ($value > 2147483647) {
+			$value -= 4294967296;
+		}
+		while ($value < -2147483648) {
+			$value += 4294967296;
+		}
+		//var_dump($value);
+		return $value;
 	}
           
 	/**
@@ -73,7 +82,7 @@ class DataInputStream implements DataInput {
 	 * @return double
 	 */
 	function readDouble() {
-		return +unpack('dd', strrev(fread($this->file, 8)))['d'];
+		return unpack('dd', strrev(fread($this->file, 8)))['d'];
 	}
           
 	/**

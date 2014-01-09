@@ -103,24 +103,79 @@ function Java_sun_misc_Unsafe_compareAndSwapInt($obj, $offset, $expected, $value
 	}
 }
 
-$GLOBALS['Java_sun_misc_Unsafe_nextpointer'] = 1;
-$GLOBALS['Java_sun_misc_Unsafe_memory'] = "\0";
+$Java_sun_misc_Unsafe_totalSize = 1;
+$Java_sun_misc_Unsafe_memory = ["\0"];
 //public native long sun.misc.Unsafe.allocateMemory(long)
 function Java_sun_misc_Unsafe_allocateMemory($bytes) {
-	$pointer = $GLOBALS['Java_sun_misc_Unsafe_nextpointer'];
-	$GLOBALS['Java_sun_misc_Unsafe_nextpointer'] += $bytes;
-	$GLOBALS['Java_sun_misc_Unsafe_memory'] .= str_repeat("\0", $bytes);
-	return $pointer;
+	global $Java_sun_misc_Unsafe_totalSize, 
+	       $Java_sun_misc_Unsafe_memory;
+	
+	$addr = $Java_sun_misc_Unsafe_totalSize;
+	$Java_sun_misc_Unsafe_totalSize += $bytes;
+	
+	$Java_sun_misc_Unsafe_memory[$addr] = str_repeat("\0", $bytes);
+	return $addr;
+}
+
+function Java_sun_misc_Unsafe_getMemBlockOffset($addr) {
+	global $Java_sun_misc_Unsafe_totalSize, 
+	       $Java_sun_misc_Unsafe_memory;
+	
+	$addresses = array_keys($Java_sun_misc_Unsafe_memory);
+	$addr_count = count($addresses);// need count before!
+	$addresses[] = $Java_sun_misc_Unsafe_totalSize;
+	
+	for ($i = 0; $i < $addr_count; $i++) {
+		//var_dump($addresses[$i]);
+		
+		if ($addr >= $addresses[$i] 
+		&& $addr < $addresses[$i + 1]) {
+			//var_dump($Java_sun_misc_Unsafe_memory[$addresses[$i]]);
+			return $addresses[$i];
+		}
+	}
+	var_dump("Java_sun_misc_Unsafe_getMemBlockRef");
+	var_dump("addr not found!");
+	exit;
 }
 
 //public native void sun.misc.Unsafe.putLong(long,long)
 function Java_sun_misc_Unsafe_putLong($addr, $value) {
-	var_dump($value);
-	var_dump(encode_int($value));
-	var_dump(decode_int(encode_int($value)));
-	var_dump([$addr, "$value", bindec(decbin($value)), unpack('l', pack("l", $value))]);
-	//for ($i = 0; $i < ) {} 
-	exit;
+	global $Java_sun_misc_Unsafe_memory;
+	
+	// long uses 8 bytes
+	$l1 = str_pad(dechex(bcdiv($value, 0x100000000, 0)), 8, '0', STR_PAD_LEFT);
+	$l2 = str_pad(dechex(bcmod($value, 0x100000000)), 8, '0', STR_PAD_LEFT);
+	
+	$b1= pack("H8", $l1);
+	$b2 = pack("H8", $l2);
+	
+	$binary = "$b1$b2";
+	
+	$blockOffset = Java_sun_misc_Unsafe_getMemBlockOffset($addr);
+	$addr -= $blockOffset;
+	
+	for ($i = 0; $i < strlen($binary); $i++) {
+		$Java_sun_misc_Unsafe_memory[$blockOffset][$addr + $i] = $binary[$addr + $i];
+	}
+	//var_dump($Java_sun_misc_Unsafe_memory[$blockOffset]);
+	return;
+}
+
+//public native byte sun.misc.Unsafe.getByte(long)
+function Java_sun_misc_Unsafe_getByte($addr) {
+	global $Java_sun_misc_Unsafe_memory;
+	
+	$blockOffset = Java_sun_misc_Unsafe_getMemBlockOffset($addr);
+	$addr -= $blockOffset;
+	
+	return ord($Java_sun_misc_Unsafe_memory[$blockOffset][$addr]);
+}
+
+//public native void sun.misc.Unsafe.freeMemory(long)
+function Java_sun_misc_Unsafe_freeMemory($addr) {
+	global $Java_sun_misc_Unsafe_memory;
+	unset($Java_sun_misc_Unsafe_memory[$addr]);
 }
 
 //private static native void java.util.zip.ZipFile.initIDs()
@@ -246,7 +301,6 @@ function Java_java_io_WinNTFileSystem_getBooleanAttributes($file) {
 
 //protected native java.lang.String java.io.WinNTFileSystem.canonicalize0(java.lang.String)
 function Java_java_io_WinNTFileSystem_canonicalize0($relative_path) {
-	//var_dump($relative_path);exit;
 	$real_path = realpath($relative_path);
 	if ($real_path === false) {
 		var_dump('Java_java_io_WinNTFileSystem_canonicalize0', $relative_path);
@@ -276,8 +330,10 @@ function openJavaFile($file, $mode) {
 		case 2:
 			$mode = 'rw';
 			break;
-		case 3:
 		case 4:
+			$mode = 'rws';
+		case 8:
+			$mode = 'rwd';
 		default:
 			var_dump('unknown mode: ' . $mode);
 			var_dump('Java_java_io_RandomAccessFile_open');
@@ -297,6 +353,10 @@ function Java_java_io_RandomAccessFile_open($file, $mode) {
 	$this->fd->handle = openJavaFile($file, $mode);
 	//var_dump($file, $mode);
 	//var_dump($this);
+}
+//private native void java.io.RandomAccessFile.close0()
+function Java_java_io_RandomAccessFile_close0() {
+	fclose($this->fd->handle);
 }
 
 //private static native void java.io.FileDescriptor.initIDs()
@@ -335,8 +395,23 @@ function Java_sun_nio_ch_FileChannelImpl_initIDs() {}
 //native int sun.nio.ch.FileChannelImpl.lock0(java.io.FileDescriptor,boolean,long,long,boolean)
 function Java_sun_nio_ch_FileChannelImpl_lock0($fd, $blocking, $pos, $size, $shared) {
 	//var_dump($fd, $blocking, $pos, $size, $shared);
-	//var_dump(\sun\nio\ch\FileChannelImpl::$RET_EX_LOCK);exit;
-	return 1; //\sun\nio\ch\FileChannelImpl::$RET_EX_LOCK
+	//var_dump(\sun\nio\ch\FileChannelImpl::$RET_EX_LOCK);
+	//var_dump(\sun\nio\ch\FileChannelImpl::$LOCKED);
+	//var_dump(\sun\nio\ch\FileChannelImpl::$NO_LOCK);// = -1
+	
+	if ($shared) {
+		$lock = \sun\nio\ch\FileChannelImpl::$RET_EX_LOCK; // return 1;
+	} else {
+		$lock = \sun\nio\ch\FileChannelImpl::$LOCKED; // return 0;
+	}
+	//var_dump($this->fileLockTable());
+	//var_dump($this, $shared, $lock);
+	return $lock;
+}
+
+//native void sun.nio.ch.FileChannelImpl.release0(java.io.FileDescriptor,long,long)
+function Java_sun_nio_ch_FileChannelImpl_release0($fd, $pos, $size) {
+	//var_dump($fd, $pos, $size);
 }
 
 //private static native void sun.nio.ch.FileKey.initIDs()
@@ -356,7 +431,8 @@ function Java_Teste32_php(/* long */$l) {
 }
 
 function Java_TesteSmallSql_var_dump0($var) {
-	println($var->getCmd());
+	var_dump($var);
+	//println($var->getCmd());
 	//var_dump($var->getCmd()->findColumn(jstring('message')));
 	//var_dump($var->getCmd()->columnExpressions);
 	/*

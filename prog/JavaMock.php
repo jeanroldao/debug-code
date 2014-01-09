@@ -631,30 +631,36 @@ class System extends Object {
 	}
 	
 	private static function initProperties($props) {
-		$ini_array = file("SystemProperties.ini");
-		if (is_array($ini_array)) {
-			foreach ($ini_array as $line) {
-				$values = explode('=', trim($line), 2);
-				if (count($values) < 2) {
-					continue;
+		try {
+			$ini_array = file("SystemProperties.ini");
+			if (is_array($ini_array)) {
+				foreach ($ini_array as $line) {
+					$values = explode('=', trim($line), 2);
+					if (count($values) < 2) {
+						continue;
+					}
+					list($k, $v) = explode('=', trim($line), 2);
+					//var_dump($v);
+					$props->put(jstring($k), jstring(stripslashes($v)));
 				}
-				list($k, $v) = explode('=', trim($line), 2);
-				//var_dump($v);
-				$props->put(jstring($k), jstring(stripslashes($v)));
 			}
+			$env_data = [
+				'sun.boot.library.path' => JAVA_RT_DIR,
+				'java.home' 			=> JAVA_RT_DIR,
+				'line.separator'        => PHP_EOL,
+				'user.dir' 				=> JAVA_RT_DIR,
+				'user.home' 			=> getenv("HOME") ?: getenv("HOMEDRIVE").getenv("HOMEPATH"),
+				'java.io.tmpdir' 		=> realpath(JAVA_RT_DIR.'/temp'),
+				'sun.nio.ch.disableSystemWideOverlappingFileLockCheck' => 'true',
+			];
+			foreach ($env_data as $k => $v) {
+				$props->put(jstring($k), jstring($v));
+			}
+		} catch (\Exception $e) {
+			var_dump('init prop fail');
+			println($e);
+			exit;
 		}
-		$env_data = [
-			'sun.boot.library.path' => JAVA_RT_DIR,
-			'java.home' 			=> JAVA_RT_DIR,
-			'line.separator'        => PHP_EOL,
-			'user.dir' 				=> JAVA_RT_DIR,
-			'user.home' 			=> getenv("HOME") ?: getenv("HOMEDRIVE").getenv("HOMEPATH"),
-			'java.io.tmpdir' 		=> realpath(JAVA_RT_DIR.'/temp'),
-		];
-		foreach ($env_data as $k => $v) {
-			$props->put(jstring($k), jstring($v));
-		}
-
 	}
 	
 	public static function __exit($code = 0) {
@@ -666,11 +672,41 @@ afterClassLoad('java\lang\System', function(){
 	System::$out = new \java\io\PrintStream();
 	System::$err = new \java\io\PrintStream();
 	System::$in = new \java\io\BufferedInputStream(new \java\io\FileInputStream(STDIN));
+	
+	\sun\misc\SharedSecrets::setJavaLangAccess(new System_S_1());
 
 	//\java\sql\DriverManager::setLogStream(System::$out);
 });
 
 
+CODE
+) !== false or exit;
+
+//java/lang/System$1
+evalLazy(['java/lang/System$1', 'java/lang/System_S_1'], <<<'CODE'
+
+namespace java\lang;
+
+class System_S_1 extends Object implements \sun\misc\JavaLangAccess {
+
+	public function getConstantPool($klass) {
+		return $klass->getConstantPool();
+	}
+	public function setAnnotationType($klass, $annotationType) {
+		$klass->setAnnotationType($annotationType);
+	}
+	public function getAnnotationType($klass) {
+		return $klass->getAnnotationType();
+	}
+	public function getEnumConstantsShared($klass) {
+		return $klass->getEnumConstantsShared();
+	}
+	public function blockedOn($thread, $interruptible) {
+		$thread->blockedOn($interruptible);
+	}
+}
+
+class_alias('java\lang\System_S_1', 'java\lang\System$1');
 CODE
 ) !== false or exit;
 
@@ -1659,6 +1695,18 @@ class AtomicInteger extends \java\lang\Number {
 		return ++$this->v;
 	}
 
+	public function decrementAndGet() {
+		return --$this->v;
+	}
+	
+	public function getAndIncrement() {
+		return $this->v++;
+	}
+	
+	public function getAndDecrement() {
+		return $this->v--;
+	}
+	
 	public static function parseInt($in) {
 		return intval($in.'');
 	}
@@ -1922,10 +1970,22 @@ evalLazy('sun/misc/SharedSecrets', <<<'CODE'
 namespace sun\misc;
 
 class SharedSecrets extends \java\lang\Object {
+	private static $javaLangAccess;
 	private static $javaIOAccess;
 	private static $javaNioAccess;
 	private static $javaIOFileAccess;
 	private static $javaUtilJarAccess;
+	
+	public static function getJavaLangAccess() {
+		if (self::$javaLangAccess === null) {
+			self::$javaLangAccess = new \java\lang\Object();
+		}
+		return self::$javaLangAccess;
+	}
+	
+	public static function setJavaLangAccess($javaLangAccess) {
+		self::$javaLangAccess = $javaLangAccess;
+	}
 	
 	public static function setJavaIOAccess($jio) {
 		self::$javaIOAccess = $jio;
@@ -2051,6 +2111,9 @@ class Thread extends Object {
 	
 	/* ThreadGroup */
 	private $group;
+	
+	/* Interruptible */
+	private $blocker;
 	
 	/* java\lang\ClassLoader */ 
 	private $contextClassLoader;
@@ -2200,6 +2263,10 @@ class Thread extends Object {
 	/* java\lang\ClassLoader */
 	public function getContextClassLoader() {
 		return $this->contextClassLoader;
+	}
+	
+	public function blockedOn($blocker) {
+		$this->blocker = $blocker;
 	}
 }
 
