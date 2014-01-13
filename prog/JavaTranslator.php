@@ -1,7 +1,7 @@
 <?php
 
 trait JavaTranslator {
-	private function translateHexOpcode($hexOpcode, &$i) {
+	private function translateHexOpcode($hexOpcode, &$i, $isWide) {
 		$input = $this->input;
 
 		$hexOpcode = hexdec($hexOpcode);
@@ -45,20 +45,47 @@ trait JavaTranslator {
 				$i += 2;
 				return [3, 'ldc2_w', $input->readShort()];
 			case 0x15:
-				$i++;
-				return [2, 'iload', $input->readByte()];
+				if ($isWide) {
+					$i += 2;
+					return [3, 'iload', $input->readShort()];
+				} else {
+					$i++;
+					return [2, 'iload', $input->readByte()];
+				}
 			case 0x16:
 				$i++;
 				return [2, 'lload', $input->readByte()];
+				if ($isWide) {
+					$i += 2;
+					return [3, 'iload', $input->readShort()];
+				} else {
+					$i++;
+					return [2, 'iload', $input->readByte()];
+				}
 			case 0x17:
-				$i++;
-				return [2, 'fload', $input->readByte()];
+				if ($isWide) {
+					$i += 2;
+					return [3, 'fload', $input->readShort()];
+				} else {
+					$i++;
+					return [2, 'fload', $input->readByte()];
+				}
 			case 0x18:
-				$i++;
-				return [2, 'dload', $input->readByte()];
+				if ($isWide) {
+					$i += 2;
+					return [3, 'dload', $input->readShort()];
+				} else {
+					$i++;
+					return [2, 'dload', $input->readByte()];
+				}
 			case 0x19:
-				$i++;
-				return [2, 'aload', $input->readByte()];
+				if ($isWide) {
+					$i += 2;
+					return [3, 'aload', $input->readShort()];
+				} else {
+					$i++;
+					return [2, 'aload', $input->readByte()];
+				}
 			case 0x1a:
 			case 0x1b:
 			case 0x1c:
@@ -101,20 +128,45 @@ trait JavaTranslator {
 			case 0x35:
 				return [1, 'saload'];
 			case 0x36:
-				$i++;
-				return [2, 'istore', $input->readByte()];
+				if ($isWide) {
+					$i += 2;
+					return [3, 'istore', $input->readShort()];
+				} else {
+					$i++;
+					return [2, 'istore', $input->readByte()];
+				}
 			case 0x37:
-				$i++;
-				return [2, 'lstore', $input->readByte()];
+				if ($isWide) {
+					$i += 2;
+					return [3, 'lstore', $input->readShort()];
+				} else {
+					$i++;
+					return [2, 'lstore', $input->readByte()];
+				}
 			case 0x38:
-				$i++;
-				return [2, 'fstore', $input->readByte()];
+				if ($isWide) {
+					$i += 2;
+					return [3, 'fstore', $input->readShort()];
+				} else {
+					$i++;
+					return [2, 'fstore', $input->readByte()];
+				}
 			case 0x39:
-				$i++;
-				return [2, 'dstore', $input->readByte()];
+				if ($isWide) {
+					$i += 2;
+					return [3, 'dstore', $input->readShort()];
+				} else {
+					$i++;
+					return [2, 'dstore', $input->readByte()];
+				}
 			case 0x3a:
-				$i++;
-				return [2, 'astore', $input->readByte()];
+				if ($isWide) {
+					$i += 2;
+					return [3, 'astore', $input->readShort()];
+				} else {
+					$i++;
+					return [2, 'astore', $input->readByte()];
+				}
 			case 0x3b:
 			case 0x3c:
 			case 0x3d:
@@ -168,6 +220,8 @@ trait JavaTranslator {
 				return [1, 'dup_x2'];
 			case 0x5c:
 				return [1, 'dup2'];
+			case 0x5d:
+				return [1, 'dup2_x1'];
 			case 0x5e:
 				return [1, 'dup2_x2'];
 			case 0x5f:
@@ -245,13 +299,20 @@ trait JavaTranslator {
 			case 0x83:
 				return [1, 'lxor'];
 			case 0x84:
-				$i += 2;
-				$var = $input->readByte();
-				$inc = $input->readByte();
-				if ($inc > 127) {
-					$inc -= 256;
+				if ($isWide) {
+					$i += 4;
+					$var = $input->readShort();
+					$inc = $input->readShort();
+					return [5, 'iinc', $var, $inc];
+				} else {
+					$i += 2;
+					$var = $input->readByte();
+					$inc = $input->readByte();
+					if ($inc > 127) {
+						$inc -= 256;
+					}
+					return [3, 'iinc', $var, $inc];
 				}
-				return [3, 'iinc', $var, $inc];
 			case 0x85:
 				return [1, 'i2l'];
 			case 0x86:
@@ -462,6 +523,8 @@ trait JavaTranslator {
 				return [1, 'monitorenter'];
 			case 0xc3:
 				return [1, 'monitorexit'];
+			case 0xc4:
+				return [1, 'wide'];
 			case 0xc5:
 				$i += 3;
 				return [4, 'multianewarray', $this->getClassName($input->readShort()), $input->readByte()];

@@ -113,7 +113,19 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 		if (!$jarPath || !realpath($jarPath)) {
 			throw new \Exception("Jar not found ($jarPath)");
 		}
-		$this->classpath[] = 'zip://'.realpath($jarPath).'#';
+		$path = 'zip://'.realpath($jarPath).'#';
+		$this->classpath[] = $path;
+		//var_dump($path.'META-INF/services/java.sql.Driver');
+		@$fp = fopen($path.'META-INF/services/java.sql.Driver', 'rb');
+		//var_dump($fp);
+		if ($fp) {
+			afterClassLoad('java\lang\System', function() use ($fp) {
+				$jdbcClass = trim(stream_get_contents($fp));
+				$drivers = \java\lang\System::getProperty("jdbc.drivers");
+				$newDrivers = jstring("$drivers:$jdbcClass");
+				\java\lang\System::setProperty("jdbc.drivers", $newDrivers);
+			});
+		}
 	}
 	
 	public function compileJavaFile($filename) {

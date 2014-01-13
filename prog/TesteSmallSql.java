@@ -87,7 +87,7 @@ public class TesteSmallSql {
 		Statement statement = con.createStatement();
 		//ResultSet result = statement.executeQuery("SELECT * FROM MESSAGES");  
 		
-		///*
+		/*
 		String sql = "select 'jean' as user, 'oi' as message";
 		String[][] messages = new String[][]{
 			{"zeze", "bye"},
@@ -103,7 +103,7 @@ public class TesteSmallSql {
 		}
 		//*/
 		
-		//String sql = "SELECT * FROM MESSAGES";
+		String sql = "SELECT * FROM MESSAGES";
 		ResultSet result = statement.executeQuery(sql);  
 		System.out.println("-MESSAGES-START-");
 		//System.out.println(result);

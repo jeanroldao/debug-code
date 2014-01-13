@@ -17,8 +17,9 @@ $applications = [
 	'WebApplication1' => [
 		'NewServlet' => new jeanroldao\web\NewServlet()
 	],
-	'WebApplication2' => [
-		'NewServlet' => new jeanroldao\web\NewServlet()
+	'JsGame' => [
+		'index' => new org\apache\jsp\index_jsp(),
+		'JsGame' => new jeanroldao\web\JsGame()
 	]
 ];
 $http->on('request', function ($request, $response) use ($applications) {
@@ -69,7 +70,7 @@ $http->on('request', function ($request, $response) use ($applications) {
 		$servlet->doGet($javaRequest, $javaResponse);
 		
 		$response->end();
-	} else if (file_exists('.'.$request->getPath())) {
+	} else if (file_exists('.'.$request->getPath()) && is_file('.'.$request->getPath())) {
 		$file = '.'.$request->getPath();
 		if (substr($file, -3) == 'php') {
 			$response->writeHead(200, $headers);

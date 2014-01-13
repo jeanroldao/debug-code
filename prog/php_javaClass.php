@@ -11,7 +11,7 @@ spl_autoload_register(function($className){
 	
 	$phpClass = str_replace('\\', '/', $className);
 	if (isset($GLOBALS['evalLazy_classes'][$phpClass])) {
-		if (isset($afterClassLoad_events[$className])) {var_dump("renew event for $className?");exit;}
+		//if (isset($afterClassLoad_events[$className])) {var_dump("renew event for $className?");exit;}
 		$afterClassLoad_events[$className] = [];
 		eval2($phpClass, $GLOBALS['evalLazy_classes'][$phpClass]);
 	} else {
@@ -27,7 +27,7 @@ spl_autoload_register(function($className){
 		
 		//$classLoader->setDefaultAssertionStatus(true);
 		$phpClassName = str_replace(['\\', '_S_', '_interface', '__'], ['.', '$', '', ''], $className);
-		if (isset($afterClassLoad_events[$className])) {var_dump("renew event for $className?");exit;}
+		//if (isset($afterClassLoad_events[$className])) {var_dump("renew event for $className?");exit;}
 		$afterClassLoad_events[$className] = [];
 		$classLoader->loadClass($phpClassName);
 		
@@ -71,7 +71,7 @@ function afterClassLoad($class, $code) {
 	} else if (is_string($code)) {
 		eval($code);
 	} else {
-		var_dump($afterClassLoad_events);
+		//var_dump($afterClassLoad_events);
 		$code();
 	}
 }
@@ -564,7 +564,7 @@ class php_javaClass extends \java\lang\Object {
 						return self::\$javaClass->run(\$method, \$args, null, \$opcode);
 					} catch(\\JavaMethodNotFoundException \$e) {
 						
-						/*
+						///*
 						if (!property_exists(get_parent_class(__CLASS__), 'javaClass')) {
 							//ob_end_clean();
 							var_dump(get_parent_class(__CLASS__));
@@ -697,6 +697,13 @@ CODE
 			
 			$php_function_name = 'Java_'.str_replace(['/', '$'], ['_', '_S_'], $this->class_attr['name']).'_'.$method_name;
 			if (!function_exists($php_function_name)) {
+				
+				//println("$method_name " . $opcode[2]['type']);
+				if ($method_name == 'initIDs' && isset($opcode[2]['type']) && $opcode[2]['type'] == '()V') {
+					// too many useless initIDs, most of them are ignored, previously declared won't be ignored
+					return;
+				}
+				
 				$className = str_replace('/', '.', $this->class_attr['name']);
 				
 				$argsType = $this->getArgsType($method['type']);
@@ -834,6 +841,9 @@ CODE
 				throw $e;
 			}
 		}
+		if (count($stack) != 1) {
+			return null;
+		}
 		return end($stack);
 	}
 	
@@ -892,7 +902,7 @@ CODE
 			//readline();
 		}
 		//*/
-		throw new \JavaMethodNotFoundException('method ' . $name .(!empty($opcode[2]['type'])?$opcode[2]['type']:'') . ' for class ' . $this->class_attr['name'] . ' not found!');
+		throw new \JavaMethodNotFoundException('method ' . $name .(!empty($opcode[2]['type'])?$opcode[2]['type']:'('.count($args).' args)') . ' for class ' . $this->class_attr['name'] . ' not found!');
 		/*
 		foreach ($this->class_attr['methods'] as $method) {
 			var_dump($method['name']);
@@ -953,10 +963,16 @@ CODE
 	
 	private function readCode($len) {
 		$instructions = [];
+		$isWide = false;
 		for ($i = 0; $i < $len; $i++) {
 			$lin = $i;
 			$hexOpcode = $this->input->readHex();
-			$code = $this->translateHexOpcode($hexOpcode, $i);
+			$code = $this->translateHexOpcode($hexOpcode, $i, $isWide);
+			if ($code[1] == 'wide') {
+				$isWide = true;
+			} else {
+				$isWide = false;
+			}
 			$instructions[$lin] = $code;
 			println($lin.': '.$this->arrayToString($code));
 		}
@@ -1241,7 +1257,7 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 
 			array_unshift($_SERVER["argv"], \php_javaClass::readJarManifest($jar_file)['Main-Class']);
 			continue;
-		} else if ($arg == '-cp') {
+		} else if ($arg == '-cp' || $arg == '-classpath') {
 			$cp = explode(';', array_shift($_SERVER["argv"]));
 			//var_dump($_SERVER["argv"]);
 			$loader = \java\lang\ClassLoader::getSystemClassLoader();

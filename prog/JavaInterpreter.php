@@ -17,23 +17,30 @@ trait JavaInterpreter {
 		//var_dump($method);
 		/*
 		if (//$i === 0 && 
-			'smallsql/database/SQLTokenizer::parseSQL' == substr($method, 0)) {
+			//$opcode[1] == 'areturn' &&
+			//count($stack) > 1 && $stack[count($stack)-1] === false &&
+			'java/util/ResourceBundle::findBundle' == substr($method, 0)) {
 		//if ('java/net/URL::__construct' == $method) {
 			//var_dump([$method, $i]);
 			//var_dump([$method, $i, $locals[1]]);
 			var_dump(['$locals' => $locals, '$stack' => $stack, '$opcode' => $opcode, '$i' =>$i, '$method' => $method]);
+			readline();
+			//println("$i ".$opcode[1]);usleep(100000);
 			
 			//var_dump(jstring($locals[0]));
 			//if (substr($method, -7) == 'println') {
 			//	var_dump($locals[0]);
 			//}
-			readline();
 			//var_dump([$opcode, $stack, $i]);readline();
 		}
 		//*/
 		$stack = array_values($stack);
 		switch ($opcode[1]) {
+			case 'nop':
+			case 'wide':
+				break;
 			case 'aaload':
+			case 'saload':
 			case 'iaload':
 			case 'laload':
 			case 'daload':
@@ -53,6 +60,7 @@ trait JavaInterpreter {
 				$stack[] = $args[0][$args[1]];
 				break;
 			case 'aastore':
+			case 'sastore':
 			case 'iastore':
 			case 'dastore':
 			case 'lastore':
@@ -123,6 +131,10 @@ trait JavaInterpreter {
 				list($value1, $value2) = [array_pop($stack), array_pop($stack)];
 				list($stack[], $stack[], $stack[], $stack[]) = [$value1, $value2, $value1, $value2];
 				break;
+			case 'dup2_x1':
+				list($value1, $value2, $value3) = [array_pop($stack), array_pop($stack), array_pop($stack)];
+				list($stack[], $stack[], $stack[], $stack[], $stack[]) = [$value1, $value2, $value3, $value1, $value2];
+				break;
 			//case 'swap':
 				
 				break;
@@ -138,7 +150,14 @@ trait JavaInterpreter {
 				$var = str_replace('$', '_S_', $opcode[2]['field']);
 				//var_dump($class);
 				ensureClassInitialized($class);
-				$property = $refClass->getProperty($var);
+				try {
+					$property = $refClass->getProperty($var);
+				} catch (\ReflectionException $e) {
+					var_dump("$class::\$$var");
+					var_dump(array_keys(get_class_vars($class)));
+					var_dump($class::$$var);
+					exit;
+				}
 				$stack[] = $property->getValue();
 				break;
 			case 'putstatic':
@@ -163,7 +182,12 @@ trait JavaInterpreter {
 			case 'getfield':
 				$var = $opcode[2]['field'];
 				//$args = $this->stackArrayPop($stack, 1);
-				$stack[] = array_pop($stack)->$var;
+				$obj = array_pop($stack);
+				if (!$obj) {
+					var_dump($opcode[2], $method, $i);
+					exit;
+				}
+				$stack[] = $obj->$var;
 				break;
 			case 'putfield':
 				//$class = str_replace('/', '\\', $opcode[2]['class']);
@@ -173,8 +197,8 @@ trait JavaInterpreter {
 				$args[0]->$var = $args[1];
 				break;
 			case 'jsr':
+				$stack[] = $i + $opcode[0];
 				$i += $opcode[2];
-				$stack[] = $i;
 				return;
 			case 'ret':
 				$i = $locals[$opcode[2]];
@@ -435,9 +459,9 @@ trait JavaInterpreter {
 			case 'drem':
 			case 'frem':
 			case 'lrem':
-				var_dump($opcode[1]);
-				var_dump($stack);
-				readline();
+				//var_dump($opcode[1]);
+				//var_dump($stack);
+				//readline();
 			case 'irem':
 				list($n1, $n2) = $this->stackArrayPop($stack, 2);
 				if ($n2 == 0) {
@@ -457,17 +481,23 @@ trait JavaInterpreter {
 				list($n1, $n2) = $this->stackArrayPop($stack, 2);
 				$stack[] = $n1 & $n2;
 				break;
+			case 'land':
+				list($n1, $n2) = $this->stackArrayPop($stack, 2);
+				$stack[] = bin2longdec(str_and(longdec2bin($n1), longdec2bin($n2)));				
+				break;
 			case 'ixor':
 				list($n1, $n2) = $this->stackArrayPop($stack, 2);
 				$stack[] = $n1 ^ $n2;
 				break;
 			case 'lxor':
 				list($n1, $n2) = $this->stackArrayPop($stack, 2);
-				$stack[] = bin2longdec(str_xor(longdec2bin($n1), longdec2bin($n2)));				break;
+				$stack[] = bin2longdec(str_xor(longdec2bin($n1), longdec2bin($n2)));				
+				break;
 			case 'lneg':
 				$stack[] = bcmul(array_pop($stack), '-1');
 				break;
 			case 'ineg':
+			case 'fneg':
 			case 'dneg':
 				$stack[] = -array_pop($stack);
 				break;
@@ -717,9 +747,11 @@ trait JavaInterpreter {
 				}
 				//var_dump($reflect);exit;
 				break;
-			//case 'pop2':
-				//unset($stack[count($stack)-1]);
-				//var_dump($stack);exit;
+			case 'pop2':
+				unset($stack[count($stack)-1]);
+				//var_dump($stack);
+				//var_dump($method);
+				//exit;
 			case 'pop':
 				//array_pop($stack);
 				unset($stack[count($stack)-1]);
@@ -881,6 +913,16 @@ function str_or($v1, $v2) {
 		$v2 = '0'.$v2;
 	}
 	return $v1 | $v2;
+}
+
+function str_and($v1, $v2) {
+	while (strlen($v1) < strlen($v2)) {
+		$v1 = '0'.$v1;
+	}
+	while (strlen($v1) > strlen($v2)) {
+		$v2 = '0'.$v2;
+	}
+	return $v1 & $v2;
 }
 
 function str_xor($v1, $v2) {
