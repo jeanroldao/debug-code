@@ -10,6 +10,32 @@ function Java_java_lang_reflect_Array_newArray($componentType, $length) {
 	return new JavaArray($length, $componentType->getName());
 }
 
+//private static native java.lang.Object sun.reflect.NativeMethodAccessorImpl.invoke0(java.lang.reflect.Method,java.lang.Object,java.lang.Object[])
+function Java_sun_reflect_NativeMethodAccessorImpl_invoke0($method, $object, $args) {
+	//var_dump($method->_java_type);
+	if ($method->_java_type) {
+		$opcode = [2 => ['type' => $method->_java_type]];
+	} else {
+		$opcode = null;
+	}
+	
+	$args = $args->toArray();
+	$argsType = \php_javaClass::getArgsType($method->_java_type);
+	foreach ($argsType['args'] as $iArg => $argType) {
+		if (strlen($argType) == 1) {
+			$args[$iArg] = strval($args[$iArg]);
+		}
+	}
+	
+	if ($object !== null) {
+		return $object->__call($method->getName().'', $args, $opcode);
+	} else {
+		$class = \php_javaClass::convertNameJavaToPhp($method->getDeclaringClass()->getName());
+		return $class::__callstatic($method->getName().'', $args, $opcode);
+	}
+	//exit;
+}
+
 //void java.lang.Runtime.gc()
 function Java_java_lang_Runtime_gc() {
 	gc_collect_cycles();

@@ -103,6 +103,25 @@ function evalLazy($className, $code) {
 	}
 }
 
+function javaClassDefinition($className) {
+	static $cache = [];
+	$path = 'zip://'.realpath('./rt.jar').'#';
+	$className = str_replace('.', '/', "$className");
+	if (isset($cache[$className])) {
+		return $cache[$className];
+	}
+	
+	$javaClass = new \php_javaClass();
+	$fp = fopen("$path$className.class", 'rb');
+	if (!$fp) { 
+		exit;
+	}
+	$javaClass->readClassNoEvaluate($fp);
+	//var_dump($javaClass);
+	return $cache[$className] = $javaClass;
+	//exit;
+}
+
 //java/lang/Object
 evalLazy('java/lang/Object', <<<'CODE'
 
@@ -130,7 +149,9 @@ trait ObjectTrait {
 		if (method_exists($this, $fname)) {
 			return call_user_func_array([$this, $fname], $args);
 		} else {
-			throw new \Exception(get_called_class() . '::' . $method.' method does not exists');
+			println(get_called_class() . '::' . $method.' method does not exists');
+			exit;
+			//throw new \Exception(get_called_class() . '::' . $method.' method does not exists');
 		}
 	}
 
@@ -139,7 +160,9 @@ trait ObjectTrait {
 		if (method_exists(get_called_class(), $fname)) {
 			return call_user_func_array([get_called_class(), $fname], $args);
 		} else {
-			throw new \Exception($method.' static method for '.get_called_class().' do not exists');
+			println($method.' static method for '.get_called_class().' do not exists');
+			exit;
+			//throw new \Exception($method.' static method for '.get_called_class().' do not exists');
 		}
 	}
 	
@@ -159,6 +182,7 @@ trait ObjectTrait {
 	public function wait() {
 		//var_dump('wait'); readline();
 	}
+	
 }
 class Object {use ObjectTrait;}
 
@@ -366,13 +390,28 @@ class Clazz extends Object {
 		}
 	}
 	
-	public function getMethods() {
+	private $declaredMethods;
+	public function getDeclaredMethods() {
+		if ($this->declaredMethods !== null) {
+			return $this->declaredMethods;
+		}
 		//var_dump($this->getRefClass()->getMethods());
-		$javaClass = $this->getRefClass()
-						  ->getProperty('javaClass')
-						  ->getValue();
+		try {
+			$javaClass = $this->getRefClass()
+							  ->getProperty('javaClass')
+							  ->getValue();
+		} catch (\ReflectionException $e) {
+			//var_dump($this->getRefClass()->getMethods()[0].'');
+			$javaClass = javaClassDefinition($this->getName());
+		}
+		
 		$methods = $javaClass->class_attr['methods'];
+		$javaMethods = [];
 		foreach ($methods as $i => $method) {
+			if (in_array($method['name'], ['<init>', '<clinit>'])) {
+				// no reference for constructor
+				continue;
+			}
 			$argsType = $javaClass->getArgsType($method['type']);
 			$returnType = strlen($argsType['return']) == 1 ? self::getPrimitiveClass($argsType['return']): self::forName($argsType['return']);
 			
@@ -396,10 +435,26 @@ class Clazz extends Object {
 			//var_dump($method);
 			//var_dump($javaMethod->toString().'');
 			//exit;
-			$methods[$i] = $javaMethod;
+			$javaMethod->override = true;
+			$javaMethod->_java_type = $method['type'];
+			$javaMethods[] = $javaMethod;
 		}
 		
-		return \JavaArray::fromArray($methods, 'java.lang.reflect.Method');
+		return $this->declaredMethods = \JavaArray::fromArray($javaMethods, 'java.lang.reflect.Method');
+	}
+	
+	public function getMethods() {
+		$allMethods = [];
+		$cls = $this;
+		while ($cls !== null) {
+			foreach ($cls->getDeclaredMethods() as $method) {
+				if (strpos("$method", 'public ') !== false) {
+					$allMethods[] = $method;
+				}
+			}
+			$cls = $cls->getSuperClass();
+		}
+		return \JavaArray::fromArray($allMethods, 'java.lang.reflect.Method');
 	}
 	
 	public function getMethod($name, $types) {
@@ -424,7 +479,7 @@ class Clazz extends Object {
 	}
 	
 	public function getDeclaredMethod($name, $types) {
-		$allMethods = $this->getMethods();
+		$allMethods = $this->getDeclaredMethods();
 		
 		//println($name);
 		//var_dump(count($allMethods));
@@ -433,7 +488,7 @@ class Clazz extends Object {
 			//print($method->getName());
 			//println(self::argumentTypesToString($method->getParameterTypes()));
 			if ($method->getName()->equals($name) 
-				//&& self::argumentTypesToString($method->getParameterTypes())->equals(self::argumentTypesToString($method->getParameterTypes($types)))
+				&& self::argumentTypesToString($method->getParameterTypes())->equals(self::argumentTypesToString($types))
 				) {
 				//var_dump(''.self::argumentTypesToString($types));
 				//var_dump(''.self::argumentTypesToString($method->getParameterTypes()));
@@ -2401,14 +2456,11 @@ class Thread extends Object {
 	public function start() {
 		
 		//disable threads 
-		return;
+		//return;
 		if ($this->name->equals(jstring('Reference Handler'))) {
 			return;
 		}
 		
-		//var_dump($this->target); exit;
-		//$this->nativeThread = new \PhpThread([$this->target, 'run'], [], $this);		
-		//$this->nativeThread->start();
 		
 		if ($this->threadStatus !== 0) {
 			throw new IllegalThreadStateException();
@@ -2418,6 +2470,10 @@ class Thread extends Object {
 		$this->group->__call('add', [$this], $opcode);
 
 		$this->run();
+		
+		//var_dump($this->target); exit;
+		//$this->nativeThread = new \PhpThread([$this, 'run'], [], $this);		
+		//$this->nativeThread->start();
 	}
 	
 	public function interrupt() {

@@ -102,7 +102,9 @@ include 'JavaInterpreter.php';
 include 'JavaPhpCompiler.php';
 include 'PhpThread.php';
 
-class php_javaClass extends \java\lang\Object {
+class php_javaClass 
+		//extends \java\lang\Object 
+{
 	use \JavaTranslator;
 	use \JavaInterpreter;
 	use \JavaPhpCompiler;
@@ -137,7 +139,11 @@ class php_javaClass extends \java\lang\Object {
 		return $this->classLoader;
 	}
 	
-	public function readClass($file) {
+	public function readClassNoEvaluate($file) {
+		$this->readClass($file, false);
+	}
+	
+	public function readClass($file, $evaluate = true) {
 		
 		ob_start();
 		
@@ -280,7 +286,8 @@ class php_javaClass extends \java\lang\Object {
 		$this->class_attr['name'] = $this->getClassName($input->readShort());
 		println("this class: " .$this->class_attr['name']);
 		
-		$this->class_attr['super'] = $this->getClassName($input->readShort());
+		$super = $input->readShort();
+		$this->class_attr['super'] = $super ? $this->getClassName($super) : '';
 		println("super class: " . $this->class_attr['super']);
 		
 		$interfaces_count = $input->readShort();
@@ -358,7 +365,9 @@ class php_javaClass extends \java\lang\Object {
 		$file = $dir.str_replace(['\\', '/'], ['_', '_'], $className).'.txt';
 		file_put_contents($file, $log_contents);
 		
-		$this->createPhpClass();
+		if ($evaluate) {
+			$this->createPhpClass();
+		}
 		//var_dump(class_exists($this->getPhpClassName(), false));
 	}
 	
@@ -1072,7 +1081,7 @@ CODE
 		];
 	}
 	
-	public function getArgsType($argsType) {
+	public static function getArgsType($argsType) {
 		list($argsStr, $return) = explode(')', substr($argsType, 1));
 		$args = [];
 		$argsLen = strlen($argsStr);
