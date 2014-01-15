@@ -12,9 +12,10 @@ public abstract class Teste38 {
 			for (Method m : ms) {
 				//System.out.println(m);
 			}
-			Teste38_T2.class.getMethod("nd", String.class).invoke(new Teste38_T2("LOL"), "vai");
-			Teste38_T2.class.getMethod("nd", Integer.TYPE).invoke(new Teste38_T2("LOL"), 123);
-			Teste38_T2.class.getMethod("nd", Integer.class).invoke(new Teste38_T2("LOL"), 123);
+			Object o = new Teste38_T2("LOL");
+			Teste38_T2.class.getMethod("nd", String.class).invoke(o, "vai");
+			Teste38_T2.class.getMethod("nd", Integer.TYPE).invoke(o, 123);
+			Teste38_T2.class.getMethod("nd", Integer.class).invoke(o, 123);
 			Teste38_T2.class.getMethod("s_nd", Integer.TYPE).invoke(null, 123);
 			//System.out.println(Reflection.quickCheckMemberAccess(clazz, modifiers));
 		} catch (Exception e) {

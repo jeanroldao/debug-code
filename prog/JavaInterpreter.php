@@ -79,6 +79,10 @@ trait JavaInterpreter {
 				break;
 			case 'arraylength':
 				$ar = array_pop($stack);
+				if ($ar === null) {
+					//var_dump($method);exit;
+					throw new \java\lang\NullPointerException();
+				}
 				$stack[] = $ar->getSize();
 				break;
 			case 'bipush':
@@ -578,7 +582,7 @@ trait JavaInterpreter {
 				//*/
 				//var_dump([$stack, $opcode, $i]);
 				//ReflectionMethod
-				$opcode[2]['method'] = fixPhpFuncName($opcode[2]['method']);
+				//$opcode[2]['method'] = fixPhpFuncName($opcode[2]['method']);
 				$numArgs = 1 + count($opcode[2]['args']);
 				$args = $this->stackArrayPop($stack, $numArgs);
 				$obj = array_shift($args);
@@ -589,7 +593,7 @@ trait JavaInterpreter {
 					$reflectMethod = new ReflectionMethod($class, '__call');
 					$ret = $reflectMethod->invokeArgs($obj, [$opcode[2]['method'], $args, $opcode]);
 				} else {
-					$reflectMethod = new ReflectionMethod($class, $opcode[2]['method']);
+					$reflectMethod = new ReflectionMethod($class, fixPhpFuncName($opcode[2]['method']));
 					$ret = $reflectMethod->invokeArgs($obj, $args);
 				}
 				if ($opcode[2]['return'] != 'V') {

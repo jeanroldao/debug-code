@@ -144,6 +144,16 @@ trait ObjectTrait {
 	}
 	
 	public function __call($method, $args) {
+		$fargs = func_get_args();
+		if (count($fargs) > 2) {
+			$opcode = $fargs[2];
+			if ($opcode[1] == 'invokespecial') {
+				var_dump($opcode);
+				exit;
+			}
+		} else {
+			$opcode = null;
+		}
 		$fname = fixPhpFuncName($method);
 		//var_dump(method_exists($this, $fname));
 		if (method_exists($this, $fname)) {
@@ -359,6 +369,7 @@ class Clazz extends Object {
 	}
 	
 	public function getResource($name) {
+		var_dump("look class resource: $name (need change this for package)");
 		if ($this->getClassLoader() !== null) {
 			return $this->getClassLoader()->getResource($name);
 		} else {
@@ -648,6 +659,9 @@ class Clazz extends Object {
 	}
 	
 	public function isAssignableFrom($cls) {
+		if ($cls === null) {
+			throw new NullPointerException();
+		}
 		$this_name = \php_javaClass::convertNameJavaToPhp($cls->getName());
 		$other_name = \php_javaClass::convertNameJavaToPhp($this->getName());
 		
@@ -910,7 +924,9 @@ class Scanner extends \java\lang\Object {
 	private $line;
 	
 	public function __construct($stream) {
-		if ($stream === null) {throw new \Exception('null stream');}
+		if ($stream === null) {
+			throw new \java\lang\NullPointerException();
+		}
 		//var_dump($stream);exit;
 		$this->stream = $stream;
 	}
@@ -2456,7 +2472,7 @@ class Thread extends Object {
 	public function start() {
 		
 		//disable threads 
-		//return;
+		return;
 		if ($this->name->equals(jstring('Reference Handler'))) {
 			return;
 		}

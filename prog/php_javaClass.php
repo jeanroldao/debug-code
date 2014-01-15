@@ -362,12 +362,14 @@ class php_javaClass
 		
 		$dir = __DIR__ . '/temp/';
 		$className = $this->getPhpClassName();
-		$file = $dir.str_replace(['\\', '/'], ['_', '_'], $className).'.txt';
-		file_put_contents($file, $log_contents);
+		$file_name = $dir.str_replace(['\\', '/'], ['_', '_'], $className).'.txt';
+		file_put_contents($file_name, $log_contents);
 		
 		if ($evaluate) {
 			$this->createPhpClass();
 		}
+		fclose($file);
+		$this->input = null;
 		//var_dump(class_exists($this->getPhpClassName(), false));
 	}
 	

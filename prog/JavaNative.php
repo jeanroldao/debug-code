@@ -82,6 +82,14 @@ function Java_sun_reflect_Reflection_getCallerClass($realFramesToSkip) {
 	return $class;
 }
 
+//private static native java.lang.String java.util.TimeZone.getSystemGMTOffsetID()
+function Java_java_util_TimeZone_getSystemGMTOffsetID() {
+	//$tz = date_default_timezone_get();
+	//var_dump($tz);
+	//exit;
+	return jstring("GMT-03:00");//LOL
+}
+
 //private static native void sun.misc.Unsafe.registerNatives()
 function Java_sun_misc_Unsafe_registerNatives() {}
 
@@ -199,7 +207,7 @@ function Java_sun_misc_Unsafe_putLong($addr, $value) {
 	$blockOffset = Java_sun_misc_Unsafe_getMemBlockOffset($addr);
 	$addr -= $blockOffset;
 	
-	for ($i = 0; $i < strlen($binary); $i++) {
+	for ($i = 0; $i < 8; $i++) {
 		$Java_sun_misc_Unsafe_memory[$blockOffset][$addr + $i] = $binary[$addr + $i];
 	}
 	//var_dump($Java_sun_misc_Unsafe_memory[$blockOffset]);
@@ -406,8 +414,26 @@ function Java_java_io_WinNTFileSystem_canonicalize0($relative_path) {
 	return jstring($real_path);
 }
 
+//public native long java.io.WinNTFileSystem.getLength(java.io.File)
+function Java_java_io_WinNTFileSystem_getLength($file) {
+	if (!file_exists("$file")) {
+		return '0';
+		//var_dump("$file");
+		//var_dump("Java_java_io_WinNTFileSystem_getLength");
+		//var_dump("file does not exist");
+		//exit;
+	}
+	return filesize("$file");
+}
+
 //public native long java.io.WinNTFileSystem.getLastModifiedTime(java.io.File)
 function Java_java_io_WinNTFileSystem_getLastModifiedTime($file) {
+	if (!file_exists("$file")) {
+		var_dump("$file");
+		var_dump("Java_java_io_WinNTFileSystem_getLastModifiedTime");
+		var_dump("file does not exist");
+		exit;
+	}
 	return filemtime("$file");
 }
 
@@ -484,11 +510,23 @@ function Java_java_io_RandomAccessFile_close0() {
 
 //static native int sun.nio.ch.FileDispatcher.read0(java.io.FileDescriptor,long,int)
 function Java_sun_nio_ch_FileDispatcher_read0($fd, $addr, $len) {
+	global $Java_sun_misc_Unsafe_memory;
+	
 	//var_dump($fd, $addr, $len);
-	fseek($fd->handle, $addr);
-	$s = fread($fd->handle, $len);
-	//return $len;//strlen($s);
-	exit;
+	//fseek($fd->handle, $addr);
+	$data = fread($fd->handle, $len);
+	$len = strlen($data);
+	
+	$blockOffset = Java_sun_misc_Unsafe_getMemBlockOffset($addr);
+	$addr -= $blockOffset;
+	
+	//var_dump($Java_sun_misc_Unsafe_memory[$blockOffset], $addr, $len);
+	for ($i = 0; $i < $len; $i++) {
+		$Java_sun_misc_Unsafe_memory[$blockOffset][$addr + $i] = $data[$i];
+	}
+	//var_dump($Java_sun_misc_Unsafe_memory[$blockOffset], $addr, $len);
+	
+	return $len;
 }
 
 //private static native long java.io.FileDescriptor.set(int)
@@ -517,7 +555,33 @@ function Java_java_io_ObjectStreamClass_initNative() {}
 
 //private static native long sun.nio.ch.FileChannelImpl.initIDs()
 function Java_sun_nio_ch_FileChannelImpl_initIDs() {
-	return '1'; // longs needs string to keep precision
+	return '1'; 
+}
+
+//private native long sun.nio.ch.FileChannelImpl.position0(java.io.FileDescriptor,long)
+function Java_sun_nio_ch_FileChannelImpl_position0($fd, $offset) {
+	//var_dump($this, $fd, $offset);
+	if ($offset !== '-1') {
+		//var_dump("set pos offset $offset");
+		//var_dump('Java_sun_nio_ch_FileChannelImpl_position0');
+		//exit;
+		fseek($fd->handle, $offset);
+	}
+	return ftell($fd->handle);
+}
+
+//private native long sun.nio.ch.FileChannelImpl.size0(java.io.FileDescriptor)
+function Java_sun_nio_ch_FileChannelImpl_size0($fd) {
+	//var_dump($this, $fd);
+	$fp = $fd->handle;
+	$pos = ftell($fp);
+	fseek($fp, 0);
+	$size = strlen(stream_get_contents($fp));
+	//var_dump($size, $pos);
+	fseek($fp, $pos);
+	return $size;
+	//return \sun\nio\ch\IOStatus::$UNSUPPORTED;
+	//exit;
 }
 
 //native int sun.nio.ch.FileChannelImpl.lock0(java.io.FileDescriptor,boolean,long,long,boolean)
