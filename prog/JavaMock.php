@@ -33,6 +33,8 @@ function fixPhpFuncName($method) {
 		'<init>' => '__construct',
 		'clone' => '_clone',
 		'empty' => '__empty',
+		'isSet' => '_isSet',
+		'isset' => '_isset',
 		'echo' => '__echo',
 		'print' => '__print',
 		'function' => '__function',
@@ -147,10 +149,13 @@ trait ObjectTrait {
 		$fargs = func_get_args();
 		if (count($fargs) > 2) {
 			$opcode = $fargs[2];
+			
+			/*
 			if ($opcode[1] == 'invokespecial') {
 				var_dump($opcode);
 				exit;
 			}
+			//*/
 		} else {
 			$opcode = null;
 		}
@@ -188,6 +193,8 @@ trait ObjectTrait {
 	public function equals($o) {
 		return $this == $o;
 	}
+	
+	public function notifyAll() {}
 	
 	public function wait() {
 		//var_dump('wait'); readline();
@@ -790,6 +797,7 @@ class System extends Object {
 			$env_data = [
 				'sun.boot.library.path' => JAVA_RT_DIR,
 				'java.home' 			=> JAVA_RT_DIR,
+				'PHP_VERSION' 			=> PHP_VERSION,
 				'line.separator'        => PHP_EOL,
 				'user.dir' 				=> JAVA_RT_DIR,
 				'user.home' 			=> getenv("HOME") ?: getenv("HOMEDRIVE").getenv("HOMEPATH"),
@@ -1589,7 +1597,7 @@ evalLazy('java/util/HashMap1', <<<'CODE'
 
 namespace java\util;
 	
-class HashMap1 extends ArrayList1 {
+class HashMap extends ArrayList1 {
 
 	public function put($key, $value) {
 		$key = "$key";
@@ -2078,6 +2086,16 @@ class Long extends Number {
 	
 	public static function valueOf($v) {
 		return new self($v);
+	}
+	
+	public static function parseLong($v) {
+		$v = "$v";
+		if (!is_numeric($v)) {
+			var_dump("not long?");
+			var_dump($v);
+			exit;
+		}
+		return $v;
 	}
 }
 

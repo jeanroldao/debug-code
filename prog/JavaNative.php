@@ -214,6 +214,16 @@ function Java_sun_misc_Unsafe_putLong($addr, $value) {
 	return;
 }
 
+//public native void sun.misc.Unsafe.putByte(long,byte)
+function Java_sun_misc_Unsafe_putByte($addr, $byte) {
+	global $Java_sun_misc_Unsafe_memory;
+	
+	$blockOffset = Java_sun_misc_Unsafe_getMemBlockOffset($addr);
+	$addr -= $blockOffset;
+	
+	$Java_sun_misc_Unsafe_memory[$blockOffset][$addr] = chr($byte);
+}
+
 //public native byte sun.misc.Unsafe.getByte(long)
 function Java_sun_misc_Unsafe_getByte($addr) {
 	global $Java_sun_misc_Unsafe_memory;
@@ -477,7 +487,7 @@ function openJavaFile($file, $mode) {
 			$mode = 'r';
 			break;
 		case 2:
-			$mode = 'rw';
+			$mode = 'r+';
 			break;
 		case 4:
 			$mode = 'rws';
@@ -488,9 +498,10 @@ function openJavaFile($file, $mode) {
 			var_dump('Java_java_io_RandomAccessFile_open');
 			exit;
 	}
+	
+	//var_dump("$file", $mode);
 	$handle = fopen("$file", $mode);
 	if ($handle === false) {
-		var_dump("$file");
 		var_dump("error fopen");
 		exit;
 	}
@@ -526,6 +537,23 @@ function Java_sun_nio_ch_FileDispatcher_read0($fd, $addr, $len) {
 	}
 	//var_dump($Java_sun_misc_Unsafe_memory[$blockOffset], $addr, $len);
 	
+	return $len;
+}
+
+//static native int sun.nio.ch.FileDispatcher.write0(java.io.FileDescriptor,long,int)
+function Java_sun_nio_ch_FileDispatcher_write0($fd, $addr, $len) {
+	global $Java_sun_misc_Unsafe_memory;
+	
+	$blockOffset = Java_sun_misc_Unsafe_getMemBlockOffset($addr);
+	$addr -= $blockOffset;
+	
+	//var_dump($Java_sun_misc_Unsafe_memory[$blockOffset], $addr, $len);
+	$len = fwrite($fd->handle, substr($Java_sun_misc_Unsafe_memory[$blockOffset], $addr, $len), $len);
+	if ($len === false) {
+		var_dump('Java_sun_nio_ch_FileDispatcher_write0');
+		var_dump("error, can't write");
+		exit;
+	}
 	return $len;
 }
 

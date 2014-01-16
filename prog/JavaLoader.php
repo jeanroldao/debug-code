@@ -16,7 +16,12 @@ class ClassLoader extends Object {
 		return self::$systemClassLoader;
 		//*/
 		return self::$systemClassLoader ?: 
-			   self::$systemClassLoader = \sun\misc\Launcher::getLauncher()->getClassLoader();	}
+			   self::$systemClassLoader = \sun\misc\Launcher::getLauncher()->getClassLoader();	
+	}
+	
+	public function getParent() {
+		return null;
+	}
 }
 CODE
 ) !== false or exit;

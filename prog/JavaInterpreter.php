@@ -53,9 +53,10 @@ trait JavaInterpreter {
 					//var_dump('here', $method);
 					throw new \java\lang\NullPointerException();
 				}
-				if (!array_key_exists($args[1], $args[0])) {
-					//var_dump($args[1], $args[0], $method, $i);readline();
-					throw new \java\lang\Exception('out of bounds');
+				
+				if (!array_key_exists(strval($args[1]), $args[0])) {
+					//var_dump($args[1], $args[0], $method, $i);//readline();
+					throw new \java\lang\ArrayIndexOutOfBoundsException(strval($args[1]));
 				}
 				$stack[] = $args[0][$args[1]];
 				break;
@@ -72,8 +73,8 @@ trait JavaInterpreter {
 					//var_dump('here?', $method);
 					throw new \java\lang\NullPointerException();
 				}
-				if (!array_key_exists($args[1].'', $args[0])) {
-					throw new \java\lang\Exception('out of bounds');
+				if (!array_key_exists(strval($args[1]), $args[0])) {
+					throw new \java\lang\ArrayIndexOutOfBoundsException(strval($args[1]));
 				}
 				$args[0][$args[1]] = $args[2];
 				break;
@@ -417,7 +418,9 @@ trait JavaInterpreter {
 			case 'isub':
 			case 'dsub':
 			case 'fsub':
-				$stack[] = - array_pop($stack) + array_pop($stack);
+				list($n1, $n2) = $this->stackArrayPop($stack, 2);
+				//var_dump($n1, $n2, $n1 - $n2);println();
+				$stack[] = $n1 - $n2;
 				break;
 			case 'lsub':
 				list($n1, $n2) = $this->stackArrayPop($stack, 2);
@@ -428,6 +431,12 @@ trait JavaInterpreter {
 				$stack[] = $result;
 				break;
 			case 'idiv':
+				list($n1, $n2) = $this->stackArrayPop($stack, 2);
+				if ($n2 == 0) {
+					throw new \java\lang\ArithmeticException("/ by zero");
+				}
+				$stack[] = floor($n1 / $n2);
+				break;
 			case 'ddiv':
 			case 'fdiv':
 				//var_dump($stack);exit;
@@ -761,6 +770,7 @@ trait JavaInterpreter {
 				unset($stack[count($stack)-1]);
 				break;
 			case 'sipush':
+				//var_dump($method, $i, 'sipush', $opcode[2]);
 				$stack[] = $opcode[2];
 				break;
 			case 'l2i':

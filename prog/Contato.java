@@ -5,7 +5,7 @@ public class Contato {
 	private String nome;
 	private String telefone;
 	private String email;
-	private Date dataCadastro;
+	private Long dataCadastro;
 	private String observacao;
 	
 	public Integer getCodigo() {
@@ -32,10 +32,10 @@ public class Contato {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getDataCadastro() {
+	public Long getDataCadastro() {
 		return dataCadastro;
 	}
-	public void setDataCadastro(Date dataCadastro) {
+	public void setDataCadastro(Long dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 	public String getObservacao() {
@@ -43,5 +43,9 @@ public class Contato {
 	}
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
+	}
+	
+	public String toString() {
+		return super.toString() + " {codigo="+codigo+"}";
 	}
 }

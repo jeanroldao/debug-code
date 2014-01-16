@@ -23,7 +23,7 @@ public class ContatoCrudJDBC {
 			insereSt.setString(1, contato.getNome());
 			insereSt.setString(2, contato.getTelefone());
 			insereSt.setString(3, contato.getEmail());
-			insereSt.setDate(4, contato.getDataCadastro());
+			insereSt.setLong(4, contato.getDataCadastro());
 			insereSt.setString(5, contato.getObservacao());
 			insereSt.executeUpdate();
 		} catch (SQLException e) {
@@ -50,7 +50,7 @@ public class ContatoCrudJDBC {
 			atualizaSt.setString(1, contato.getNome());
 			atualizaSt.setString(2, contato.getTelefone());
 			atualizaSt.setString(3, contato.getEmail());
-			atualizaSt.setDate(4, contato.getDataCadastro());
+			atualizaSt.setLong(4, contato.getDataCadastro());
 			atualizaSt.setString(5, contato.getObservacao());
 			atualizaSt.setInt(6, contato.getCodigo());
 			atualizaSt.executeUpdate();
@@ -108,7 +108,7 @@ public class ContatoCrudJDBC {
 				contato.setNome(resultado.getString("nome"));
 				contato.setTelefone(resultado.getString("telefone"));
 				contato.setEmail(resultado.getString("email"));
-				contato.setDataCadastro(resultado.getDate("dt_cad"));
+				contato.setDataCadastro(resultado.getLong("dt_cad"));
 				contato.setObservacao(resultado.getString("obs"));
 				
 				contatos.add(contato);
@@ -150,7 +150,7 @@ public class ContatoCrudJDBC {
 				contato.setNome(resultado.getString("nome"));
 				contato.setTelefone(resultado.getString("telefone"));
 				contato.setEmail(resultado.getString("email"));
-				contato.setDataCadastro(resultado.getDate("dt_cad"));
+				contato.setDataCadastro(resultado.getLong("dt_cad"));
 				contato.setObservacao(resultado.getString("obs"));
 				
 			}
@@ -173,7 +173,7 @@ public class ContatoCrudJDBC {
 		Connection conexao = null;
 		
 		try {
-			///*
+			/*
 			String url = "jdbc:mysql://localhost/agenda";
 			String usuario = "root";
 			String senha = "root";
@@ -181,9 +181,21 @@ public class ContatoCrudJDBC {
 			conexao = DriverManager.getConnection(url, usuario, senha);
 			//*/
 			
+			///*
+			Class.forName("smallsql.database.SSDriver");
+			String db;
+			if (System.getProperty("PHP_VERSION") == null) {
+				db = "emp1";
+			} else {
+				db = "emp1";
+			}
+			conexao = DriverManager.getConnection( "jdbc:smallsql:"+db );
+
+			//*/
+			
 			//Class.forName("org.sqlite.JDBC");
 			//conexao = DriverManager.getConnection("jdbc:sqlite:C:\\java-web\\contato.db");
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			System.out.println("Erro ao conectar ao banco de dados. ERRO: " + e.getMessage());
 		}
 		return conexao;
@@ -196,19 +208,40 @@ public class ContatoCrudJDBC {
 		beltrano.setNome("beltrano");
 		beltrano.setTelefone("(00) 1234567");
 		beltrano.setEmail("beltrano@teste.com.br");
-		beltrano.setDataCadastro(new Date(System.currentTimeMillis()));
+		beltrano.setDataCadastro(System.currentTimeMillis());
 		beltrano.setObservacao("Novo cliente");
+		System.out.print("saving " + beltrano);
 		contatoDao.salvar(beltrano);
+		System.out.println(" ok");
 		
 		Contato fulano = new Contato();
 		fulano.setNome("fulano");
 		fulano.setTelefone("(00) 312321312");
 		fulano.setEmail("fulano@teste.com.br");
-		fulano.setDataCadastro(new Date(System.currentTimeMillis()));
+		fulano.setDataCadastro(System.currentTimeMillis());
 		fulano.setObservacao("Novo contato");
-		//contatoDao.salvar(fulano);
+		System.out.print("saving " + fulano);
+		contatoDao.salvar(fulano);
+		System.out.println(" ok");
 		
-		System.out.println("Contatos cadastrados: " + contatoDao.listar().size());
+		List<Contato> contatos = contatoDao.listar();
+		System.out.println("Contatos cadastrados: " + contatos.size());
+		for (Contato c : contatos) {
+			System.out.println(c);
+			//c = contatoDao.buscaContato(c.getCodigo());
+			//System.out.println(c);
+		}
+		
+		///*
+		if (contatos.size() > 3) {
+			for (int i = 0; i < 3; i++) {
+				Contato c = contatos.get(i);
+				System.out.print("deleting " + c);
+				contatoDao.excluir(c);
+				System.out.println(" ok");
+			}
+		}
+		//*/
 	}
 
 }

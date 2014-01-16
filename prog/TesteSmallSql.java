@@ -5,7 +5,6 @@ import java.net.*;
 
 public class TesteSmallSql {
 	
-	private static final String DATABASE = "emp1";
 	private static final int MENOS_UM = -1;
 
 	private static void var_dump(Object var) {
@@ -78,7 +77,7 @@ public class TesteSmallSql {
 		
 		///*
 		//C:\Program Files\EasyPHP-12.1\www\debug\prog\emp1
-		String db = DATABASE;
+		String db = "emp1";
 		Connection con = DriverManager.getConnection( "jdbc:smallsql:"+db );
 		
 		//System.out.println(con);
