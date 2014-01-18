@@ -16,7 +16,8 @@ public abstract class Teste38 {
 			Teste38_T2.class.getMethod("nd", String.class).invoke(o, "vai");
 			Teste38_T2.class.getMethod("nd", Integer.TYPE).invoke(o, 123);
 			Teste38_T2.class.getMethod("nd", Integer.class).invoke(o, 123);
-			Teste38_T2.class.getMethod("s_nd", Integer.TYPE).invoke(null, 123);
+			Object r = Teste38_T2.class.getMethod("s_nd", Integer.TYPE).invoke(null, 123);
+			System.out.println(r);
 			//System.out.println(Reflection.quickCheckMemberAccess(clazz, modifiers));
 		} catch (Exception e) {
 			System.out.println(e);

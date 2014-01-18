@@ -1,0 +1,537 @@
+Classfile jar:file:/C:/Program%20Files/Java/jdk1.7.0_21/jre/lib/rt.jar!/java/util/Properties$LineReader.class
+  Last modified 04/04/2013; size 1966 bytes
+  MD5 checksum 3e9853c313ab6604a20522160f13ccd3
+  Compiled from "Properties.java"
+class java.util.Properties$LineReader
+  SourceFile: "Properties.java"
+  InnerClasses:
+       #71= #40 of #39; //LineReader=class java/util/Properties$LineReader of class java/util/Properties
+  minor version: 0
+  major version: 51
+  flags: ACC_SUPER
+Constant pool:
+   #1 = Integer            2147483647
+   #2 = Utf8               ()I
+   #3 = Utf8               ()V
+   #4 = Utf8               ([B)I
+   #5 = Utf8               ([C)I
+   #6 = Utf8               <init>
+   #7 = Utf8               Code
+   #8 = Utf8               Exceptions
+   #9 = Utf8               I
+  #10 = Utf8               InnerClasses
+  #11 = Utf8               LineNumberTable
+  #12 = Utf8               SourceFile
+  #13 = Utf8               StackMapTable
+  #14 = Utf8               [B
+  #15 = Utf8               [C
+  #16 = Utf8               arraycopy
+  #17 = Utf8               inByteBuf
+  #18 = Utf8               inCharBuf
+  #19 = Utf8               inLimit
+  #20 = Utf8               inOff
+  #21 = Utf8               inStream
+  #22 = Utf8               java/io/IOException
+  #23 = Utf8               java/io/InputStream
+  #24 = Utf8               java/io/Reader
+  #25 = Utf8               java/lang/Object
+  #26 = Utf8               java/lang/System
+  #27 = Utf8               java/util/Properties
+  #28 = Utf8               java/util/Properties$LineReader
+  #29 = Utf8               lineBuf
+  #30 = Utf8               read
+  #31 = Utf8               readLine
+  #32 = Utf8               reader
+  #33 = Utf8               this$0
+  #34 = Class              #22            //  java/io/IOException
+  #35 = Class              #23            //  java/io/InputStream
+  #36 = Class              #24            //  java/io/Reader
+  #37 = Class              #25            //  java/lang/Object
+  #38 = Class              #26            //  java/lang/System
+  #39 = Class              #27            //  java/util/Properties
+  #40 = Class              #28            //  java/util/Properties$LineReader
+  #41 = Utf8               Ljava/io/InputStream;
+  #42 = Utf8               Ljava/io/Reader;
+  #43 = Utf8               Ljava/util/Properties;
+  #44 = Utf8               (Ljava/util/Properties;Ljava/io/InputStream;)V
+  #45 = Utf8               (Ljava/util/Properties;Ljava/io/Reader;)V
+  #46 = Utf8               (Ljava/lang/Object;ILjava/lang/Object;II)V
+  #47 = NameAndType        #19:#9         //  inLimit:I
+  #48 = NameAndType        #20:#9         //  inOff:I
+  #49 = NameAndType        #17:#14        //  inByteBuf:[B
+  #50 = NameAndType        #18:#15        //  inCharBuf:[C
+  #51 = NameAndType        #29:#15        //  lineBuf:[C
+  #52 = NameAndType        #21:#41        //  inStream:Ljava/io/InputStream;
+  #53 = NameAndType        #32:#42        //  reader:Ljava/io/Reader;
+  #54 = NameAndType        #33:#43        //  this$0:Ljava/util/Properties;
+  #55 = NameAndType        #6:#3          //  "<init>":()V
+  #56 = NameAndType        #30:#4         //  read:([B)I
+  #57 = NameAndType        #30:#5         //  read:([C)I
+  #58 = NameAndType        #16:#46        //  arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+  #59 = Fieldref           #40.#47        //  java/util/Properties$LineReader.inLimit:I
+  #60 = Fieldref           #40.#48        //  java/util/Properties$LineReader.inOff:I
+  #61 = Fieldref           #40.#49        //  java/util/Properties$LineReader.inByteBuf:[B
+  #62 = Fieldref           #40.#50        //  java/util/Properties$LineReader.inCharBuf:[C
+  #63 = Fieldref           #40.#51        //  java/util/Properties$LineReader.lineBuf:[C
+  #64 = Fieldref           #40.#52        //  java/util/Properties$LineReader.inStream:Ljava/io/InputStream;
+  #65 = Fieldref           #40.#53        //  java/util/Properties$LineReader.reader:Ljava/io/Reader;
+  #66 = Fieldref           #40.#54        //  java/util/Properties$LineReader.this$0:Ljava/util/Properties;
+  #67 = Methodref          #35.#56        //  java/io/InputStream.read:([B)I
+  #68 = Methodref          #36.#57        //  java/io/Reader.read:([C)I
+  #69 = Methodref          #37.#55        //  java/lang/Object."<init>":()V
+  #70 = Methodref          #38.#58        //  java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+  #71 = Utf8               LineReader
+  #72 = Utf8               Properties.java
+{
+  byte[] inByteBuf;
+    flags: 
+
+  char[] inCharBuf;
+    flags: 
+
+  char[] lineBuf;
+    flags: 
+
+  int inLimit;
+    flags: 
+
+  int inOff;
+    flags: 
+
+  java.io.InputStream inStream;
+    flags: 
+
+  java.io.Reader reader;
+    flags: 
+
+  final java.util.Properties this$0;
+    flags: ACC_FINAL, ACC_SYNTHETIC
+
+  public java.util.Properties$LineReader(java.util.Properties, java.io.InputStream);
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=3, args_size=3
+         0: aload_0       
+         1: aload_1       
+         2: putfield      #66                 // Field this$0:Ljava/util/Properties;
+         5: aload_0       
+         6: invokespecial #69                 // Method java/lang/Object."<init>":()V
+         9: aload_0       
+        10: sipush        1024
+        13: newarray       char
+        15: putfield      #63                 // Field lineBuf:[C
+        18: aload_0       
+        19: iconst_0      
+        20: putfield      #59                 // Field inLimit:I
+        23: aload_0       
+        24: iconst_0      
+        25: putfield      #60                 // Field inOff:I
+        28: aload_0       
+        29: aload_2       
+        30: putfield      #64                 // Field inStream:Ljava/io/InputStream;
+        33: aload_0       
+        34: sipush        8192
+        37: newarray       byte
+        39: putfield      #61                 // Field inByteBuf:[B
+        42: return        
+      LineNumberTable:
+        line 403: 0
+        line 415: 9
+        line 416: 18
+        line 417: 23
+        line 404: 28
+        line 405: 33
+        line 406: 42
+
+  public java.util.Properties$LineReader(java.util.Properties, java.io.Reader);
+    flags: ACC_PUBLIC
+    Code:
+      stack=2, locals=3, args_size=3
+         0: aload_0       
+         1: aload_1       
+         2: putfield      #66                 // Field this$0:Ljava/util/Properties;
+         5: aload_0       
+         6: invokespecial #69                 // Method java/lang/Object."<init>":()V
+         9: aload_0       
+        10: sipush        1024
+        13: newarray       char
+        15: putfield      #63                 // Field lineBuf:[C
+        18: aload_0       
+        19: iconst_0      
+        20: putfield      #59                 // Field inLimit:I
+        23: aload_0       
+        24: iconst_0      
+        25: putfield      #60                 // Field inOff:I
+        28: aload_0       
+        29: aload_2       
+        30: putfield      #65                 // Field reader:Ljava/io/Reader;
+        33: aload_0       
+        34: sipush        8192
+        37: newarray       char
+        39: putfield      #62                 // Field inCharBuf:[C
+        42: return        
+      LineNumberTable:
+        line 408: 0
+        line 415: 9
+        line 416: 18
+        line 417: 23
+        line 409: 28
+        line 410: 33
+        line 411: 42
+
+  int readLine() throws java.io.IOException;
+    flags: 
+    Code:
+      stack=6, locals=11, args_size=1
+         0: iconst_0      
+         1: istore_1      
+         2: iconst_0      
+         3: istore_2      
+         4: iconst_1      
+         5: istore_3      
+         6: iconst_0      
+         7: istore        4
+         9: iconst_1      
+        10: istore        5
+        12: iconst_0      
+        13: istore        6
+        15: iconst_0      
+        16: istore        7
+        18: iconst_0      
+        19: istore        8
+        21: aload_0       
+        22: getfield      #60                 // Field inOff:I
+        25: aload_0       
+        26: getfield      #59                 // Field inLimit:I
+        29: if_icmplt     93
+        32: aload_0       
+        33: aload_0       
+        34: getfield      #64                 // Field inStream:Ljava/io/InputStream;
+        37: ifnonnull     54
+        40: aload_0       
+        41: getfield      #65                 // Field reader:Ljava/io/Reader;
+        44: aload_0       
+        45: getfield      #62                 // Field inCharBuf:[C
+        48: invokevirtual #68                 // Method java/io/Reader.read:([C)I
+        51: goto          65
+        54: aload_0       
+        55: getfield      #64                 // Field inStream:Ljava/io/InputStream;
+        58: aload_0       
+        59: getfield      #61                 // Field inByteBuf:[B
+        62: invokevirtual #67                 // Method java/io/InputStream.read:([B)I
+        65: putfield      #59                 // Field inLimit:I
+        68: aload_0       
+        69: iconst_0      
+        70: putfield      #60                 // Field inOff:I
+        73: aload_0       
+        74: getfield      #59                 // Field inLimit:I
+        77: ifgt          93
+        80: iload_1       
+        81: ifeq          89
+        84: iload         4
+        86: ifeq          91
+        89: iconst_m1     
+        90: ireturn       
+        91: iload_1       
+        92: ireturn       
+        93: aload_0       
+        94: getfield      #64                 // Field inStream:Ljava/io/InputStream;
+        97: ifnull        125
+       100: sipush        255
+       103: aload_0       
+       104: getfield      #61                 // Field inByteBuf:[B
+       107: aload_0       
+       108: dup           
+       109: getfield      #60                 // Field inOff:I
+       112: dup_x1        
+       113: iconst_1      
+       114: iadd          
+       115: putfield      #60                 // Field inOff:I
+       118: baload        
+       119: iand          
+       120: i2c           
+       121: istore_2      
+       122: goto          142
+       125: aload_0       
+       126: getfield      #62                 // Field inCharBuf:[C
+       129: aload_0       
+       130: dup           
+       131: getfield      #60                 // Field inOff:I
+       134: dup_x1        
+       135: iconst_1      
+       136: iadd          
+       137: putfield      #60                 // Field inOff:I
+       140: caload        
+       141: istore_2      
+       142: iload         8
+       144: ifeq          159
+       147: iconst_0      
+       148: istore        8
+       150: iload_2       
+       151: bipush        10
+       153: if_icmpne     159
+       156: goto          21
+       159: iload_3       
+       160: ifeq          209
+       163: iload_2       
+       164: bipush        32
+       166: if_icmpeq     21
+       169: iload_2       
+       170: bipush        9
+       172: if_icmpeq     21
+       175: iload_2       
+       176: bipush        12
+       178: if_icmpne     184
+       181: goto          21
+       184: iload         6
+       186: ifne          204
+       189: iload_2       
+       190: bipush        13
+       192: if_icmpeq     21
+       195: iload_2       
+       196: bipush        10
+       198: if_icmpne     204
+       201: goto          21
+       204: iconst_0      
+       205: istore_3      
+       206: iconst_0      
+       207: istore        6
+       209: iload         5
+       211: ifeq          235
+       214: iconst_0      
+       215: istore        5
+       217: iload_2       
+       218: bipush        35
+       220: if_icmpeq     229
+       223: iload_2       
+       224: bipush        33
+       226: if_icmpne     235
+       229: iconst_1      
+       230: istore        4
+       232: goto          21
+       235: iload_2       
+       236: bipush        10
+       238: if_icmpeq     339
+       241: iload_2       
+       242: bipush        13
+       244: if_icmpeq     339
+       247: aload_0       
+       248: getfield      #63                 // Field lineBuf:[C
+       251: iload_1       
+       252: iinc          1, 1
+       255: iload_2       
+       256: castore       
+       257: iload_1       
+       258: aload_0       
+       259: getfield      #63                 // Field lineBuf:[C
+       262: arraylength   
+       263: if_icmpne     312
+       266: aload_0       
+       267: getfield      #63                 // Field lineBuf:[C
+       270: arraylength   
+       271: iconst_2      
+       272: imul          
+       273: istore        9
+       275: iload         9
+       277: ifge          284
+       280: ldc           #1                  // int 2147483647
+       282: istore        9
+       284: iload         9
+       286: newarray       char
+       288: astore        10
+       290: aload_0       
+       291: getfield      #63                 // Field lineBuf:[C
+       294: iconst_0      
+       295: aload         10
+       297: iconst_0      
+       298: aload_0       
+       299: getfield      #63                 // Field lineBuf:[C
+       302: arraylength   
+       303: invokestatic  #70                 // Method java/lang/System.arraycopy:(Ljava/lang/Object;ILjava/lang/Object;II)V
+       306: aload_0       
+       307: aload         10
+       309: putfield      #63                 // Field lineBuf:[C
+       312: iload_2       
+       313: bipush        92
+       315: if_icmpne     333
+       318: iload         7
+       320: ifne          327
+       323: iconst_1      
+       324: goto          328
+       327: iconst_0      
+       328: istore        7
+       330: goto          21
+       333: iconst_0      
+       334: istore        7
+       336: goto          21
+       339: iload         4
+       341: ifne          348
+       344: iload_1       
+       345: ifne          361
+       348: iconst_0      
+       349: istore        4
+       351: iconst_1      
+       352: istore        5
+       354: iconst_1      
+       355: istore_3      
+       356: iconst_0      
+       357: istore_1      
+       358: goto          21
+       361: aload_0       
+       362: getfield      #60                 // Field inOff:I
+       365: aload_0       
+       366: getfield      #59                 // Field inLimit:I
+       369: if_icmplt     422
+       372: aload_0       
+       373: aload_0       
+       374: getfield      #64                 // Field inStream:Ljava/io/InputStream;
+       377: ifnonnull     394
+       380: aload_0       
+       381: getfield      #65                 // Field reader:Ljava/io/Reader;
+       384: aload_0       
+       385: getfield      #62                 // Field inCharBuf:[C
+       388: invokevirtual #68                 // Method java/io/Reader.read:([C)I
+       391: goto          405
+       394: aload_0       
+       395: getfield      #64                 // Field inStream:Ljava/io/InputStream;
+       398: aload_0       
+       399: getfield      #61                 // Field inByteBuf:[B
+       402: invokevirtual #67                 // Method java/io/InputStream.read:([B)I
+       405: putfield      #59                 // Field inLimit:I
+       408: aload_0       
+       409: iconst_0      
+       410: putfield      #60                 // Field inOff:I
+       413: aload_0       
+       414: getfield      #59                 // Field inLimit:I
+       417: ifgt          422
+       420: iload_1       
+       421: ireturn       
+       422: iload         7
+       424: ifeq          450
+       427: iinc          1, -1
+       430: iconst_1      
+       431: istore_3      
+       432: iconst_1      
+       433: istore        6
+       435: iconst_0      
+       436: istore        7
+       438: iload_2       
+       439: bipush        13
+       441: if_icmpne     21
+       444: iconst_1      
+       445: istore        8
+       447: goto          21
+       450: iload_1       
+       451: ireturn       
+      StackMapTable: number_of_entries = 26
+           frame_type = 255 /* full_frame */
+          offset_delta = 21
+          locals = [ class java/util/Properties$LineReader, int, int, int, int, int, int, int, int ]
+          stack = []
+           frame_type = 96 /* same_locals_1_stack_item */
+          stack = [ class java/util/Properties$LineReader ]
+           frame_type = 255 /* full_frame */
+          offset_delta = 10
+          locals = [ class java/util/Properties$LineReader, int, int, int, int, int, int, int, int ]
+          stack = [ class java/util/Properties$LineReader, int ]
+           frame_type = 23 /* same */
+           frame_type = 1 /* same */
+           frame_type = 1 /* same */
+           frame_type = 31 /* same */
+           frame_type = 16 /* same */
+           frame_type = 16 /* same */
+           frame_type = 24 /* same */
+           frame_type = 19 /* same */
+           frame_type = 4 /* same */
+           frame_type = 19 /* same */
+           frame_type = 5 /* same */
+           frame_type = 252 /* append */
+             offset_delta = 48
+        locals = [ int ]
+           frame_type = 250 /* chop */
+          offset_delta = 27
+           frame_type = 14 /* same */
+           frame_type = 64 /* same_locals_1_stack_item */
+          stack = [ int ]
+           frame_type = 4 /* same */
+           frame_type = 5 /* same */
+           frame_type = 8 /* same */
+           frame_type = 12 /* same */
+           frame_type = 96 /* same_locals_1_stack_item */
+          stack = [ class java/util/Properties$LineReader ]
+           frame_type = 255 /* full_frame */
+          offset_delta = 10
+          locals = [ class java/util/Properties$LineReader, int, int, int, int, int, int, int, int ]
+          stack = [ class java/util/Properties$LineReader, int ]
+           frame_type = 16 /* same */
+           frame_type = 27 /* same */
+
+      LineNumberTable:
+        line 422: 0
+        line 423: 2
+        line 425: 4
+        line 426: 6
+        line 427: 9
+        line 428: 12
+        line 429: 15
+        line 430: 18
+        line 433: 21
+        line 434: 32
+        line 436: 68
+        line 437: 73
+        line 438: 80
+        line 439: 89
+        line 441: 91
+        line 444: 93
+        line 447: 100
+        line 449: 125
+        line 451: 142
+        line 452: 147
+        line 453: 150
+        line 454: 156
+        line 457: 159
+        line 458: 163
+        line 459: 181
+        line 461: 184
+        line 462: 201
+        line 464: 204
+        line 465: 206
+        line 467: 209
+        line 468: 214
+        line 469: 217
+        line 470: 229
+        line 471: 232
+        line 475: 235
+        line 476: 247
+        line 477: 257
+        line 478: 266
+        line 479: 275
+        line 480: 280
+        line 482: 284
+        line 483: 290
+        line 484: 306
+        line 487: 312
+        line 488: 318
+        line 490: 333
+        line 495: 339
+        line 496: 348
+        line 497: 351
+        line 498: 354
+        line 499: 356
+        line 500: 358
+        line 502: 361
+        line 503: 372
+        line 506: 408
+        line 507: 413
+        line 508: 420
+        line 511: 422
+        line 512: 427
+        line 514: 430
+        line 515: 432
+        line 516: 435
+        line 517: 438
+        line 518: 444
+        line 521: 450
+    Exceptions:
+      throws java.io.IOException
+}

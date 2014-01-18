@@ -31,7 +31,7 @@ public class ContatoCrudJDBC {
 		} finally {
 			try {
 				insereSt.close();
-				conexao.close();
+				//conexao.close();
 			} catch (SQLException e) {
 				System.out.println("Erro ao fechar operações de inserção: " + e.getMessage());
 			}
@@ -59,7 +59,7 @@ public class ContatoCrudJDBC {
 		} finally {
 			try {
 				atualizaSt.close();
-				conexao.close();
+				//conexao.close();
 			} catch (SQLException e) {
 				System.out.println("Erro ao fechar operações de atualização: " + e.getMessage());
 			}
@@ -82,7 +82,7 @@ public class ContatoCrudJDBC {
 		} finally {
 			try {
 				deletaSt.close();
-				conexao.close();
+				//conexao.close();
 			} catch (SQLException e) {
 				System.out.println("Erro ao fechar operações de exclusão: " + e.getMessage());
 			}
@@ -120,7 +120,7 @@ public class ContatoCrudJDBC {
 			try {
 				consulta.close();
 				resultado.close();
-				conexao.close();
+				//conexao.close();
 			} catch (SQLException e) {
 				System.out.println("Erro ao fechar operações de listar: " + e.getMessage());
 			}
@@ -160,7 +160,7 @@ public class ContatoCrudJDBC {
 			try {
 				buscaSt.close();
 				resultado.close();
-				conexao.close();
+				//conexao.close();
 			} catch (SQLException e) {
 				System.out.println("Erro ao fechar operações de buscar: " + e.getMessage());
 			}
@@ -168,9 +168,12 @@ public class ContatoCrudJDBC {
 		return contato;
 	}
 	
+	private Connection conexao;
 	public Connection geraConexao() {
 		
-		Connection conexao = null;
+		if (conexao != null) {
+			return conexao;
+		}
 		
 		try {
 			/*
@@ -181,7 +184,7 @@ public class ContatoCrudJDBC {
 			conexao = DriverManager.getConnection(url, usuario, senha);
 			//*/
 			
-			///*
+			/*
 			Class.forName("smallsql.database.SSDriver");
 			String db;
 			if (System.getProperty("PHP_VERSION") == null) {
@@ -193,8 +196,10 @@ public class ContatoCrudJDBC {
 
 			//*/
 			
-			//Class.forName("org.sqlite.JDBC");
-			//conexao = DriverManager.getConnection("jdbc:sqlite:C:\\java-web\\contato.db");
+			//*/
+			Class.forName("org.sqlite.JDBC");
+			conexao = DriverManager.getConnection("jdbc:sqlite:C:\\java-web\\contato.db");
+			//*/
 		} catch (Exception e) {
 			System.out.println("Erro ao conectar ao banco de dados. ERRO: " + e.getMessage());
 		}

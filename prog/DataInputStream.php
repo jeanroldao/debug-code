@@ -20,7 +20,7 @@ class DataInputStream implements DataInput {
 	}
 	
 	public function readHex($bytes = 1) {
-		$binarydata = fread($this->file, $bytes);;
+		$binarydata = $this->readChar($bytes);
 		return unpack("H".($bytes*2)."hex", $binarydata)['hex'];
 	}
 	
@@ -29,7 +29,7 @@ class DataInputStream implements DataInput {
 	 * @return bool
 	 */
 	public function readBoolean() {
-		return (bool) fread($this->file, 1);
+		return (bool) $this->readChar();
 	}
 	
 	/**
@@ -37,8 +37,15 @@ class DataInputStream implements DataInput {
 	 * @return byte
 	 */
 	public function readByte() {
+		try {
+			return hexdec($this->readHex(1));
+		} catch (\DataInputStreamException $e) {
+			return -1;
+		}
 		//return ord(fread($this->file, 1));
-		return hexdec($this->readHex(1));
+		//$ret = ord(fgetc($this->file));
+		//var_dump($ret);
+		//return $ret;
 	}
 	
 	/**
@@ -46,7 +53,19 @@ class DataInputStream implements DataInput {
 	 * @return char
 	 */
 	public function readChar($len = 1) {
-		return fread($this->file, $len);
+		$ret = '';
+		$fp = $this->file;
+		for ($i = 0; $i < $len; $i++) {
+			$c = fgetc($fp);
+			if ($c === false) {
+				throw new \DataInputStreamException(jstring("EOF"));
+				//var_dump('EOF');
+				//exit;
+			}
+			$ret .= $c;
+		}
+		return $ret;
+		//return fread($this->file, $len);
 	}
     
 	/**
@@ -54,8 +73,10 @@ class DataInputStream implements DataInput {
 	 * @return short
 	 */
 	function readShort() {
-		$binarydata = fread($this->file, 2);;
-		return +(unpack("s", strrev($binarydata))[1]);
+		$binarydata = $this->readChar(2);
+		$n = +(unpack("s", strrev($binarydata))[1]);
+		//var_dump($n);
+		return +$n;
 	}
 	
 	/**

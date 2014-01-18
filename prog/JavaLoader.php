@@ -71,7 +71,7 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 	
 	//java.net.URL
 	public function getResource($name) {
-		//var_dump("getResource: $name");
+		//var_dump("getResource: $name");readline();
 		foreach ($this->classpath as $path) {
 			$filename = $path.$name;
 			//var_dump($filename);
@@ -88,7 +88,8 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 				return $url;
 			}
 		}
-		//var_dump("getResource fail: $name");
+		//var_dump($name);
+		//var_dump("getResource fail");
 		//exit;
 		return null;
 	}

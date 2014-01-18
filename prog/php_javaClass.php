@@ -159,7 +159,7 @@ class php_javaClass
 		println("minor version: " . $input->readShort());
 		println("major version: " . $input->readShort());
 		
-		$constant_pool_count = $input->readShort();
+		$constant_pool_count = $input->readUnsignedShort();
 		println("constant_pool_count = " . $constant_pool_count);
 		
 		for ($i = 1; $i < $constant_pool_count; $i++) {
@@ -181,7 +181,7 @@ class php_javaClass
 				case 1:
 					$utf = $input->readUTF();
 					$this->constant_pool[$i] = ['utf8', $utf]; 
-					print("utf8 string: " . $utf);
+					print('utf8 string: ('.strlen($utf).')' . $utf);
 					break;
 			
 				//int
@@ -269,7 +269,7 @@ class php_javaClass
 					break;
 					
 				default:
-					println("unknown byte_tag");
+					println("unknown byte_tag ($byte_tag)");
 					exit();
 					return;
 			}
@@ -531,6 +531,7 @@ class php_javaClass
 				//var_dump($methods);
 				//exit;
 			} else if (strpos($m['flags'], 'static') !== false) {
+				/*
 				if ($fname == 'toString') {
 					$fname = 'staticToString';//bug?
 				} else if ($fname == 'hashCode') {
@@ -538,7 +539,9 @@ class php_javaClass
 				} else if ($fname == 'equals') {
 					$fname = 'staticEquals';
 				}
-				$methods .= 'public static function '.$fname.'() {
+				*/
+				
+				$methods .= 'public static function static_'.$fname.'() {
 					$args = func_get_args();
 					return self::$javaClass->run("'.$m['name'].'", $args);
 				}'.PHP_EOL;
@@ -1155,6 +1158,7 @@ CODE
 	private function getDataFromRefDebug($i) {
 		$const = $this->getConstant($i);
 		if ($const[0] == "String") {
+			var_dump($i, 'constant not found');
 			return "(String)" . $this->getDataFromRefDebug($const[1]);
 		}
 		return "(" . $const[0] . ")"

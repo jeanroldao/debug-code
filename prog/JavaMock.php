@@ -10,6 +10,7 @@ function fixPhpClassName($className) {
 		'Class' => 'Clazz',
 		'Array' => '__Array',
 		'List' => '__List',
+		'Function' => '__Function',
 	];
 	
 	$className_ns = explode('\\', $className);
@@ -376,10 +377,22 @@ class Clazz extends Object {
 	}
 	
 	public function getResource($name) {
-		var_dump("look class resource: $name (need change this for package)");
+		if (substr("$name", 0, 1) != '/') {
+			var_dump("look class resource: $name (need change this for package)");
+			exit;
+		}
 		if ($this->getClassLoader() !== null) {
 			return $this->getClassLoader()->getResource($name);
 		} else {
+			return null;
+		}
+	}
+	
+	public function getResourceAsStream($name) {
+		$url = $this->getResource($name);
+		try {
+			return $url != null ? $url->openStream() : null;
+		} catch (IOException $e) {
 			return null;
 		}
 	}
@@ -739,6 +752,10 @@ class System extends Object {
 		return null;
 	}
 	
+	public static function mapLibraryName($name) {
+		return jstring("$name.php");
+	}
+	
 	public static function loadLibrary($lib) {
 		
 		//built-in libs
@@ -797,6 +814,7 @@ class System extends Object {
 			$env_data = [
 				'sun.boot.library.path' => JAVA_RT_DIR,
 				'java.home' 			=> JAVA_RT_DIR,
+				'os.name' 				=> 'PHP',
 				'PHP_VERSION' 			=> PHP_VERSION,
 				'line.separator'        => PHP_EOL,
 				'user.dir' 				=> JAVA_RT_DIR,
@@ -878,19 +896,29 @@ class PrintStream extends \java\lang\Object {
 	
 	public function __call($func, $args) {
 		//var_dump(func_get_args());//readline();
-		/*
+		
 		$func_args = func_get_args();
 		if(count($func_args) > 2) {
-			var_dump($func_args[2][2]);
-			exit;
+			$opcode = $func_args[2];
+		} else {
+			$opcode = null;
 		}
-		//*/
+		
+		$isCharArg = isset($opcode) && $opcode[2]['args'][0] == 'C';
 		
 		if ($func == 'print') {
 			//$this->__call('__print', $args);
+			if ($isCharArg) {
+				$args[0] = chr($args[0]);
+			}
 			call_user_func_array([$this, '__print'], $args);
+		} else if ($func == 'println') {
+			if ($isCharArg) {
+				$args[0] = chr($args[0]);
+			}
+			call_user_func_array([$this, '__println'], $args);
 		} else {
-			parent::__call($func, $args);
+			parent::__call($func, $args, $opcode);
 		}
 	}
 	
@@ -909,7 +937,7 @@ class PrintStream extends \java\lang\Object {
 		}
 	}
 	
-	public function println($s = '') {
+	public function __println($s = '') {
 		//var_dump($s);
 		$this->print($s, PHP_EOL);
 	}
@@ -1132,6 +1160,10 @@ class String extends Object implements \java\io\Serializable, Comparable, CharSe
 		return in_array("$component_type", ['char', 'byte']);
 	}
 	
+	public function contains($substr) {
+		return $this->indexOf($substr) > -1;
+	}
+	
 	public function indexOf($str, $fromIndex = 0) {
 		if (is_int($str)) {
 			$str = chr($str);
@@ -1185,6 +1217,10 @@ class String extends Object implements \java\io\Serializable, Comparable, CharSe
 	}
 	
 	public function replace($from, $to) {
+		if (!is_object($from)) {
+			$from = chr($from);
+			$to = chr($to);
+		}
 		return new String(str_replace("$from", "$to", $this->string));
 	}
 	
@@ -2154,11 +2190,11 @@ class Boolean extends \java\lang\Object {
 	}
 	
 	public static function parseBoolean($s) {
-		return (bool) "$s";
+		return (new Boolean($s))->booleanValue();
 	}
 	
 	public static function valueOf($v) {
-		return new self($v);
+		return new Boolean($v);
 	}
 	
 	public static function getBoolean($name) {
@@ -2675,8 +2711,7 @@ class FileInputStream extends \java\lang\Object {
 		if ($b === null) {
 			return $this->readByte();
 		} else {
-			$this->readFully($b, $off, $len);
-			return $len;
+			return $this->readFully($b, $off, $len);
 		}
 	}
 	
@@ -2741,10 +2776,15 @@ class FileInputStream extends \java\lang\Object {
 		}
 	}
 	
-	public function readFully(\SplFixedArray $ar, $offset, $length) {
+	public function readFully(\JavaArray $ar, $offset, $length) {
 		for ($i = 0; $i < $length; $i++) {
-			$ar[$offset + $i] = $this->readByte();
+			$c = $this->readByte();
+			if ($c == -1) {
+				return $i;
+			}
+			$ar[$offset + $i] = $c;
 		}
+		return $length;
 	}
 	
 	public function close() {

@@ -61,7 +61,7 @@ public class TesteSmallSql {
 		//System.out.println(cls);
 		//cls.newInstance();
 		
-		/*
+		///*
 		Enumeration<Driver> drivers = DriverManager.getDrivers();
 		System.out.println("-DRIVERS-START-");
 		while (drivers.hasMoreElements()) {

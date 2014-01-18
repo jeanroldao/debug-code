@@ -19,7 +19,7 @@ function Java_sun_reflect_NativeMethodAccessorImpl_invoke0($method, $object, $ar
 		$opcode = null;
 	}
 	
-	$args = $args->toArray();
+	$args = $args !== null ? $args->toArray() : [];
 	$argsType = \php_javaClass::getArgsType($method->_java_type);
 	foreach ($argsType['args'] as $iArg => $argType) {
 		if (strlen($argType) == 1) {
@@ -28,12 +28,42 @@ function Java_sun_reflect_NativeMethodAccessorImpl_invoke0($method, $object, $ar
 	}
 	
 	if ($object !== null) {
-		return $object->__call($method->getName().'', $args, $opcode);
+		$ret = $object->__call($method->getName().'', $args, $opcode);
 	} else {
 		$class = \php_javaClass::convertNameJavaToPhp($method->getDeclaringClass()->getName());
-		return $class::__callstatic($method->getName().'', $args, $opcode);
+		$ret = $class::__callstatic($method->getName().'', $args, $opcode);
 	}
-	//exit;
+	
+	switch ($argsType['return']) {
+		case 'Z': 
+			$ret = \java\lang\Boolean::valueOf($ret);
+			break;
+		case 'C':
+			$ret = \java\lang\Character::valueOf($ret);
+			break;
+		case 'F':
+			$ret = \java\lang\Float::valueOf($ret);
+			break;
+		case 'D':
+			$ret = \java\lang\Double::valueOf($ret);
+			break;
+		case 'B':
+			$ret = \java\lang\Byte::valueOf($ret);
+			break;
+		case 'S':
+			$ret = \java\lang\Short::valueOf($ret);
+			break;
+		case 'I':
+			$ret = \java\lang\Integer::valueOf($ret);
+			break;
+		case 'J':
+			$ret = \java\lang\Long::valueOf($ret);
+			break;
+		case 'V':
+			$ret = null;
+			break;
+	}
+	return $ret;
 }
 
 //void java.lang.Runtime.gc()
@@ -121,7 +151,7 @@ function Java_sun_misc_Unsafe_arrayBaseOffset($cls) {
 //public native java.lang.Object sun.misc.Unsafe.getObject(java.lang.Object,long)
 function Java_sun_misc_Unsafe_getObject($obj, $offset) {
 	if ($obj instanceof \java\lang\Clazz) {
-		$className = $obj->getName()->replace('.', '\\')->toString() . '';
+		$className = $obj->getName()->replace(jstring('.'), jstring('\\'))->toString() . '';
 		$field = array_keys(get_class_vars($className))[$offset];
 		return $className::$$field;
 	}
@@ -131,9 +161,15 @@ function Java_sun_misc_Unsafe_getObject($obj, $offset) {
 
 //public native long sun.misc.Unsafe.staticFieldOffset(java.lang.reflect.Field)
 function Java_sun_misc_Unsafe_staticFieldOffset($field) {
-	$className = $field->getDeclaringClass()->getName()->replace('.', '\\')->toString() . '';
+	$className = $field->getDeclaringClass()->getName()->replace(jstring('.'), jstring('\\'))->toString() . '';
 	$fieldName = $field->getName()->toString().'';
-	return array_search($fieldName, array_keys(get_class_vars($className)));
+	
+	//var_dump($className);
+	$vars = get_class_vars($className);
+	//var_dump($vars);
+	$keys = array_keys($vars);
+	//var_dump($keys);
+	return array_search($fieldName, $keys);
 }
 
 //public native long sun.misc.Unsafe.objectFieldOffset(java.lang.reflect.Field)
@@ -506,6 +542,12 @@ function openJavaFile($file, $mode) {
 		exit;
 	}
 	return $handle;
+}
+
+//private native void java.io.FileOutputStream.open(java.lang.String)
+function Java_java_io_FileOutputStream_open($filename) {
+	var_dump("$filename");
+	exit;
 }
 
 //private native void java.io.RandomAccessFile.open(java.lang.String,int)

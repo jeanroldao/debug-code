@@ -808,6 +808,12 @@ trait JavaInterpreter {
 				$obj = $stack[count($stack)-1];//end($stack);
 				if ($obj !== null && !checkcast($obj, $class)) {
 					$class = str_replace('/', '.', $opcode[2]);
+					if (!is_object($obj)) {
+						var_dump($obj, $class);
+						var_dump($method, $i);
+						var_dump("need object");
+						exit;
+					}
 					$msg = $obj->getClass()->getName() . ' cannot be cast to ' . $class;
 					//var_dump($obj);
 					/*
@@ -815,7 +821,7 @@ trait JavaInterpreter {
 						var_dump($b['class']);
 						var_dump($b['function']);
 					}*/
-					throw new \java\lang\ClassCastException($msg);
+					throw new \java\lang\ClassCastException(jstring($msg));
 				}
 				break;
 			case 'areturn':
@@ -956,10 +962,12 @@ function str_xor($v1, $v2) {
 
 function checkcast($obj, $class) {
 	//return true;
+	//var_dump($obj, $class);
 	if ($obj === null) {
 		return true;
 	} else if ($obj instanceof JavaArray) {
-		$className = $obj->getClass()->getName()->replace('.', '\\').'';
+		$className = str_replace('.', '\\', $obj->getClass()->getName());
+		//var_dump($className, $class);
 		if ($className == $class) {
 			return true;
 		}
