@@ -546,8 +546,23 @@ function openJavaFile($file, $mode) {
 
 //private native void java.io.FileOutputStream.open(java.lang.String)
 function Java_java_io_FileOutputStream_open($filename) {
-	var_dump("$filename");
-	exit;
+	//var_dump($this, "$filename");
+	$handle = fopen("$filename", 'w');
+	if ($handle === false) {
+		var_dump("error fopen");
+		exit;
+	}
+	$this->fd->handle = $handle;
+}
+
+//private native void java.io.FileOutputStream.writeBytes(byte[],int,int)
+function Java_java_io_FileOutputStream_writeBytes($b, $offset, $len) {
+	//var_dump($b, $offset, $len);
+	$data = '';
+	for ($i = 0; $i < $len; $i++) {
+		$data .= chr($b[$offset + $i]);
+	}
+	fwrite($this->fd->handle, $data);
 }
 
 //private native void java.io.RandomAccessFile.open(java.lang.String,int)
