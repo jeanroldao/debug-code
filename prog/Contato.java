@@ -46,6 +46,6 @@ public class Contato {
 	}
 	
 	public String toString() {
-		return super.toString() + " {codigo="+codigo+"}";
+		return super.toString() + " {codigo="+codigo+", nome="+nome+"}";
 	}
 }

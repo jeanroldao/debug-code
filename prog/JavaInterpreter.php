@@ -739,6 +739,10 @@ trait JavaInterpreter {
 				//$class = str_replace('$', '_S_', str_replace('/', '\\', $opcode[2]));
 				$class = str_replace('/', '\\', $opcode[2]);
 				//var_dump($opcode[2]);
+				//var_dump($reflect);
+				
+				//$stack[] = unserialize(sprintf('O:%d:"%s":0:{}', strlen($class), $class));
+				///*
 				try {
 					$reflect = new ReflectionClass($class);
 				} catch (\ReflectionException $e) {
@@ -746,8 +750,6 @@ trait JavaInterpreter {
 					println($e->getMessage());
 					exit;
 				}
-				//var_dump($reflect);
-				
 				if (is_a($class, 'Exception', true)) {
 					try {
 						$stack[] = $reflect->newInstance('__EXCEPTION_DONT_INIT__');
@@ -758,6 +760,7 @@ trait JavaInterpreter {
 				} else {
 					$stack[] = $reflect->newInstanceWithoutConstructor();
 				}
+				//*/
 				//var_dump($reflect);exit;
 				break;
 			case 'pop2':

@@ -18,7 +18,7 @@ public class ContatoCrudJDBC {
 					+"values (?, ?, ?, ?, ?)";
 		
 		try {
-			
+			//System.out.println("insert into: " + conexao);
 			insereSt = conexao.prepareStatement(sql);
 			insereSt.setString(1, contato.getNome());
 			insereSt.setString(2, contato.getTelefone());
@@ -209,25 +209,27 @@ public class ContatoCrudJDBC {
 	public static void main(String[] args) {
 		ContatoCrudJDBC contatoDao = new ContatoCrudJDBC();
 		
+		String os_name = System.getProperty("os.name");
+		
 		Contato beltrano = new Contato();
-		beltrano.setNome("beltrano");
+		beltrano.setNome(os_name +" beltrano");
 		beltrano.setTelefone("(00) 1234567");
 		beltrano.setEmail("beltrano@teste.com.br");
 		beltrano.setDataCadastro(System.currentTimeMillis());
 		beltrano.setObservacao("Novo cliente");
-		System.out.print("saving " + beltrano);
+		System.out.println("saving " + beltrano);
 		contatoDao.salvar(beltrano);
-		System.out.println(" ok");
+		System.out.println("ok");
 		
 		Contato fulano = new Contato();
-		fulano.setNome("fulano");
+		fulano.setNome(os_name +" fulano");
 		fulano.setTelefone("(00) 312321312");
 		fulano.setEmail("fulano@teste.com.br");
 		fulano.setDataCadastro(System.currentTimeMillis());
 		fulano.setObservacao("Novo contato");
-		System.out.print("saving " + fulano);
+		System.out.println("saving " + fulano);
 		contatoDao.salvar(fulano);
-		System.out.println(" ok");
+		System.out.println("ok");
 		
 		List<Contato> contatos = contatoDao.listar();
 		System.out.println("Contatos cadastrados: " + contatos.size());
@@ -237,13 +239,13 @@ public class ContatoCrudJDBC {
 			//System.out.println(c);
 		}
 		
-		///*
+		/*
 		if (contatos.size() > 3) {
 			for (int i = 0; i < 3; i++) {
 				Contato c = contatos.get(i);
-				System.out.print("deleting " + c);
+				System.out.println("deleting " + c);
 				contatoDao.excluir(c);
-				System.out.println(" ok");
+				System.out.println("ok");
 			}
 		}
 		//*/

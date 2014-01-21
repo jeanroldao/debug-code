@@ -719,7 +719,8 @@ class System extends Object {
 	private static $props;
 	
 	public static function currentTimeMillis() {
-		return intval(microtime(true) * 1000);
+		//var_dump(floor(microtime(true) * 1000), 'currentTimeMillis');
+		return floor(microtime(true) * 1000);
 	}
 	
 	public static function identityHashCode($obj) {
@@ -754,6 +755,15 @@ class System extends Object {
 	
 	public static function mapLibraryName($name) {
 		return jstring("$name.php");
+	}
+	
+	public static function load($name) {
+		if (file_exists($name)) {
+			require_once $name;
+		} else {
+			var_dump("file not found: $name");
+			//throw new UnsatisfiedLinkError(jstring("no $file in java.library.path"));
+		}
 	}
 	
 	public static function loadLibrary($lib) {
@@ -799,6 +809,7 @@ class System extends Object {
 	
 	private static function initProperties($props) {
 		try {
+			//var_dump("initProperties?");exit;
 			$ini_array = file("SystemProperties.ini");
 			if (is_array($ini_array)) {
 				foreach ($ini_array as $line) {
@@ -2780,7 +2791,9 @@ class FileInputStream extends \java\lang\Object {
 		for ($i = 0; $i < $length; $i++) {
 			$c = $this->readByte();
 			if ($c == -1) {
-				return $i;
+				// it is not about how many bytes was read, 
+				// it is about sending the message
+				return $i > 0 ? $i : -1;
 			}
 			$ar[$offset + $i] = $c;
 		}

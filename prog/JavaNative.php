@@ -565,6 +565,23 @@ function Java_java_io_FileOutputStream_writeBytes($b, $offset, $len) {
 	fwrite($this->fd->handle, $data);
 }
 
+//private native void java.io.FileOutputStream.close0()
+function Java_java_io_FileOutputStream_close0() {
+	fclose($this->fd->handle);
+}
+
+//private static native java.lang.String java.lang.ProcessEnvironment.environmentBlock()
+function Java_java_lang_ProcessEnvironment_environmentBlock() {
+	return jstring('');
+}
+
+//private native long java.lang.ProcessImpl.create(java.lang.String,java.lang.String,java.lang.String,boolean,java.io.FileDescriptor,java.io.FileDescriptor,java.io.FileDescriptor)
+function Java_java_lang_ProcessImpl_create($cmdstr, $envblock, $dir, $stdHandles, $redirectErrorStream) {
+	//var_dump($cmdstr, $envblock, $dir, $stdHandles, $redirectErrorStream);
+	//exit;
+	throw new \java\io\IOException(jstring('Cannot run'));
+}
+
 //private native void java.io.RandomAccessFile.open(java.lang.String,int)
 function Java_java_io_RandomAccessFile_open($file, $mode) {
 	$this->fd->handle = openJavaFile($file, $mode);
