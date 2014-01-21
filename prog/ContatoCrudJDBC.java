@@ -184,7 +184,7 @@ public class ContatoCrudJDBC {
 			conexao = DriverManager.getConnection(url, usuario, senha);
 			//*/
 			
-			/*
+			///*
 			Class.forName("smallsql.database.SSDriver");
 			String db;
 			if (System.getProperty("PHP_VERSION") == null) {
@@ -196,7 +196,7 @@ public class ContatoCrudJDBC {
 
 			//*/
 			
-			//*/
+			/*
 			Class.forName("org.sqlite.JDBC");
 			conexao = DriverManager.getConnection("jdbc:sqlite:C:\\java-web\\contato.db");
 			//*/

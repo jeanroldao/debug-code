@@ -489,8 +489,12 @@ class php_javaClass
 						// so set value after class loaded
 						afterClassLoad($className, function() use ($className, $field) {
 							$fieldName = self::convertNameJavaToPhp($field['name']);
+							//var_dump($className, $fieldName, $field['attr']['ConstantValue']);
+							//exit;
+							if (interface_exists($className)) {
+								$className .= '_interface';
+							}
 							$className::$$fieldName = $field['attr']['ConstantValue'];
-							//var_dump($className, $fieldName, $field['attr']['ConstantValue']);exit;
 						});
 					} else {
 						$iniValue = var_export($field['attr']['ConstantValue'], true);
