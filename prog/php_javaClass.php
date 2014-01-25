@@ -95,12 +95,14 @@ function ensureClassInitialized($class) {
 
 include 'DataInputStream.php';
 include 'JavaMock.php';
+include 'ServletMock.php';
 include 'JavaNative.php';
 include 'JavaLoader.php';
 include 'JavaTranslator.php';
 include 'JavaInterpreter.php';
 include 'JavaPhpCompiler.php';
 include 'PhpThread.php';
+require 'vendor/autoload.php';
 
 class php_javaClass 
 		//extends \java\lang\Object 
@@ -363,7 +365,7 @@ class php_javaClass
 		$dir = __DIR__ . '/temp/';
 		$className = $this->getPhpClassName();
 		$file_name = $dir.str_replace(['\\', '/'], ['_', '_'], $className).'.txt';
-		file_put_contents($file_name, $log_contents);
+		//file_put_contents($file_name, $log_contents);
 		
 		if ($evaluate) {
 			$this->createPhpClass();
@@ -757,6 +759,16 @@ CODE
 				return call_user_func_array($php_function_name, $args);
 			}
 			
+		}
+		
+		if (strpos($method['flags'], 'abstract') !== false) {
+			if (method_exists($thisObj, $method_name)) {
+				return call_user_func_array([$thisObj, $method_name], $args);
+			} else {
+				var_dump(method_exists($thisObj, $method_name));
+				var_dump('abstract...');
+				exit;
+			}
 		}
 		
 		

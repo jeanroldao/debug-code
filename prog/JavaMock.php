@@ -90,8 +90,9 @@ function eval2($thisObj, $php) {
 	
 	$className = is_object($thisObj) ? $thisObj->getPhpClassName() : $thisObj;
 	$file = $dir.str_replace(['\\', '/'], ['_', '_'], $className).'.php';
-	file_put_contents($file, "<?php $php");
-	include($file);
+	//file_put_contents($file, "<?php $php");
+	//include($file);
+	eval($php);
 }
 
 $GLOBALS['evalLazy_classes'] = [];
@@ -832,6 +833,7 @@ class System extends Object {
 				'user.home' 			=> getenv("HOME") ?: getenv("HOMEDRIVE").getenv("HOMEPATH"),
 				'java.io.tmpdir' 		=> realpath(JAVA_RT_DIR.'/temp'),
 				'sun.nio.ch.disableSystemWideOverlappingFileLockCheck' => 'true',
+				'com.sun.net.httpserver.HttpServerProvider' => 'com.sun.net.httpserver.HttpServerProviderPhp',
 			];
 			foreach ($env_data as $k => $v) {
 				$props->put(jstring($k), jstring($v));
@@ -953,7 +955,11 @@ class PrintStream extends \java\lang\Object {
 		$this->print($s, PHP_EOL);
 	}
 	
-	public function close() {}
+	public function close() {
+		if ($this->writer != null) {
+			$this->writer->end();
+		}
+	}
 }
 
 CODE
@@ -1253,6 +1259,10 @@ class String extends Object implements \java\io\Serializable, Comparable, CharSe
 	
 	public function length() {
 		return strlen($this->string);
+	}
+	
+	public function getBytes() {
+		return \JavaArray::fromArray($this->toCharArray()->toArray(), 'B');
 	}
 	
 	public function toCharArray() {
@@ -2687,6 +2697,10 @@ class BufferedInputStream extends FilterInputStream {
 		parent::__construct($in);
 	}
 	
+	public function readByte() {
+		return $this->in->readByte();
+	}
+	
 	public function readLine() {
 		return $this->in->readLine();
 	}
@@ -2823,6 +2837,10 @@ class DataInputStream extends \java\lang\Object {
 	
 	public function read() {
 		return $this->input->read();
+	}
+	
+	public function readByte() {
+		return $this->input->readByte();
 	}
 	
 	public function readUnsignedShort() {
@@ -3446,13 +3464,66 @@ class Chars Charset1 extends \java\lang\Object {
 CODE
 ) !== false or exit;
 
-//javax/swing/JFrame
-evalLazy('javax/swing/JFrame1', <<<'CODE'
+//com/sun/net/httpserver/HttpServerProviderPhp
+evalLazy('com/sun/net/httpserver/HttpServerProviderPhp', <<<'CODE'
 
-namespace javax\swing;
+namespace com\sun\net\httpserver;
 	
-class JFrame1 extends \java\lang\Object {
+class HttpServerProviderPhp extends \com\sun\net\httpserver\spi\HttpServerProvider  {
+	public function createHttpServer($InetSocketAddress_addr, $int_backlog) {
+		return new HttpServerPhp($InetSocketAddress_addr, $int_backlog);
+	}
+	public function createHttpsServer($InetSocketAddress_addr, $int_backlog) {
+		return $this->createHttpServer($InetSocketAddress_addr, $int_backlog);
+	}
+}
+
+CODE
+) !== false or exit;
+
+//com/sun/net/httpserver/HttpServerPhp
+evalLazy('com/sun/net/httpserver/HttpServerPhp', <<<'CODE'
+
+namespace com\sun\net\httpserver;
 	
+class HttpServerPhp extends HttpServer  {
+	
+	private $addr;
+	private $contexts = [];
+	
+	public function __construct($InetSocketAddress_addr, $int_backlog) {
+		$this->addr = $InetSocketAddress_addr;
+	}
+	
+	public function createContext($context, $handler) {
+		$this->contexts["$context"] = $handler;
+	}
+	
+	public function setExecutor($executor) {
+		//ignored
+	}
+	
+	public function start() {
+		
+		$server = $this;
+		$loop = \React\EventLoop\Factory::create();
+		$socket = new \React\Socket\Server($loop);
+		$http = new \React\Http\Server($socket);
+		
+		$http->on('request', function ($request, $response) use ($server) {
+			$path = $request->getPath();
+			$headers = array('Content-Type' => 'text/plain');
+			$response->writeHead(200, $headers);
+			if (isset($server->contexts[$path])) {
+				$server->contexts[$path]->handle(new \javax\servlet\http\HttpServletResponse($response));
+			} else {
+				$response->end('page not found: '.$request->getPath());
+			}
+		});
+		
+		$socket->listen($this->addr->getPort());
+		$loop->run();
+	}
 }
 
 CODE

@@ -1,6 +1,7 @@
 {
     "require": {
         "react/react": "0.3.*",
-        "phastlight/phastlight": "*"
+        "phastlight/phastlight": "*",
+		"react/zmq": "0.2.*"
     }
 }

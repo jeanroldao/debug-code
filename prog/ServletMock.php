@@ -107,6 +107,10 @@ class JspWriter extends \java\lang\Object {
 	public function write($msg) {
 		$this->writer->print($msg);
 	}
+	
+	public function close() {
+		$this->writer->close();
+	}
 }
 CODE
 );
@@ -191,6 +195,14 @@ class HttpServletResponse extends \java\lang\Object {
 	}
 	
 	public function setContentType($contentType) {}
+	
+	public function sendResponseHeaders($httpcode, $length) {
+		
+	}
+	
+	public function getResponseBody() {
+		return new \javax\servlet\jsp\JspWriter($this->getWriter());
+	}
 	
 	public function getWriter() {
 		return $this->responseWriter;

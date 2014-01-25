@@ -734,6 +734,17 @@ function Java_sun_awt_Win32GraphicsEnvironment_getEUDCFontFile() {
 //private static native boolean sun.java2d.windows.WindowsFlags.initNativeFlags()
 function Java_sun_java2d_windows_WindowsFlags_initNativeFlags() {}
 
+//private static native void java.net.InetAddress.init()
+function Java_java_net_InetAddress_init() {}
+
+//static native boolean java.net.InetAddressImplFactory.isIPv6Supported()
+function Java_java_net_InetAddressImplFactory_isIPv6Supported() {
+	return false;
+}
+
+//private static native void java.net.Inet4Address.init()
+function Java_java_net_Inet4Address_init() {}
+
 function Java_Teste32_php(/* long */$l) {
 	var_dump($l);
 }
