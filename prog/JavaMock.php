@@ -11,6 +11,11 @@ function fixPhpClassName($className) {
 		'Array' => '__Array',
 		'List' => '__List',
 		'Function' => '__Function',
+		'print' => '__print',
+		'and' => '__and',
+		'or' => '__or',
+		'xor' => '__xor',
+		'xand' => '__xand',
 	];
 	
 	$className_ns = explode('\\', $className);
@@ -90,9 +95,9 @@ function eval2($thisObj, $php) {
 	
 	$className = is_object($thisObj) ? $thisObj->getPhpClassName() : $thisObj;
 	$file = $dir.str_replace(['\\', '/'], ['_', '_'], $className).'.php';
-	//file_put_contents($file, "<?php $php");
-	//include($file);
-	eval($php);
+	file_put_contents($file, "<?php $php");
+	include($file);
+	//eval($php);
 }
 
 $GLOBALS['evalLazy_classes'] = [];
@@ -183,13 +188,75 @@ trait ObjectTrait {
 		}
 	}
 	
+	public function __get($field) {
+		
+		$class = get_class($this);
+		$refClass = new \ReflectionClass($class);
+		$property = null;
+		while ($property == null && $refClass != null) {
+			try {
+				$property = $refClass->getProperty($field);
+				if ($property->isPrivate()) {
+					$property->setAccessible(true);
+				}
+			} catch (\ReflectionException $e) {
+				//$refClass = $refClass->getParentClass();
+				//var_dump($class);
+				$class = get_parent_class($class);
+				$refClass = $class ? new \ReflectionClass($class) : null;
+			}
+		}
+		if ($property == null) {
+			return $this->$field;
+			/*
+			$class = get_class($this);
+			var_dump($class);
+			var_dump(array_keys(get_class_vars($class)));
+			var_dump($this->$field);
+			exit;
+			//*/
+		}
+		return $property->getValue($this);
+	}
+	
+	public function __set($field, $value) {
+		
+		$class = get_class($this);
+		$refClass = new \ReflectionClass($class);
+		$property = null;
+		while ($property == null && $refClass != null) {
+			try {
+				$property = $refClass->getProperty($field);
+				if ($property->isPrivate()) {
+					$property->setAccessible(true);
+				}
+			} catch (\ReflectionException $e) {
+				//$refClass = $refClass->getParentClass();
+				//var_dump($class);
+				$class = get_parent_class($class);
+				$refClass = $class ? new \ReflectionClass($class) : null;
+			}
+		}
+		if ($property == null) {
+			$this->$field = $value;
+			return;
+			/*
+			$class = get_class($this);
+			var_dump($class);
+			var_dump(array_keys(get_class_vars($class)));
+			var_dump($this->$field);
+			exit;
+			//*/
+		}
+		$property->setValue($this, $value);
+	}
+	
 	public function __toString() {
 		return $this->toString().'';
 	}
 	
 	public function _clone() {
-		$c = clone $this;
-		return $c;
+		return clone $this;
 	}
 	
 	public function equals($o) {
@@ -244,7 +311,7 @@ class Clazz extends Object {
 		//*/
 	}
 	
-	private function getRefClass() {
+	public function getRefClass() {
 		//Thread::currentThread()->getContextClassLoader()->loadClass($this->name);
 		//var_dump($this->name);
 		//var_dump($this->refClass);
@@ -378,11 +445,12 @@ class Clazz extends Object {
 	}
 	
 	public function getResource($name) {
-		if (substr("$name", 0, 1) != '/') {
-			var_dump("look class resource: $name (need change this for package)");
-			exit;
-		}
 		if ($this->getClassLoader() !== null) {
+			if (substr("$name", 0, 1) != '/') {
+				$package = explode('.', $this->getName().'');
+				array_pop($package);
+				$name = jstring('/'.implode('/', $package).'/'.$name);
+			}
 			return $this->getClassLoader()->getResource($name);
 		} else {
 			return null;
@@ -475,6 +543,67 @@ class Clazz extends Object {
 		return $this->declaredMethods = \JavaArray::fromArray($javaMethods, 'java.lang.reflect.Method');
 	}
 	
+	private $constructors;
+	public function getConstructors() {
+		if ($this->constructors !== null) {
+			return $this->constructors;
+		}
+		try {
+			$javaClass = $this->getRefClass()
+							  ->getProperty('javaClass')
+							  ->getValue();
+		} catch (\ReflectionException $e) {
+			//var_dump($this->getRefClass()->getMethods()[0].'');
+			$javaClass = javaClassDefinition($this->getName());
+		}
+		
+		$methods = $javaClass->class_attr['methods'];
+		$javaMethods = [];
+		foreach ($methods as $i => $method) {
+			if ($method['name'] != '<init>') {
+				// only reference for constructors
+				continue;
+			}
+			$argsType = $javaClass->getArgsType($method['type']);
+			$returnType = strlen($argsType['return']) == 1 ? self::getPrimitiveClass($argsType['return']): self::forName($argsType['return']);
+			
+			$parameterTypes = new \JavaArray(count($argsType['args']), 'java.lang.Class');
+			foreach ($argsType['args'] as $iArg => $argType) {
+				$parameterTypes[$iArg] = strlen($argType) == 1 ? self::getPrimitiveClass($argType): self::forName($argType);
+			}
+			$javaMethod = new \java\lang\reflect\Constructor(
+				/*Class declaringClass*/        $this,
+				/*Class[] parameterTypes*/      $parameterTypes,
+				/*Class[] checkedExceptions*/   new \JavaArray(0, 'java.lang.reflect.Class'),
+				/*int modifiers*/               $method['flags_num'],
+				/*int slot*/                    0,
+				/*String signature*/            jstring(''),
+				/*byte[] annotations*/          new \JavaArray(0, 'B'),
+				/*byte[] parameterAnnotations*/ new \JavaArray(0, 'B')
+			);
+			//var_dump($method);
+			//var_dump($javaMethod->toString().'');
+			//exit;
+			$javaMethod->override = true;
+			$javaMethod->_java_type = $method['type'];
+			$javaMethods[] = $javaMethod;
+		}
+		
+		return $this->constructors = \JavaArray::fromArray($javaMethods, 'java.lang.reflect.Constructor');
+		
+	}
+	
+	public function getConstructor($types) {
+		$allConstructors = $this->getConstructors();
+		
+		foreach ($allConstructors as $method) {
+			if (self::argumentTypesToString($method->getParameterTypes())->equals(self::argumentTypesToString($types))) {
+				return $method;
+			}
+		}
+		throw new NoSuchMethodException(jstring($this->getName().'.'.$name.self::argumentTypesToString($types)));
+	}
+	
 	public function getMethods() {
 		$allMethods = [];
 		$cls = $this;
@@ -505,9 +634,9 @@ class Clazz extends Object {
 				exit;
 			}
 		}
-		println(jstring($this->getName().'.'.$name.self::argumentTypesToString($types)));
-		exit;
-		//throw new NoSuchMethodException(jstring($this->getName().'.'.$name.self::argumentTypesToString($types)));
+		//println(jstring($this->getName().'.'.$name.self::argumentTypesToString($types)));
+		//exit;
+		throw new NoSuchMethodException(jstring($this->getName().'.'.$name.self::argumentTypesToString($types)));
 	}
 	
 	public function getDeclaredMethod($name, $types) {
@@ -559,15 +688,34 @@ class Clazz extends Object {
 	}
 	
 	public function getFields() {
-		return $this->getAllFields();
+		return $this->getDeclaredFields();
+		
+		$allFields = [];
+		$cls = $this;
+		while ($cls !== null) {
+			foreach ($cls->getDeclaredFields() as $field) {
+				if (strpos("$field", 'public ') !== false) {
+					$allFields[] = $field;
+				}
+			}
+			$cls = $cls->getSuperClass();
+		}
+		return \JavaArray::fromArray($allFields, 'java.lang.reflect.Field');
 	}
 	
-	private function getAllFields() {
-		
-		//var_dump($this->getRefClass());
-		$javaClass = $this->getRefClass()
-						  ->getProperty('javaClass')
-						  ->getValue();
+	private $fields;
+	private function getDeclaredFields() {
+		if ($this->fields !== null) {
+			return $this->fields;
+		}
+		try {
+			$javaClass = $this->getRefClass()
+							  ->getProperty('javaClass')
+							  ->getValue();
+		} catch (\ReflectionException $e) {
+			//var_dump($this->getRefClass()->getMethods()[0].'');
+			$javaClass = javaClassDefinition($this->getName());
+		}
 		$fields = $javaClass->class_attr['fields'];
 		//var_dump($fields);
 		foreach ($fields as $i => $field) {
@@ -583,12 +731,12 @@ class Clazz extends Object {
 			);
 			$fields[$i] = $javaField;
 		}
-		return \JavaArray::fromArray($fields, 'java.lang.reflect.Field');
+		return $this->fields = \JavaArray::fromArray($fields, 'java.lang.reflect.Field');
 	}
 	
 	public function getDeclaredField($fieldName) {
 		//var_dump(['looking', $fieldName]);
-		$fields = $this->getAllFields();
+		$fields = $this->getDeclaredFields();
 		foreach ($fields as $f) {
 			if ($f->getName()->equals($fieldName)) {
 				//var_dump(['found', $fieldName]);
@@ -596,10 +744,6 @@ class Clazz extends Object {
 			}
 		}
 		throw new \java\lang\NoSuchFieldException($fieldName);
-	}
-	public function getDeclaredFields() {
-		var_dump('getDeclaredFields');
-		exit;
 	}
 	
 	public function getEnclosingClass() {
@@ -851,8 +995,8 @@ class System extends Object {
 }
 
 afterClassLoad('java\lang\System', function(){
-	System::$out = new \java\io\PrintStream();
-	System::$err = new \java\io\PrintStream();
+	System::$out = new \java\io\PrintStream(STDOUT);
+	System::$err = new \java\io\PrintStream(STDERR);
 	System::$in = new \java\io\BufferedInputStream(new \java\io\FileInputStream(STDIN));
 	
 	\sun\misc\SharedSecrets::setJavaLangAccess(new System_S_1());
@@ -902,7 +1046,9 @@ class PrintStream extends \java\lang\Object {
 	private $writer;
 	
 	public function __construct($writer = null) {
-		if ($writer !== null) {
+		if ($writer === null) {
+			$this->writer = STDOUT;
+		} else {
 			$this->writer = $writer;
 		}
 	}
@@ -917,9 +1063,9 @@ class PrintStream extends \java\lang\Object {
 			$opcode = null;
 		}
 		
-		$isCharArg = isset($opcode) && $opcode[2]['args'][0] == 'C';
+		$isCharArg = isset($opcode) && count($opcode[2]['args']) > 0 && $opcode[2]['args'][0] == 'C';
 		
-		if ($func == 'print') {
+		if ($func == 'print' || $func == 'write') {
 			//$this->__call('__print', $args);
 			if ($isCharArg) {
 				$args[0] = chr($args[0]);
@@ -942,10 +1088,10 @@ class PrintStream extends \java\lang\Object {
 			if ($arg === null) {
 				$arg = 'null';
 			}
-			if ($writer !== null) {
-				$writer->write((string)new \java\lang\String($arg));
+			if (is_object($writer)) {
+				$writer->write(strval(jstring($arg)));
 			} else {
-				echo new \java\lang\String($arg);
+				fwrite($writer, strval(jstring($arg)));
 			}
 		}
 	}
@@ -955,9 +1101,13 @@ class PrintStream extends \java\lang\Object {
 		$this->print($s, PHP_EOL);
 	}
 	
+	public function flush() {}
+	
 	public function close() {
-		if ($this->writer != null) {
+		if (is_object($this->writer)) {
 			$this->writer->end();
+		} else {
+			fclose($this->writer);
 		}
 	}
 }
@@ -1097,6 +1247,17 @@ class Character extends \java\lang\Object {
 		$this->char = "$char";
 	}
 	
+	public static function charCount($i) {
+		return 1;//unicode not supported
+	}
+	
+	public static function codePointAt($chars, $i) {
+		if ($chars instanceof CharSequence) {
+			$chars = $chars->toCharArray();
+		}
+		return $chars[$i];
+	}
+	
 	public function charValue() {
 		return $this->char;
 	}
@@ -1107,6 +1268,14 @@ class Character extends \java\lang\Object {
 	
 	public function toString() {
 		return jstring(chr($this->char));
+	}
+	
+	public static function digit($char, $radix) {
+		return $char;
+	}
+	
+	public static function isDigit($char) {
+		return ctype_digit(chr($char));
 	}
 	
 	public static function isLetter($char) {
@@ -1150,6 +1319,10 @@ class String extends Object implements \java\io\Serializable, Comparable, CharSe
 	public function __construct($string = '', $offset = null, $length = null) {
 		//String( sql, offset, length );
 		if (self::isCharArray($string)) {
+			//var_dump(func_get_args());
+			if (is_object($offset)) {
+				$offset = 0;
+			}
 			$this->string = '';
 			if ($offset === null) {
 				$offset = 0;
@@ -1245,6 +1418,10 @@ class String extends Object implements \java\io\Serializable, Comparable, CharSe
 		return new String(str_replace("$from", "$to", $this->string));
 	}
 	
+	public function replaceFirst($from, $to) {
+		return new String(preg_replace("/$from/", "$to", $this->string));
+	}
+	
 	public function trim() {
 		return new String(trim($this->string));
 	}
@@ -1294,12 +1471,13 @@ class String extends Object implements \java\io\Serializable, Comparable, CharSe
 	
 	public function charAt($i) {
 		if ($i < 0 || $i >= $this->length()) {
-			//var_dump([$this->string, $i]);
-			//debug_print_backtrace(0, 10);
-			//exit;
 			throw new StringIndexOutOfBoundsException($i);
 		}
 		return ord($this->string[$i]);
+	}
+	
+	public function codePointAt($i) {
+		return $this->charAt($i);
 	}
 	
 	public function startsWith($str) {
@@ -1314,6 +1492,11 @@ class String extends Object implements \java\io\Serializable, Comparable, CharSe
 	
 	public function concat(String $o) {
 		return new String($this->string . $o->string);
+	}
+	
+	public function matches($regex) {
+		//var_dump($this->string, $regex->string);
+		return preg_match("/$regex/", $this->string);
 	}
 	
 	public function regionMatches($ignoreCase, $toffset, $otherString, $ooffset, $len) {
@@ -1458,6 +1641,10 @@ class StringBuilder extends Object implements \java\io\Serializable, Comparable,
 		if ($newLength > $length) {
 			$this->string .= str_repeat("\0", $newLength - $length);
 		}
+	}
+	
+	public function substring($start, $end = null) {
+		return jstring($this->string)->substring($start, $end);
 	}
 	
 	public function length() {
@@ -1814,7 +2001,7 @@ class Number extends Object {
 		
 		if ($v !== null) {
 			if (!is_numeric("$v")) {
-				throw new \java\lang\NumberFormatException("For input string: \"$v\"");
+				throw new NumberFormatException("For input string: \"$v\"");
 			}
 			$this->v = "$v";
 		}
@@ -1829,7 +2016,7 @@ class Number extends Object {
 	}
 	
 	public function doubleValue() {
-		return +$this->v;
+		return strval($this->v);
 	}
 	
 	public function floatValue() {
@@ -1898,6 +2085,10 @@ class Integer extends Number {
 		$i = $i + ($i >> 16);
 		return $i & 0x3f;
     }
+	
+	public static function getInteger($name, $default = null) {
+		return self::valueOf(System::getProperty($name, $default));
+	}
 }
 
 afterClassLoad('java\lang\Integer', function(){
@@ -2089,12 +2280,16 @@ class Float extends Number {
 	}
 	
 	public static function valueOf($v) {
-		return new self($v);
+		return new Float($v);
 	}
 	
 	public static function isNaN($f) {
 		//var_dump($f);
 		return false;//WTF?
+	}
+	
+	public static function parseFloat($value) {
+		return self::valueOf($value)->floatValue();
 	}
 }
 

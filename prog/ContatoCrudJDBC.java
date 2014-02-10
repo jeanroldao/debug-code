@@ -239,7 +239,7 @@ public class ContatoCrudJDBC {
 			//System.out.println(c);
 		}
 		
-		/*
+		///*
 		if (contatos.size() > 3) {
 			for (int i = 0; i < 3; i++) {
 				Contato c = contatos.get(i);

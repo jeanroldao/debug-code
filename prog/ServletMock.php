@@ -8,6 +8,15 @@ class HttpServlet extends \java\lang\Object {
 	}
 }
 
+eval2('java/servlet/Servlet', <<<CODE
+namespace javax\servlet;
+
+interface Servlet {
+
+}
+CODE
+);
+
 //org.apache.jasper.runtime.HttpJspBase
 eval2('org/apache/jasper/runtime/HttpJspBase', <<<'CODE'
 namespace org\apache\jasper\runtime;

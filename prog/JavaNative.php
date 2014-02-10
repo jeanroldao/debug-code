@@ -13,25 +13,28 @@ function Java_java_lang_reflect_Array_newArray($componentType, $length) {
 //private static native java.lang.Object sun.reflect.NativeMethodAccessorImpl.invoke0(java.lang.reflect.Method,java.lang.Object,java.lang.Object[])
 function Java_sun_reflect_NativeMethodAccessorImpl_invoke0($method, $object, $args) {
 	//var_dump($method->_java_type);
-	if ($method->_java_type) {
-		$opcode = [2 => ['type' => $method->_java_type]];
-	} else {
-		$opcode = null;
-	}
 	
 	$args = $args !== null ? $args->toArray() : [];
-	$argsType = \php_javaClass::getArgsType($method->_java_type);
-	foreach ($argsType['args'] as $iArg => $argType) {
-		if (strlen($argType) == 1) {
-			$args[$iArg] = strval($args[$iArg]);
+	
+	if (property_exists($method, '_java_type')) {
+		$opcode = [2 => ['type' => $method->_java_type]];
+		$argsType = \php_javaClass::getArgsType($method->_java_type);
+		foreach ($argsType['args'] as $iArg => $argType) {
+			if (strlen($argType) == 1) {
+				$args[$iArg] = strval($args[$iArg]);
+			}
 		}
+	} else {
+		$opcode = null;
+		$argsType = ['return' => ''];
 	}
 	
+	$methodName = $method instanceof \java\lang\reflect\Constructor? '<init>': $method->getName() . '';
 	if ($object !== null) {
-		$ret = $object->__call($method->getName().'', $args, $opcode);
+		$ret = $object->__call($methodName, $args, $opcode);
 	} else {
 		$class = \php_javaClass::convertNameJavaToPhp($method->getDeclaringClass()->getName());
-		$ret = $class::__callstatic($method->getName().'', $args, $opcode);
+		$ret = $class::__callstatic($methodName, $args, $opcode);
 	}
 	
 	switch ($argsType['return']) {
@@ -64,6 +67,13 @@ function Java_sun_reflect_NativeMethodAccessorImpl_invoke0($method, $object, $ar
 			break;
 	}
 	return $ret;
+}
+
+//private static native java.lang.Object sun.reflect.NativeConstructorAccessorImpl.newInstance0(java.lang.reflect.Constructor,java.lang.Object[])
+function Java_sun_reflect_NativeConstructorAccessorImpl_newInstance0($constructor, $args) {
+	$instance = $constructor->getDeclaringClass()->getRefClass()->newInstanceWithoutConstructor();
+	Java_sun_reflect_NativeMethodAccessorImpl_invoke0($constructor, $instance, $args);
+	return $instance;
 }
 
 //void java.lang.Runtime.gc()
@@ -125,9 +135,19 @@ function Java_sun_misc_Unsafe_registerNatives() {}
 
 //public native void sun.misc.Unsafe.ensureClassInitialized(java.lang.Class)
 function Java_sun_misc_Unsafe_ensureClassInitialized($class) {
-	var_dump('Java_sun_misc_Unsafe_ensureClassInitialized');
-	println($class->getName());
-	exit;
+	//var_dump('Java_sun_misc_Unsafe_ensureClassInitialized');
+	ensureClassInitialized($class->getName().'');
+}
+
+//public native java.lang.Object sun.misc.Unsafe.getObjectVolatile(java.lang.Object,long)
+function Java_sun_misc_Unsafe_getObjectVolatile($obj, $offset) {
+	return Java_sun_misc_Unsafe_getObject($obj, $offset);
+}
+
+//public native int sun.misc.Unsafe.getIntVolatile(java.lang.Object,long)
+function Java_sun_misc_Unsafe_getIntVolatile($obj, $offset) {
+	//var_dump($obj, $offset);
+	return Java_sun_misc_Unsafe_getObject($obj, $offset);
 }
 
 //public native java.lang.Object sun.misc.Unsafe.staticFieldBase(java.lang.reflect.Field)
@@ -148,10 +168,22 @@ function Java_sun_misc_Unsafe_arrayBaseOffset($cls) {
 	//exit;
 }
 
+//public native void sun.misc.Unsafe.putObject(java.lang.Object,long,java.lang.Object)
+function Java_sun_misc_Unsafe_putObject($o, $offset, $x) {
+	var_dump('Java_sun_misc_Unsafe_getObject', $obj, $offset, $x);
+	exit;
+	if ($obj instanceof \java\lang\Clazz) {
+		$className = $obj->getRefClass()->getName();
+		$field = array_keys(get_class_vars($className))[$offset];
+		$className::$$field = $x;
+	}
+}
+
 //public native java.lang.Object sun.misc.Unsafe.getObject(java.lang.Object,long)
 function Java_sun_misc_Unsafe_getObject($obj, $offset) {
+	//var_dump($obj, $offset);
 	if ($obj instanceof \java\lang\Clazz) {
-		$className = $obj->getName()->replace(jstring('.'), jstring('\\'))->toString() . '';
+		$className = $obj->getRefClass()->getName();
 		$field = array_keys(get_class_vars($className))[$offset];
 		return $className::$$field;
 	}
@@ -161,7 +193,7 @@ function Java_sun_misc_Unsafe_getObject($obj, $offset) {
 
 //public native long sun.misc.Unsafe.staticFieldOffset(java.lang.reflect.Field)
 function Java_sun_misc_Unsafe_staticFieldOffset($field) {
-	$className = $field->getDeclaringClass()->getName()->replace(jstring('.'), jstring('\\'))->toString() . '';
+	$className = $field->getDeclaringClass()->getRefClass()->getName();
 	$fieldName = $field->getName()->toString().'';
 	
 	//var_dump($className);
@@ -306,8 +338,10 @@ function Java_java_util_zip_ZipFile_open($name, $mode, $lastModified, $usemmap) 
 	$zip = new ZipArchive();
 	$filename = "$name";
 
-	if ($zip->open($filename /*, ZipArchive::CREATE*/) !== TRUE) {
-		exit("cannot open <$filename>\n");
+	if ($zip->open($filename /*, ZipArchive::CREATE*/) !== true) {
+		//var_dump($mode);
+		//exit("cannot open <$filename>\n");
+		throw new java\util\zip\ZipException(jstring("cannot open <$filename>"));
 	}
 	$jzfile = $Java_java_util_zip_ZipFile_openID++;
 	$Java_java_util_zip_ZipFile_openFiles[$jzfile] = $zip;
@@ -358,7 +392,8 @@ function Java_java_util_zip_ZipFile_getMethod($jzfile) {
 	//global $Java_java_util_zip_ZipFile_openFiles;
 	//var_dump($Java_java_util_zip_ZipFile_openFiles[$jzfile]);
 	//exit;
-	return \java\util\zip\ZipFile::$STORED;
+	//return \java\util\zip\ZipFile::$STORED;
+	return \java\util\zip\ZipEntry::$STORED;
 }
 
 //private static native int java.util.zip.ZipFile.read(long,long,long,byte[],int,int)
@@ -385,7 +420,7 @@ function Java_java_util_zip_ZipEntry_initFields($jzentry) {
 
 //private native java.lang.String[] java.util.jar.JarFile.getMetaInfEntryNames()
 function Java_java_util_jar_JarFile_getMetaInfEntryNames() {
-	$manifest = php_javaClass::readJarManifest($this->name.'');
+	$manifest = php_javaClass::readJarManifest($this->getName().'');
 	//$lines = new \JavaArray(count($manifest), 'java.lang.String');
 	$lines = [];
 	foreach ($manifest as $name => $value) {
@@ -460,6 +495,11 @@ function Java_java_io_WinNTFileSystem_canonicalize0($relative_path) {
 	return jstring($real_path);
 }
 
+//protected native java.lang.String java.io.WinNTFileSystem.canonicalizeWithPrefix0(java.lang.String,java.lang.String)
+function Java_java_io_WinNTFileSystem_canonicalizeWithPrefix0($canonicalPrefix, $pathWithCanonicalPrefix) {
+	return $pathWithCanonicalPrefix;
+}
+
 //public native long java.io.WinNTFileSystem.getLength(java.io.File)
 function Java_java_io_WinNTFileSystem_getLength($file) {
 	if (!file_exists("$file")) {
@@ -475,6 +515,7 @@ function Java_java_io_WinNTFileSystem_getLength($file) {
 //public native long java.io.WinNTFileSystem.getLastModifiedTime(java.io.File)
 function Java_java_io_WinNTFileSystem_getLastModifiedTime($file) {
 	if (!file_exists("$file")) {
+		return filemtime(".");
 		var_dump("$file");
 		var_dump("Java_java_io_WinNTFileSystem_getLastModifiedTime");
 		var_dump("file does not exist");
@@ -584,9 +625,8 @@ function Java_java_lang_ProcessImpl_create($cmdstr, $envblock, $dir, $stdHandles
 
 //private native void java.io.RandomAccessFile.open(java.lang.String,int)
 function Java_java_io_RandomAccessFile_open($file, $mode) {
+	//var_dump($this->fd->handle);
 	$this->fd->handle = openJavaFile($file, $mode);
-	//var_dump($file, $mode);
-	//var_dump($this);
 }
 //private native void java.io.RandomAccessFile.close0()
 function Java_java_io_RandomAccessFile_close0() {

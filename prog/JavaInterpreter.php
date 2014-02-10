@@ -19,10 +19,16 @@ trait JavaInterpreter {
 		if (//$i === 0 && 
 			//$opcode[1] == 'areturn' &&
 			//count($stack) > 1 && $stack[count($stack)-1] === false &&
-			'java/util/ResourceBundle::findBundle' == substr($method, 0)) {
+			'java/lang/reflect/Method::acquireMethodAccessor' == substr($method, 0)) {
 		//if ('java/net/URL::__construct' == $method) {
 			//var_dump([$method, $i]);
 			//var_dump([$method, $i, $locals[1]]);
+			ensureClassInitialized('java\lang\reflect\Method');
+			var_dump(\java\lang\reflect\Method::$reflectionFactory !== null);
+			//var_dump($GLOBALS['afterClassLoad_events']);
+			var_dump(\sun\reflect\ReflectionFactory::$soleInstance !== null);
+			var_dump(\sun\reflect\ReflectionFactory::$initted);
+			exit;
 			var_dump(['$locals' => $locals, '$stack' => $stack, '$opcode' => $opcode, '$i' =>$i, '$method' => $method]);
 			readline();
 			//println("$i ".$opcode[1]);usleep(100000);
@@ -137,36 +143,85 @@ trait JavaInterpreter {
 				list($stack[], $stack[], $stack[], $stack[]) = [$value1, $value2, $value1, $value2];
 				break;
 			case 'dup2_x1':
-				list($value1, $value2, $value3) = [array_pop($stack), array_pop($stack), array_pop($stack)];
-				list($stack[], $stack[], $stack[], $stack[], $stack[]) = [$value1, $value2, $value3, $value1, $value2];
+				if (is_string($stack[count($stack) - 1])) {
+					list($value1, $value2) = [array_pop($stack), array_pop($stack)];
+					list($stack[], $stack[], $stack[]) = [$value1, $value2, $value1];
+				} else {
+					list($value1, $value2, $value3) = [array_pop($stack), array_pop($stack), array_pop($stack)];
+					list($stack[], $stack[], $stack[], $stack[], $stack[]) = [$value1, $value2, $value3, $value1, $value2];
+				}
 				break;
-			//case 'swap':
-				
+			case 'swap':
+				list($value1, $value2) = [array_pop($stack), array_pop($stack)];
+				list($stack[], $stack[]) = [$value2, $value1];
 				break;
 			case 'getstatic':
 				/*
 				$class = str_replace('$', '_S_', str_replace('/', '\\', $opcode[2]['class']));
 				$var = '$'.str_replace('$', '_S_', $opcode[2]['field']);
 				eval("\$stack[] = &$class::$var;");
-				*/
+				//*/
 				
 				$class = str_replace('$', '_S_', str_replace('/', '\\', $opcode[2]['class']));
-				$refClass = new ReflectionClass($class);
+				$refClass = \java\lang\Clazz::forName($class)->getRefClass();
 				$var = str_replace('$', '_S_', $opcode[2]['field']);
 				//var_dump($class);
 				ensureClassInitialized($class);
-				try {
-					$property = $refClass->getProperty($var);
-				} catch (\ReflectionException $e) {
-					var_dump("$class::\$$var");
+				$property = null;
+				while ($property == null && $refClass != null) {
+					try {
+						$property = $refClass->getProperty($var);
+						if ($property->isPrivate()) {
+							$property->setAccessible(true);
+						}
+					} catch (\ReflectionException $e) {
+						//$refClass = $refClass->getParentClass();
+						//var_dump($class);
+						$class = get_parent_class($class);
+						$refClass = $class ? \java\lang\Clazz::forName($class)->getRefClass() : null;
+					}
+				}
+				if ($property == null) {
+					var_dump($class);
 					var_dump(array_keys(get_class_vars($class)));
-					var_dump($class::$$var);
+					var_dump(array_pop($stack)->$var);
 					exit;
 				}
 				$stack[] = $property->getValue();
 				break;
 			case 'putstatic':
-				
+				$class = str_replace('$', '_S_', str_replace('/', '\\', $opcode[2]['class']));
+				$refClass = \java\lang\Clazz::forName($class)->getRefClass();
+				$var = str_replace('$', '_S_', $opcode[2]['field']);
+				$property = null;
+				while ($property == null && $refClass != null) {
+					try {
+						$property = $refClass->getProperty($var);
+						if ($property->isPrivate()) {
+							$property->setAccessible(true);
+						}
+					} catch (\ReflectionException $e) {
+						//$refClass = $refClass->getParentClass();
+						//var_dump($class);
+						$class = get_parent_class($class);
+						$refClass = $class ? \java\lang\Clazz::forName($class)->getRefClass() : null;
+					}
+				}
+				if ($property == null) {
+					$class = str_replace('$', '_S_', str_replace('/', '\\', $opcode[2]['class']));
+					var_dump($class);
+					var_dump($var);
+					var_dump(array_keys(get_class_vars($class)));
+					$var = strtoupper($var);
+					var_dump($class::$$var);
+					//var_dump(array_pop($stack)->$var);
+					exit;
+				}
+				$arg = array_pop($stack);
+				$property->setValue($arg);
+				break;
+
+				/*
 				$class = str_replace('$', '_S_', str_replace('/', '\\', $opcode[2]['class']));
 				$var = '$'.str_replace('$', '_S_', $opcode[2]['field']);
 				$args = $this->stackArrayPop($stack, 1);
@@ -175,7 +230,7 @@ trait JavaInterpreter {
 				}
 				eval("$class::$var = \$args[0];");
 				break;
-				
+				//*/
 				/*
 				$class = '\\'.str_replace('/', '\\', $opcode[2]['class']);
 				$refClass = new ReflectionClass($class);
@@ -183,8 +238,41 @@ trait JavaInterpreter {
 				$property = $refClass->getProperty($opcode[2]['field']);
 				$property->setValue($args[0]);
 				break;
-				*/
+				//*/
 			case 'getfield':
+				$class = str_replace('$', '_S_', str_replace('/', '\\', $opcode[2]['class']));
+				$refClass = \java\lang\Clazz::forName($class)->getRefClass();
+				$var = str_replace('$', '_S_', $opcode[2]['field']);
+				$property = null;
+				while ($property == null && $refClass != null) {
+					try {
+						$property = $refClass->getProperty($var);
+						if ($property->isPrivate()) {
+							$property->setAccessible(true);
+						}
+					} catch (\ReflectionException $e) {
+						//$refClass = $refClass->getParentClass();
+						//var_dump($class);
+						$class = get_parent_class($class);
+						$refClass = $class ? \java\lang\Clazz::forName($class)->getRefClass() : null;
+					}
+				}
+				if ($property == null) {
+					var_dump($class);
+					var_dump(array_keys(get_class_vars($class)));
+					var_dump(array_pop($stack)->$var);
+					exit;
+				}
+				$obj = array_pop($stack);
+				$stack[] = $property->getValue($obj);
+				//var_dump(get_class($obj)."::$class->\$$var");
+				//var_dump($obj->$var);
+				//var_dump($property->getValue($obj));
+				//var_dump($property);
+				break;
+				
+				/*
+				//var_dump($opcode[2]['class']);
 				$var = $opcode[2]['field'];
 				//$args = $this->stackArrayPop($stack, 1);
 				$obj = array_pop($stack);
@@ -194,13 +282,47 @@ trait JavaInterpreter {
 				}
 				$stack[] = $obj->$var;
 				break;
+				//*/
 			case 'putfield':
+				$class = str_replace('$', '_S_', str_replace('/', '\\', $opcode[2]['class']));
+				$refClass = \java\lang\Clazz::forName($class)->getRefClass();
+				$var = str_replace('$', '_S_', $opcode[2]['field']);
+				$property = null;
+				while ($property == null && $refClass != null) {
+					try {
+						$property = $refClass->getProperty($var);
+						if ($property->isPrivate()) {
+							$property->setAccessible(true);
+						}
+					} catch (\ReflectionException $e) {
+						//$refClass = $refClass->getParentClass();
+						//var_dump($class);
+						$class = get_parent_class($class);
+						$refClass = $class ? \java\lang\Clazz::forName($class)->getRefClass() : null;
+					}
+				}
+				if ($property == null) {
+					var_dump($class);
+					var_dump(array_keys(get_class_vars($class)));
+					var_dump(array_pop($stack)->$var);
+					exit;
+				}
+				$arg = array_pop($stack);
+				$obj = array_pop($stack);
+				if (!is_object($obj)) {
+					var_dump($class, $var, $obj, $arg);
+					exit;
+				}
+				$property->setValue($obj, $arg);
+				break;
+				/*
 				//$class = str_replace('/', '\\', $opcode[2]['class']);
 				$var = $opcode[2]['field'];
 				$args = $this->stackArrayPop($stack, 2);
 				//var_dump($args, $var, $method);readline();
 				$args[0]->$var = $args[1];
 				break;
+				//*/
 			case 'jsr':
 				$stack[] = $i + $opcode[0];
 				$i += $opcode[2];
@@ -628,17 +750,24 @@ trait JavaInterpreter {
 				$numArgs = 1 + count($opcode[2]['args']);
 				//$args = array_slice($stack, -$num_args, $num_args);
 				//array_splice($stack, -$num_args, $num_args);
-				//var_dump($stack);readline();
+				//var_dump($stack[count($stack) - 1]);//readline();
+				//var_dump($numArgs . '/' . count($stack));//readline();
 				//var_dump($locals);
+				//var_dump($stack[0] === null);
 				$args = $this->stackArrayPop($stack, $numArgs);
+				//var_dump($numArgs . '/' . count($stack) . '/' . count($args));
+				//var_dump(count($args));
+				//var_dump($args[0] === null);
 				$obj = array_shift($args);
+				//var_dump($obj === null);
+				//var_dump("$obj", count($args));
 				if (!is_object($obj)) {
 					//var_dump(explode('::', $method)[0]);
 					//var_dump(\java\lang\ClassLoader::getSystemClassLoader()->getResource(explode('::', $method)[0].'.class'));
 					if ($obj) {
 						var_dump([$method, $i, $obj, $args, $stack, $opcode[2]['class'].'::'.$opcode[2]['method'], 'need object']);
 					}
-					//var_dump('here? 3', $method, $i, $obj);
+					//var_dump('here? 3', $method, $i, $obj, count($args));
 					//var_dump($GLOBALS['afterClassLoad_events']);
 					//var_dump(\java\util\concurrent\atomic\AtomicReferenceFieldUpdater_S_AtomicReferenceFieldUpdaterImpl::$unsafe);
 					//var_dump(\sun\misc\Unsafe::$theUnsafe);
@@ -851,6 +980,12 @@ trait JavaInterpreter {
 	}
 	
 	public function stackArrayPop(&$stack, $qt) {
+		if (count($stack) == $qt) {
+			$ret = $stack;
+			$stack = [];
+			return $ret;
+		}
+		
 		$stack = array_values($stack);
 		//$args = array_slice($stack, -$qt, $qt);
 		//array_splice($stack, -$qt, $qt);

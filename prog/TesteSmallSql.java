@@ -125,6 +125,7 @@ public class TesteSmallSql {
 	private static String URLtoString2(URL u) {
 		return u.toString();
 	}
+	
 	private static String URLtoString(URL u) {
 		StringBuffer result = new StringBuffer();
         result.append(u.getProtocol());

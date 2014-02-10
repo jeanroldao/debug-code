@@ -67,7 +67,11 @@ public class TesteSmallSqlServer implements HttpHandler {
 		}
 	}
 	
+	private ArrayList<Message> backup_db = new ArrayList<Message>();
 	private void saveMessage(Message message) {
+		for (Message m : messages_db.toArray(new Message[0])) {
+			backup_db.add(m);
+		}
 		messages_db.add(message);
 	}
 	
@@ -82,7 +86,9 @@ public class TesteSmallSqlServer implements HttpHandler {
 		sb.append(c++);
 		sb.append("\n(");
 		sb.append(messages.size());
-		sb.append(" messages)\n");
+		sb.append(" messages, ");
+		sb.append(backup_db.size());
+		sb.append(" backup_db)\n");
 		
 		for (Message m : messages.toArray(new Message[0])) {
 			sb.append("{user: ");

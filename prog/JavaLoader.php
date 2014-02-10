@@ -19,6 +19,10 @@ class ClassLoader extends Object {
 			   self::$systemClassLoader = \sun\misc\Launcher::getLauncher()->getClassLoader();	
 	}
 	
+	public static function getSystemResource($name) {
+		return self::getSystemClassLoader()->getResource($name);
+	}
+	
 	public function getParent() {
 		return null;
 	}
@@ -107,7 +111,10 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 	public function getResources($name) {
 		
 		$vector = new \java\util\Vector();
-		$vector->add($this->getResource($name));
+		$resource = $this->getResource($name);
+		if ($resource !== null) {
+			$vector->add($resource);
+		}
 		
 		$enum = new \JavaArray(1, 'java.util.Enumeration');
 		$enum[0] = $vector->elements();

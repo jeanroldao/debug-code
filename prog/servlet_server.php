@@ -1,12 +1,15 @@
 <?php
 require 'vendor/autoload.php';
 include 'php_javaClass.php';
-include 'ServletMock.php';
+//include 'ServletMock.php';
 
-\java\lang\Thread::currentThread()->getContextClassLoader()->addClasspath(
+//\java\lang\Thread::currentThread()->getContextClassLoader()->addClasspath(
+\java\lang\ClassLoader::getSystemClassLoader()->addClasspath('./rt.jar');
+\java\lang\ClassLoader::getSystemClassLoader()->addClasspath(
 //'C:\Users\asus\Documents\NetBeansProjects\WebApplication1\build\web\WEB-INF\classes'
 //'C:\Users\jean_roldao\Documents\NetBeansProjects\JavaPhpApplication\dist\JavaPhpApplication.war'
-'C:\Users\jean_roldao\Documents\NetBeansProjects\JavaPhpApplication\build\generated\classes'
+//'C:\Users\jean_roldao\Documents\NetBeansProjects\JavaPhpApplication\build\generated\classes'
+'sample.war'
 );
 
 $loop = React\EventLoop\Factory::create();
@@ -26,6 +29,22 @@ $applications = [
 		'NewServlet' => new org\apache\jsp\index_jsp()
 	]
 ];
+
+$servlets = [];
+
+$fp = fopen('zip://'.realpath('sample.war').'#WEB-INF/web.xml', 'rb');
+$xml = simplexml_load_string(stream_get_contents($fp));
+fclose($fp);
+
+$servlet_name = trim($xml->servlet->{'servlet-name'});
+$servlet_class = trim($xml->servlet->{'servlet-class'});
+$servlets[$servlet_name] = \java\lang\Clazz::forName($servlet_class)->newInstance();
+
+//var_dump($servlets);
+$servlet_name = trim($xml->{'servlet-mapping'}->{'servlet-name'});
+$servlet_url = substr(trim($xml->{'servlet-mapping'}->{'url-pattern'}), 1);
+$applications[$servlet_name] = [$servlet_url => $servlets[$servlet_name]];
+
 $http->on('request', function ($request, $response) use ($applications) {
 	$headers = array('Content-Type' => 'text/html');
 	$path = explode('/', $request->getPath());

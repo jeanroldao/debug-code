@@ -365,7 +365,7 @@ class php_javaClass
 		$dir = __DIR__ . '/temp/';
 		$className = $this->getPhpClassName();
 		$file_name = $dir.str_replace(['\\', '/'], ['_', '_'], $className).'.txt';
-		//file_put_contents($file_name, $log_contents);
+		file_put_contents($file_name, $log_contents);
 		
 		if ($evaluate) {
 			$this->createPhpClass();
@@ -480,9 +480,12 @@ class php_javaClass
 		foreach ($this->class_attr['fields'] as $field) {
 			//var_dump($field); exit;
 			$iniValue = 'null';
-			if (in_array($field['type'], ['J', 'I'])) {
+			if (strlen($field['type']) == 1) {
 				$iniValue = '0';
 			}
+			
+			//var_dump($field['flags']);
+			$v = strpos($field['flags'], 'public') !== false ? 'public' : 'private';
 			if (strpos($field['flags'], 'static') !== false) {
 				if (isset($field['attr']['ConstantValue'])) {
 					if (is_object($field['attr']['ConstantValue'])) {
@@ -496,23 +499,25 @@ class php_javaClass
 							if (interface_exists($className)) {
 								$className .= '_interface';
 							}
-							$className::$$fieldName = $field['attr']['ConstantValue'];
+							//$className::$$fieldName = $field['attr']['ConstantValue'];
+							
+							$refClass = new ReflectionClass($className);
+							$property = $refClass->getProperty($fieldName);
+							if ($property->isPrivate()) {
+								$property->setAccessible(true);
+							}
+							$property->setValue($field['attr']['ConstantValue']);
 						});
 					} else {
 						$iniValue = var_export($field['attr']['ConstantValue'], true);
 					}
 				}
-				$fields .= 'public static $'.self::convertNameJavaToPhp($field['name'])." = $iniValue;".PHP_EOL;
+				$fields .= $v.' static $'.self::convertNameJavaToPhp($field['name'])." = $iniValue;".PHP_EOL;
 			} else {
-				$fields .= 'public $'.self::convertNameJavaToPhp($field['name'])." = $iniValue;".PHP_EOL;
+				$fields .= $v.' $'.self::convertNameJavaToPhp($field['name'])." = $iniValue;".PHP_EOL;
 			}
-			//$dump .= '"'.$field['name'].'",';
-			//$dump .= $className.'::$'.$field['name'].',';
 		}
-		//$dump .= 'null);';
-		//var_dump($dump);exit;
 		
-		//var_dump($this->class_attr['methods']);
 		$methods = '';
 		$arfnums = [];
 		foreach ($this->class_attr['methods'] as $m) {
@@ -754,7 +759,7 @@ CODE
 			}
 			if ($thisObj !== null) {
 				$php_function = new ReflectionFunction($php_function_name);
-				return call_user_func_array($php_function->getClosure()->bindTo($thisObj), $args);
+				return call_user_func_array($php_function->getClosure()->bindTo($thisObj, $thisObj), $args);
 			} else {
 				return call_user_func_array($php_function_name, $args);
 			}
@@ -808,7 +813,7 @@ CODE
 		return $newArgs;
 	}
 	
-	private function & compileAndRun($code, $args = [], $method = '') {
+	private function compileAndRun($code, $args = [], $method = '') {
 		$method = str_replace('::', '__', $method);
 		$method = str_replace('\\', '_', $method);
 		$method = 'java_' . $method;
@@ -1268,16 +1273,21 @@ function readLine() {
 	return trim(fgets(STDIN));
 }
 
+$threadGroup = new \java\lang\ThreadGroup();
+
+$thread = new \java\lang\Thread($threadGroup, jstring('main'));
+\java\lang\Thread::$currentThreadId = $thread->getId();
+
+$thread->setContextClassLoader(\java\lang\ClassLoader::getSystemClassLoader());
+
+//fix for bug on class loading order on reflection methods
+\java\lang\Clazz::forName('java.lang.reflect.Method');
+
 if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 
 	$self_php = array_shift($_SERVER["argv"]);
 	
-	$threadGroup = new \java\lang\ThreadGroup();
-	
-	$thread = new \java\lang\Thread($threadGroup, jstring('main'));
-	\java\lang\Thread::$currentThreadId = $thread->getId();
-	
-	$thread->setContextClassLoader(\java\lang\ClassLoader::getSystemClassLoader());
+	//exit;
 	
 	while (count($_SERVER["argv"]) > 0) {
 		$arg = array_shift($_SERVER["argv"]);
@@ -1323,8 +1333,10 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 			$class::__callstatic('main', [$args], $opcode);
 		} catch (\java\lang\Exception $e) {
 			println($e->toString());
+			
 			//var_dump($e->getStackTrace());
-			//var_dump($e->printStackTrace());
+			var_dump($e->printStackTrace());
+			throw $e;
 		}
 		exit;
 	} 
