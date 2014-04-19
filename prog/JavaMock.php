@@ -11,7 +11,9 @@ function fixPhpClassName($className) {
 		'Array' => '__Array',
 		'List' => '__List',
 		'Function' => '__Function',
+		'Callable' => '__Callable',
 		'print' => '__print',
+		'eval' => '__eval',
 		'and' => '__and',
 		'or' => '__or',
 		'xor' => '__xor',
@@ -44,6 +46,7 @@ function fixPhpFuncName($method) {
 		'echo' => '__echo',
 		'print' => '__print',
 		'function' => '__function',
+		'eval' => '__eval',
 		'exit' => '__exit',
 		'list' => '__list',
 		'array' => '__array',
@@ -78,6 +81,11 @@ function fixPhpFuncName($method) {
 	}*/
 }
 
+function unlink_r($path) {
+	if (!is_dir($path)) {
+		unlink($path);
+	}
+}
 
 function eval2($thisObj, $php) {
 	static $dir = null;
@@ -88,7 +96,7 @@ function eval2($thisObj, $php) {
 		}
 		foreach (scandir($dir) as $file) {
 			if (!in_array($file, ['.', '..'])) {
-				unlink($dir.$file);
+				unlink_r($dir.$file);
 			}
 		}
 	}
@@ -114,21 +122,22 @@ function evalLazy($className, $code) {
 
 function javaClassDefinition($className) {
 	static $cache = [];
-	$path = 'zip://'.realpath('./rt.jar').'#';
+	
 	$className = str_replace('.', '/', "$className");
 	if (isset($cache[$className])) {
 		return $cache[$className];
 	}
 	
-	$javaClass = new \php_javaClass();
+	$path = 'zip://'.realpath('./rt.jar').'#';
 	$fp = fopen("$path$className.class", 'rb');
 	if (!$fp) { 
+		var_dump("$path$className.class", "error reading file");
 		exit;
 	}
+	
+	$javaClass = new \php_javaClass();
 	$javaClass->readClassNoEvaluate($fp);
-	//var_dump($javaClass);
 	return $cache[$className] = $javaClass;
-	//exit;
 }
 
 //java/lang/Object
@@ -302,11 +311,14 @@ class Clazz extends Object {
 		///*
 		//ob_end_flush();
 		//var_dump("$name", isset(self::$loadedClasses["$name"]), class_exists("$name", false));readline();
-		
+		if ($name == 'org.hibernate.internal.CoreMessageLogger_$logger_en_US') {
+			//var_dump($name, !$this->isPrimitive() && !isset(self::$loadedClasses["$name"]));//readline();
+			//var_dump($this->getRefClass());
+		}
 		//teste para tipos primitivos?
 		if (!$this->isPrimitive() && !isset(self::$loadedClasses["$name"])) {
-			self::$loadedClasses["$name"] = true;
 			$this->getRefClass();
+			self::$loadedClasses["$name"] = true;
 		}
 		//*/
 	}
@@ -347,6 +359,41 @@ class Clazz extends Object {
 	public static function forName($name) {
 		$cls = new Clazz($name);
 		return $cls->intern();
+	}
+	
+	public function cast($obj) {
+		if (checkcast($obj, \php_javaClass::convertNameJavaToPhp($this->name))) {
+			return $obj;
+		} else {
+			$msg = $obj->getClass()->getName() . ' cannot be cast to ' . $this->getName();
+			throw new ClassCastException(jstring($msg));
+		}
+	}
+	
+	public function asSubclass($clazz) {
+        if ($clazz->isAssignableFrom($this)) {
+            return $this;
+        } else {
+            //var_dump("ClassCastException(".$this->toString().")");
+			throw new ClassCastException($this->toString());
+		}
+    }
+	
+	public function isAssignableFrom($cls) {
+		if ($cls === null) {
+			throw new NullPointerException();
+		}
+		
+		if ($this === $cls || $this === self::forName('java.lang.Object')) {
+			return true;
+		}
+
+		$this_name = \php_javaClass::convertNameJavaToPhp($cls->getName());
+		$other_name = \php_javaClass::convertNameJavaToPhp($this->getName());
+		
+		//var_dump($this_name, $other_name);
+
+		return is_a($this_name, $other_name, true);
 	}
 	
 	public function newInstance() {
@@ -823,16 +870,6 @@ class Clazz extends Object {
 		return self::forName($name);
 	}
 	
-	public function isAssignableFrom($cls) {
-		if ($cls === null) {
-			throw new NullPointerException();
-		}
-		$this_name = \php_javaClass::convertNameJavaToPhp($cls->getName());
-		$other_name = \php_javaClass::convertNameJavaToPhp($this->getName());
-		
-		return is_a($this_name, $other_name, true);
-	}
-	
 	public function getAnnotation($annotationClass) {
 		/*
 		if ($annotationClass === null) {
@@ -864,8 +901,11 @@ class System extends Object {
 	private static $props;
 	
 	public static function currentTimeMillis() {
-		//var_dump(floor(microtime(true) * 1000), 'currentTimeMillis');
-		return floor(microtime(true) * 1000);
+		return bcmul(microtime(true), 1000); 
+	}
+	
+	public static function nanoTime() {
+		return bcadd(bcmul(microtime(true), 1000000000), mt_rand(0, 100000));
 	}
 	
 	public static function identityHashCode($obj) {
@@ -1054,7 +1094,7 @@ class PrintStream extends \java\lang\Object {
 	}
 	
 	public function __call($func, $args) {
-		//var_dump(func_get_args());//readline();
+		//var_dump(func_get_args());exit;
 		
 		$func_args = func_get_args();
 		if(count($func_args) > 2) {
@@ -1070,7 +1110,7 @@ class PrintStream extends \java\lang\Object {
 			if ($isCharArg) {
 				$args[0] = chr($args[0]);
 			}
-			call_user_func_array([$this, '__print'], $args);
+			call_user_func_array([$this, "__$func"], $args);
 		} else if ($func == 'println') {
 			if ($isCharArg) {
 				$args[0] = chr($args[0]);
@@ -1078,6 +1118,32 @@ class PrintStream extends \java\lang\Object {
 			call_user_func_array([$this, '__println'], $args);
 		} else {
 			parent::__call($func, $args, $opcode);
+		}
+	}
+	
+	public function printf($string, $args = null) {
+		if ($args !== null) {
+			$args = $args->toArray();
+			foreach ($args as $i => $arg) {
+				if ($arg instanceof \java\lang\Number) {
+					$args[$i] = "$arg";
+				}
+			}
+			
+			$string = vsprintf(str_replace('%n', PHP_EOL, "$string"), $args);
+		}
+		call_user_func_array([$this, 'print'], [$string]);
+	}
+	
+	public function __write($args) {
+		$args = func_get_args();
+		if (count($args) === 3) {
+			$b = $args[0];
+			$off = $args[1];
+			$len = $args[2];
+			$this->__print(new \java\lang\String($b, $off, $len));
+		} else {
+			$this->__call('print', $args);
 		}
 	}
 	
@@ -1288,6 +1354,16 @@ class Character extends \java\lang\Object {
 	
 	public static function isWhiteSpace($char) {
 		return ctype_space(chr($char));
+	}
+	
+	public static function isJavaIdentifierStart($c) {
+		$c = chr($c);
+		return ctype_alpha($c);
+	}
+	
+	public static function isJavaIdentifierPart($c) {
+		$c = chr($c);
+		return ctype_alnum($c);
 	}
 	
 	public static function toUpperCase($c) {
@@ -1541,10 +1617,13 @@ class String extends Object implements \java\io\Serializable, Comparable, CharSe
         return (int)$h;
 	}
 	
-	public static function format($str, $args) {
-		$args = func_get_args();
-		$args[0] = ''.$args[0];
-		return new self(call_user_func_array('sprintf', $args));
+	public static function format($format, $args) {
+		$vars = [];
+		foreach ($args as $arg) {
+			$vars[] = $arg->toString();
+		}
+		$string = vsprintf("$format", $vars);
+		return jstring($string);
 	}
 	
 	public static function valueOf($o) {
@@ -1822,6 +1901,10 @@ evalLazy('java/util/concurrent/ConcurrentHashMap', <<<'CODE'
 namespace java\util\concurrent;
 class ConcurrentHashMap extends \java\util\HashMap {
 
+	public function __construct($initialCapacity = 10, $loadFactor = '0.75', $concurrencyLevel = 0) {
+		parent::__construct($initialCapacity, $loadFactor);
+	}
+	
 	public function putIfAbsent($key, $value) {
 		if ($value === null) {
 			throw new \java\lang\NullPointerException();
@@ -2142,6 +2225,15 @@ class AtomicInteger extends \java\lang\Number {
 		return $current;
 	}
 	
+	public function compareAndSet($expect, $update) {
+		if ($this->v == $expect) {
+			$this->v = $update;
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public static function parseInt($in) {
 		return intval($in.'');
 	}
@@ -2204,8 +2296,17 @@ class AtomicLong extends \java\lang\Number {
 		return $current;
 	}
 	
-	public static function parseInt($in) {
-		return intval($in.'');
+	public function compareAndSet($expect, $update) {
+		if ($this->v == $expect) {
+			$this->v = $update;
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static function parseLong($in) {
+		return "$in";
 	}
 
 	public static function valueOf($v) {
@@ -2250,8 +2351,11 @@ class Double extends Number {
 	
 	public static $TYPE;
 	
+	public static function longBitsToDouble($long) {
+		return unpackDouble(packLong($long));
+	}
 	public static function doubleToLongBits($d) {
-		return $d | 0;
+		return unpackLong(packDouble($d));
 	}
 	
 	public static function valueOf($v) {
@@ -2388,6 +2492,9 @@ class Boolean extends \java\lang\Object {
 	
 	public static $TYPE;
 	
+	public static $TRUE;
+	public static $FALSE;
+	
 	public function __construct($v) {
 		//var_dump($v);
 		parent::__construct();
@@ -2402,7 +2509,7 @@ class Boolean extends \java\lang\Object {
 	}
 	
 	public function booleanValue() {
-		return (bool) $this->v;
+		return $this->v;
 	}
 	
 	public static function parseBoolean($s) {
@@ -2410,7 +2517,7 @@ class Boolean extends \java\lang\Object {
 	}
 	
 	public static function valueOf($v) {
-		return new Boolean($v);
+		return (new Boolean($v))->booleanValue() ? self::$TRUE : self::$FALSE;
 	}
 	
 	public static function getBoolean($name) {
@@ -2426,6 +2533,9 @@ class Boolean extends \java\lang\Object {
 		return new String($this->v ? "true" : "false");
 	}
 }
+
+Boolean::$TRUE = new Boolean(true);
+Boolean::$FALSE = new Boolean(false);
 
 afterClassLoad('java\lang\Boolean', function(){
 	Boolean::$TYPE = Clazz::getPrimitiveClass('boolean');
@@ -2997,11 +3107,10 @@ class FileInputStream extends \java\lang\Object {
 	}
 	
 	public function readFully(\JavaArray $ar, $offset, $length) {
+		//var_dump(count($ar), $offset, $length);exit;
 		for ($i = 0; $i < $length; $i++) {
 			$c = $this->readByte();
 			if ($c == -1) {
-				// it is not about how many bytes was read, 
-				// it is about sending the message
 				return $i > 0 ? $i : -1;
 			}
 			$ar[$offset + $i] = $c;
@@ -3039,16 +3148,8 @@ class DataInputStream extends \java\lang\Object {
 	}
 	
 	public function readUnsignedShort() {
-		$ch1 = $this->input->read();
-        $ch2 = $this->input->read();
-        //var_dump("DataInputStream::readUnsignedShort");var_dump($ch1, $ch2);readline();
-        if (($ch1 | $ch2) < 0) {
-			//var_dump("?EOFException");
-			//var_dump($ch1, $ch2);
-			//var_dump("exit");
-			//exit;
-			throw new EOFException();
-		}
+		$ch1 = $this->read();
+        $ch2 = $this->read();
         return ($ch1 << 8) + ($ch2 << 0);
 	}
 }
@@ -3720,6 +3821,50 @@ class HttpServerPhp extends HttpServer  {
 		$loop->run();
 	}
 }
+CODE
+) !== false or exit;
 
+//java.util.concurrent.ForkJoinPool
+evalLazy('java/util/concurrent/ForkJoinPool', <<<'CODE'
+
+namespace java\util\concurrent;
+
+class ForkJoinPool extends \java\lang\Object {
+	
+	public function __construct($threadsNum = null) {
+		
+	}
+	
+	public function invoke($task) {
+		if ($task->pool === null) {
+			$task->pool = $this;
+		}
+		$task->compute();
+	}
+	
+	public function invokeAll($task0, $task1) {
+		$this->invoke($task0);
+		$this->invoke($task1);
+	}
+}
+CODE
+) !== false or exit;
+
+//java.util.concurrent.RecursiveAction
+evalLazy('java/util/concurrent/RecursiveAction', <<<'CODE'
+
+namespace java\util\concurrent;
+
+class RecursiveAction extends \java\lang\Object {
+	public $pool;
+	
+	public function invoke($task) {
+		$this->pool->invoke($task);
+	}
+	
+	public static function invokeAll($task0, $task1) {
+		(new ForkJoinPool())->invokeAll($task0, $task1);
+	}
+}
 CODE
 ) !== false or exit;

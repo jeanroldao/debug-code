@@ -27,6 +27,7 @@ spl_autoload_register(function($className){
 		
 		//$classLoader->setDefaultAssertionStatus(true);
 		$phpClassName = str_replace(['\\', '_S_', '_interface', '__'], ['.', '$', '', ''], $className);
+		//var_dump($className, $phpClassName);
 		//if (isset($afterClassLoad_events[$className])) {var_dump("renew event for $className?");exit;}
 		$afterClassLoad_events[$className] = [];
 		$classLoader->loadClass($phpClassName);
@@ -104,9 +105,7 @@ include 'JavaPhpCompiler.php';
 include 'PhpThread.php';
 require 'vendor/autoload.php';
 
-class php_javaClass 
-		//extends \java\lang\Object 
-{
+class php_javaClass {
 	use \JavaTranslator;
 	use \JavaInterpreter;
 	use \JavaPhpCompiler;
@@ -440,7 +439,7 @@ class php_javaClass
 	public static function convertNameJavaToPhp($name) {
 		//var_dump($name);
 		$name1 = fixPhpClassName(str_replace(['/', '.', '$'], ['\\', '\\', '_S_'], $name));
-		//var_dump($name1);readline();
+		//var_dump($name1);//readline();
 		return $name1;
 	}
 	
@@ -465,14 +464,30 @@ class php_javaClass
 		$isInterface = strpos($this->class_attr['flags'], 'interface') !== false;
 		//$isInterface = false;
 		
-		$implements = '';
-		if (!empty($this->class_attr['interfaces'])) {
-			//$implements = str_replace('/', '\\', 'implements /'.implode(', /', $this->class_attr['interfaces']));
-			$implements = [];
-			foreach ($this->class_attr['interfaces'] as $interfaceName) {
-				$implements[] = '\\'.$this->convertNameJavaToPhp($interfaceName);
+		//$implements = str_replace('/', '\\', 'implements /'.implode(', /', $this->class_attr['interfaces']));
+		$implements = [];
+		foreach ($this->class_attr['interfaces'] as $interfaceName) {
+			$interface_name = '\\'.$this->convertNameJavaToPhp($interfaceName);
+			//var_dump($super, $interface_name, is_a($super, $interface_name, true));
+			
+			$alreadyImplementedInterface = is_a($super, $interface_name, true);
+			
+			if ($alreadyImplementedInterface == false) {
+				foreach ($implements as $alreadyImplementedInterfaceName) {
+					if (is_a($alreadyImplementedInterfaceName, $interface_name, true)) {
+						$alreadyImplementedInterface = true;
+						break;
+					}
+				}
 			}
+			if ($alreadyImplementedInterface == false) {
+				$implements[] = $interface_name;
+			}
+		}
+		if (count($implements) > 0) {
 			$implements = 'implements '.implode(', ', $implements);
+		} else {
+			$implements = '';
 		}
 		
 		$fields = '';
@@ -537,10 +552,15 @@ class php_javaClass
 					if (count($args) === 1 && $args[0] == \'__EXCEPTION_DONT_INIT__\') {
 						return;
 					}
-					return self::$javaClass->run("'.$m['name'].'", $args, $this);
+					return self::$javaClass->run(\''.$m['name'].'\', $args, $this);
 				}'.PHP_EOL;
 				//var_dump($methods);
 				//exit;
+			} else if ($fname === '__construct' ) {
+				$methods .= 'public function __construct() {
+					$args = func_get_args();
+					return self::$javaClass->run(\''.$m['name'].'\', $args, $this);
+				}'.PHP_EOL;
 			} else if (strpos($m['flags'], 'static') !== false) {
 				/*
 				if ($fname == 'toString') {
@@ -554,12 +574,12 @@ class php_javaClass
 				
 				$methods .= 'public static function static_'.$fname.'() {
 					$args = func_get_args();
-					return self::$javaClass->run("'.$m['name'].'", $args);
+					return self::$javaClass->run(\''.$m['name'].'\', $args);
 				}'.PHP_EOL;
 			} else {
-				$methods .= 'public function '.$fname.'() {
+				$methods .= 'public function instance_'.$fname.'() {
 					$args = func_get_args();
-					return self::$javaClass->run("'.$m['name'].'", $args, $this);
+					return self::$javaClass->run(\''.$m['name'].'\', $args, $this);
 				}'.PHP_EOL;
 			}
 		}
@@ -588,19 +608,25 @@ class php_javaClass
 					try {
 						return self::\$javaClass->run(\$method, \$args, null, \$opcode);
 					} catch(\\JavaMethodNotFoundException \$e) {
-						
-						///*
-						if (!property_exists(get_parent_class(__CLASS__), 'javaClass')) {
-							//ob_end_clean();
-							var_dump(get_parent_class(__CLASS__));
-							var_dump(['$className::'.\$method, get_called_class(), __CLASS__]);
-							echo __CLASS__  . '::' . \$e->getMessage();
-							readline();
-							var_dump((get_class_methods(__CLASS__)));
-							readline();
+						try {
+							/*
+							if (!property_exists(get_parent_class(__CLASS__), 'javaClass')) {
+								//ob_end_clean();
+								var_dump(get_parent_class(__CLASS__));
+								var_dump(['$className::'.\$method, get_called_class(), __CLASS__]);
+								echo __CLASS__  . '::' . \$e->getMessage();
+								readline();
+								var_dump((get_class_methods(__CLASS__)));
+								readline();
+							}
+							//*/
+							//return parent::\$javaClass->run(\$method, \$args, null, \$opcode);
+							return parent::__callstatic(\$method, \$args, \$opcode);
+						} catch(\\JavaMethodNotFoundException \$e) {
+							throw new \Exception(\$e);
+							//echo(\$e->getMessage());
+							//exit;
 						}
-						//*/
-						return parent::\$javaClass->run(\$method, \$args, null, \$opcode);
 					}
 				}
 				
@@ -882,72 +908,43 @@ CODE
 		return end($stack);
 	}
 	
-	
+	private $chachedMethods = [];
 	private function findMethod($name, &$args = [], $thisObj = null, $opcode = null) {
-		//var_dump(['class' => $this->class_attr['name'], 'name' => $name]);		
-		/*
-		if ($opcode !== null) {
-			var_dump($opcode, $this->class_attr['name']);
-		}
-		//*/
 		
 		if ($name == '__construct') {
 			$name = '<init>';
 		}
 		
+		$fullname = $this->class_attr['name'] . '::' . $name .(!empty($opcode[2]['type'])?$opcode[2]['type']:'('.count($args).' args)');
+		if (isset($this->chachedMethods[$fullname])) {
+			$method = $this->chachedMethods[$fullname];
+			if ($method == 'not_found') {
+				throw new \JavaMethodNotFoundException('method ' . $name .(!empty($opcode[2]['type'])?$opcode[2]['type']:'('.count($args).' args)') . ' for class ' . $this->class_attr['name'] . ' not found!');
+			}
+			foreach ($this->getArgsType($method['type'])['args'] as $i => $arg) {
+				if (is_string($args[$i]) && strlen($arg) > 1) {
+					$args[$i] = jstring($args[$i]);
+				}
+			}
+			return $method;
+		}
+		
 		$countArgs = count($args);
 		foreach ($this->class_attr['methods'] as $method) {
-			//if ($this->class_attr['name'] == 'C2JRTBase') {
-			//	var_dump("$name ($countArgs) <1>(".count($this->class_attr['methods']).") " . $method['name'] . " (".count($this->getArgsType($method['type'])['args']).")");
-			//}
-			//echo $method['name'] . PHP_EOL;
-			if ($method['name'] == $name) {
-				//var_dump([$this->class_attr['name'], $opcode[2]['type'], $method['type']]);
-			}
 			if (   $method['name'] == $name 
 				&& (  ($opcode !== null && $opcode[2]['type'] == $method['type']) 
 					|| ($opcode === null && count($this->getArgsType($method['type'])['args']) == $countArgs))) {
-				//var_dump($this->getArgsType($method['type']));exit;
 				foreach ($this->getArgsType($method['type'])['args'] as $i => $arg) {
-					//var_dump($arg);exit;
-					if (is_string($args[$i]) && strlen($arg) > 1
-					/*$arg == 'java/lang/String' && !($args[$i] instanceof \java\lang\String)*/) {
-						//debug_print_backtrace();
-						//var_dump($args[$i]);
+					if (is_string($args[$i]) && strlen($arg) > 1) {
 						$args[$i] = jstring($args[$i]);
 					}
 				}
-				return $method;
+				return $this->chachedMethods[$fullname] = $method;
 			}
-			//if ($this->class_attr['name'] == 'C2JRTBase') {
-			//	var_dump("$name ($countArgs) <2>(".count($this->class_attr['methods']).") " . $method['name'] . " (".count($this->getArgsType($method['type'])['args']).")");
-			//}
 		}
-		/*
-		//if ($this->class_attr['name'] == 'java/util/concurrent/atomic/AtomicReferenceFieldUpdater$AtomicReferenceFieldUpdaterImpl') {
-		if ($name == 'forOutputStreamWriter') {
-			//var_dump($opcode);
-			foreach ($this->class_attr['methods'] as $method) {
-				if ($method['name'] == $name) {
-					println($this->class_attr['name'].'::'.$method['name'] . ' *'.$method['type'].'* != ' . $name . ' *'.$opcode[2]['type'].'*');
-				}
-			}
-			println($this->class_attr['name'].'::'.$name);
-			var_dump($opcode);
-			//readline();
-		}
-		//*/
+		
+		$this->chachedMethods[$fullname] = 'not_found';
 		throw new \JavaMethodNotFoundException('method ' . $name .(!empty($opcode[2]['type'])?$opcode[2]['type']:'('.count($args).' args)') . ' for class ' . $this->class_attr['name'] . ' not found!');
-		/*
-		foreach ($this->class_attr['methods'] as $method) {
-			var_dump($method['name']);
-			if ($method['name'] == $name) {
-				var_dump($this->getArgsType($method['type']));
-			}
-		}
-		if ($name != '<clinit>') {
-			var_dump([$name, $countArgs]);exit;
-		}*/
 	}
 	
 	private function getCodeAttr($attr_length) {

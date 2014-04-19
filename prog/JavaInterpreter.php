@@ -67,6 +67,20 @@ trait JavaInterpreter {
 				$stack[] = $args[0][$args[1]];
 				break;
 			case 'aastore':
+				$args = $this->stackArrayPop($stack, 3);
+				//var_dump($args[1].'', $args[0]->getSize());
+				if ($args[0] === null) {
+					//var_dump('here?', $method);
+					throw new \java\lang\NullPointerException();
+				}
+				if ($args[2] !== null && $args[0]->getClass()->getComponentType()->isAssignableFrom($args[2]->getClass()) === false) {
+					throw new \java\lang\ArrayStoreException(jstring($args[2]->getClass() . ' can\'t fit into ' . $args[0]->getClass()));
+				}
+				if (!array_key_exists(strval($args[1]), $args[0])) {
+					throw new \java\lang\ArrayIndexOutOfBoundsException(strval($args[1]));
+				}
+				$args[0][$args[1]] = $args[2];
+				break;
 			case 'sastore':
 			case 'iastore':
 			case 'dastore':
@@ -139,11 +153,17 @@ trait JavaInterpreter {
 				list($stack[], $stack[], $stack[], $stack[]) = [$value1, $value2, $value3, $value1];
 				break;
 			case 'dup2':
-				list($value1, $value2) = [array_pop($stack), array_pop($stack)];
-				list($stack[], $stack[], $stack[], $stack[]) = [$value1, $value2, $value1, $value2];
+				if (is_string($stack[count($stack) - 1])) {
+					list($value1) = [array_pop($stack)];
+					list($stack[], $stack[]) = [$value1, $value1];
+				} else {
+					list($value1, $value2) = [array_pop($stack), array_pop($stack)];
+					list($stack[], $stack[], $stack[], $stack[]) = [$value1, $value2, $value1, $value2];
+				}
 				break;
 			case 'dup2_x1':
 				if (is_string($stack[count($stack) - 1])) {
+				//if (count($stack) == 2) {
 					list($value1, $value2) = [array_pop($stack), array_pop($stack)];
 					list($stack[], $stack[], $stack[]) = [$value1, $value2, $value1];
 				} else {
@@ -179,12 +199,23 @@ trait JavaInterpreter {
 						//var_dump($class);
 						$class = get_parent_class($class);
 						$refClass = $class ? \java\lang\Clazz::forName($class)->getRefClass() : null;
+						if ($refClass == null) {
+							if (!isset($interfaces)) {
+								$class = str_replace('$', '_S_', str_replace('/', '\\', $opcode[2]['class']));
+								$interfaces = array_values(class_implements($class));
+							}
+							if (!empty($interfaces)) {
+								$refClass = \java\lang\Clazz::forName(array_shift($interfaces))->getRefClass();
+							}
+						}
 					}
 				}
 				if ($property == null) {
+					$class = str_replace('$', '_S_', str_replace('/', '\\', $opcode[2]['class']));
+					var_dump($method, $i);
 					var_dump($class);
 					var_dump(array_keys(get_class_vars($class)));
-					var_dump(array_pop($stack)->$var);
+					var_dump($class::$$var);
 					exit;
 				}
 				$stack[] = $property->getValue();
@@ -947,12 +978,6 @@ trait JavaInterpreter {
 						exit;
 					}
 					$msg = $obj->getClass()->getName() . ' cannot be cast to ' . $class;
-					//var_dump($obj);
-					/*
-					foreach (debug_backtrace() as $b) {
-						var_dump($b['class']);
-						var_dump($b['function']);
-					}*/
 					throw new \java\lang\ClassCastException(jstring($msg));
 				}
 				break;
@@ -1100,8 +1125,9 @@ function str_xor($v1, $v2) {
 
 function checkcast($obj, $class) {
 	//return true;
-	//var_dump($obj, $class);
-	if ($obj === null) {
+	//var_dump("$obj", "$class");
+	$class = str_replace('.', '\\', $class);
+	if ($obj === null || "$class" == 'java\lang\Object') {
 		return true;
 	} else if ($obj instanceof JavaArray) {
 		$className = str_replace('.', '\\', $obj->getClass()->getName());

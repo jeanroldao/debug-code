@@ -8,23 +8,83 @@ class ClassLoader extends Object {
 
 	private static $systemClassLoader;
 	
+	private $parent;
+	
+	public function __construct(ClassLoader $parent = null) {
+		$this->parent = $parent;
+	}
+	
 	public static function getSystemClassLoader() {
-		/*
-		if (self::$systemClassLoader === null) {
-			self::$systemClassLoader = \sun\misc\Launcher::getLauncher()->getClassLoader();
-		}
-		return self::$systemClassLoader;
-		//*/
 		return self::$systemClassLoader ?: 
 			   self::$systemClassLoader = \sun\misc\Launcher::getLauncher()->getClassLoader();	
+	}
+	
+	public final function defineClass($name, $b, $off, $len, $protectionDomain = null) {
+		//var_dump($name, $b, $off, $len, $protectionDomain);
+		$string = base64_encode(new \java\lang\String($b, $off, $len));
+		$fp = fopen("data://text/plain;base64,$string",'r');
+		//var_dump(strlen(stream_get_contents($fp)));
+		$phpName = \php_javaClass::convertNameJavaToPhp("$name");
+		
+		if (class_exists($phpName, false)) {
+			//var_dump($phpName, 'class_exists', class_exists($phpName, false));exit;
+			$javaClass = new \php_javaClass();
+			$javaClass->readClassNoEvaluate($fp);
+			$javaClass->setClassLoader($this);
+
+			$cls = \java\lang\Clazz::forName($name);
+			$cls->getRefClass()
+				->getProperty('javaClass')
+				->setValue($javaClass);
+				
+			try {
+				$phpName::__callstatic('<clinit>', []);
+			} catch (\JavaMethodNotFoundException $e) {}
+			return $cls;
+		} else {
+			$javaClass = new \php_javaClass();
+			$javaClass->readClass($fp);
+			$javaClass->setClassLoader($this);
+			
+			return \java\lang\Clazz::forName($name);
+		}
+	}
+	
+	public function loadClass($name) {
+		if ($this->parent != null) {
+			$this->parent->loadClass($name);
+		} else {
+			return null;
+		}
 	}
 	
 	public static function getSystemResource($name) {
 		return self::getSystemClassLoader()->getResource($name);
 	}
 	
+	public static function getSystemResourceAsStream($name) {
+		return self::getSystemClassLoader()->getResourceAsStream($name);
+	}
+	
+	public function getResource($name) {
+		if ($this->parent != null) {
+			return $this->parent->getResource($name);
+		} else {
+			return null;
+		}
+	}
+	
+	public function getResourceAsStream($name) {
+		$url = $this->getResource($name);
+		try {
+			return $url != null ? $url->openStream() : null;
+		} catch (IOException $e) {
+			return null;
+		}
+	}
+	
 	public function getParent() {
-		return null;
+		return $this->parent;
 	}
 }
 CODE
@@ -36,8 +96,7 @@ class Launcher extends \java\lang\Object {
 	private $loader;
 	
 	public function __construct() {
-		$this->loader = new Launcher_S_AppClassLoader();
-		//\java\lang\Thread::currentThread()->setContextClassLoader($this->loader);
+		$this->loader = new Launcher_S_AppClassLoader($this);
 	}
 	
 	public static function getLauncher() {
@@ -51,13 +110,18 @@ class Launcher extends \java\lang\Object {
 		return $this->loader;
 	}
 }
+
 class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
+	
+	private $this0;
 	
 	private $classpath = [];
 	
 	private $debug_log = false;
 	
-	public function __construct() {
+	public function __construct(Launcher $this0) {
+		parent::__construct(null);
+		$this->this0 = $this0;
 		$this->addClasspath(dirname(__FILE__));
 		$this->addJarClasspath('./rt.jar');
 		$this->addJarClasspath('./resources.jar');
@@ -124,6 +188,15 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 	}
 	
 	public function addClasspath($path) {
+		if (substr($path, -1) == '*') {
+			$path = substr($path, 0, -1);
+			foreach (scandir($path) as $file) {
+				if (substr($file, -4) == '.jar') {
+					$this->addClasspath($path . $file);
+				}
+			}
+			return;
+		}
 		if (!$path || !realpath($path)) {
 			throw new \Exception('Path not found');
 		}
@@ -222,6 +295,7 @@ class Launcher_S_AppClassLoader extends \java\lang\ClassLoader {
 			}
 			if ($this->debug_log) { echo "<$className not found>".PHP_EOL; }
 		}
+		return null;
 	}
 }
 

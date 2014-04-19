@@ -1,3 +1,5 @@
+//var alert = function (msg) {print(msg);};
+var alert = function (msg) {java.lang.System.out.println(msg);};
 
 function Arma() {
   var nome = '';

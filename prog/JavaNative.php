@@ -29,7 +29,7 @@ function Java_sun_reflect_NativeMethodAccessorImpl_invoke0($method, $object, $ar
 		$argsType = ['return' => ''];
 	}
 	
-	$methodName = $method instanceof \java\lang\reflect\Constructor? '<init>': $method->getName() . '';
+	$methodName = $method instanceof \java\lang\reflect\Constructor ? '<init>': $method->getName() . '';
 	if ($object !== null) {
 		$ret = $object->__call($methodName, $args, $opcode);
 	} else {
@@ -79,6 +79,11 @@ function Java_sun_reflect_NativeConstructorAccessorImpl_newInstance0($constructo
 //void java.lang.Runtime.gc()
 function Java_java_lang_Runtime_gc() {
 	gc_collect_cycles();
+}
+
+//public int java.lang.Runtime.availableProcessors()
+function Java_java_lang_Runtime_availableProcessors() {
+	return 1;
 }
 
 //public static native <T> T doPrivileged(PrivilegedExceptionAction<T> action, AccessControlContext context) throws PrivilegedActionException;
@@ -169,22 +174,27 @@ function Java_sun_misc_Unsafe_arrayBaseOffset($cls) {
 }
 
 //public native void sun.misc.Unsafe.putObject(java.lang.Object,long,java.lang.Object)
-function Java_sun_misc_Unsafe_putObject($o, $offset, $x) {
-	var_dump('Java_sun_misc_Unsafe_getObject', $obj, $offset, $x);
-	exit;
+function Java_sun_misc_Unsafe_putObject0($o, $offset, $x) {
 	if ($obj instanceof \java\lang\Clazz) {
 		$className = $obj->getRefClass()->getName();
 		$field = array_keys(get_class_vars($className))[$offset];
 		$className::$$field = $x;
+		return;
 	}
+	var_dump('Java_sun_misc_Unsafe_getObject', $obj, $offset, $x);
+	readline();
+	exit;
 }
 
 //public native java.lang.Object sun.misc.Unsafe.getObject(java.lang.Object,long)
 function Java_sun_misc_Unsafe_getObject($obj, $offset) {
-	//var_dump($obj, $offset);
+	//var_dump("$obj", $offset);exit;
 	if ($obj instanceof \java\lang\Clazz) {
 		$className = $obj->getRefClass()->getName();
 		$field = array_keys(get_class_vars($className))[$offset];
+		ensureClassInitialized($className);
+		//var_dump("$className::$$field");
+		//var_dump($className::$$field);exit;
 		return $className::$$field;
 	}
 	var_dump('Java_sun_misc_Unsafe_getObject', $obj, $offset);
@@ -259,6 +269,37 @@ function Java_sun_misc_Unsafe_getMemBlockOffset($addr) {
 	exit;
 }
 
+function packLong($value) {
+	$l1 = str_pad(dechex(bcdiv($value, 0x100000000, 0)), 8, '0', STR_PAD_LEFT);
+	$l2 = str_pad(dechex(bcmod($value, 0x100000000)), 8, '0', STR_PAD_LEFT);
+	
+	$b1 = pack("H8", $l1);
+	$b2 = pack("H8", $l2);
+	
+	return "$b1$b2";
+}
+
+function unpackLong($binarydata) {
+	if (strlen($binarydata) != 8) {
+		var_dump('unpackLong error, need 8 bytes for long');
+	}
+	$l1 = unpack("H8hex", substr($binarydata, 0, 4))['hex'];
+	$l2 = unpack("H8hex", substr($binarydata, 4, 4))['hex'];
+	$result = bcadd(bcmul(hexdec($l1), 0x100000000), hexdec($l2));
+	while (bccomp($result, '9223372036854775807') === 1) {
+		$result = bcsub($result, '18446744073709551616');
+	}
+	return $result;
+}
+
+function packDouble($value) {
+	return pack('d', $value);
+}
+
+function unpackDouble($binarydata) {
+	return unpack('dd', $binarydata)['d'];
+}
+
 //public native void sun.misc.Unsafe.putLong(long,long)
 function Java_sun_misc_Unsafe_putLong($addr, $value) {
 	global $Java_sun_misc_Unsafe_memory;
@@ -267,7 +308,7 @@ function Java_sun_misc_Unsafe_putLong($addr, $value) {
 	$l1 = str_pad(dechex(bcdiv($value, 0x100000000, 0)), 8, '0', STR_PAD_LEFT);
 	$l2 = str_pad(dechex(bcmod($value, 0x100000000)), 8, '0', STR_PAD_LEFT);
 	
-	$b1= pack("H8", $l1);
+	$b1 = pack("H8", $l1);
 	$b2 = pack("H8", $l2);
 	
 	$binary = "$b1$b2";
@@ -276,7 +317,7 @@ function Java_sun_misc_Unsafe_putLong($addr, $value) {
 	$addr -= $blockOffset;
 	
 	for ($i = 0; $i < 8; $i++) {
-		$Java_sun_misc_Unsafe_memory[$blockOffset][$addr + $i] = $binary[$addr + $i];
+		$Java_sun_misc_Unsafe_memory[$blockOffset][$addr + $i] = $binary[$i];
 	}
 	//var_dump($Java_sun_misc_Unsafe_memory[$blockOffset]);
 	return;
@@ -401,6 +442,9 @@ function Java_java_util_zip_ZipFile_read($jzfile, $jzentry, $pos, $b, $off, $len
 	global $Java_java_util_zip_ZipFile_openFiles;
 	$toRead = substr($Java_java_util_zip_ZipFile_openFiles[$jzentry], $pos, $len);
 	$len = strlen($toRead);
+	if ($len == 0) {
+		return -1;
+	}
 	for ($i = 0; $i < $len; $i++) {
 		$b[$i + $off] = ord($toRead[$i]);
 	}

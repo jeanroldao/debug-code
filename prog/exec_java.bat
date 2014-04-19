@@ -4,6 +4,7 @@ SET clss=%1
 SET ikvm="D:\download\ikvmbin-7.2.4630.5\ikvm-7.2.4630.5\bin\ikvm"
 SET ecj=java -jar ecj-4.3.1.jar -1.6 -classpath .;rt.jar
 SET cp= -classpath .;rt.jar;lib/mysql-connector.jar;lib/sqlite-jdbc.jar;lib\pdfbox.jar;lib\log4j.jar
+SET cp= -classpath .;rt.jar;lib\*
 SET javac=javac %classpath%
 
 %javac% %cp% %clss% && java %cp% -DENV=DEV -DLOG="no log" %clss:~0,-5% %2 %3 %4 && echo ---------------- && php_javaClass.bat %cp% -DENV=DEV -DLOG="no log" %clss:~0,-5% %2 %3 %4
