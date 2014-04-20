@@ -3,11 +3,12 @@ import java.util.Arrays;
 public class Teste59 {
 	
 	public static void main(String[] args) {
-		Object[] data = new Object[1];
+		Object[] data = new Object[2];
 		String[] ss = {"nada", "demais"};
 		System.out.println(ss instanceof Object ? "true" : "false");
 		System.out.println(ss instanceof Object[] ? "true" : "false");
 		data[0] = ss;
+		data[1] = 123;
 		
 		print_r(data);
 		System.out.println();
