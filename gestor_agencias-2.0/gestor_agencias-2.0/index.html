@@ -1,0 +1,81 @@
+<html>
+<head>
+<style>
+
+table.borda {
+    border-collapse: collapse;
+}
+
+table.borda td, table.borda th {
+    border: 1px solid black;
+    boder-collapse: collapse;
+    padding: 3px;
+}
+
+.hidden {
+	display: none;
+}
+</style>
+<script src="jquery-1.8.3.min.js"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.9.3/dijit/themes/claro/claro.css" media="screen" />
+<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.9.3/dojo/dojo.js" data-dojo-config="async: true"></script>
+<script src="index.js"></script>
+<title>Gestor de Agências</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta charset="utf-8" />
+</head>
+<body class="claro">
+<small>autor: jeanroldao@gmail.com</small>
+<h1>Gestor de Agências</h1>
+<div id="index" class="hidden">
+	<button id="btn_nova_agencia" 
+			data-dojo-type="dijit.form.Button"
+			data-dojo-props="iconClass: 'dijitIconNewTask'">Nova agência</button>
+	<table id="tbl_agencias_vazia" class="borda">
+		<tr>
+			<th>Sem agências registradas</th>
+		</tr>
+	</table>
+	<table id="tbl_agencias" class="borda hidden">
+		<thead>
+			<tr>
+				<th>Agência</th>
+				<th>Operadores</th>
+				<th>Ação</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="hidden">
+				<td>{agencia}</td>
+				<td>{operadores}</td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div id="agencia_editar" class="hidden">
+	<button id="btn_salvar"
+			data-dojo-type="dijit.form.Button"
+			data-dojo-props="iconClass: 'dijitIconSave'">Salvar</button>
+	<button id="btn_cancelar"
+			data-dojo-type="dijit.form.Button">Cancelar</button>
+	<div>Nome da agência:</div>
+	<div><input id="txt_nome"
+		data-dojo-type="dijit/form/TextBox"
+		data-dojo-props="trim:true, propercase:true, placeHolder:'Nome da agência'" /></div>
+	<div>Adicionar operador:</div>
+	<div>
+		<input id="txt_operador"
+			data-dojo-type="dijit/form/TextBox"
+			data-dojo-props="trim:true, propercase:true, placeHolder:'Operador'" />
+		<button id="btn_adicionar_operador"
+				data-dojo-type="dijit.form.Button"
+				data-dojo-props="iconClass: 'dijitIconUsers'">Adicionar</button>
+	</div>
+	<div>Operadores:</div>
+	<div id="list_operadores">
+		<div>(Sem operadores)</div>
+	</div>
+</div>
+</body>
+</html>
