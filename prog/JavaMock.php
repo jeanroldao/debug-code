@@ -5,6 +5,62 @@ function jstring($str) {
 	return (new \java\lang\String($str))->intern();
 }
 
+// Java's Double.toString() algorithm: shortest round-trip decimal representation
+function javaDoubleToString($d) {
+	if (is_nan($d)) return 'NaN';
+	if (is_infinite($d)) return $d > 0 ? 'Infinity' : '-Infinity';
+	if ($d == 0.0) return (1 / $d === -INF) ? '-0.0' : '0.0';
+
+	$negative = $d < 0;
+	$abs = abs($d);
+
+	// Start with 17 significant digits (max needed for IEEE 754 round-trip),
+	// then trim trailing zeros while the bit pattern still round-trips.
+	// Uses pack('d') for exact bit comparison to avoid PHP strtod edge cases
+	// near the subnormal/normal boundary (e.g. Double.MIN_NORMAL).
+	$absBits = pack('d', $abs);
+	$s = sprintf("%.16E", $abs);
+	list($mantissa, $expStr) = explode('E', $s);
+
+	while (strlen($mantissa) > 3) {
+		$shorter = substr($mantissa, 0, -1);
+		if (substr($shorter, -1) === '.') break;
+		if (pack('d', (float)($shorter . 'E' . $expStr)) !== $absBits) break;
+		$mantissa = $shorter;
+	}
+
+	if (substr($mantissa, -1) === '.') $mantissa .= '0';
+
+	$exp = (int)$expStr;
+
+	$sign = $negative ? '-' : '';
+
+	// Java uses E-notation when exp < -3 or exp >= 7
+	if ($exp < -3 || $exp >= 7) {
+		return $sign . $mantissa . 'E' . $exp;
+	}
+
+	// Plain decimal: shift decimal point by $exp positions
+	$dotAt = strpos($mantissa, '.');
+	$allDigits = str_replace('.', '', $mantissa);
+	$newDotPos = $dotAt + $exp;
+	$len = strlen($allDigits);
+
+	if ($newDotPos <= 0) {
+		$result = '0.' . str_repeat('0', -$newDotPos) . $allDigits;
+	} else if ($newDotPos >= $len) {
+		$result = $allDigits . str_repeat('0', $newDotPos - $len) . '.0';
+	} else {
+		$result = substr($allDigits, 0, $newDotPos) . '.' . substr($allDigits, $newDotPos);
+	}
+
+	// Trim trailing zeros after decimal (keep at least X.X)
+	$result = rtrim($result, '0');
+	if (substr($result, -1) === '.') $result .= '0';
+
+	return $sign . $result;
+}
+
 function fixPhpClassName($className) {
 	static $replace_ar = [
 		'Class' => 'Clazz',
@@ -424,7 +480,7 @@ class Clazz extends Object {
 			
 			$map = new \java\util\HashMap();
 			$name = $this->name;
-			foreach ($name::$_S_VALUES as $constant) {
+			foreach ($name::static_values() as $constant) {
 				$map->put($constant->name(), $constant);
 			}
 			$this->enumConstantDirectory = $map;
@@ -909,14 +965,13 @@ class System extends Object {
 	}
 	
 	public static function identityHashCode($obj) {
-		//var_dump($obj);
-		//return spl_object_hash($obj);
 		ob_start(); var_dump($obj); $dump = ob_get_contents(); ob_end_clean();
-		if ($r = preg_match('/^object\(([a-z0-9_\\\\]+)\)\#(\d+)/i', $dump, $match)) {
-			//var_dump($dump, $match);
-			$hash = \md5($match[1] . $match[2]);
-			return \base_convert(\substr($hash, 0, 6), 16, 10);
-		}	
+		if (preg_match('/^object\(([a-z0-9_\\\\]+)\)\#(\d+)/i', $dump, $match)) {
+			// crc32 returns a signed 32-bit int, matching Java's int return type.
+			// dechex() on a negative 32-bit int produces 8-char two's complement hex,
+			// matching Java's Integer.toHexString() behaviour.
+			return \crc32($match[1] . $match[2]);
+		}
 		return 0;
 	}
 	
@@ -1104,23 +1159,28 @@ class PrintStream extends \java\lang\Object {
 		}
 		
 		$isCharArg = isset($opcode) && count($opcode[2]['args']) > 0 && $opcode[2]['args'][0] == 'C';
-		
+		$isDoubleArg = isset($opcode) && count($opcode[2]['args']) > 0 && $opcode[2]['args'][0] == 'D';
+
 		if ($func == 'print' || $func == 'write') {
 			//$this->__call('__print', $args);
 			if ($isCharArg) {
 				$args[0] = chr($args[0]);
+			} else if ($isDoubleArg && isset($args[0]) && is_float($args[0])) {
+				$args[0] = \javaDoubleToString($args[0]);
 			}
 			call_user_func_array([$this, "__$func"], $args);
 		} else if ($func == 'println') {
 			if ($isCharArg) {
 				$args[0] = chr($args[0]);
+			} else if ($isDoubleArg && isset($args[0]) && is_float($args[0])) {
+				$args[0] = \javaDoubleToString($args[0]);
 			}
 			call_user_func_array([$this, '__println'], $args);
 		} else {
-			parent::__call($func, $args, $opcode);
+			return parent::__call($func, $args, $opcode);
 		}
 	}
-	
+
 	public function printf($string, $args = null) {
 		if ($args !== null) {
 			$args = $args->toArray();
@@ -1644,7 +1704,6 @@ class String extends Object implements \java\io\Serializable, Comparable, CharSe
 		return $this;
 	}
 	public function __toString() {
-		//var_dump($this->string);
 		return (string) $this->string;
 	}
 }
@@ -2099,7 +2158,7 @@ class Number extends Object {
 	}
 	
 	public function doubleValue() {
-		return strval($this->v);
+		return (float) $this->v;
 	}
 	
 	public function floatValue() {
@@ -2360,6 +2419,13 @@ class Double extends Number {
 	
 	public static function valueOf($v) {
 		return new self($v);
+	}
+
+	public function toString($i = null) {
+		if ($i !== null) {
+			return parent::toString($i);
+		}
+		return \jstring(\javaDoubleToString((float)$this->v));
 	}
 }
 

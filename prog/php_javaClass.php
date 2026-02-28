@@ -102,7 +102,6 @@ include 'JavaLoader.php';
 include 'JavaTranslator.php';
 include 'JavaInterpreter.php';
 include 'JavaPhpCompiler.php';
-include 'PhpThread.php';
 require 'vendor/autoload.php';
 
 class php_javaClass {
@@ -1352,7 +1351,11 @@ if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 	//$args = array_slice($_SERVER["argv"], 2);
 	//var_dump($args);exit;
 	//$javaClass->run('main', [$args]);
-									 
+	
+}
+
+if (class_exists('Thread', false)) {
+	include 'PhpThread.php';
 }
 
 ?>
