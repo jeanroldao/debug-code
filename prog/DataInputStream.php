@@ -197,7 +197,7 @@ class DataInputStream implements DataInput {
 		$len = $this->readUnsignedShort();
 		//println("($len)");
 		if ($len == 0) {return '';}
-		return utf8_decode($this->readChar($len));
+		return $this->readChar($len); // Keep as UTF-8 (class file Modified UTF-8 = standard UTF-8 for BMP)
 	}
 	
 	/**

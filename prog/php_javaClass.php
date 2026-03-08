@@ -268,6 +268,37 @@ class php_javaClass {
 					print(", type index=" . $descRef[1]);
 					break;
 					
+				// MethodHandle
+				case 15:
+					$refKind = $input->readByte();
+					$refIndex = $input->readShort();
+					$this->constant_pool[$i] = ['MethodHandle', $refKind, $refIndex];
+					print("MethodHandle: reference_kind=" . $refKind . ", reference_index=" . $refIndex);
+					break;
+
+				// MethodType
+				case 16:
+					$descIndex = $input->readShort();
+					$this->constant_pool[$i] = ['MethodType', $descIndex];
+					print("MethodType: descriptor_index=" . $descIndex);
+					break;
+
+				// Dynamic (Java 11+)
+				case 17:
+					$bsmIndex = $input->readShort();
+					$natIndex = $input->readShort();
+					$this->constant_pool[$i] = ['Dynamic', $bsmIndex, $natIndex];
+					print("Dynamic: bootstrap_method_attr_index=" . $bsmIndex . ", name_and_type_index=" . $natIndex);
+					break;
+
+				// InvokeDynamic (lambdas in Java 8+)
+				case 18:
+					$bsmIndex = $input->readShort();
+					$natIndex = $input->readShort();
+					$this->constant_pool[$i] = ['InvokeDynamic', $bsmIndex, $natIndex];
+					print("InvokeDynamic: bootstrap_method_attr_index=" . $bsmIndex . ", name_and_type_index=" . $natIndex);
+					break;
+
 				default:
 					println("unknown byte_tag ($byte_tag)");
 					exit();
@@ -419,6 +450,21 @@ class php_javaClass {
 					//println("    enclosing class $class_i/$number_of_classes " . $enc_class_attr['inner_class_name']);
 				}
 				$attrs[$attr_name] = $classes;
+			} else if ($attr_name == 'BootstrapMethods') {
+				$num_bsm = $this->input->readShort();
+				println("  attribute $i BootstrapMethods count: " . $num_bsm);
+				$bsms = [];
+				for ($bi = 0; $bi < $num_bsm; $bi++) {
+					$bsm_ref = $this->input->readShort();
+					$num_bsm_args = $this->input->readShort();
+					$bsm_args = [];
+					for ($ai = 0; $ai < $num_bsm_args; $ai++) {
+						$bsm_args[] = $this->input->readShort();
+					}
+					$bsms[] = ['ref' => $bsm_ref, 'args' => $bsm_args];
+					println("  BootstrapMethod $bi: ref=$bsm_ref args=[" . implode(',', $bsm_args) . "]");
+				}
+				$attrs[$attr_name] = $bsms;
 			} else {
 				$attrs[$attr_name] = '(?)length '.$attr_length;
 				println("  attribute $i length: " . $attr_length);
@@ -1065,7 +1111,7 @@ CODE
 	
 	private function getMethod($i) {
 		$desc = $this->getConstant($i);
-		if ($desc[0] != 'method') {
+		if ($desc[0] != 'method' && $desc[0] != 'interface') {
 			throw new \Exception('not a method! ('.$desc[0].')');
 		}
 		$className = $this->getClassName($desc[1][0]);
@@ -1135,6 +1181,23 @@ CODE
 		}
 		//retuns $this->getClassName($desc[1][0]);
 		return $this->getDescriptorName($desc[1][1]);
+	}
+
+	private function getInvokeDynamic($i) {
+		$desc = $this->getConstant($i);
+		if ($desc[0] != 'InvokeDynamic') {
+			throw new \Exception('not an InvokeDynamic! ('.$desc[0].')');
+		}
+		$method = $this->getConstant($desc[2]);
+		$methodName = $this->getString($method[1][0]);
+		$methodType = $this->getArgsType($this->getString($method[1][1]));
+		return [
+			'bsm' => $desc[1],
+			'method' => $methodName,
+			'type' => $this->getString($method[1][1]),
+			'args' => $methodType['args'],
+			'return' => $methodType['return']
+		];
 	}
 
 	private function getInterfaceMethodName($i) {

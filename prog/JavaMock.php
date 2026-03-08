@@ -5,6 +5,81 @@ function jstring($str) {
 	return (new \java\lang\String($str))->intern();
 }
 
+// Cooperative thread scheduler: captures thread output in chunks split at each
+// Thread.sleep() call, then replays them interleaved with the main thread when
+// the main thread itself calls Thread.sleep().
+class ThreadScheduler {
+	private static $instance = null;
+
+	// Whether we are currently capturing output for a spawned thread
+	public $captureMode = false;
+	private $captureBuffer = '';
+	private $pendingThreads = [];
+
+	public static function getInstance() {
+		if (self::$instance === null) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+
+	// Called by PrintStream when writing output
+	public function captureOutput($str) {
+		if ($this->captureMode) {
+			$this->captureBuffer .= $str;
+			return true;
+		}
+		return false;
+	}
+
+	// Called by Thread.sleep() inside a spawned thread — marks a chunk boundary
+	public function markYield() {
+		$this->captureBuffer .= "\x00YIELD\x00";
+	}
+
+	// Called by Thread.start() before running the thread body
+	public function beginCapture() {
+		$this->captureMode = true;
+		$this->captureBuffer = '';
+	}
+
+	// Called by Thread.start() after the thread body finishes
+	public function endCapture() {
+		$this->captureMode = false;
+		$chunks = explode("\x00YIELD\x00", $this->captureBuffer);
+		$this->captureBuffer = '';
+		$this->pendingThreads[] = ['chunks' => $chunks, 'tick' => 0];
+	}
+
+	// Called by Thread.sleep() in the main thread — outputs next chunk of each thread
+	public function tick() {
+		foreach ($this->pendingThreads as &$t) {
+			if ($t['tick'] < count($t['chunks'])) {
+				echo $t['chunks'][$t['tick']];
+				$t['tick']++;
+			}
+		}
+	}
+
+	// Flush any thread output that remains after main finishes
+	public function flush() {
+		$hasMore = true;
+		while ($hasMore) {
+			$hasMore = false;
+			foreach ($this->pendingThreads as &$t) {
+				if ($t['tick'] < count($t['chunks'])) {
+					echo $t['chunks'][$t['tick']];
+					$t['tick']++;
+					$hasMore = true;
+				}
+			}
+		}
+	}
+}
+register_shutdown_function(function() {
+	ThreadScheduler::getInstance()->flush();
+});
+
 // Java's Double.toString() algorithm: shortest round-trip decimal representation
 function javaDoubleToString($d) {
 	if (is_nan($d)) return 'NaN';
@@ -1084,6 +1159,18 @@ class System extends Object {
 		}
 	}
 	
+	public static function setOut($out) {
+		self::$out = $out;
+	}
+
+	public static function setErr($err) {
+		self::$err = $err;
+	}
+
+	public static function setIn($in) {
+		self::$in = $in;
+	}
+
 	public static function __exit($code = 0) {
 		exit($code);
 	}
@@ -1189,7 +1276,7 @@ class PrintStream extends \java\lang\Object {
 					$args[$i] = "$arg";
 				}
 			}
-			
+
 			$string = vsprintf(str_replace('%n', PHP_EOL, "$string"), $args);
 		}
 		call_user_func_array([$this, 'print'], [$string]);
@@ -1214,10 +1301,13 @@ class PrintStream extends \java\lang\Object {
 			if ($arg === null) {
 				$arg = 'null';
 			}
-			if (is_object($writer)) {
-				$writer->write(strval(jstring($arg)));
-			} else {
-				fwrite($writer, strval(jstring($arg)));
+			$str = strval(jstring($arg));
+			if (!\ThreadScheduler::getInstance()->captureOutput($str)) {
+				if (is_object($writer)) {
+					$writer->write($str);
+				} else {
+					fwrite($writer, $str);
+				}
 			}
 		}
 	}
@@ -1571,9 +1661,15 @@ class String extends Object implements \java\io\Serializable, Comparable, CharSe
 	}
 	
 	public function length() {
-		return strlen($this->string);
+		// Count UTF-8 characters without mbstring: remove continuation bytes (10xxxxxx = 0x80-0xBF)
+		// so each remaining byte represents exactly one character's start
+		return strlen(preg_replace('/[\x80-\xBF]/s', '', $this->string));
 	}
-	
+
+	public function isEmpty() {
+		return $this->length() == 0;
+	}
+
 	public function getBytes() {
 		return \JavaArray::fromArray($this->toCharArray()->toArray(), 'B');
 	}
@@ -1996,6 +2092,20 @@ class HashMap extends ArrayList1 {
 		return new HashSet(array_keys($this->array));
 	}
 	
+	public function getOrDefault($key, $defaultValue) {
+		$key = "$key";
+		return isset($this->array[$key]) ? $this->array[$key] : $defaultValue;
+	}
+
+	public function putIfAbsent($key, $value) {
+		$key = "$key";
+		if (!isset($this->array[$key])) {
+			$this->array[$key] = $value;
+			return null;
+		}
+		return $this->array[$key];
+	}
+
 	public function toString() {
 		$values = [];
 		foreach ($this->array as $k => $v) {
@@ -2003,6 +2113,17 @@ class HashMap extends ArrayList1 {
 		}
 		return "{".implode(', ', $values)."}";
 	}
+}
+CODE
+) !== false or exit;
+
+//java/util/LinkedHashMap
+evalLazy('java/util/LinkedHashMap1', <<<'CODE'
+
+namespace java\util;
+
+class LinkedHashMap extends HashMap {
+	// Extends HashMap — PHP arrays already preserve insertion order
 }
 CODE
 ) !== false or exit;
@@ -2416,6 +2537,10 @@ class Double extends Number {
 	public static function doubleToLongBits($d) {
 		return unpackLong(packDouble($d));
 	}
+
+	public static function doubleToRawLongBits($d) {
+		return unpackLong(packDouble($d));
+	}
 	
 	public static function valueOf($v) {
 		return new self($v);
@@ -2446,7 +2571,18 @@ class Float extends Number {
 	public static $TYPE;
 	
 	public static function floatToIntBits($f) {
-		return $f | 0;
+		$bits = unpack('l', pack('f', (float)$f));
+		return $bits[1];
+	}
+
+	public static function floatToRawIntBits($f) {
+		$bits = unpack('l', pack('f', (float)$f));
+		return $bits[1];
+	}
+
+	public static function intBitsToFloat($i) {
+		$f = unpack('f', pack('l', (int)$i));
+		return $f[1];
 	}
 	
 	public static function valueOf($v) {
@@ -2817,6 +2953,100 @@ class Throwable extends \Exception {
 CODE
 ) !== false or exit;
 
+//java/lang/ProcessBuilder
+evalLazy('java/lang/ProcessBuilder', <<<'CODE'
+
+namespace java\lang;
+
+class ProcessBuilder extends Object {
+
+	private $cmdParts = [];
+	private $dir = null;
+	private $mergeErr = false;
+
+	public function __construct() {
+		$args = func_get_args();
+		if (count($args) === 1 && $args[0] instanceof \JavaArray) {
+			// String[] varargs
+			foreach ($args[0] as $a) {
+				$this->cmdParts[] = "$a";
+			}
+		} else if (count($args) === 1 && is_object($args[0])) {
+			// List<String> constructor
+			$list = $args[0];
+			$size = $list->__call('size', []);
+			for ($i = 0; $i < $size; $i++) {
+				$this->cmdParts[] = $list->__call('get', [$i]) . '';
+			}
+		} else {
+			foreach ($args as $a) {
+				$this->cmdParts[] = "$a";
+			}
+		}
+	}
+
+	public function command() {
+		$args = func_get_args();
+		if (count($args) === 0) {
+			// getter: return as java.util.ArrayList
+			$list = new \java\util\ArrayList();
+			foreach ($this->cmdParts as $p) {
+				$list->__call('add', [jstring($p)]);
+			}
+			return $list;
+		}
+		// setter
+		$this->cmdParts = [];
+		foreach ($args as $a) { $this->cmdParts[] = "$a"; }
+		return $this;
+	}
+
+	public function directory() {
+		$args = func_get_args();
+		if (count($args) === 0) return $this->dir;
+		$this->dir = $args[0];
+		return $this;
+	}
+
+	public function redirectErrorStream() {
+		$args = func_get_args();
+		if (count($args) === 0) return $this->mergeErr;
+		$this->mergeErr = (bool)$args[0];
+		return $this;
+	}
+
+	public function environment() {
+		return new \java\util\LinkedHashMap();
+	}
+
+	public function inheritIO() { return $this; }
+	public function redirectInput()  { return $this; }
+	public function redirectOutput() { return $this; }
+	public function redirectError()  { return $this; }
+
+	public function start() {
+		if (empty($this->cmdParts)) {
+			throw new \java\lang\IllegalStateException(jstring('ProcessBuilder: empty command'));
+		}
+		$dir = ($this->dir !== null) ? ($this->dir->instance_getPath() . '') : null;
+		// PHP 5.4: proc_open requires a string, not an array
+		$cmdStr = implode(' ', array_map(function($p) {
+			return strpos($p, ' ') !== false ? '"' . addcslashes($p, '"\\') . '"' : $p;
+		}, $this->cmdParts));
+		$descriptors = [0 => ['pipe', 'r'], 1 => ['pipe', 'w'], 2 => ['pipe', 'w']];
+		$proc = proc_open($cmdStr, $descriptors, $pipes, $dir);
+		if ($proc === false) {
+			throw new \java\io\IOException(jstring(
+				'Cannot run program "' . $this->cmdParts[0] . '": proc_open failed'
+			));
+		}
+		return new \JavaProcProcess($proc, $pipes, $this->mergeErr);
+	}
+}
+
+CODE
+) !== false or exit;
+
 //java/lang/Thread
 evalLazy('java/lang/Thread', <<<'CODE'
 
@@ -2916,17 +3146,20 @@ class Thread extends Object {
 	}
 	
 	public function start() {
-		
-		//disable threads 
-		return;
+
 		if ($this->name->equals(jstring('Reference Handler'))) {
 			return;
 		}
-		
-		
+
 		if ($this->threadStatus !== 0) {
 			throw new IllegalThreadStateException();
 		}
+
+		$scheduler = \ThreadScheduler::getInstance();
+		$scheduler->beginCapture();
+		$this->run();
+		$scheduler->endCapture();
+		return;
 
 		$opcode = [2 => ['type' => '([Ljava/lang/Thread;)V']];
 		$this->group->__call('add', [$this], $opcode);
@@ -2995,7 +3228,14 @@ class Thread extends Object {
 	
 	/* long */
 	public static function sleep($milisecs) {
-		usleep($milisecs * 1000);
+		$scheduler = \ThreadScheduler::getInstance();
+		if ($scheduler->captureMode) {
+			// Inside a spawned thread — mark a chunk boundary
+			$scheduler->markYield();
+		} else {
+			// Inside main — output next chunk from each thread
+			$scheduler->tick();
+		}
 	}
 	
 	/* java\lang\Thread */
@@ -3094,7 +3334,8 @@ class FileInputStream extends \java\lang\Object {
 		if (is_resource($file)) {
 			$this->file = $file;
 		} else {
-			@$this->file = fopen($file, 'rb');
+			$file = $file instanceof File ? $file->getPath() : $file;
+			@$this->file = fopen("$file", 'rb');
 			if ($this->file === false) {
 				//println($file); exit;
 				throw new FileNotFoundException($file);
@@ -3107,10 +3348,12 @@ class FileInputStream extends \java\lang\Object {
 		if ($b === null) {
 			return $this->readByte();
 		} else {
+			if ($off === null) $off = 0;
+			if ($len === null) $len = count($b);
 			return $this->readFully($b, $off, $len);
 		}
 	}
-	
+
 	public function readByte() {
 		return $this->stream->readByte();
 	}
@@ -3173,7 +3416,6 @@ class FileInputStream extends \java\lang\Object {
 	}
 	
 	public function readFully(\JavaArray $ar, $offset, $length) {
-		//var_dump(count($ar), $offset, $length);exit;
 		for ($i = 0; $i < $length; $i++) {
 			$c = $this->readByte();
 			if ($c == -1) {
@@ -3184,9 +3426,129 @@ class FileInputStream extends \java\lang\Object {
 		return $length;
 	}
 	
+	public function available() {
+		if (!$this->file) return 0;
+		$cur = ftell($this->file);
+		fseek($this->file, 0, SEEK_END);
+		$end = ftell($this->file);
+		fseek($this->file, $cur, SEEK_SET);
+		return $end - $cur;
+	}
+
+	public function skip($n) {
+		return fseek($this->file, $n, SEEK_CUR) === 0 ? $n : 0;
+	}
+
+	public function getChannel() {
+		return new \sun\nio\ch\FileChannelImpl($this->file);
+	}
+
+	public function getFD() {
+		$fd = new \java\io\FileDescriptor();
+		$fd->handle = $this->file;
+		return $fd;
+	}
+
 	public function close() {
 		$this->file = null;
 	}
+}
+
+CODE
+) !== false or exit;
+
+//sun/nio/ch/FileChannelImpl
+evalLazy('sun/nio/ch/FileChannelImpl', <<<'CODE'
+
+namespace sun\nio\ch;
+
+class FileChannelImpl extends \java\lang\Object {
+
+	private $handle;
+
+	public function __construct($handle) {
+		$this->handle = $handle;
+	}
+
+	public function size() {
+		$pos = ftell($this->handle);
+		fseek($this->handle, 0, SEEK_END);
+		$size = ftell($this->handle);
+		fseek($this->handle, $pos);
+		return $size;
+	}
+
+	public function position($pos = null) {
+		if ($pos === null) {
+			return ftell($this->handle);
+		}
+		fseek($this->handle, (int)$pos);
+		return $this;
+	}
+
+	public function read($dst) {
+		$remaining = $dst->remaining();
+		if ($remaining <= 0) return 0;
+		$data = fread($this->handle, $remaining);
+		$n = strlen($data);
+		if ($n === 0) return -1;
+		$arr = new \JavaArray($n, 'B');
+		for ($i = 0; $i < $n; $i++) {
+			$arr[$i] = ord($data[$i]);
+		}
+		$dst->put($arr, 0, $n);
+		return $n;
+	}
+
+	public function write($src) {
+		$remaining = $src->remaining();
+		if ($remaining <= 0) return 0;
+		$data = '';
+		for ($i = 0; $i < $remaining; $i++) {
+			$data .= chr($src->get());
+		}
+		return fwrite($this->handle, $data);
+	}
+
+	// static factory: FileChannelImpl.open(fd, readable, writable, parent)
+	// Used by RandomAccessFile.getChannel() and FileInputStream.getChannel() in JDK internals.
+	public static function open($fd, $readable, $writable, $parent) {
+		return new self($fd->handle);
+	}
+
+	public function tryLock() {
+		return new \java\nio\channels\FileLock($this);
+	}
+
+	public function isOpen() {
+		return $this->handle !== null;
+	}
+
+	public function close() {
+		if ($this->handle) {
+			fclose($this->handle);
+			$this->handle = null;
+		}
+	}
+}
+
+CODE
+) !== false or exit;
+
+//java/nio/channels/FileLock
+evalLazy('java/nio/channels/FileLock', <<<'CODE'
+
+namespace java\nio\channels;
+
+class FileLock extends \java\lang\Object {
+	private $channel;
+	public function __construct($channel) {
+		$this->channel = $channel;
+	}
+	public function release() {}
+	public function isValid() { return true; }
+	public function isShared() { return false; }
+	public function channel() { return $this->channel; }
 }
 
 CODE

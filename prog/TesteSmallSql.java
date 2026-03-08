@@ -86,23 +86,23 @@ public class TesteSmallSql {
 		Statement statement = con.createStatement();
 		//ResultSet result = statement.executeQuery("SELECT * FROM MESSAGES");  
 		
-		/*
+		//*
 		String sql = "select 'jean' as user, 'oi' as message";
 		String[][] messages = new String[][]{
-			{"zeze", "bye"},
+			//{"zeze", "bye"},
 			{"z1", "wait!"},
 			{"z2", "why?"},
 			{"z1", "never mind..."},
-			{"z2", "what? o.O"},
-			{"z1", "it's just that..."},
-			{"z2", "..."}
+			//{"z2", "what? o.O"},
+			//{"z1", "it's just that..."},
+			//{"z2", "..."}
 		};
 		for (String[] msg : messages) {
 			sql += " UNION ALL select '"+msg[0]+"' as user, '"+msg[1].replace("'", "''")+"' as message";
 		}
 		//*/
 		
-		String sql = "SELECT * FROM MESSAGES";
+		sql = "SELECT * FROM MESSAGES";
 		ResultSet result = statement.executeQuery(sql);  
 		System.out.println("-MESSAGES-START-");
 		//System.out.println(result);

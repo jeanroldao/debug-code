@@ -489,6 +489,9 @@ trait JavaTranslator {
 			case 0xb9:
 				$i += 4;
 				return [5, 'invokeinterface', $this->getInterfaceMethod($input->readShort()), $input->readShort()];
+			case 0xba:
+				$i += 4;
+				return [5, 'invokedynamic', $this->getInvokeDynamic($input->readShort()), $input->readShort()];
 			case 0xbb:
 				$i += 2;
 				return [3, 'new', $this->getClassName($input->readShort())];

@@ -106,7 +106,7 @@ function Java_sun_reflect_Reflection_getClassAccessFlags($c) {
 function Java_sun_misc_VM_initialize() {}
 
 //public static native java.lang.Class sun.reflect.Reflection.getCallerClass(int)
-function Java_sun_reflect_Reflection_getCallerClass($realFramesToSkip) {
+function Java_sun_reflect_Reflection_getCallerClass($realFramesToSkip = 0) {
 	//var_dump("getCallerClass($realFramesToSkip)");
 	$i = 0;
 	$backtrace = debug_backtrace();
@@ -135,6 +135,56 @@ function Java_java_util_TimeZone_getSystemGMTOffsetID() {
 	return jstring("GMT-03:00");//LOL
 }
 
+// ---- java.lang.ProcessImpl (Windows) ----
+
+//private static native int java.lang.ProcessImpl.getStillActive()
+// Returns Windows STILL_ACTIVE (259 = 0x103) — the exit code meaning "still running"
+function Java_java_lang_ProcessImpl_getStillActive() {
+	return 259;
+}
+
+//private static native int java.lang.ProcessImpl.getExitCodeProcess(long handle)
+function Java_java_lang_ProcessImpl_getExitCodeProcess($handle) {
+	return 0; // assume success / exited cleanly
+}
+
+//private static native long java.lang.ProcessImpl.create(String cmd, String envBlock, String dir, long[] stdHandles, boolean redirectErrorStream)
+function Java_java_lang_ProcessImpl_create($cmd, $envBlock, $dir, $stdHandles, $redirectErrorStream) {
+	return 1; // dummy process handle
+}
+
+//private static native boolean java.lang.ProcessImpl.closeHandle(long handle)
+function Java_java_lang_ProcessImpl_closeHandle($handle) {
+	return true;
+}
+
+//private static native boolean java.lang.ProcessImpl.terminateProcess(long handle)
+function Java_java_lang_ProcessImpl_terminateProcess($handle) {
+	return true;
+}
+
+//private static native boolean java.lang.ProcessImpl.isProcessAlive(long handle)
+function Java_java_lang_ProcessImpl_isProcessAlive($handle) {
+	return false; // process has finished
+}
+
+//private static native boolean java.lang.ProcessImpl.waitForInterruptibly(long handle)
+function Java_java_lang_ProcessImpl_waitForInterruptibly($handle) {
+	return true;
+}
+
+//private static native boolean java.lang.ProcessImpl.waitForTimeoutInterruptibly(long handle, long timeout)
+function Java_java_lang_ProcessImpl_waitForTimeoutInterruptibly($handle, $timeout) {
+	return true;
+}
+
+//private static native long java.lang.ProcessImpl.openForAtomicAppend(String path)
+function Java_java_lang_ProcessImpl_openForAtomicAppend($path) {
+	return 0;
+}
+
+// ---- sun.misc.Unsafe ----
+
 //private static native void sun.misc.Unsafe.registerNatives()
 function Java_sun_misc_Unsafe_registerNatives() {}
 
@@ -162,15 +212,6 @@ function Java_sun_misc_Unsafe_staticFieldBase($field) {
 	//var_dump($field->getDeclaringClass()->toString());
 	//exit;
 	return $field->getDeclaringClass();
-}
-
-//public native int sun.misc.Unsafe.arrayBaseOffset(java.lang.Class)
-function Java_sun_misc_Unsafe_arrayBaseOffset($cls) {
-	return 0;
-	//var_dump($this);
-	//var_dump("$cls");
-	//var_dump('Java_sun_misc_Unsafe_arrayBaseOffset');
-	//exit;
 }
 
 //public native void sun.misc.Unsafe.putObject(java.lang.Object,long,java.lang.Object)
@@ -233,40 +274,18 @@ function Java_sun_misc_Unsafe_compareAndSwapInt($obj, $offset, $expected, $value
 	}
 }
 
-$Java_sun_misc_Unsafe_totalSize = 1;
-$Java_sun_misc_Unsafe_memory = ["\0"];
+// Flat memory model: single string where $mem[$addr] = byte char.
+// Address 0 is reserved (null pointer placeholder).
+$Java_sun_misc_Unsafe_memory = "\0"; // index 0 = null pointer
+$Java_sun_misc_Unsafe_nextAddr = 1;
+
 //public native long sun.misc.Unsafe.allocateMemory(long)
 function Java_sun_misc_Unsafe_allocateMemory($bytes) {
-	global $Java_sun_misc_Unsafe_totalSize, 
-	       $Java_sun_misc_Unsafe_memory;
-	
-	$addr = $Java_sun_misc_Unsafe_totalSize;
-	$Java_sun_misc_Unsafe_totalSize += $bytes;
-	
-	$Java_sun_misc_Unsafe_memory[$addr] = str_repeat("\0", $bytes);
+	global $Java_sun_misc_Unsafe_memory, $Java_sun_misc_Unsafe_nextAddr;
+	$addr = $Java_sun_misc_Unsafe_nextAddr;
+	$Java_sun_misc_Unsafe_nextAddr += $bytes;
+	$Java_sun_misc_Unsafe_memory .= str_repeat("\0", $bytes);
 	return $addr;
-}
-
-function Java_sun_misc_Unsafe_getMemBlockOffset($addr) {
-	global $Java_sun_misc_Unsafe_totalSize, 
-	       $Java_sun_misc_Unsafe_memory;
-	
-	$addresses = array_keys($Java_sun_misc_Unsafe_memory);
-	$addr_count = count($addresses);// need count before!
-	$addresses[] = $Java_sun_misc_Unsafe_totalSize;
-	
-	for ($i = 0; $i < $addr_count; $i++) {
-		//var_dump($addresses[$i]);
-		
-		if ($addr >= $addresses[$i] 
-		&& $addr < $addresses[$i + 1]) {
-			//var_dump($Java_sun_misc_Unsafe_memory[$addresses[$i]]);
-			return $addresses[$i];
-		}
-	}
-	var_dump("Java_sun_misc_Unsafe_getMemBlockRef");
-	var_dump("addr not found!");
-	exit;
 }
 
 function packLong($value) {
@@ -303,69 +322,166 @@ function unpackDouble($binarydata) {
 //public native void sun.misc.Unsafe.putLong(long,long)
 function Java_sun_misc_Unsafe_putLong($addr, $value) {
 	global $Java_sun_misc_Unsafe_memory;
-	
-	// long uses 8 bytes
-	$l1 = str_pad(dechex(bcdiv($value, 0x100000000, 0)), 8, '0', STR_PAD_LEFT);
-	$l2 = str_pad(dechex(bcmod($value, 0x100000000)), 8, '0', STR_PAD_LEFT);
-	
-	$b1 = pack("H8", $l1);
-	$b2 = pack("H8", $l2);
-	
-	$binary = "$b1$b2";
-	
-	$blockOffset = Java_sun_misc_Unsafe_getMemBlockOffset($addr);
-	$addr -= $blockOffset;
-	
+	$binary = packLong($value);
+	$addr = (int)$addr;
 	for ($i = 0; $i < 8; $i++) {
-		$Java_sun_misc_Unsafe_memory[$blockOffset][$addr + $i] = $binary[$i];
+		$Java_sun_misc_Unsafe_memory[$addr + $i] = $binary[$i];
 	}
-	//var_dump($Java_sun_misc_Unsafe_memory[$blockOffset]);
-	return;
 }
 
 //public native void sun.misc.Unsafe.putByte(long,byte)
 function Java_sun_misc_Unsafe_putByte($addr, $byte) {
 	global $Java_sun_misc_Unsafe_memory;
-	
-	$blockOffset = Java_sun_misc_Unsafe_getMemBlockOffset($addr);
-	$addr -= $blockOffset;
-	
-	$Java_sun_misc_Unsafe_memory[$blockOffset][$addr] = chr($byte);
+	$Java_sun_misc_Unsafe_memory[(int)$addr] = chr((int)$byte & 0xFF);
 }
 
 //public native byte sun.misc.Unsafe.getByte(long)
 function Java_sun_misc_Unsafe_getByte($addr) {
 	global $Java_sun_misc_Unsafe_memory;
-	
-	$blockOffset = Java_sun_misc_Unsafe_getMemBlockOffset($addr);
-	$addr -= $blockOffset;
-	
-	return ord($Java_sun_misc_Unsafe_memory[$blockOffset][$addr]);
+	return ord($Java_sun_misc_Unsafe_memory[(int)$addr]);
+}
+
+//public native long sun.misc.Unsafe.getLong(long)
+function Java_sun_misc_Unsafe_getLong($addr) {
+	global $Java_sun_misc_Unsafe_memory;
+	$binary = substr($Java_sun_misc_Unsafe_memory, (int)$addr, 8);
+	$val = unpackLong($binary);
+	fwrite(STDERR, "getLong($addr)=$val\n");
+	return $val;
+}
+
+//public native int sun.misc.Unsafe.getInt(long)
+function Java_sun_misc_Unsafe_getInt($addr) {
+	global $Java_sun_misc_Unsafe_memory;
+	$a = (int)$addr;
+	$val = (ord($Java_sun_misc_Unsafe_memory[$a]) << 24)
+	     | (ord($Java_sun_misc_Unsafe_memory[$a+1]) << 16)
+	     | (ord($Java_sun_misc_Unsafe_memory[$a+2]) << 8)
+	     |  ord($Java_sun_misc_Unsafe_memory[$a+3]);
+	// convert to signed 32-bit
+	if ($val >= 0x80000000) $val -= 0x100000000;
+	fwrite(STDERR, "getInt($addr)=$val\n");
+	return $val;
+}
+
+//public native short sun.misc.Unsafe.getShort(long)
+function Java_sun_misc_Unsafe_getShort($addr) {
+	global $Java_sun_misc_Unsafe_memory;
+	$a = (int)$addr;
+	$val = (ord($Java_sun_misc_Unsafe_memory[$a]) << 8)
+	     |  ord($Java_sun_misc_Unsafe_memory[$a+1]);
+	if ($val >= 0x8000) $val -= 0x10000;
+	fwrite(STDERR, "getShort($addr)=$val\n");
+	return $val;
+}
+
+//public native void sun.misc.Unsafe.putInt(long,int)
+function Java_sun_misc_Unsafe_putInt($addr, $value) {
+	global $Java_sun_misc_Unsafe_memory;
+	$a = (int)$addr;
+	$v = (int)$value;
+	$Java_sun_misc_Unsafe_memory[$a]   = chr(($v >> 24) & 0xFF);
+	$Java_sun_misc_Unsafe_memory[$a+1] = chr(($v >> 16) & 0xFF);
+	$Java_sun_misc_Unsafe_memory[$a+2] = chr(($v >> 8)  & 0xFF);
+	$Java_sun_misc_Unsafe_memory[$a+3] = chr( $v        & 0xFF);
 }
 
 //public native int sun.misc.Unsafe.pageSize()
 function Java_sun_misc_Unsafe_pageSize() {
-	return 1 << 8; // ???
-	//var_dump($this);
-	//exit;
+	return 1 << 8;
+}
+
+//public native int sun.misc.Unsafe.addressSize()
+function Java_sun_misc_Unsafe_addressSize() {
+	return 4; // 32-bit
+}
+
+//public native int sun.misc.Unsafe.arrayBaseOffset(Class)
+function Java_sun_misc_Unsafe_arrayBaseOffset($arrayClass) {
+	return 0;
+}
+
+//public native int sun.misc.Unsafe.arrayIndexScale(Class)
+function Java_sun_misc_Unsafe_arrayIndexScale($arrayClass) {
+	// Return element size based on component type name
+	$name = '';
+	if (is_object($arrayClass) && method_exists($arrayClass, 'instance_getName')) {
+		$name = $arrayClass->instance_getName() . '';
+	}
+	switch ($name) {
+		case '[B': case '[Z': return 1;  // byte[], boolean[]
+		case '[S': case '[C': return 2;  // short[], char[]
+		case '[I': case '[F': return 4;  // int[], float[]
+		case '[J': case '[D': return 8;  // long[], double[]
+		default:              return 4;  // Object[] (reference size)
+	}
 }
 
 //public native void sun.misc.Unsafe.setMemory(long,long,byte)
 function Java_sun_misc_Unsafe_setMemory($addr, $bytes, $value) {
 	global $Java_sun_misc_Unsafe_memory;
-
-	$blockOffset = Java_sun_misc_Unsafe_getMemBlockOffset($addr);
-	$addr -= $blockOffset;
-	
+	$ch = chr((int)$value & 0xFF);
+	$addr = (int)$addr;
 	for ($i = 0; $i < $bytes; $i++) {
-		$Java_sun_misc_Unsafe_memory[$blockOffset][$addr + $i] = chr($value);
+		$Java_sun_misc_Unsafe_memory[$addr + $i] = $ch;
 	}
 }
 
 //public native void sun.misc.Unsafe.freeMemory(long)
 function Java_sun_misc_Unsafe_freeMemory($addr) {
+	// no-op: flat string model, memory is never reclaimed
+}
+
+//public native void sun.misc.Unsafe.copyMemory(Object,long,Object,long,long)
+//public native void sun.misc.Unsafe.copyMemory(long,long,long)
+function Java_sun_misc_Unsafe_copyMemory($srcBase, $srcOffset, $destBase, $destOffset = null, $bytes = null) {
 	global $Java_sun_misc_Unsafe_memory;
-	unset($Java_sun_misc_Unsafe_memory[$addr]);
+
+	if ($destOffset === null) {
+		// 3-arg form: copyMemory(srcAddr, destAddr, bytes)
+		$srcAddr  = (int)$srcBase;
+		$destAddr = (int)$srcOffset;
+		$n        = (int)$destBase;
+		$chunk = substr($Java_sun_misc_Unsafe_memory, $srcAddr, $n);
+		for ($i = 0; $i < $n; $i++) {
+			$Java_sun_misc_Unsafe_memory[$destAddr + $i] = isset($chunk[$i]) ? $chunk[$i] : "\0";
+		}
+		return;
+	}
+
+	// 5-arg form: copyMemory(srcBase, srcOffset, destBase, destOffset, bytes)
+	$n = (int)$bytes;
+
+	// Read source bytes into a string chunk
+	if ($srcBase === null) {
+		$chunk = substr($Java_sun_misc_Unsafe_memory, (int)$srcOffset, $n);
+	} elseif ($srcBase instanceof \JavaArray) {
+		$off = (int)$srcOffset;
+		$chunk = '';
+		for ($i = 0; $i < $n; $i++) {
+			$chunk .= chr((int)$srcBase[$off + $i]);
+		}
+	} else {
+		$chunk = substr($Java_sun_misc_Unsafe_memory, (int)$srcOffset, $n);
+	}
+
+	// Write chunk to destination
+	if ($destBase === null) {
+		$d = (int)$destOffset;
+		for ($i = 0; $i < $n; $i++) {
+			$Java_sun_misc_Unsafe_memory[$d + $i] = isset($chunk[$i]) ? $chunk[$i] : "\0";
+		}
+	} elseif ($destBase instanceof \JavaArray) {
+		$d = (int)$destOffset;
+		for ($i = 0; $i < $n; $i++) {
+			$destBase[$d + $i] = ord(isset($chunk[$i]) ? $chunk[$i] : "\0");
+		}
+	} else {
+		$d = (int)$destOffset;
+		for ($i = 0; $i < $n; $i++) {
+			$Java_sun_misc_Unsafe_memory[$d + $i] = isset($chunk[$i]) ? $chunk[$i] : "\0";
+		}
+	}
 }
 
 $Java_java_util_zip_ZipFile_openID = 1; //start at 1
@@ -495,8 +611,8 @@ function Java_java_io_WinNTFileSystem_getBooleanAttributes($file) {
     BA_HIDDEN    = 0x08;
 	
 	*/
-	$file = "$file";
-	//$file .= '\smallsql.master';
+	$path = $file->instance_getPath();
+	$file = "$path";
 	$mode = 0;
 	if (file_exists($file)) {
 		$mode |= 0x01;
@@ -507,14 +623,6 @@ function Java_java_io_WinNTFileSystem_getBooleanAttributes($file) {
 	if (is_dir($file)) {
 		$mode |= 0x04;
 	}
-	
-	/*
-	var_dump($mode);
-	var_dump($mode & 1 ? 'BA_EXISTS' : 0);
-	var_dump($mode & 2 ? 'BA_REGULAR' : 0);
-	var_dump($mode & 4 ? 'BA_DIRECTORY' : 0);
-	var_dump($mode & 8 ? 'BA_HIDDEN' : 0);
-	*/
 	return $mode;
 }
 
@@ -546,31 +654,25 @@ function Java_java_io_WinNTFileSystem_canonicalizeWithPrefix0($canonicalPrefix, 
 
 //public native long java.io.WinNTFileSystem.getLength(java.io.File)
 function Java_java_io_WinNTFileSystem_getLength($file) {
-	if (!file_exists("$file")) {
+	$file = '' . $file->instance_getPath();
+	if (!file_exists($file)) {
 		return '0';
-		//var_dump("$file");
-		//var_dump("Java_java_io_WinNTFileSystem_getLength");
-		//var_dump("file does not exist");
-		//exit;
 	}
-	return filesize("$file");
+	return filesize($file);
 }
 
 //public native long java.io.WinNTFileSystem.getLastModifiedTime(java.io.File)
 function Java_java_io_WinNTFileSystem_getLastModifiedTime($file) {
-	if (!file_exists("$file")) {
+	$file = '' . $file->instance_getPath();
+	if (!file_exists($file)) {
 		return filemtime(".");
-		var_dump("$file");
-		var_dump("Java_java_io_WinNTFileSystem_getLastModifiedTime");
-		var_dump("file does not exist");
-		exit;
 	}
-	return filemtime("$file");
+	return filemtime($file);
 }
 
 //public native java.lang.String[] java.io.WinNTFileSystem.list(java.io.File)
 function Java_java_io_WinNTFileSystem_list($dir) {
-	//var_dump($this, $file);
+	$dir = '' . $dir->instance_getPath();
 	$list = [];
 	foreach (scandir($dir) as $file) {
 		if (!in_array($file, ['.', '..'])) {
@@ -660,13 +762,6 @@ function Java_java_lang_ProcessEnvironment_environmentBlock() {
 	return jstring('');
 }
 
-//private native long java.lang.ProcessImpl.create(java.lang.String,java.lang.String,java.lang.String,boolean,java.io.FileDescriptor,java.io.FileDescriptor,java.io.FileDescriptor)
-function Java_java_lang_ProcessImpl_create($cmdstr, $envblock, $dir, $stdHandles, $redirectErrorStream) {
-	//var_dump($cmdstr, $envblock, $dir, $stdHandles, $redirectErrorStream);
-	//exit;
-	throw new \java\io\IOException(jstring('Cannot run'));
-}
-
 //private native void java.io.RandomAccessFile.open(java.lang.String,int)
 function Java_java_io_RandomAccessFile_open($file, $mode) {
 	//var_dump($this->fd->handle);
@@ -677,42 +772,47 @@ function Java_java_io_RandomAccessFile_close0() {
 	fclose($this->fd->handle);
 }
 
+//private native int java.io.RandomAccessFile.readBytes(byte[],int,int)
+function Java_java_io_RandomAccessFile_readBytes($b, $off, $len) {
+	$data = fread($this->fd->handle, $len);
+	$n = strlen($data);
+	if ($n === 0) return -1;
+	for ($i = 0; $i < $n; $i++) {
+		$b[(int)$off + $i] = ord($data[$i]);
+	}
+	return $n;
+}
+
+//private native int java.io.RandomAccessFile.read0()
+function Java_java_io_RandomAccessFile_read0() {
+	$c = fgetc($this->fd->handle);
+	return $c === false ? -1 : ord($c);
+}
+
 //static native int sun.nio.ch.FileDispatcher.read0(java.io.FileDescriptor,long,int)
 function Java_sun_nio_ch_FileDispatcher_read0($fd, $addr, $len) {
 	global $Java_sun_misc_Unsafe_memory;
-	
-	//var_dump($fd, $addr, $len);
-	//fseek($fd->handle, $addr);
+	fwrite(STDERR, "read0: addr=$addr len=$len pos=".ftell($fd->handle)."\n");
 	$data = fread($fd->handle, $len);
 	$len = strlen($data);
-	
-	$blockOffset = Java_sun_misc_Unsafe_getMemBlockOffset($addr);
-	$addr -= $blockOffset;
-	
-	//var_dump($Java_sun_misc_Unsafe_memory[$blockOffset], $addr, $len);
+	$addr = (int)$addr;
 	for ($i = 0; $i < $len; $i++) {
-		$Java_sun_misc_Unsafe_memory[$blockOffset][$addr + $i] = $data[$i];
+		$Java_sun_misc_Unsafe_memory[$addr + $i] = $data[$i];
 	}
-	//var_dump($Java_sun_misc_Unsafe_memory[$blockOffset], $addr, $len);
-	
+	fwrite(STDERR, "read0 done: got $len bytes\n");
 	return $len;
 }
 
 //static native int sun.nio.ch.FileDispatcher.write0(java.io.FileDescriptor,long,int)
 function Java_sun_nio_ch_FileDispatcher_write0($fd, $addr, $len) {
 	global $Java_sun_misc_Unsafe_memory;
-	
-	$blockOffset = Java_sun_misc_Unsafe_getMemBlockOffset($addr);
-	$addr -= $blockOffset;
-	
-	//var_dump($Java_sun_misc_Unsafe_memory[$blockOffset], $addr, $len);
-	$len = fwrite($fd->handle, substr($Java_sun_misc_Unsafe_memory[$blockOffset], $addr, $len), $len);
-	if ($len === false) {
-		var_dump('Java_sun_nio_ch_FileDispatcher_write0');
-		var_dump("error, can't write");
+	$data = substr($Java_sun_misc_Unsafe_memory, (int)$addr, $len);
+	$written = fwrite($fd->handle, $data, $len);
+	if ($written === false) {
+		var_dump('Java_sun_nio_ch_FileDispatcher_write0 error');
 		exit;
 	}
-	return $len;
+	return $written;
 }
 
 //private static native long java.io.FileDescriptor.set(int)
@@ -746,28 +846,23 @@ function Java_sun_nio_ch_FileChannelImpl_initIDs() {
 
 //private native long sun.nio.ch.FileChannelImpl.position0(java.io.FileDescriptor,long)
 function Java_sun_nio_ch_FileChannelImpl_position0($fd, $offset) {
-	//var_dump($this, $fd, $offset);
 	if ($offset !== '-1') {
-		//var_dump("set pos offset $offset");
-		//var_dump('Java_sun_nio_ch_FileChannelImpl_position0');
-		//exit;
 		fseek($fd->handle, $offset);
 	}
-	return ftell($fd->handle);
+	$pos = ftell($fd->handle);
+	fwrite(STDERR, "position0: offset=$offset => pos=$pos\n");
+	return $pos;
 }
 
 //private native long sun.nio.ch.FileChannelImpl.size0(java.io.FileDescriptor)
 function Java_sun_nio_ch_FileChannelImpl_size0($fd) {
-	//var_dump($this, $fd);
 	$fp = $fd->handle;
 	$pos = ftell($fp);
-	fseek($fp, 0);
-	$size = strlen(stream_get_contents($fp));
-	//var_dump($size, $pos);
+	fseek($fp, 0, SEEK_END);
+	$size = ftell($fp);
 	fseek($fp, $pos);
+	fwrite(STDERR, "size0: $size bytes\n");
 	return $size;
-	//return \sun\nio\ch\IOStatus::$UNSUPPORTED;
-	//exit;
 }
 
 //native int sun.nio.ch.FileChannelImpl.lock0(java.io.FileDescriptor,boolean,long,long,boolean)

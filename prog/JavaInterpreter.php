@@ -54,14 +54,10 @@ trait JavaInterpreter {
 			case 'caload':
 			case 'baload':
 				$args = $this->stackArrayPop($stack, 2);
-				//var_dump($args[1], count($args[0]), $method, $i);
 				if ($args[0] === null) {
-					//var_dump('here', $method);
 					throw new \java\lang\NullPointerException();
 				}
-				
 				if (!array_key_exists(strval($args[1]), $args[0])) {
-					//var_dump($args[1], $args[0], $method, $i);//readline();
 					throw new \java\lang\ArrayIndexOutOfBoundsException(strval($args[1]));
 				}
 				$stack[] = $args[0][$args[1]];
@@ -838,6 +834,29 @@ trait JavaInterpreter {
 					$stack[] = $ret;
 				}
 				break;
+			case 'invokedynamic': {
+				// Pop captured variables (call site args)
+				$capturedArgs = $this->stackArrayPop($stack, count($opcode[2]['args']));
+				$bsmIndex = $opcode[2]['bsm'];
+				$bsmTable = isset($this->class_attr['attr']['BootstrapMethods']) ? $this->class_attr['attr']['BootstrapMethods'] : [];
+				$bsm = $bsmTable[$bsmIndex];
+				// Resolve bootstrap method handle (cp[bsm['ref']]) -> ['MethodHandle', refKind, refIndex]
+				$mhEntry = $this->getConstant($bsm['ref']);
+				// Bootstrap args: [0]=samType, [1]=implMethod handle, [2]=instantiatedType
+				$implMhEntry = isset($bsm['args'][1]) ? $this->getConstant($bsm['args'][1]) : null;
+				$implMethod = null;
+				if ($implMhEntry && $implMhEntry[0] == 'MethodHandle') {
+					$implMethod = $this->getMethod($implMhEntry[2]);
+				}
+				$callSiteMethod = $opcode[2]['method']; // e.g. "apply", "test", "run"
+				$captured = $capturedArgs;
+				$refKind = $mhEntry ? $mhEntry[1] : 6;
+				$lambdaObj = new JavaLambdaCallSite($callSiteMethod, $implMethod, $captured, $refKind);
+				if ($opcode[2]['return'] != 'V') {
+					$stack[] = $lambdaObj;
+				}
+				break;
+			}
 			case 'astore':
 				$opcode[1] = 'astore_'.$opcode[2];
 			case 'astore_0':
@@ -1187,5 +1206,89 @@ class JavaArray extends SplFixedArray {
 			$javaArray[$i] = $array[$i];
 		}
 		return $javaArray;
+	}
+
+	// PHP 5.4 SplFixedArray::toArray() includes private class properties (e.g. $type)
+	// in its output. Override to return only the array elements.
+	public function toArray() {
+		$result = [];
+		$size = $this->getSize();
+		for ($i = 0; $i < $size; $i++) {
+			$result[] = $this[$i];
+		}
+		return $result;
+	}
+}
+
+class JavaLambdaCallSite extends \java\lang\Object {
+	public $javaClass = true;
+	private $csMethod, $implMethod, $captured, $refKind;
+	public function __construct($csMethod, $implMethod, $captured, $refKind) {
+		$this->csMethod   = $csMethod;
+		$this->implMethod = $implMethod;
+		$this->captured   = $captured;
+		$this->refKind    = $refKind;
+	}
+	public function __call($name, $args) {
+		$impl = $this->implMethod;
+		if (!$impl) throw new \java\lang\UnsupportedOperationException("invokedynamic: no impl for " . $name);
+		$allArgs = array_merge($this->captured, $args);
+		$cls = '\\' . str_replace('/', '\\', $impl['class']);
+		if ($this->refKind == 6) {
+			// REF_invokeStatic
+			return call_user_func_array(array($cls, '__callstatic'), array($impl['method'], $allArgs, null));
+		} else {
+			// REF_invokeVirtual / REF_invokeSpecial / others
+			$obj = array_shift($allArgs);
+			return call_user_func_array(array($obj, '__call'), array($impl['method'], $allArgs, null));
+		}
+	}
+}
+
+class JavaProcProcess extends \java\lang\Object {
+	public $javaClass = true;
+	private $proc;
+	private $pipes;
+	private $exitCode = null;
+
+	private $mergeErr;
+
+	public function __construct($proc, $pipes, $mergeErr = false) {
+		$this->proc = $proc;
+		$this->pipes = $pipes;
+		$this->mergeErr = $mergeErr;
+	}
+
+	public function __call($name, $args) {
+		switch ($name) {
+			case 'getInputStream':
+				return new \java\io\FileInputStream($this->pipes[1]);
+			case 'getOutputStream':
+				return new \java\io\FileInputStream($this->pipes[0]);
+			case 'getErrorStream':
+				return new \java\io\FileInputStream($this->pipes[2]);
+			case 'waitFor':
+				if ($this->exitCode === null) {
+					fclose($this->pipes[0]);
+					$this->exitCode = proc_close($this->proc);
+				}
+				return $this->exitCode;
+			case 'exitValue':
+			case 'instance_exitValue':
+				if ($this->exitCode === null) {
+					$status = proc_get_status($this->proc);
+					if ($status['running']) throw new \java\lang\IllegalThreadStateException(jstring('process has not exited'));
+					$this->exitCode = $status['exitcode'];
+				}
+				return $this->exitCode;
+			case 'destroy':
+			case 'destroyForcibly':
+				proc_terminate($this->proc);
+				return $this;
+			case 'isAlive':
+				$status = proc_get_status($this->proc);
+				return $status['running'];
+		}
+		throw new \JavaMethodNotFoundException('JavaProcProcess::'.$name.' not implemented');
 	}
 }
