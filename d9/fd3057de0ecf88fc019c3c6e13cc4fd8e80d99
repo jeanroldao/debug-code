@@ -1,0 +1,19 @@
+docs/frontend-observability-plan.md
+  s_5640e964151aad::t_823404bc3789e6 127-186
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "d9fd3057de0ecf88fc019c3c6e13cc4fd8e80d99",
+  "prompts": {},
+  "sessions": {
+    "s_5640e964151aad": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9da393b9-49d2-459a-8c16-9c099594c768",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "jeanroldao <j.roldao@planerio.de>"
+    }
+  }
+}
