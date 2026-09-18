@@ -124,14 +124,66 @@ build time (`build.sourcemap: 'hidden'` in Vite) and keep them out of the public
 Store them per build hash, then resolve stacks offline with a small script using the
 `source-map` npm package. Resolving at ingest time is possible later but not needed on day one.
 
-## Phase 5: reading and alerting (two hours)
+## Phase 5: using the logs (two hours)
 
-- Frontend events are just Monolog JSON records with `channel: frontend`, so whatever already
-  ships backend logs (stdout to journald, Docker, CloudWatch, Loki, ELK) picks them up unchanged.
-- Write a short `docs/READING-LOGS.md` in the repo: where logs go, the filter for the
-  frontend channel, and the known-noise list. Grow the noise list weekly during the first month.
-- One alert: frontend error count per hour exceeds a baseline, or a message fingerprint
-  appears that was not seen in the previous seven days.
+Frontend events are ordinary Monolog JSON records with `channel: frontend`, so whatever
+already ships backend logs (stdout to journald, Docker, CloudWatch, Loki, ELK) picks them up
+unchanged. There is nothing new to deploy or pay for. What changes is how you read them.
+
+### Day-to-day queries
+
+Filter on the channel first, then group by message. With plain files or `docker logs`:
+
+```bash
+# last 200 frontend errors
+docker logs app 2>&1 | jq -c 'select(.channel == "frontend" and .level_name == "ERROR")' | tail -200
+
+# top messages today
+docker logs --since 24h app 2>&1 \
+  | jq -r 'select(.channel == "frontend") | .message' | sort | uniq -c | sort -rn | head -20
+
+# everything for one backend request id, browser and server side together
+docker logs app 2>&1 | jq -c 'select(.extra.request_id == "a1b2c3")'
+```
+
+The same three queries in Loki / LogQL:
+
+```logql
+{app="backend"} | json | channel="frontend" | level_name="ERROR"
+sum by (message) (count_over_time({app="backend"} | json | channel="frontend" [24h]))
+{app="backend"} | json | extra_request_id="a1b2c3"
+```
+
+And in CloudWatch Logs Insights:
+
+```
+fields @timestamp, message, context.route, context.build, extra.user_id
+| filter channel = "frontend" and level_name = "ERROR"
+| sort @timestamp desc | limit 200
+
+filter channel = "frontend" | stats count() by message | sort count desc
+```
+
+### Triage routine
+
+- **After every deploy:** compare the top-messages query for the last hour against the same
+  query for the previous seven days, grouped by `context.build`. A message that exists only
+  under the new build hash is a regression from that deploy.
+- **Weekly:** review the top 20 messages. Each is either a bug to ticket, or noise to add to
+  the server-side ignore list. Do this for the first month, then monthly.
+- **Investigating one report:** take the backend request id from the frontend record, query
+  for it, and read the backend exception next to the browser error. Take the build hash and
+  minified stack, run the offline source-map script, and you have the original file and line.
+
+### Alerting
+
+One rule is enough to start: frontend `ERROR` count in the last hour exceeds three times the
+hourly median of the previous seven days, or a message fingerprint appears that was absent in
+the previous seven days. Route it to the same place backend alerts go. Do not alert on
+`warning`.
+
+Once the routine is stable, write down the queries and the current noise list next to the
+code, so the next person does not rediscover them.
 
 ## Optional cheap extras once the basics work
 
